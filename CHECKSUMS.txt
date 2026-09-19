@@ -1,1 +1,1 @@
-42b35b5ef82d50778a13d0db9cb2e7463a0da24b3ca47e19d46f9fbd41bc9574  dist/ultratokenkiller-0.1.0-py3-none-any.whl
+0acd3dfae17532c2cc60f327d2239169b90e794c0f3aee33616acca06afb8f41  dist/ultratokenkiller-0.2.0-py3-none-any.whl

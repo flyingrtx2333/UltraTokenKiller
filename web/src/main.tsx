@@ -6,6 +6,9 @@ type Client = {name:string; detected:boolean; enabled:boolean; supported:boolean
 type Status = {service:boolean;headroom:boolean;rtk:boolean;profile:string;profile_controlled:boolean;caveman:string;auto_start:boolean;ports:{dashboard:number;headroom:number};clients:Client[]}
 type Metrics = {requests:number;model_requests?:number;tool_commands?:number;tool_optimized?:number;known_input_usage?:number;input_tokens:number|null;output_tokens:number|null;cached_tokens:number|null;rtk_saved_tokens:number;headroom_saved_tokens:number;average_duration_ms:number;failures:number;error_rate:number}
 type EventItem = {id:number;created_at:number;kind:string;client:string;model?:string;duration_ms?:number;success:boolean;metadata:Record<string,unknown>}
+type CapabilityState = 'not_implemented'|'implemented_unverified'|'offline_passed'|'real_client_passed'|'upstream_parity_passed'
+type CapabilityReport = {summary:Record<CapabilityState,number>;total_core_capabilities:number;discovered_command_variants:number;reviewed_command_contracts:number;parity_certified:boolean;upstream_comparisons_missing:boolean}
+type BenchmarkReport = {status:string;kind?:string;created_at?:string;summary?:Record<string,unknown>;fixtures?:unknown[];pairs?:unknown[]}
 
 const emptyMetrics: Metrics = {requests:0,input_tokens:0,output_tokens:0,cached_tokens:0,rtk_saved_tokens:0,headroom_saved_tokens:0,average_duration_ms:0,failures:0,error_rate:0}
 const formatter = new Intl.NumberFormat('zh-CN')
@@ -19,8 +22,9 @@ function App(){
   const [hours,setHours]=useState(24)
   const [error,setError]=useState('')
   const [busy,setBusy]=useState('')
-  const [readiness,setReadiness]=useState<{discovered_command_variants:number;parity_certified:boolean}|null>(null)
+  const [readiness,setReadiness]=useState<CapabilityReport|null>(null)
   const [recovery,setRecovery]=useState<{used_bytes:number;capacity_bytes:number}|null>(null)
+  const [benchmarks,setBenchmarks]=useState<{compression:BenchmarkReport|null;response:BenchmarkReport|null}>({compression:null,response:null})
 
   async function load(){
     try{
@@ -29,9 +33,13 @@ function App(){
       ])
       if(!s.ok||!m.ok||!e.ok||!c.ok) throw new Error('服务返回错误')
       setStatus(await s.json()); setMetrics((await m.json()).local); setEvents(await e.json()); setToken((await c.json()).session_token); setError('')
-      const [cap,mem]=await Promise.all([fetch('/api/v1/capabilities'),fetch('/api/v1/recovery/status')])
+      const [cap,mem,compression,response]=await Promise.all([
+        fetch('/api/v1/capabilities'),fetch('/api/v1/recovery/status'),
+        fetch('/api/v1/benchmarks/latest?kind=compression'),fetch('/api/v1/benchmarks/latest?kind=response')
+      ])
       if(cap.ok)setReadiness(await cap.json())
       if(mem.ok)setRecovery(await mem.json())
+      setBenchmarks({compression:compression.ok?await compression.json():null,response:response.ok?await response.json():null})
     }catch(e){ setError(e instanceof Error?e.message:'无法连接本地服务') }
   }
   useEffect(()=>{
@@ -89,6 +97,8 @@ function App(){
         </div>
         <div className="savings-note"><strong>节省口径分开显示</strong><span>输入压缩估算 {number.format(metrics.headroom_saved_tokens)} · 工具输出估算 {number.format(metrics.rtk_saved_tokens)}。按 UTF-8 字节数估算，两项不合并为账单节省。</span></div>
         <div className="savings-note"><strong>{readiness?.parity_certified?'核心对标已验收':'完整对标尚未验收'}</strong><span>已发现 {readiness?.discovered_command_variants??'—'} 个上游命令枚举项，发现不等于实现。原文仅保存在内存，重启失效。{recovery?` 当前使用 ${(recovery.used_bytes/1048576).toFixed(1)} / ${(recovery.capacity_bytes/1048576).toFixed(0)} MiB。`:''}</span></div>
+        <div className="savings-note"><strong>能力证据</strong><span>核心能力 {readiness?.total_core_capabilities??'—'} 项：上游对标 {readiness?.summary.upstream_parity_passed??0}、真实客户端 {readiness?.summary.real_client_passed??0}、离线通过 {readiness?.summary.offline_passed??0}、待验证 {readiness?.summary.implemented_unverified??0}、未实现 {readiness?.summary.not_implemented??0}。已审阅 {readiness?.reviewed_command_contracts??'—'} 个命令契约；发现的 {readiness?.discovered_command_variants??'—'} 个枚举项不作为覆盖率分母。</span></div>
+        <div className="savings-note"><strong>验证报告</strong><span>压缩对照：{benchmarks.compression?'已有报告':'未运行'}；回答成对评测：{benchmarks.response?'已有报告':'未运行'}。原文只存内存且重启失效。{recovery?` 当前使用 ${(recovery.used_bytes/1048576).toFixed(1)} / ${(recovery.capacity_bytes/1048576).toFixed(0)} MiB。`:''}</span></div>
       </section>
 
       <div className="workspace">
