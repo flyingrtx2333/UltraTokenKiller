@@ -51,14 +51,14 @@ async def compress_request(payload, settings, root, session):
                 if not isinstance(item, dict):
                     continue
                 fields = []
-                if item.get("role") == "tool" and isinstance(item.get("content"), str):
-                    fields.append((item, "content"))
-                if item.get("type") == "function_call_output" and isinstance(item.get("output"), str):
-                    fields.append((item, "output"))
+                if item.get("role") == "tool":
+                    fields.extend(tool_text_fields(item, "content"))
+                if item.get("type") in {"function_call_output", "custom_tool_call_output"}:
+                    fields.extend(tool_text_fields(item, "output"))
                 if isinstance(item.get("content"), list):
                     for block in item["content"]:
-                        if isinstance(block, dict) and block.get("type") == "tool_result" and isinstance(block.get("content"), str):
-                            fields.append((block, "content"))
+                        if isinstance(block, dict) and block.get("type") == "tool_result":
+                            fields.extend(tool_text_fields(block, "content"))
                 for block, key in fields:
                     compressed = await asyncio.to_thread(broker.compress, block[key], session, query=query)
                     if compressed["content"] != block[key]:
@@ -69,25 +69,56 @@ async def compress_request(payload, settings, root, session):
     return result, metadata
 
 
+def tool_text_fields(container, key):
+    """Select only text inside known tool results; preserve multimodal items."""
+    content = container.get(key)
+    if isinstance(content, str):
+        return [(container, key)]
+    if isinstance(content, list):
+        return [(part, "text") for part in content if isinstance(part, dict)
+                and part.get("type") in {"text", "input_text"} and isinstance(part.get("text"), str)]
+    return []
+
+
 class UsageObserver:
     """Bounded side observation; wire bytes are always forwarded unchanged."""
     def __init__(self, sse: bool):
         self.sse = sse
+        self.declared_sse = sse
         self.buffer = b""
         self.usage: dict = {}
+        self.usage_objects = 0
+        self.terminal_events = 0
+        self.bytes_seen = 0
+        self.data_lines = 0
+        self.json_events = 0
+        self.parse_errors = 0
+        self.cr_seen = 0
+        self.lf_seen = 0
         self.disabled = False
         self.event_data = []
         self.failed = False
 
     def feed(self, chunk: bytes):
+        self.bytes_seen += len(chunk)
+        self.cr_seen += chunk.count(b"\r")
+        self.lf_seen += chunk.count(b"\n")
         if self.disabled:
             return
         self.buffer += chunk
+        # Some compatible upstreams stream SSE with a missing or generic MIME
+        # type. Detect only unambiguous SSE field prefixes; wire bytes unchanged.
+        if not self.sse and not self.json_events:
+            prefix = self.buffer.lstrip(b"\xef\xbb\xbf \t\r\n")
+            if prefix.startswith((b"data:", b"event:", b":")):
+                self.sse = True
+                self.buffer = prefix
         if self.sse:
             while b"\n" in self.buffer:
                 line, self.buffer = self.buffer.split(b"\n", 1)
                 line = line.rstrip(b"\r")
                 if line.startswith(b"data:"):
+                    self.data_lines += 1
                     self.event_data.append(line[5:].lstrip(b" "))
                 elif not line and self.event_data:
                     self.parse(b"\n".join(self.event_data))
@@ -104,11 +135,15 @@ class UsageObserver:
         try:
             data = json.loads(value)
             if isinstance(data, dict):
+                self.json_events += 1
+                response = data.get("response", data.get("message", data))
+                self.usage_objects += int(isinstance(response, dict) and isinstance(response.get("usage"), dict))
+                self.terminal_events += int(data.get("type") in {"response.completed", "response.done", "response.failed", "message_stop"})
                 self.usage.update(usage_fields(data))
                 if data.get("type") in {"error", "response.failed", "response.incomplete"} or data.get("error"):
                     self.failed = True
         except (ValueError, TypeError, AttributeError):
-            pass
+            self.parse_errors += 1
 
     def finish(self):
         if not self.sse and not self.disabled:
@@ -188,7 +223,7 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
             store.add(kind="input", client=client_name, model=model, success=False,
                       duration_ms=int((time.perf_counter()-started)*1000), metadata=metadata)
             return JSONResponse({"error": {"message": "UTK upstream connection failed"}}, status_code=502)
-        observer = UsageObserver("text/event-stream" in response.headers.get("content-type", ""))
+        observer = UsageObserver("text/event-stream" in response.headers.get("content-type", "").lower())
         metadata["upstream_status"] = response.status_code
         metadata["method"] = request.method
 
@@ -202,6 +237,19 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
             finally:
                 await response.aclose()
                 observer.finish()
+                metadata["usage_observation"] = {
+                    "status": "observed" if observer.usage else "observer_limit" if observer.disabled else "not_observed",
+                    "usage_objects": observer.usage_objects,
+                    "terminal_events": observer.terminal_events,
+                    "sse_content_type": observer.declared_sse,
+                    "sse_detected": observer.sse,
+                    "bytes_seen": observer.bytes_seen,
+                    "data_lines": observer.data_lines,
+                    "json_events": observer.json_events,
+                    "parse_errors": observer.parse_errors,
+                    "cr_seen": observer.cr_seen,
+                    "lf_seen": observer.lf_seen,
+                }
                 store.add(kind="input" if request.method == "POST" else "transport", client=client_name, model=model,
                           success=completed and response.is_success and not observer.failed,
                           duration_ms=int((time.perf_counter()-started)*1000),
