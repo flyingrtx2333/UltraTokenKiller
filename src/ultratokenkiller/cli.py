@@ -240,21 +240,32 @@ def profile(name: str = typer.Argument(..., help="safe、aggressive 或 off"), c
 
 
 @app.command(context_settings={"allow_extra_args": True, "ignore_unknown_options": True})
-def exec(ctx: typer.Context, session: str | None = typer.Option(None)):
+def exec(ctx: typer.Context, session: str | None = typer.Option(None), hook_call_id: str | None = typer.Option(None)):
     """通过 UTK 工具压缩 运行命令；复杂 shell 语法安全透传。"""
     command = list(ctx.args)
     if command and command[0] == "--":
         command = command[1:]
     previous = os.environ.get("UTK_SESSION_ID")
+    previous_call = os.environ.get("UTK_HOOK_CALL_ID")
+    if hook_call_id:
+        import re
+        if not re.fullmatch(r"[a-f0-9]{64}", hook_call_id):
+            raise typer.BadParameter("Invalid hook correlation identifier")
     if session:
         import re
         if not re.fullmatch(r"[A-Za-z0-9_-]{16,128}", session):
             raise typer.BadParameter("Invalid session identifier")
         os.environ["UTK_SESSION_ID"] = session
     try:
+        if hook_call_id:
+            os.environ["UTK_HOOK_CALL_ID"] = hook_call_id
         from .tool_events import ToolEventSink
         code = run_command(command, ToolEventSink())
     finally:
+        if previous_call is None:
+            os.environ.pop("UTK_HOOK_CALL_ID", None)
+        else:
+            os.environ["UTK_HOOK_CALL_ID"] = previous_call
         if previous is None:
             os.environ.pop("UTK_SESSION_ID", None)
         else:
@@ -267,6 +278,18 @@ def mcp_server():
     """启动会话隔离的原文查询 MCP stdio 服务。"""
     from .mcp import main
     main()
+
+
+@app.command("codex", context_settings={"allow_extra_args": True, "ignore_unknown_options": True})
+def codex(ctx: typer.Context):
+    """启动自动绑定代理、只读命令钩子及原文查询的 Codex 新会话。"""
+    from .codex_session import launch
+    try:
+        code = launch(list(ctx.args))
+    except (ValueError, OSError, subprocess.SubprocessError) as error:
+        typer.echo(str(error), err=True)
+        raise typer.Exit(1)
+    raise typer.Exit(code)
 
 
 @app.command("hook")

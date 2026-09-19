@@ -3,6 +3,7 @@ import json
 import os
 import re
 import sys
+import hashlib
 
 from .tool_filters import command_filter
 
@@ -27,6 +28,10 @@ def rewrite_literal(command: str, session: str):
     kind = command_filter(args)
     if kind not in {"git-status", "git-log", "diff", "search"}:
         return None
+    if kind == "search":
+        allowed = {"-n", "--line-number", "--with-filename", "-H", "-i", "--ignore-case", "-F", "--fixed-strings", "--"}
+        if any(arg.startswith("-") and arg not in allowed for arg in args[1:]):
+            return None
     return f"utk exec --session {session} -- " + command
 
 
@@ -42,6 +47,10 @@ def codex_event(event: dict, session: str):
     updated = rewrite_literal(original, session)
     if updated is None:
         return {}
+    call_id = event.get("tool_use_id")
+    if isinstance(call_id, str) and call_id:
+        digest = hashlib.sha256(call_id.encode("utf-8")).hexdigest()
+        updated = updated.replace(" -- ", " --hook-call-id " + digest + " -- ", 1)
     return {"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "allow",
                                    "updatedInput": {**inputs, key: updated}}}
 
@@ -53,7 +62,11 @@ def hermes_terminal(command: str, session: str) -> str:
 
 def main():
     try:
-        event = json.load(sys.stdin)
+        stream = getattr(sys.stdin, "buffer", sys.stdin)
+        raw = stream.read(1024 * 1024 + 1)
+        if len(raw) > 1024 * 1024:
+            raise ValueError("Hook input exceeds budget")
+        event = json.loads(raw)
         result = codex_event(event, os.environ.get("UTK_SESSION_ID", ""))
     except (ValueError, TypeError, AttributeError):
         result = {}

@@ -132,6 +132,8 @@ def run_command(command: list[str], store: Store) -> int:
                 "estimator": "utf8_bytes_div_4", "filter": kind, "execution_id": uuid.uuid4().hex}
     if os.environ.get("UTK_SESSION_ID"):
         metadata["session_id"] = hashlib.sha256(os.environ["UTK_SESSION_ID"].encode()).hexdigest()
+    if os.environ.get("UTK_HOOK_CALL_ID"):
+        metadata["tool_call_id"] = os.environ["UTK_HOOK_CALL_ID"]
     code, raw, fallback = execute(command, capture=bool(kind), write=_write_stdout)
     if raw is not None:
         rendered = raw
@@ -158,7 +160,10 @@ def run_command(command: list[str], store: Store) -> int:
             fallback = "encoding_or_compression_error"
         _write_stdout(rendered)
     metadata["fallback"] = fallback
-    store.add(kind="tool", client="cli", success=code == 0,
+    client_name = os.environ.get("UTK_CLIENT", "cli")
+    if client_name not in {"codex", "hermes", "cli"}:
+        client_name = "cli"
+    store.add(kind="tool", client=client_name, success=code == 0,
               duration_ms=int((time.perf_counter()-started)*1000), saved_tokens=saved, metadata=metadata)
     return code
 

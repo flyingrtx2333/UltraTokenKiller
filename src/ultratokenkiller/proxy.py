@@ -140,7 +140,7 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
 
     @app.get("/health")
     def health():
-        return {"status": "ok", "engine": "utk-native"}
+        return {"status": "ok", "engine": "utk-native", "route_id": hashlib.sha256(upstream.encode()).hexdigest()}
 
     @app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
     async def forward(path: str, request: Request):

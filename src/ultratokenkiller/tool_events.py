@@ -20,6 +20,7 @@ class ToolMetadata(BaseModel):
     filter: str | None = Field(default=None, max_length=64, pattern=r"^[a-z0-9:_-]+$")
     execution_id: str = Field(pattern=r"^[a-f0-9]{32}$")
     session_id: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
+    tool_call_id: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
     recovery_id: str | None = Field(default=None, max_length=128, pattern=r"^[A-Za-z0-9_-]+$")
     fallback: str | None = Field(default=None, max_length=64, pattern=r"^[a-z0-9:_-]+$")
 

@@ -20,6 +20,8 @@ from ultratokenkiller.integrations import CodexAdapter
 from ultratokenkiller.runtime import start_processes, stop_processes
 from ultratokenkiller.store import Store
 from ultratokenkiller.processes import run_owned
+from ultratokenkiller.codex_session import session_overrides, toml_value, validate_client
+from ultratokenkiller import coding_acceptance
 
 
 def acceptance_passed(report):
@@ -33,7 +35,9 @@ def acceptance_passed(report):
         and all(t.get("status") == "completed" and t.get("exit_code") in (None, 0) for t in commands)
         and recovery and all(t.get("status") == "completed" and not t.get("error_types") for t in recovery)
         and (needed == 0 or report["optimized_command_records"] > 0)
-        and (needed < 2 or report["input_compressed_records"] > 0)
+        and (needed < 2 or report["scope"] == "coding_task" or report["input_compressed_records"] > 0)
+        and (report["scope"] != "coding_task" or (report.get("automatic_hook_records", 0) > 0
+             and report.get("coding_verification", {}).get("passed", False)))
     )
 
 
@@ -51,6 +55,7 @@ def main():
     scenario = parser.add_mutually_exclusive_group()
     scenario.add_argument("--recovery-only", action="store_true")
     scenario.add_argument("--tools-only", action="store_true")
+    scenario.add_argument("--coding-task", action="store_true")
     arguments = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     import re
@@ -78,6 +83,16 @@ def main():
         command = [shutil.which("node"), str(node_script)]
     home.mkdir(parents=True, exist_ok=True)
     session = secrets.token_hex(16)
+    working = home
+    coding_baseline = None
+    if arguments.coding_task:
+        validate_client(adapter, command)
+        budget = budget_status(home)
+        remaining = (budget["ceiling"] or arguments.request_limit) - budget["consumed"]
+        if not arguments.offline_preflight and remaining < 4:
+            raise SystemExit("Coding acceptance needs four remaining authorized submissions; budget was not changed")
+        working = home / "coding" / session
+        coding_baseline = coding_acceptance.prepare(working)
     settings = Settings(profile="safe", caveman=arguments.response_profile, auto_start=False,
                         dashboard_port=choose_port(19870), headroom_port=choose_port(19880))
     settings.clients = {"codex": {"proxy_port": settings.headroom_port, "managed": True,
@@ -85,6 +100,7 @@ def main():
     settings.save(home)
     os.environ["UTK_HOME"] = str(home)
     os.environ["UTK_SESSION_ID"] = session
+    os.environ["UTK_CLIENT"] = "codex"
     os.environ["UTK_MAX_MODEL_REQUESTS"] = str(arguments.request_limit)
     fixture = home / "acceptance-fixture.log"
     fixture.write_text("UTK_RECOVERY_PROOF\n"+"\n".join(f"INFO synthetic record {i}: expected value" for i in range(240)), encoding="utf-8")
@@ -112,9 +128,17 @@ def main():
             raise RuntimeError("Offline MCP preflight failed: "+str(checked.get("error", checked.get("result", {}))))
         if os.name == "nt":
             sandbox_session = secrets.token_hex(16)
+            sandbox_arguments = ["utk", "exec", "--session", sandbox_session, "--", "rg", "-n", "--with-filename", ".", fixture.name]
+            sandbox_working = home
+            if arguments.coding_task:
+                from ultratokenkiller.hooks import codex_event
+                event = {"hook_event_name": "PreToolUse", "tool_name": "Bash", "tool_use_id": "preflight-" + sandbox_session,
+                         "tool_input": {"command": "rg -n --with-filename . calculator.py"}}
+                rewrite = codex_event(event, sandbox_session)["hookSpecificOutput"]["updatedInput"]["command"]
+                sandbox_arguments = rewrite.split()
+                sandbox_working = working
             sandbox_check = run_owned(command + ["sandbox", "--permissions-profile", ":workspace",
-                "-c", 'windows.sandbox="unelevated"', "-C", str(home),
-                "utk", "exec", "--session", sandbox_session, "--", "rg", "-n", "--with-filename", ".", fixture.name],
+                "-c", 'windows.sandbox="unelevated"', "-C", str(sandbox_working)] + sandbox_arguments,
                 input="", timeout=30)
             if sandbox_check.returncode or "UTK original:" not in sandbox_check.stdout:
                 print("Sandbox preflight exit:", sandbox_check.returncode, flush=True)
@@ -126,8 +150,15 @@ def main():
             if not any(e["kind"] == "tool" and e["metadata"].get("session_id") == sandbox_hash
                        and e["metadata"].get("optimized") for e in sandbox_events):
                 raise RuntimeError("Offline sandbox metrics preflight failed; model submissions were not attempted")
+        hook_trust = {}
+        if arguments.coding_task:
+            from ultratokenkiller.codex_hook_trust import approve_session_hook
+            automatic, _ = session_overrides(settings, home, session)
+            hook_trust = approve_session_hook(command, automatic, working)
         if arguments.offline_preflight:
-            print(json.dumps({"offline_mcp_preflight": "passed", "model_requests": 0, "budget": budget_status(home)}))
+            print(json.dumps({"offline_mcp_preflight": "passed", "scoped_hook_trust_verified": bool(hook_trust),
+                "model_requests": 0, "budget": budget_status(home),
+                "original_config_unchanged": adapter.config.read_bytes() == original}))
             return
         overrides = {
             "model_provider": "utk_acceptance",
@@ -145,9 +176,15 @@ def main():
         }
         if os.name == "nt":
             overrides["windows.sandbox"] = "unelevated"
-        command += ["exec", "--ignore-user-config", "--ephemeral", "--json", "--skip-git-repo-check", "--sandbox", "workspace-write", "-C", str(home), "-m", model]
+        if arguments.coding_task:
+            automatic, scoped = session_overrides(settings, home, session)
+            overrides.update(automatic)
+            overrides.update(hook_trust)
+            os.environ.update(scoped)
+            overrides["developer_instructions"] = "This is a bounded coding acceptance task. Only modify calculator.py, run its tests and inspect its diff. Preserve tests. Run the requested raw rg command exactly; UTK's installed hook wraps it. Do not wrap commands in rtk or headroom. Do not explore other directories or spawn agents."
+        command += ["exec", "--ignore-user-config", "--ephemeral", "--json", "--skip-git-repo-check", "--sandbox", "workspace-write", "-C", str(working), "-m", model]
         for key, value in overrides.items():
-            command += ["-c", key+"="+json.dumps(value)]
+            command += ["-c", key+"="+toml_value(value)]
         command += ["-c", 'model_providers.utk_acceptance.env_http_headers={"X-UTK-Session-Id"="UTK_SESSION_ID"}']
         env_inline = "{"+", ".join(json.dumps(k)+"="+json.dumps(os.environ[k]) for k in ["UTK_HOME", "UTK_SESSION_ID"])+"}"
         command += ["-c", "mcp_servers.utk_recovery.env="+env_inline, "-"]
@@ -171,6 +208,8 @@ def main():
             prompt = ("Run exactly this one read-only shell command: " + wrapper + "\n"
                       "Find the recovery handle in its output, call utk_retrieve with offset 0 and limit 2000, "
                       "verify UTK_RECOVERY_PROOF, then answer UTK_REAL_RECOVERY_OK. Do not run other shell commands.")
+        if arguments.coding_task:
+            prompt = coding_acceptance.prompt()
         before = budget_status(home)["consumed"]
         timed_out = False
         try:
@@ -193,7 +232,7 @@ def main():
                 # Shown only; never persisted in the metadata report.
                 print("Client declined command: " + str(item.get("aggregated_output", item.get("error", "reason unavailable")))[:1200], flush=True)
             if item.get("type") in {"command_execution", "mcp_tool_call"}:
-                error_types = [name for name in ["ValueError", "KeyError", "FileNotFoundError", "HTTPStatusError", "ConnectError", "RecoveryUnavailable", "TypeError", "TimeoutException"] if name in str(item)]
+                error_types = [name for name in ["ValueError", "KeyError", "FileNotFoundError", "HTTPStatusError", "ConnectError", "RecoveryUnavailable", "TypeError", "TimeoutException"] if name in str(item.get("error") or {})]
                 tool_types.append({"type": item["type"], "status": item.get("status"), "tool": item.get("tool"),
                                    "error_types": error_types, "exit_code": item.get("exit_code"),
                                    "error_category": "sandbox" if "sandbox" in str(item).lower() else "permission" if "permission" in str(item).lower() else None})
@@ -215,6 +254,12 @@ def main():
         report["response_profile"] = arguments.response_profile
         report["input_compressed_records"] = sum(e["metadata"].get("changed_tool_results", 0) > 0 for e in events)
         report["scope"] = "recovery_only" if arguments.recovery_only else "tools_recovery" if arguments.tools_only else "input_tools_recovery_response_policy"
+        if arguments.coding_task:
+            report["scope"] = "coding_task"
+            report["automatic_hook_records"] = sum(e["kind"] == "tool" and e["metadata"].get("tool_call_id") is not None
+                                                  and e["metadata"].get("optimized", False) for e in events)
+            report["coding_verification"] = coding_acceptance.verify(working, coding_baseline)
+            report["baseline_tests"] = {"failed": coding_baseline["baseline_failed"], "passed": coding_baseline["baseline_passed"]}
         report["passed"] = acceptance_passed(report)
         (home / "report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
         (home / f"report-{report['budget']['consumed']:03d}.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
