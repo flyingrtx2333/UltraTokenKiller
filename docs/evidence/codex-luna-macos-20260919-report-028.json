@@ -1,0 +1,145 @@
+{
+  "client": "codex",
+  "model": "gpt-5.6-luna",
+  "authentication": "existing_subscription",
+  "exit_code": 0,
+  "timed_out": false,
+  "recovery_only": false,
+  "final_marker": true,
+  "event_types": [
+    "thread.started",
+    "turn.started",
+    "item.completed",
+    "item.started",
+    "item.completed",
+    "item.started",
+    "item.completed",
+    "item.started",
+    "item.completed",
+    "item.completed",
+    "turn.completed"
+  ],
+  "tools": [
+    {
+      "type": "command_execution",
+      "status": "in_progress",
+      "tool": null,
+      "error_types": [],
+      "exit_code": null,
+      "error_category": null
+    },
+    {
+      "type": "command_execution",
+      "status": "completed",
+      "tool": null,
+      "error_types": [],
+      "exit_code": 0,
+      "error_category": null
+    },
+    {
+      "type": "mcp_tool_call",
+      "status": "in_progress",
+      "tool": "utk_retrieve",
+      "error_types": [],
+      "exit_code": null,
+      "error_category": null
+    },
+    {
+      "type": "mcp_tool_call",
+      "status": "completed",
+      "tool": "utk_retrieve",
+      "error_types": [],
+      "exit_code": null,
+      "error_category": null
+    },
+    {
+      "type": "command_execution",
+      "status": "in_progress",
+      "tool": null,
+      "error_types": [],
+      "exit_code": null,
+      "error_category": null
+    },
+    {
+      "type": "command_execution",
+      "status": "completed",
+      "tool": null,
+      "error_types": [],
+      "exit_code": 0,
+      "error_category": null
+    }
+  ],
+  "budget": {
+    "consumed": 28,
+    "ceiling": 40
+  },
+  "submissions_this_run": 5,
+  "provider_usage_records": 0,
+  "optimized_command_records": 1,
+  "original_config_unchanged": true,
+  "config_changes": {
+    "preflight": {
+      "bytes_unchanged": true,
+      "semantic_unchanged": true,
+      "changed_sections": [],
+      "other_sections_changed": false
+    },
+    "client_run": {
+      "bytes_unchanged": true,
+      "semantic_unchanged": true,
+      "changed_sections": [],
+      "other_sections_changed": false
+    }
+  },
+  "response_profile": "lite",
+  "client_reported_usage": {
+    "input_tokens": 69202,
+    "cached_input_tokens": 49152,
+    "output_tokens": 799
+  },
+  "proxy_usage_observations": [
+    {
+      "status": "not_observed",
+      "usage_objects": 0,
+      "terminal_events": 0
+    },
+    {
+      "status": "not_observed",
+      "usage_objects": 0,
+      "terminal_events": 0
+    },
+    {
+      "status": "not_observed",
+      "usage_objects": 0,
+      "terminal_events": 0
+    },
+    {
+      "status": "not_observed",
+      "usage_objects": 0,
+      "terminal_events": 0
+    },
+    {
+      "status": "not_observed",
+      "usage_objects": 0,
+      "terminal_events": 0
+    }
+  ],
+  "sandbox_transport": "unix_socket_allowlist",
+  "sandbox_network_isolation_verified": true,
+  "input_compressed_records": 0,
+  "scope": "coding_task",
+  "automatic_hook_records": 1,
+  "coding_verification": {
+    "source_changed": true,
+    "tests_unchanged": true,
+    "only_target_changed": true,
+    "tests_exit_code": 0,
+    "seven_tests_passed": true,
+    "passed": true
+  },
+  "baseline_tests": {
+    "failed": 3,
+    "passed": 4
+  },
+  "passed": true
+}

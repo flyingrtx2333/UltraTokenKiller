@@ -20,8 +20,43 @@ from ultratokenkiller.integrations import CodexAdapter
 from ultratokenkiller.runtime import start_processes, stop_processes
 from ultratokenkiller.store import Store
 from ultratokenkiller.processes import run_owned
-from ultratokenkiller.codex_session import codex_executable, session_overrides, toml_value, validate_client
+from ultratokenkiller.codex_session import codex_executable, session_overrides, toml_value, validate_client, local_broker_permissions
 from ultratokenkiller import coding_acceptance
+
+
+def verify_local_broker_isolation(command, flags, working, home):
+    """Fail before model submission if TCP or an unlisted Unix socket is reachable."""
+    import socket
+    from ultratokenkiller.local_transport import bind_broker_socket, broker_socket
+    denied_home = home / "denied-socket-probe"
+    denied_path = broker_socket(denied_home)
+    tcp = socket.socket()
+    uds = None
+    try:
+        tcp.bind(("127.0.0.1", 0))
+        tcp.listen(1)
+        uds = bind_broker_socket(denied_home)
+        targets = [(int(socket.AF_INET), tcp.getsockname()), (int(socket.AF_UNIX), str(denied_path))]
+        code = "import socket\nfor family, address in " + repr(targets) + ":\n" + (
+            " with socket.socket(family) as peer:\n"
+            "  try: peer.connect(address)\n"
+            "  except PermissionError: pass\n"
+            "  else: raise SystemExit('Unexpected network access')\n"
+            "import os, httpx\n"
+            "proxy = os.environ.get('HTTP_PROXY') or os.environ.get('http_proxy')\n"
+            "assert proxy, 'Required sandbox proxy is absent'\n"
+            "with httpx.Client(proxy=proxy, trust_env=False, timeout=5) as client:\n"
+            " assert client.get('http://127.0.0.1:" + str(tcp.getsockname()[1]) + "/').status_code == 403\n"
+            "print('UTK_NETWORK_RESTRICTIONS_OK')\n")
+        check = run_owned(command + ["sandbox"] + flags + ["-C", str(working), sys.executable, "-c", code],
+                          input="", timeout=30)
+        if check.returncode or "UTK_NETWORK_RESTRICTIONS_OK" not in check.stdout:
+            raise RuntimeError("Sandbox network isolation preflight failed; no model submission attempted")
+    finally:
+        tcp.close()
+        if uds:
+            uds.close()
+            denied_path.unlink(missing_ok=True)
 
 
 def config_change_summary(before, after):
@@ -45,13 +80,14 @@ def acceptance_passed(report):
     terminal = [t for t in report["tools"] if t.get("status") != "in_progress"]
     commands = [t for t in terminal if t.get("type") == "command_execution"]
     recovery = [t for t in terminal if t.get("tool") == "utk_retrieve"]
-    needed = 0 if report["scope"] == "recovery_only" else 1 if report["scope"] == "tools_recovery" else 2
+    needed = 0 if report["scope"] == "recovery_only" else 1 if report["scope"] in {"tools_recovery", "input_recovery"} else 2
     return bool(
         report["exit_code"] == 0 and not report["timed_out"] and report["final_marker"]
         and report["original_config_unchanged"] and len(commands) == needed
         and all(t.get("status") == "completed" and t.get("exit_code") in (None, 0) for t in commands)
         and recovery and all(t.get("status") == "completed" and not t.get("error_types") for t in recovery)
-        and (needed == 0 or report["optimized_command_records"] > 0)
+        and (needed == 0 or report["scope"] == "input_recovery" or report["optimized_command_records"] > 0)
+        and (report["scope"] != "input_recovery" or report["input_compressed_records"] > 0)
         and (needed < 2 or report["scope"] == "coding_task" or report["input_compressed_records"] > 0)
         and (report["scope"] != "coding_task" or (report.get("automatic_hook_records", 0) > 0
              and report.get("coding_verification", {}).get("passed", False)))
@@ -74,6 +110,7 @@ def main():
     scenario.add_argument("--recovery-only", action="store_true")
     scenario.add_argument("--tools-only", action="store_true")
     scenario.add_argument("--coding-task", action="store_true")
+    scenario.add_argument("--input-only", action="store_true")
     arguments = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     import re
@@ -143,6 +180,7 @@ def main():
         checked = json.loads(check.stdout)
         if checked.get("result", {}).get("isError") or "result" not in checked:
             raise RuntimeError("Offline MCP preflight failed: "+str(checked.get("error", checked.get("result", {}))))
+        ipc_permissions = local_broker_permissions(home) if sys.platform == "darwin" else {}
         if os.name == "nt" or sys.platform == "darwin":
             sandbox_session = secrets.token_hex(16)
             sandbox_arguments = ["utk", "exec", "--session", sandbox_session, "--", "grep", "-n", "-H", ".", fixture.name]
@@ -154,9 +192,8 @@ def main():
                 rewrite = codex_event(event, sandbox_session)["hookSpecificOutput"]["updatedInput"]["command"]
                 sandbox_arguments = rewrite.split()
                 sandbox_working = working
-            sandbox_flags = (["--permission-profile", "utk_acceptance",
-                "-c", 'permissions.utk_acceptance.extends=":workspace"',
-                "-c", "permissions.utk_acceptance.network.enabled=true"] if sys.platform == "darwin" else
+            sandbox_flags = (["--permission-profile", "utk_acceptance"] +
+                [part for key, value in ipc_permissions.items() for part in ("-c", key + "=" + toml_value(value))] if sys.platform == "darwin" else
                 ["--permissions-profile", ":workspace", "-c", 'windows.sandbox="unelevated"'])
             sandbox_check = run_owned(command + ["sandbox"] + sandbox_flags + ["-C", str(sandbox_working)] + sandbox_arguments,
                 input="", timeout=30)
@@ -175,6 +212,8 @@ def main():
             recovered = BrokerClient(home).retrieve(sandbox_session, matching[0]["metadata"]["recovery_id"], limit=32000)
             if arguments.coding_task and "return numerator // denominator" not in recovered["content"]:
                 raise RuntimeError("Sandbox recovery omitted the target code; model submissions were not attempted")
+            if ipc_permissions:
+                verify_local_broker_isolation(command, sandbox_flags, sandbox_working, home)
         hook_trust = {}
         if arguments.coding_task:
             from ultratokenkiller.codex_hook_trust import approve_session_hook
@@ -202,10 +241,10 @@ def main():
         }
         if os.name == "nt":
             overrides["windows.sandbox"] = "unelevated"
-        if sys.platform == "darwin":
-            overrides["permissions.utk_acceptance.extends"] = ":workspace"
-            overrides["permissions.utk_acceptance.network.enabled"] = True
-            overrides["default_permissions"] = "utk_acceptance"
+        overrides.update(ipc_permissions)
+        # Codex otherwise persists a trust entry even with ignore-user-config.
+        # Keep trust for every synthetic scenario in this invocation only.
+        overrides["projects"] = {str(working): {"trust_level": "trusted"}}
         if arguments.coding_task:
             automatic, scoped = session_overrides(settings, home, session)
             overrides.update(automatic)
@@ -222,12 +261,12 @@ def main():
         command += ["-c", "mcp_servers.utk_recovery.env="+env_inline, "-"]
         if not shutil.which("utk"):
             raise RuntimeError("Install the UTK CLI before client acceptance")
-        wrapper = f"utk exec --session {session} -- rg -n --with-filename . acceptance-fixture.log"
+        wrapper = f"utk exec --session {session} -- grep -n -H . acceptance-fixture.log"
         prompt = (
             "Perform this bounded integration test, in order. Use shell twice, with no other shell commands. "
-            "First run: rg -n --with-filename . acceptance-fixture.log\n"
+            "First run: grep -n -H . acceptance-fixture.log\n"
             "Second run: " + wrapper + "\n"
-            "Each result should contain a UTK original recovery handle. Call utk_retrieve on each distinct handle "
+            "Each result should contain a UTK original recovery handle. Call utk_retrieve once for EACH of the two results "
             "with offset 0 and limit 2000. Verify recovered content contains UTK_RECOVERY_PROOF. "
             "Only after both commands and recovery succeed, answer exactly UTK_REAL_RECOVERY_OK. "
             "Do not inspect other files or run other tasks."
@@ -242,6 +281,15 @@ def main():
                       "verify UTK_RECOVERY_PROOF, then answer UTK_REAL_RECOVERY_OK. Do not run other shell commands.")
         if arguments.coding_task:
             prompt = coding_acceptance.prompt()
+        if arguments.input_only:
+            prompt = (
+                "Bounded input compression test. Run exactly ONE raw shell command: "
+                "grep -n -H . acceptance-fixture.log\n"
+                "Do not wrap it in utk, rtk or another program. The proxy should compress its result. "
+                "Then call utk_retrieve once with the UTK original handle shown in that result, offset 0, limit 2000. "
+                "Verify UTK_RECOVERY_PROOF is in the recovered text, then answer exactly UTK_REAL_RECOVERY_OK. "
+                "Use no other tools or commands; if a step fails, stop and report the failure."
+            )
         before = budget_status(home)["consumed"]
         timed_out = False
         try:
@@ -251,6 +299,7 @@ def main():
             output = error.stdout.decode("utf-8", errors="replace") if isinstance(error.stdout, bytes) else error.stdout or ""
             completed = subprocess.CompletedProcess(command, 124, stdout=output, stderr="acceptance timeout")
         event_types = []
+        client_usage = {}
         tool_types = []
         marker = False
         for line in completed.stdout.splitlines():
@@ -259,6 +308,10 @@ def main():
             except ValueError:
                 continue
             event_types.append(event.get("type"))
+            if event.get("type") == "turn.completed" and isinstance(event.get("usage"), dict):
+                client_usage = {key: value for key, value in event["usage"].items()
+                                if key in {"input_tokens", "output_tokens", "cached_input_tokens"}
+                                and type(value) is int and value >= 0}
             item = event.get("item", {})
             if item.get("status") == "declined":
                 # Shown only; never persisted in the metadata report.
@@ -288,8 +341,14 @@ def main():
             # Classify initialization failure without persisting client logs.
             report["initialization_failure"] = "mcp" if "mcp" in completed.stderr.lower() else "client_startup"
         report["response_profile"] = arguments.response_profile
+        report["client_reported_usage"] = client_usage or None
+        report["proxy_usage_observations"] = [e["metadata"].get("usage_observation") for e in events if e["kind"] == "input"]
+        report["sandbox_transport"] = "unix_socket_allowlist" if ipc_permissions else "platform_default"
+        report["sandbox_network_isolation_verified"] = bool(ipc_permissions)
         report["input_compressed_records"] = sum(e["metadata"].get("changed_tool_results", 0) > 0 for e in events)
         report["scope"] = "recovery_only" if arguments.recovery_only else "tools_recovery" if arguments.tools_only else "input_tools_recovery_response_policy"
+        if arguments.input_only:
+            report["scope"] = "input_recovery"
         if arguments.coding_task:
             report["scope"] = "coding_task"
             report["automatic_hook_records"] = sum(e["kind"] == "tool" and e["metadata"].get("tool_call_id") is not None

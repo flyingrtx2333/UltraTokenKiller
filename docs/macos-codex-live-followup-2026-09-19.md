@@ -1,5 +1,7 @@
 # Mac Codex 真实编码闭环复验
 
+本文件记录累计 23/40 时的历史结果；后续 socket 限制、usage 及输入协议修复见 [继续复验报告](macos-native-ipc-2026-09-19.md)。
+
 环境：macOS 26.6.2 arm64，隔离 Python 3.11.16，Codex 0.153.4，现有 ChatGPT 订阅，gpt-5.6-luna。测试目录 `/tmp/utk-codex20.5aPKrH`。未替换已有 Headroom，未安装自启，未修改用户 Codex/Hermes 日常配置。
 
 ## 故障与修正

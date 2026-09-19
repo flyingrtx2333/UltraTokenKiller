@@ -16,8 +16,8 @@
 | 工具压缩 | 部分 Git、搜索、测试及诊断命令；真实 Git 暂存差异和 pytest 成功/失败离线执行 | 固定 RTK 基线所有命令与参数组合；不能将未知格式透传算作覆盖 |
 | 回答策略 | 各档离线规则测试；Luna 联动任务使用 lite | 相同任务的正确性和长度成对对照 |
 | Windows / WSL Ubuntu | 两个环境运行离线测试；Windows 运行真实客户端任务 | WSL 原生 Codex 未安装/未验收；干净机器安装、自启和卸载验收 |
-| macOS arm64 26.6.2 / Codex 0.153.4 | 现有订阅 gpt-5.6-luna 真实编码任务通过：自动钩子、工具压缩、MCP 找回、源码修复及 7 项测试，配置不变；累计请求 23/40 | 验收临时启用沙箱网络，默认禁网接入待解决；实际 usage 未记录、输入压缩未触发；缺少三次对照、运行时准备、自启与升级/卸载验收，无正式支持声明 |
+| macOS arm64 26.6.2 / Codex 0.153.4 | 现有订阅 gpt-5.6-luna 在仅放行 UTK socket 的配置下完成自动钩子、工具压缩、MCP 找回、源码修复及 7 项测试；后续已采集实际 usage、触发输入压缩；累计 40/40 | 输入专项在找回成功后因额度耗尽未取得最终标记；日常旧 sandbox/profile 自动兼容、三次对照、运行时准备、自启与升级/卸载待验收，无正式支持声明 |
 
-macOS 实机证据见 [离线验收](docs/macos-arm64-acceptance-2026-09-19.md) 和 [真实编码复验](docs/macos-codex-live-followup-2026-09-19.md)。
+macOS 实机证据见 [离线验收](docs/macos-arm64-acceptance-2026-09-19.md)、[真实编码复验](docs/macos-codex-live-followup-2026-09-19.md) 和 [socket / usage / 输入复验](docs/macos-native-ipc-2026-09-19.md)。
 
 Luna 手动包装命令链路通过时累计使用 16/20 次，随后自动钩子编码尝试未通过，累计达到 19/20。钩子信任与冲突隔离已修复并通过离线预检，真实重验等待新增预算。提供商实际 usage 缺失，不展示推算成实际的 token 或现金节省。详见 [原验收记录](docs/acceptance-luna-2026-09-19.md) 与 [自动会话进度](docs/codex-auto-session-2026-09-19.md)。
