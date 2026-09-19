@@ -28,6 +28,17 @@ if not token_path.exists():
 session_token = token_path.read_text(encoding="ascii").strip()
 
 app = FastAPI(title="UltraTokenKiller", version="0.1.0", docs_url=None, redoc_url=None)
+from .broker import broker_router
+from .recovery import RecoveryVault
+
+recovery_vault = RecoveryVault(settings.recovery_capacity_bytes, settings.recovery_idle_seconds)
+app.include_router(broker_router(recovery_vault, session_token, home))
+
+
+@app.get("/api/v1/capabilities")
+def api_capabilities():
+    from .benchmark import capability_report
+    return capability_report()
 
 
 def clients() -> list[dict]:
@@ -121,25 +132,46 @@ def _rtk_summary() -> dict:
 
 @app.get("/api/v1/config")
 def api_config() -> dict:
-    return {"profile": settings.profile, "caveman": settings.caveman, "auto_start": settings.auto_start, "session_token": session_token}
+    return {"schema_version": 2, "input": {"profile": settings.profile}, "tools": {"enabled": settings.tools_enabled},
+            "response": {"mode": settings.caveman}, "profile": settings.profile, "caveman": settings.caveman,
+            "auto_start": settings.auto_start, "session_token": session_token}
 
 
 @app.patch("/api/v1/config")
 async def update_config(request: Request, x_utk_token: str | None = Header(None)) -> dict:
+    global settings
+    from dataclasses import replace
     require_write(request, x_utk_token)
+    pending = replace(settings)
     data = await request.json()
+    if not isinstance(data, dict):
+        raise HTTPException(422, "Configuration must be an object")
+    if "input" in data:
+        if not isinstance(data["input"], dict):
+            raise HTTPException(422, "input must be an object")
+        data["profile"] = data["input"].get("profile", pending.profile)
+    if "response" in data:
+        if not isinstance(data["response"], dict):
+            raise HTTPException(422, "response must be an object")
+        data["caveman"] = data["response"].get("mode", pending.caveman)
     if "profile" in data:
         status = await api_status()
         if not status["profile_controlled"]:
             raise HTTPException(409, "Legacy external proxy is not managed by UTK; reconnect to the native engine")
-        if data["profile"] not in {"safe", "aggressive", "off"}:
+        if not isinstance(data["profile"], str) or data["profile"] not in {"safe", "aggressive", "off"}:
             raise HTTPException(422, "Unknown profile")
-        settings.profile = data["profile"]
+        pending.profile = data["profile"]
     if "caveman" in data:
-        if data["caveman"] not in {"lite", "full", "ultra", "off"}:
+        if not isinstance(data["caveman"], str) or data["caveman"] not in {"lite", "full", "ultra", "off", "wenyan-lite", "wenyan-full", "wenyan-ultra"}:
             raise HTTPException(422, "Unknown caveman mode")
-        settings.caveman = data["caveman"]
-    settings.save(home)
+        pending.caveman = data["caveman"]
+    if "tools" in data:
+        tools_config = data["tools"]
+        if not isinstance(tools_config, dict) or not isinstance(tools_config.get("enabled"), bool):
+            raise HTTPException(422, "tools.enabled must be a boolean")
+        pending.tools_enabled = tools_config["enabled"]
+    pending.save(home)
+    settings = pending
     return await api_status()
 
 

@@ -74,6 +74,11 @@ class Store:
           SUM(input_tokens) input_tokens,
           SUM(output_tokens) output_tokens,
           SUM(cached_tokens) cached_tokens,
+          SUM(CASE WHEN kind IN ('input','headroom') THEN 1 ELSE 0 END) model_requests,
+          SUM(CASE WHEN kind IN ('tool','rtk') THEN 1 ELSE 0 END) tool_commands,
+          SUM(CASE WHEN kind IN ('input','headroom') AND input_tokens IS NOT NULL THEN 1 ELSE 0 END) known_input_usage,
+          SUM(CASE WHEN kind='tool' AND json_extract(metadata, '$.filter') IS NOT NULL THEN 1 ELSE 0 END) tool_eligible,
+          SUM(CASE WHEN kind='tool' AND json_extract(metadata, '$.optimized')=1 THEN 1 ELSE 0 END) tool_optimized,
           COALESCE(SUM(CASE WHEN kind IN ('rtk','tool') THEN saved_tokens ELSE 0 END),0) rtk_saved_tokens,
           COALESCE(SUM(CASE WHEN kind IN ('headroom','input') THEN saved_tokens ELSE 0 END),0) headroom_saved_tokens,
           COALESCE(AVG(duration_ms),0) average_duration_ms,
@@ -82,6 +87,10 @@ class Store:
         with self.connect() as db:
             row = dict(db.execute(query, args).fetchone())
         row["error_rate"] = row["failures"] / row["requests"] if row["requests"] else 0
+        row["input_saved_tokens"] = row["headroom_saved_tokens"]
+        row["tool_saved_tokens"] = row["rtk_saved_tokens"]
+        for key in ("model_requests", "tool_commands", "known_input_usage", "tool_eligible", "tool_optimized"):
+            row[key] = row[key] or 0
         return row
 
     def events(self, limit: int = 100) -> list[dict[str, Any]]:
