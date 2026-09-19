@@ -24,8 +24,10 @@ def load_encoder(directory: str):
 
 def summarize_text(text: str, query: str, home=None, aggressive=False) -> str:
     import numpy as np
-    if not query or re.search(r"[\u3400-\u9fff]", text+query):
-        return text  # Frozen encoder is English; do not claim multilingual semantic parity.
+    if not query:
+        return text
+    if re.search(r"[\u3400-\u9fff]", text + query):
+        return summarize_cjk_text(text, query, aggressive)
     chunks = re.split(r"(?<=\n)\n+|(?<=[.!?])\s+(?=[A-Z])", text)
     if len(chunks) < 8 or len(chunks) > 256 or any(len(chunk) > 2000 for chunk in chunks):
         return text
@@ -53,3 +55,43 @@ def summarize_text(text: str, query: str, home=None, aggressive=False) -> str:
     count = max(2, int(len(chunks)*(.35 if aggressive else .6)))
     keep.update(sorted(range(len(chunks)), key=lambda i: scores[i], reverse=True)[:count])
     return "\n\n".join(chunk if i in keep else "[UTK: passage omitted]" for i, chunk in enumerate(chunks))
+
+
+def summarize_cjk_text(text: str, query: str, aggressive=False) -> str:
+    """Deterministic CJK passage selection; no multilingual parity claim."""
+    chunks = [part for part in re.split(r"(?<=[。！？!?；;])\s*|\n+", text) if part]
+    if len(chunks) < 8 or len(chunks) > 512 or any(len(chunk) > 2000 for chunk in chunks):
+        return text
+
+    def terms(value):
+        compact = re.sub(r"\s+", "", value.lower())
+        cjk = re.findall(r"[\u3400-\u9fff]", compact)
+        words = re.findall(r"[a-z_][a-z0-9_.:/-]*|\d+(?:\.\d+)?", compact)
+        return set(words) | {"".join(cjk[i:i + 2]) for i in range(max(0, len(cjk) - 1))}
+
+    wanted = terms(query)
+    protected = re.compile(
+        r"(?:不得|不要|禁止|必须|仅限|除非|错误|失败|异常|警告|风险|未知|可能|不确定)|"
+        r"\d|[/\\]|`|[A-Za-z_][A-Za-z0-9_.:/-]{3,}")
+    scores = []
+    for index, chunk in enumerate(chunks):
+        overlap = len(terms(chunk) & wanted)
+        scores.append((overlap, -index))
+    keep = {0, len(chunks) - 1}
+    keep.update(index for index, chunk in enumerate(chunks) if protected.search(chunk))
+    target = max(2, int(len(chunks) * (.3 if aggressive else .5)))
+    keep.update(sorted(range(len(chunks)), key=lambda index: scores[index], reverse=True)[:target])
+    output = []
+    omitted = 0
+    for index, chunk in enumerate(chunks):
+        if index in keep:
+            if omitted:
+                output.append(f"[UTK: 省略 {omitted} 个低相关段落]")
+                omitted = 0
+            output.append(chunk)
+        else:
+            omitted += 1
+    if omitted:
+        output.append(f"[UTK: 省略 {omitted} 个低相关段落]")
+    rendered = "\n".join(output)
+    return rendered if len(rendered) < len(text) else text

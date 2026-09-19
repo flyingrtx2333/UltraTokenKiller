@@ -15,6 +15,8 @@ CRITICAL = re.compile(r"\b(error|fail(?:ed|ure)?|fatal|exception|warning|denied|
 
 
 def classify(text: str, hint: str | None = None) -> str:
+    if hint == "image":
+        return "image"
     if hint and hint.startswith("tool:"):
         return hint
     if hint in {"search", "diff", "log"}:
@@ -119,12 +121,14 @@ def _log_compact(text: str) -> str:
     return "\n".join(output) + ("\n" if text.endswith("\n") else "")
 
 
-def _python_compact(text: str) -> str:
+def _python_compact(text: str, query: str = "") -> str:
     tree = ast.parse(text)
     lines = text.splitlines(keepends=True)
     replacements = []
     def visit(node):
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.body:
+            if node.name and re.search(rf"\b{re.escape(node.name)}\b", query):
+                return
             first = node.body[0]
             # Single-line functions and signatures sharing a body line are untouched.
             if first.lineno > node.lineno and len(node.body) > 1:
@@ -192,9 +196,11 @@ def compress_content(text: str, *, session: str, vault: RecoveryVault, profile="
         return replace(plain, fallback="already_compressed")
     if profile == "off":
         return unchanged("disabled")
-    processors = {"json": _json_compact, "log": _log_compact, "code:python": _python_compact,
+    processors = {"json": _json_compact, "log": _log_compact,
                   "diff": _diff_compact, "search": _search_compact}
     processor = processors.get(kind)
+    if kind == "code:python":
+        processor = lambda value: _python_compact(value, query)
     if kind == "text" and query:
         from .text_compression import summarize_text
         processor = lambda value: summarize_text(value, query, home=home, aggressive=profile == "aggressive")
@@ -203,7 +209,10 @@ def compress_content(text: str, *, session: str, vault: RecoveryVault, profile="
         processor = lambda value: compress_tool(value, kind.split(":", 1)[1])
     if kind.startswith("code:") and kind != "code:python":
         from .code_compression import summarize_code
-        processor = lambda value: summarize_code(value, kind.split(":", 1)[1])
+        processor = lambda value: summarize_code(value, kind.split(":", 1)[1], query=query)
+    if kind == "image":
+        from .image_compression import compress_data_url
+        processor = lambda value: compress_data_url(value, query, profile == "aggressive")
     if processor is None:
         return unchanged("compressor_not_ready")
     try:
@@ -211,6 +220,8 @@ def compress_content(text: str, *, session: str, vault: RecoveryVault, profile="
         def make(handle):
             if kind == "json":
                 content = json.dumps({"_utk_recovery": handle, "data": json.loads(candidate)}, ensure_ascii=False, separators=(",", ":"))
+            elif kind == "image":
+                content = candidate
             else:
                 marker = f"UTK original: {handle}; use utk_retrieve"
                 prefix = "# " if kind in {"code:python", "code:perl"} else "// " if kind.startswith("code:") else ""

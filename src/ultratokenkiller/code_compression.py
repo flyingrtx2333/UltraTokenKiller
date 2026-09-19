@@ -16,7 +16,7 @@ def parser_for(language):
     return get_parser(language)
 
 
-def summarize_code(text: str, language: str) -> str:
+def summarize_code(text: str, language: str, query: str = "") -> str:
     parser = parser_for(language)
     source = text.encode("utf-8")
     tree = parser.parse(source)
@@ -25,6 +25,11 @@ def summarize_code(text: str, language: str) -> str:
     edits = []
     def visit(node):
         if node.type in FUNCTIONS:
+            name = node.child_by_field_name("name")
+            if name is not None:
+                identifier = source[name.start_byte:name.end_byte].decode("utf-8", errors="ignore")
+                if identifier and identifier in query:
+                    return
             body = node.child_by_field_name("body")
             if body is None:
                 body = next((child for child in node.named_children if child.type in BLOCKS), None)

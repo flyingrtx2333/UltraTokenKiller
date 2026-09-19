@@ -44,9 +44,8 @@ async def compress_request(payload, settings, root, session):
         broker = BrokerClient(root)
         items = result.get("messages", result.get("input", []))
         if isinstance(items, list):
-            query = next((item.get("content", "") for item in reversed(items) if isinstance(item, dict) and item.get("role") == "user"), "")
-            if not isinstance(query, str):
-                query = ""
+            query = next((user_text(item.get("content")) for item in reversed(items)
+                          if isinstance(item, dict) and item.get("role") == "user"), "")
             for item in items:
                 if not isinstance(item, dict):
                     continue
@@ -64,9 +63,57 @@ async def compress_request(payload, settings, root, session):
                     if compressed["content"] != block[key]:
                         metadata["changed_tool_results"] += 1
                         block[key] = compressed["content"]
+            metadata["changed_images"] = await compress_inline_images(items, broker, session, query)
     metadata["estimated_input_after"] = estimate_tokens(json.dumps(result, ensure_ascii=False))
     metadata["estimated_saved_tokens"] = max(0, metadata["estimated_input_before"]-metadata["estimated_input_after"])
     return result, metadata
+
+
+def user_text(content):
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        return "\n".join(part.get("text", "") for part in content if isinstance(part, dict)
+                         and part.get("type") in {"text", "input_text"} and isinstance(part.get("text"), str))
+    return ""
+
+
+async def compress_inline_images(items, broker, session, query):
+    changed = 0
+    for item in items:
+        content = item.get("content") if isinstance(item, dict) else None
+        if not isinstance(content, list):
+            continue
+        markers = []
+        for block in content:
+            if not isinstance(block, dict):
+                continue
+            target = None
+            if block.get("type") in {"input_image", "image_url"}:
+                image = block.get("image_url")
+                if isinstance(image, str):
+                    target = (block, "image_url", image)
+                elif isinstance(image, dict) and isinstance(image.get("url"), str):
+                    target = (image, "url", image["url"])
+            elif block.get("type") == "image" and isinstance(block.get("source"), dict):
+                source = block["source"]
+                if source.get("type") == "base64" and isinstance(source.get("data"), str):
+                    target = (source, "data", f"data:{source.get('media_type', 'image/png')};base64,{source['data']}")
+            if target is None or not target[2].startswith("data:image/"):
+                continue
+            result = await asyncio.to_thread(broker.compress, target[2], session, hint="image", query=query)
+            if result["content"] == target[2]:
+                continue
+            rendered = result["content"]
+            if target[1] == "data":
+                header, rendered = rendered.split(",", 1)
+                target[0]["media_type"] = header[5:].split(";", 1)[0]
+            target[0][target[1]] = rendered
+            marker_type = "input_text" if block.get("type") == "input_image" else "text"
+            markers.append({"type": marker_type, "text": f"UTK original image: {result['recovery_id']}; use utk_retrieve"})
+            changed += 1
+        content.extend(markers)
+    return changed
 
 
 def tool_text_fields(container, key):

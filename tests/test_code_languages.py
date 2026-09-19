@@ -1,6 +1,6 @@
 import pytest
 
-from ultratokenkiller.code_compression import parser_for
+from ultratokenkiller.code_compression import parser_for, summarize_code
 from ultratokenkiller.compression import compress_content
 from ultratokenkiller.recovery import RecoveryVault
 
@@ -22,3 +22,11 @@ def test_syntax_and_original_preserved(language, source):
     assert not parser_for(language).parse(result.content.encode()).root_node.has_error
     assert "total" in result.content
     assert vault.retrieve("test", result.recovery_id)["content"] == source
+
+
+def test_query_named_function_keeps_body_while_other_body_is_summarized():
+    source = ("function keepThis(value) {\n" + "  value += 1;\n" * 30 + "  return value;\n}\n"
+              "function omitThis(value) {\n" + "  value += 2;\n" * 30 + "  return value;\n}\n")
+    result = summarize_code(source, "javascript", query="fix keepThis behavior")
+    assert "value += 1" in result
+    assert "function omitThis" in result and "original body available" in result
