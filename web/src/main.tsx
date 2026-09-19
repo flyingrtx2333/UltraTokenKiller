@@ -4,7 +4,7 @@ import './styles.css'
 
 type Client = {name:string; detected:boolean; enabled:boolean; supported:boolean; detail:string}
 type Status = {service:boolean;headroom:boolean;rtk:boolean;profile:string;profile_controlled:boolean;caveman:string;auto_start:boolean;ports:{dashboard:number;headroom:number};clients:Client[]}
-type Metrics = {requests:number;input_tokens:number;output_tokens:number;cached_tokens:number;rtk_saved_tokens:number;headroom_saved_tokens:number;average_duration_ms:number;failures:number;error_rate:number}
+type Metrics = {requests:number;model_requests?:number;tool_commands?:number;tool_optimized?:number;known_input_usage?:number;input_tokens:number|null;output_tokens:number|null;cached_tokens:number|null;rtk_saved_tokens:number;headroom_saved_tokens:number;average_duration_ms:number;failures:number;error_rate:number}
 type EventItem = {id:number;created_at:number;kind:string;client:string;model?:string;duration_ms?:number;success:boolean;metadata:Record<string,unknown>}
 
 const emptyMetrics: Metrics = {requests:0,input_tokens:0,output_tokens:0,cached_tokens:0,rtk_saved_tokens:0,headroom_saved_tokens:0,average_duration_ms:0,failures:0,error_rate:0}
@@ -19,6 +19,8 @@ function App(){
   const [hours,setHours]=useState(24)
   const [error,setError]=useState('')
   const [busy,setBusy]=useState('')
+  const [readiness,setReadiness]=useState<{discovered_command_variants:number;parity_certified:boolean}|null>(null)
+  const [recovery,setRecovery]=useState<{used_bytes:number;capacity_bytes:number}|null>(null)
 
   async function load(){
     try{
@@ -27,6 +29,9 @@ function App(){
       ])
       if(!s.ok||!m.ok||!e.ok||!c.ok) throw new Error('服务返回错误')
       setStatus(await s.json()); setMetrics((await m.json()).local); setEvents(await e.json()); setToken((await c.json()).session_token); setError('')
+      const [cap,mem]=await Promise.all([fetch('/api/v1/capabilities'),fetch('/api/v1/recovery/status')])
+      if(cap.ok)setReadiness(await cap.json())
+      if(mem.ok)setRecovery(await mem.json())
     }catch(e){ setError(e instanceof Error?e.message:'无法连接本地服务') }
   }
   useEffect(()=>{
@@ -62,10 +67,9 @@ function App(){
   }
 
   const coverage=useMemo(()=>{
-    const rtk=events.filter(e=>e.kind==='tool')
-    if(!rtk.length)return null
-    return Math.round(100*rtk.filter(e=>e.metadata.optimized).length/rtk.length)
-  },[events])
+    if(!metrics.tool_commands)return null
+    return Math.round(100*(metrics.tool_optimized||0)/metrics.tool_commands)
+  },[metrics])
 
   return <>
     <a className="skip" href="#main">跳到主要内容</a>
@@ -78,18 +82,19 @@ function App(){
       <section aria-labelledby="overview-title">
         <div className="section-head"><div><h2 id="overview-title">运行概览</h2><p>{status?`看板 :${status.ports.dashboard} · 数据代理 :${status.ports.headroom}`:'正在读取服务状态'}</p></div><time>{new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}</time></div>
         <div className="metrics">
-          <Metric label="请求记录" value={number.format(metrics.requests)} note={metrics.requests?'本地记录':'尚无真实请求'} />
+          <Metric label="模型请求" value={number.format(metrics.model_requests??metrics.requests)} note={metrics.requests?`${metrics.tool_commands||0} 条工具命令记录`:'尚无真实请求'} />
           <Metric label="输入 Token" value={number.format(metrics.input_tokens)} note={`缓存 ${number.format(metrics.cached_tokens)}`} />
           <Metric label="输出 Token" value={number.format(metrics.output_tokens)} note="提供商 usage" />
-          <Metric label="工具压缩覆盖率" value={coverage===null?'—':`${coverage}%`} note={coverage===null?'尚无命令记录':'最近命令记录中受支持的比例'} />
+          <Metric label="已记录命令压缩率" value={coverage===null?'—':`${coverage}%`} note={coverage===null?'尚无命令记录':'分母仅含经过 UTK 的命令'} />
         </div>
         <div className="savings-note"><strong>节省口径分开显示</strong><span>输入压缩估算 {number.format(metrics.headroom_saved_tokens)} · 工具输出估算 {number.format(metrics.rtk_saved_tokens)}。按 UTF-8 字节数估算，两项不合并为账单节省。</span></div>
+        <div className="savings-note"><strong>{readiness?.parity_certified?'核心对标已验收':'完整对标尚未验收'}</strong><span>已发现 {readiness?.discovered_command_variants??'—'} 个上游命令枚举项，发现不等于实现。原文仅保存在内存，重启失效。{recovery?` 当前使用 ${(recovery.used_bytes/1048576).toFixed(1)} / ${(recovery.capacity_bytes/1048576).toFixed(0)} MiB。`:''}</span></div>
       </section>
 
       <div className="workspace">
         <section aria-labelledby="layers-title"><div className="section-head"><h2 id="layers-title">三层优化</h2></div>
           <div className="layer-list">
-            <Layer name="输入压缩" tool="UTK 原生" active={!!status?.headroom} detail={status?.headroom?'历史工具结果重复内容压缩':'服务未连接'} />
+            <Layer name="输入压缩" tool="UTK 原生" active={!!status?.headroom} detail={status?.headroom?'按内容处理；需要有效会话才能找回原文':'服务未连接'} />
             <Layer name="工具输出" tool="UTK 原生" active={!!status?.rtk} detail={coverage===null?'等待实际调用':`${coverage}% 命令进入压缩器`} />
             <Layer name="回答精简" tool="UTK 原生" active={!!status&&status.caveman!=='off'} detail={`当前 ${status?.caveman||'—'} 档`} />
           </div>

@@ -1,15 +1,19 @@
 # 原生引擎兼容性
 
-本表适用于当前原生实现。旧集成版的 Headroom/RTK 验证结果不能用于证明原生实现。
+本表仅描述当前原生实现，不将旧集成版证据作为原生对标结果，也不声明正式完整支持。
 
-| 路径 | 当前证据 | 状态 |
+| 路径 | 当前证据 | 尚未完成 |
 |---|---|---|
-| Responses HTTP/SSE | MockTransport 检查认证头、订阅路由、完整 SSE 字节、usage、429、异常回退 | 本地测试通过；真实 Codex 未验证 |
-| Chat Completions | 原生转发和历史 tool 消息压缩已实现 | 真实 Hermes 未验证 |
-| WebSocket | 暂未实现；Codex 配置声明关闭 | 不支持 |
-| 多模态 | 请求对象内非工具内容保留测试 | 真实多模态未验证 |
-| Git status/stat、普通 rg/grep/pytest | 原生输出规则、透传和退出码测试 | 保守能力，非 RTK 全命令覆盖 |
-| 回答 lite/full/ultra/off | 原生请求指令控制 | 不提供未经对照的节省比例 |
-| Windows / macOS / Linux | 保留安装、自启实现 | 原生版三平台干净安装和登录验收待完成 |
+| Windows Codex 0.138.0 / 现有订阅 / gpt-5.6-luna | 隔离实例真实完成输入压缩、一次工具输出压缩与 MCP 原文找回，返回码 0 | 自动接入、强制钩子覆盖、真实代码修改任务、多次效果对照 |
+| Windows Codex / gpt-5.6-terra | 先前原文找回专项任务通过 | 不能作为完整三层联动证据 |
+| Responses HTTP/SSE | 离线协议测试及上述 Luna 真实任务 | API Key、认证过期等真实提供商组合 |
+| Chat Completions / Anthropic Messages | 本地协议与 usage 处理测试 | Hermes CLI/gateway 与真实提供商验收 |
+| Responses WebSocket | 本地实际 socket 转发与关闭测试 | 真实 Codex WebSocket、多模态与压缩联动 |
+| 多模态 | 原样透传的离线测试 | 图像压缩及真实多模态任务 |
+| 原文恢复 | 内存、会话隔离、过期、容量、历史稳定性测试；真实 MCP 调用 | 正常客户端自动会话绑定 |
+| 工具压缩 | 部分 Git、搜索、测试及诊断命令；真实 Git 暂存差异和 pytest 成功/失败离线执行 | 固定 RTK 基线所有命令与参数组合；不能将未知格式透传算作覆盖 |
+| 回答策略 | 各档离线规则测试；Luna 联动任务使用 lite | 相同任务的正确性和长度成对对照 |
+| Windows / WSL Ubuntu | 两个环境运行离线测试；Windows 运行真实客户端任务 | WSL 原生 Codex 未安装/未验收；干净机器安装、自启和卸载验收 |
+| macOS / 其他 Linux 环境 | 有安装实现 | 实机验收，无正式支持声明 |
 
-缺失能力：语义输入压缩、复杂测试报告/搜索结果压缩、WebSocket、跨平台进程树取消、真实客户端关联验收。当前不标记为正式首版发布。
+Luna 本轮累计使用 16/20 次授权请求，最后通过的尝试使用 6 次。提供商实际 usage 缺失，不展示推算成实际的 token 或现金节省。详见 [验收记录](docs/acceptance-luna-2026-09-19.md)。
