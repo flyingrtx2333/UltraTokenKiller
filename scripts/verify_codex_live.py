@@ -20,7 +20,7 @@ from ultratokenkiller.integrations import CodexAdapter
 from ultratokenkiller.runtime import start_processes, stop_processes
 from ultratokenkiller.store import Store
 from ultratokenkiller.processes import run_owned
-from ultratokenkiller.codex_session import session_overrides, toml_value, validate_client
+from ultratokenkiller.codex_session import codex_executable, session_overrides, toml_value, validate_client
 from ultratokenkiller import coding_acceptance
 
 
@@ -89,15 +89,10 @@ def main():
         import tomli as tomllib
     config = tomllib.loads(original.decode("utf-8"))
     model = arguments.model
-    executable = shutil.which("codex")
-    if not executable:
-        raise SystemExit("Codex unavailable")
-    command = [executable]
-    if executable.lower().endswith(".cmd"):
-        node_script = Path(executable).parent / "node_modules/@openai/codex/bin/codex.js"
-        if not node_script.exists() or not shutil.which("node"):
-            raise SystemExit("Cannot launch Codex without a shell wrapper")
-        command = [shutil.which("node"), str(node_script)]
+    try:
+        command = codex_executable()
+    except ValueError as error:
+        raise SystemExit(str(error)) from error
     home.mkdir(parents=True, exist_ok=True)
     session = secrets.token_hex(16)
     working = home

@@ -48,10 +48,20 @@ def test_client_gate_preserves_config_and_rejects_unknown_version(tmp_path, monk
     before = adapter.config.read_bytes()
     monkeypatch.setattr(subprocess, "run", lambda *a, **k: subprocess.CompletedProcess(a, 0, "codex-cli 0.138.0"))
     assert codex_session.validate_client(adapter, ["codex"])["model"] == "kept"
+    monkeypatch.setattr(subprocess, "run", lambda *a, **k: subprocess.CompletedProcess(a, 0, "codex-cli 0.153.4"))
+    assert codex_session.validate_client(adapter, ["codex"])["model"] == "kept"
     monkeypatch.setattr(subprocess, "run", lambda *a, **k: subprocess.CompletedProcess(a, 0, "codex-cli 0.139.0"))
     with pytest.raises(ValueError, match="not been verified"):
         codex_session.validate_client(adapter, ["codex"])
     assert adapter.config.read_bytes() == before
+
+
+def test_macos_finds_chatgpt_bundled_codex(monkeypatch):
+    bundled = "/Applications/ChatGPT.app/Contents/Resources/codex"
+    monkeypatch.setattr(codex_session.shutil, "which", lambda name: None)
+    monkeypatch.setattr(codex_session.sys, "platform", "darwin")
+    monkeypatch.setattr(Path, "is_file", lambda path: path.as_posix() == bundled)
+    assert codex_session.codex_executable()[0].replace("\\", "/") == bundled
 
 
 def test_hook_correlation_preserves_other_fields_and_rejects_external_helpers():

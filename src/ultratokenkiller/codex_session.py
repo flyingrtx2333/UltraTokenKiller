@@ -17,12 +17,18 @@ import httpx
 from .config import Settings, choose_port, default_home
 from .integrations import CodexAdapter
 
-VERIFIED_CODEX = {"0.138.0"}
+VERIFIED_CODEX = {"0.138.0", "0.153.4"}
 SUBSCRIPTION_UPSTREAM = "https://chatgpt.com/backend-api/codex"
 
 
 def codex_executable():
     executable = shutil.which("codex")
+    if not executable and sys.platform == "darwin":
+        candidates = [
+            Path("/Applications/ChatGPT.app/Contents/Resources/codex"),
+            Path.home() / "Applications/ChatGPT.app/Contents/Resources/codex",
+        ]
+        executable = next((str(path) for path in candidates if path.is_file()), None)
     if not executable:
         raise ValueError("Codex is not installed; UTK does not install it automatically")
     if executable.lower().endswith(".cmd"):
