@@ -9,6 +9,46 @@ import sys
 import threading
 
 
+def run_owned(command, *, input: str, timeout: float, env=None, cwd=None):
+    """Run an acceptance client with ownership of its complete process tree.
+
+    Output is kept in memory only. On timeout the CLI launcher and descendants
+    are terminated before returning, so a timed-out client cannot spend budget.
+    """
+    job = WindowsJob() if sys.platform == "win32" else None
+    process = None
+    def terminate():
+        if job:
+            job.terminate()
+        elif process is not None:
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+    try:
+        process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE, text=True, encoding="utf-8", errors="replace",
+                                   env=env, cwd=cwd, creationflags=0x00000004 if job else 0,
+                                   start_new_session=job is None)
+        if job:
+            job.attach_and_resume(process)
+        try:
+            stdout, stderr = process.communicate(input=input, timeout=timeout)
+        except subprocess.TimeoutExpired:
+            terminate()
+            stdout, stderr = process.communicate(timeout=5)
+            raise subprocess.TimeoutExpired(command, timeout, output=stdout, stderr=stderr) from None
+        return subprocess.CompletedProcess(command, process.returncode, stdout, stderr)
+    finally:
+        if process is not None:
+            terminate()
+            if process.poll() is None:
+                process.kill()
+            process.wait(timeout=5)
+        if job:
+            job.close()
+
+
 class WindowsJob:
     def __init__(self):
         import ctypes

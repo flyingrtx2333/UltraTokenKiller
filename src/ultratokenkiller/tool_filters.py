@@ -8,15 +8,29 @@ def command_filter(argv: list[str]) -> str | None:
         return None
     name = Path(argv[0]).stem.lower()
     args = argv[1:]
+    if re.fullmatch(r"python(?:3(?:\.\d+)?)?", name) and args[:2] == ["-m", "pytest"]:
+        return command_filter(["pytest", *args[2:]])
     machine = {"--json", "--porcelain", "--porcelain=v1", "--porcelain=v2", "--binary", "-z", "--null", "--raw", "--patch", "--no-textconv"}
     if any(x in machine or x.startswith(("--format=", "--pretty=", "--output=", "--junitxml=")) for x in args):
         return None
     if name == "git":
+        # These global flags preserve the selected command's output schema.
+        # Arbitrary -c configuration and external diff programs stay unsupported.
+        while args:
+            if args[0] == "--no-pager":
+                args = args[1:]
+            elif args[0] == "-C" and len(args) >= 3:
+                args = args[2:]
+            else:
+                break
         if args == ["status"]:
             return "git-status"
         if args == ["log"] or len(args) == 3 and args[:2] == ["log", "-n"] and args[2].isdigit():
             return "git-log"
-        if args == ["diff"]:
+        if args and args[0] == "diff" and all(
+            x in {"--cached", "--staged"} or re.fullmatch(r"(?:--unified=|-U)\d{1,6}", x)
+            for x in args[1:]
+        ):
             return "diff"
         return None
     if name in {"rg", "grep"}:
@@ -39,6 +53,9 @@ def command_filter(argv: list[str]) -> str | None:
 
 
 def compress_tool(text: str, kind: str) -> str:
+    if kind in {"diff", "search"}:
+        from .compression import _diff_compact, _search_compact
+        return (_diff_compact if kind == "diff" else _search_compact)(text)
     lines = text.splitlines()
     if kind == "git-status":
         if not lines or not lines[0].startswith(("On branch ", "HEAD detached ")):
@@ -54,8 +71,9 @@ def compress_tool(text: str, kind: str) -> str:
             header, separator, body = block.partition("\n\n")
             if not separator or "\nAuthor:" not in header or "\nDate:" not in header:
                 return text
-            subject = next((line.strip() for line in body.splitlines() if line.strip()), "")
-            output.append(header+"\n    "+subject+"\n")
+            # Bodies can carry migration instructions, negation and risk.
+            message = "\n".join(line[4:] if line.startswith("    ") else line for line in body.splitlines())
+            output.append(header+"\n"+message+"\n")
         return "\n".join(output)
     if kind in {"pytest", "cargo-test", "go-test", "js-test"}:
         from .compression import CRITICAL

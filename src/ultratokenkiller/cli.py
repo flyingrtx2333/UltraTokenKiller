@@ -240,13 +240,42 @@ def profile(name: str = typer.Argument(..., help="safe、aggressive 或 off"), c
 
 
 @app.command(context_settings={"allow_extra_args": True, "ignore_unknown_options": True})
-def exec(ctx: typer.Context):
+def exec(ctx: typer.Context, session: str | None = typer.Option(None)):
     """通过 UTK 工具压缩 运行命令；复杂 shell 语法安全透传。"""
     command = list(ctx.args)
     if command and command[0] == "--":
         command = command[1:]
-    code = run_command(command, Store(default_home() / "metrics.sqlite3"))
+    previous = os.environ.get("UTK_SESSION_ID")
+    if session:
+        import re
+        if not re.fullmatch(r"[A-Za-z0-9_-]{16,128}", session):
+            raise typer.BadParameter("Invalid session identifier")
+        os.environ["UTK_SESSION_ID"] = session
+    try:
+        from .tool_events import ToolEventSink
+        code = run_command(command, ToolEventSink())
+    finally:
+        if previous is None:
+            os.environ.pop("UTK_SESSION_ID", None)
+        else:
+            os.environ["UTK_SESSION_ID"] = previous
     raise typer.Exit(code)
+
+
+@app.command("mcp")
+def mcp_server():
+    """启动会话隔离的原文查询 MCP stdio 服务。"""
+    from .mcp import main
+    main()
+
+
+@app.command("hook")
+def hook(client: str = typer.Argument("codex")):
+    """运行工具事件适配器；不会自动修改客户端配置。"""
+    if client != "codex":
+        raise typer.BadParameter("该客户端的事件格式尚未完成真实验收")
+    from .hooks import main
+    main()
 
 
 @app.command()

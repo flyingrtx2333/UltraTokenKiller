@@ -61,6 +61,13 @@ def _json_compact(text: str) -> str:
                     schemas[schema] = i
                     keep.add(i)
             for key in set().union(*(row.keys() for row in item)):
+                categories = {}
+                for i, row in enumerate(item):
+                    value = row.get(key)
+                    if value is None or isinstance(value, (str, bool)):
+                        categories.setdefault((type(value).__name__, value), i)
+                if len(categories) <= min(32, len(item) // 2):
+                    keep.update(categories.values())
                 values = [(i, row[key]) for i, row in enumerate(item) if isinstance(row.get(key), (int, float)) and not isinstance(row.get(key), bool)]
                 if len(values) < 5 or re.search(r"(^id$|_id$|timestamp|time$)", key):
                     continue
@@ -136,6 +143,8 @@ def _python_compact(text: str) -> str:
 
 
 def _diff_compact(text: str) -> str:
+    if not text.startswith(("diff --git ", "--- ")) or "\n@@ " not in text:
+        return text
     # Preserve all file/hunk headers and changed lines. Explicitly mark omitted context.
     output = []
     omitted = 0
@@ -173,6 +182,8 @@ def compress_content(text: str, *, session: str, vault: RecoveryVault, profile="
     before = estimate_tokens(text)
     kind = classify(text, hint)
     plain = CompressionResult(text, kind, before, before)
+    def unchanged(reason):
+        return vault.pin_passthrough(session, replace(plain, fallback=reason))
     # A prior transform wins across profile switches, protecting an already sent prefix.
     previous = vault.lookup(session, text)
     if previous:
@@ -180,7 +191,7 @@ def compress_content(text: str, *, session: str, vault: RecoveryVault, profile="
     if vault.owns_rendering(session, text):
         return replace(plain, fallback="already_compressed")
     if profile == "off":
-        return replace(plain, fallback="disabled")
+        return unchanged("disabled")
     processors = {"json": _json_compact, "log": _log_compact, "code:python": _python_compact,
                   "diff": _diff_compact, "search": _search_compact}
     processor = processors.get(kind)
@@ -194,7 +205,7 @@ def compress_content(text: str, *, session: str, vault: RecoveryVault, profile="
         from .code_compression import summarize_code
         processor = lambda value: summarize_code(value, kind.split(":", 1)[1])
     if processor is None:
-        return replace(plain, fallback="compressor_not_ready")
+        return unchanged("compressor_not_ready")
     try:
         candidate = processor(text)
         def make(handle):
@@ -207,6 +218,6 @@ def compress_content(text: str, *, session: str, vault: RecoveryVault, profile="
             return CompressionResult(content, kind, before, estimate_tokens(content), recovery_id=handle,
                                      preserved=("original_available", "content_boundaries"))
         result = vault.put(session, text, make)
-        return result or replace(plain, fallback="not_smaller_or_memory_full")
+        return result or unchanged("not_smaller_or_memory_full")
     except Exception:
-        return replace(plain, fallback="compression_error")
+        return unchanged("compression_error")

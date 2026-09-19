@@ -5,7 +5,7 @@ import hashlib
 import secrets
 import threading
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
 from .contracts import CompressionResult
 
@@ -19,6 +19,7 @@ class Session:
     touched: float
     entries: dict[str, tuple[str, CompressionResult]] = field(default_factory=dict)
     fingerprints: dict[str, str] = field(default_factory=dict)
+    passthroughs: dict[str, CompressionResult] = field(default_factory=dict)
     bytes: int = 0
 
 
@@ -31,6 +32,7 @@ class RecoveryVault:
         self.clock = clock
         self.sessions: dict[str, Session] = {}
         self.used = 0
+        self.frozen_until = 0.0
         self.lock = threading.RLock()
 
     def _prune(self):
@@ -42,13 +44,42 @@ class RecoveryVault:
     def lookup(self, session: str, original: str) -> CompressionResult | None:
         with self.lock:
             self._prune()
+            if self.frozen_until > self.clock():
+                self.frozen_until = self.clock() + self.idle_seconds
             current = self.sessions.get(session)
             if current:
                 current.touched = self.clock()
                 key = current.fingerprints.get(hashlib.sha256(original.encode()).hexdigest())
                 if key:
                     return current.entries[key][1]
+                plain = current.passthroughs.get(hashlib.sha256(original.encode()).hexdigest())
+                if plain is not None:
+                    return replace(plain, content=original)
         return None
+
+    def pin_passthrough(self, session: str, result: CompressionResult) -> CompressionResult:
+        """Remember unchanged history without retaining another copy of its body.
+
+        If even fingerprint metadata cannot fit, freeze new transformations until
+        the vault is idle. Previously sent history must not change after space frees.
+        """
+        if not session:
+            return result
+        with self.lock:
+            previous = self.lookup(session, result.content)
+            if previous is not None:
+                return previous
+            size = 2048
+            if self.frozen_until > self.clock() or self.used + size > self.capacity:
+                self.frozen_until = self.clock() + self.idle_seconds
+                return result
+            current = self.sessions.setdefault(session, Session(self.clock()))
+            current.touched = self.clock()
+            fingerprint = hashlib.sha256(result.content.encode()).hexdigest()
+            current.passthroughs[fingerprint] = replace(result, content="")
+            current.bytes += size
+            self.used += size
+            return result
 
     def put(self, session: str, original: str, factory) -> CompressionResult | None:
         """Atomically pin a transformation. Never evict active entries for space."""
@@ -58,6 +89,8 @@ class RecoveryVault:
             existing = self.lookup(session, original)
             if existing:
                 return existing
+            if self.frozen_until > self.clock():
+                return None
             handle = secrets.token_urlsafe(24)
             result = factory(handle)
             # Conservatively charge Python Unicode storage and per-entry overhead.
@@ -98,4 +131,5 @@ class RecoveryVault:
         with self.lock:
             self._prune()
             return {"used_bytes": self.used, "capacity_bytes": self.capacity,
-                    "sessions": len(self.sessions), "idle_seconds": self.idle_seconds, "storage": "memory-only"}
+                    "sessions": len(self.sessions), "idle_seconds": self.idle_seconds, "storage": "memory-only",
+                    "new_compression_frozen": self.frozen_until > self.clock()}

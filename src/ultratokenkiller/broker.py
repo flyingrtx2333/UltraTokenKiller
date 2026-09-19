@@ -15,13 +15,29 @@ from .recovery import RecoveryUnavailable, RecoveryVault
 def broker_router(vault: RecoveryVault, token: str, home=None):
     router = APIRouter()
 
+    @router.post("/api/v1/internal/tool-events")
+    async def tool_events(request: Request):
+        from pydantic import ValidationError
+        from .tool_events import ToolEvent
+        from .store import Store
+        authenticate(request)
+        body = await read_body(request, require_session=False)
+        try:
+            event = ToolEvent.model_validate(body).model_dump(exclude_none=True)
+        except ValidationError:
+            raise HTTPException(422, "Invalid tool event metadata") from None
+        event["metadata"]["external_id"] = event["metadata"]["execution_id"]
+        store = Store((home or default_home()) / "metrics.sqlite3")
+        event_id = await asyncio.to_thread(store.add, **event)
+        return {"id": event_id}
+
     def authenticate(request: Request):
         if request.headers.get("origin"):
             raise HTTPException(403, "Recovery is not available to browser origins")
         if not secrets.compare_digest(request.headers.get("x-utk-token", ""), token):
             raise HTTPException(403, "Invalid broker token")
 
-    async def read_body(request):
+    async def read_body(request, require_session=True):
         body = bytearray()
         async for part in request.stream():
             body.extend(part)
@@ -32,7 +48,7 @@ def broker_router(vault: RecoveryVault, token: str, home=None):
             data = json.loads(body)
         except (ValueError, UnicodeDecodeError):
             raise HTTPException(422, "Invalid JSON")
-        if not isinstance(data, dict) or not isinstance(data.get("session"), str) or not 1 <= len(data["session"]) <= 256:
+        if not isinstance(data, dict) or (require_session and (not isinstance(data.get("session"), str) or not 1 <= len(data["session"]) <= 256)):
             raise HTTPException(422, "A bounded session identifier is required")
         return data
 

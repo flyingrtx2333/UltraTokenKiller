@@ -120,6 +120,13 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
     upstream = upstream or os.environ.get("UTK_UPSTREAM_URL", "https://api.openai.com/v1")
     client_name = os.environ.get("UTK_CLIENT", "unknown")
     store = Store(root / "metrics.sqlite3")
+    submission_limit = os.environ.get("UTK_MAX_MODEL_REQUESTS")
+
+    def may_submit():
+        if submission_limit is None:
+            return True
+        from .budgets import consume_submission
+        return consume_submission(root, int(submission_limit))
 
     @asynccontextmanager
     async def lifespan(app):
@@ -137,6 +144,8 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
 
     @app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
     async def forward(path: str, request: Request):
+        if request.method == "POST" and not may_submit():
+            return JSONResponse({"error": {"message": "UTK live verification request budget exhausted"}}, status_code=429)
         started = time.perf_counter()
         body = await request.body()
         metadata: dict = {"engine": "utk-native", "transport": "http"}
@@ -180,6 +189,8 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
                       duration_ms=int((time.perf_counter()-started)*1000), metadata=metadata)
             return JSONResponse({"error": {"message": "UTK upstream connection failed"}}, status_code=502)
         observer = UsageObserver("text/event-stream" in response.headers.get("content-type", ""))
+        metadata["upstream_status"] = response.status_code
+        metadata["method"] = request.method
 
         async def stream():
             completed = False
@@ -191,7 +202,7 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
             finally:
                 await response.aclose()
                 observer.finish()
-                store.add(kind="input", client=client_name, model=model,
+                store.add(kind="input" if request.method == "POST" else "transport", client=client_name, model=model,
                           success=completed and response.is_success and not observer.failed,
                           duration_ms=int((time.perf_counter()-started)*1000),
                           saved_tokens=metadata.get("estimated_saved_tokens", 0),
@@ -227,6 +238,9 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
                 while True:
                     message = await socket.receive()
                     if message["type"] == "websocket.disconnect":
+                        return
+                    if not may_submit():
+                        await socket.send_json({"type": "error", "error": {"message": "UTK live verification request budget exhausted"}})
                         return
                     # Transport parity first: WebSocket frames are not optimized until session binding is verified.
                     await remote.send(message.get("text") if message.get("text") is not None else message["bytes"])

@@ -73,6 +73,8 @@ async def api_status() -> dict:
         "headroom": bool(headroom_ports(settings)) and all(headroom_health(settings, port) for port in headroom_ports(settings)),
         "rtk": True,
         "engine": "utk-native",
+        "parity_certified": False,
+        "recovery": recovery_vault.status(),
         "profile": settings.profile,
         "profile_controlled": all(managed_values) if managed_values else settings.headroom_managed,
         "caveman": settings.caveman,
