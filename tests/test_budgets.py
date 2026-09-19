@@ -3,6 +3,19 @@ from concurrent.futures import ThreadPoolExecutor
 from ultratokenkiller.budgets import budget_status, consume_submission
 from ultratokenkiller.budgets import authorize_ceiling
 import pytest
+from ultratokenkiller.budgets import reconcile_submissions
+
+
+def test_reconciliation_is_atomic_idempotent_and_does_not_grant(tmp_path):
+    authorize_ceiling(tmp_path, 3)
+    assert consume_submission(tmp_path, 3)
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        list(pool.map(lambda _: reconcile_submissions(tmp_path, "observed-run", 4), range(16)))
+    assert budget_status(tmp_path) == {"consumed": 5, "ceiling": 3}
+    assert not consume_submission(tmp_path, 100)
+    with pytest.raises(ValueError):
+        reconcile_submissions(tmp_path, "observed-run", 2)
+    assert budget_status(tmp_path)["consumed"] == 5
 
 
 def test_explicit_grant_preserves_consumption_and_is_idempotent(tmp_path):

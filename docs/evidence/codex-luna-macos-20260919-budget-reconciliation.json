@@ -1,0 +1,24 @@
+{
+  "evidence_id": "headroom-launcher-20260919T114832-114911",
+  "reason": "Codex discarded root config overrides when subcommand config flags were present; launcher bypassed UTK",
+  "model": "gpt-5.6-luna",
+  "client": "codex",
+  "window_start_utc": "2026-09-19T11:48:32.399260+00:00",
+  "window_end_utc": "2026-09-19T11:49:11.512994+00:00",
+  "source": "Headroom savings_events metadata, matching model/client/time window",
+  "observed_event_timestamps_utc": [
+    "2026-09-19T11:48:42.970898+00:00",
+    "2026-09-19T11:48:48.799513+00:00",
+    "2026-09-19T11:48:59.045997+00:00",
+    "2026-09-19T11:49:02.127331+00:00"
+  ],
+  "reconciled_submissions": 4,
+  "consumed_before": 44,
+  "consumed_after": 48,
+  "authorized_ceiling": 60,
+  "method": "All four matching observations counted conservatively; atomic idempotent reconciliation, no ceiling increase",
+  "limitation": "Metadata attribution, not UTK request correlation; original failed report retained unchanged",
+  "later_verified_submissions": 9,
+  "final_consumed": 57,
+  "remaining": 3
+}
