@@ -19,6 +19,15 @@ def test_codex_preserves_workdir_and_timeout():
     assert codex_event(event, "") == {}
 
 
+def test_codex_rewrites_unknown_command_tool_but_ignores_non_commands():
+    event = {"hook_event_name": "PreToolUse", "tool_name": "command_execution",
+             "tool_use_id": "call", "tool_input": {"command": "grep -n -H . calculator.py"}}
+    updated = codex_event(event, SESSION)["hookSpecificOutput"]["updatedInput"]["command"]
+    assert updated.startswith("utk exec --session ")
+    assert "--hook-call-id " in updated
+    assert codex_event({"hook_event_name": "PreToolUse", "tool_name": "Read", "tool_input": {}}, SESSION) == {}
+
+
 def test_hermes_unknown_syntax_preserved():
     assert hermes_terminal("git status | cat", SESSION) == "git status | cat"
     assert hermes_terminal("git status", SESSION).startswith("utk exec --session")

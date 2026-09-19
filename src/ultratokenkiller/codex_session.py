@@ -15,6 +15,7 @@ import time
 import httpx
 
 from .config import Settings, choose_port, default_home
+from .codex_hook_trust import CODEX_SHELL_MATCHER, utk_hook_command
 from .integrations import CodexAdapter
 
 VERIFIED_CODEX = {"0.138.0", "0.153.4"}
@@ -67,8 +68,8 @@ def session_overrides(settings, home, session, config=None):
     # Codex loads hook groups from every layer; copying lower groups here would
     # execute user hooks twice. Add only this invocation's own group.
     hooks = []
-    hooks.append({"matcher": "^Bash$", "hooks": [{"type": "command",
-                  "command": "utk hook codex", "timeout": 10}]})
+    hooks.append({"matcher": CODEX_SHELL_MATCHER, "hooks": [{"type": "command",
+                                                    "command": utk_hook_command(), "timeout": 10}]})
     provider = "utk_session_" + session[:12]
     route = settings.clients.get("codex", {})
     port = route.get("proxy_port", settings.headroom_port)

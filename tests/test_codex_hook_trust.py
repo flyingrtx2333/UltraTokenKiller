@@ -2,16 +2,16 @@ import copy
 
 import pytest
 
-from ultratokenkiller.codex_hook_trust import approve_session_hook, scoped_trust
+from ultratokenkiller.codex_hook_trust import CODEX_SHELL_MATCHER, approve_session_hook, scoped_trust, utk_hook_command
 
 
 def discovered():
     base = {"enabled": True, "handlerType": "command", "isManaged": False,
-            "eventName": "preToolUse", "matcher": "^Bash$", "source": "user",
+            "eventName": "preToolUse", "matcher": CODEX_SHELL_MATCHER, "source": "user",
             "trustStatus": "untrusted", "currentHash": "sha256:other"}
     return {"data": [{"errors": [], "hooks": [
         {**base, "source": "sessionFlags", "key": "C:/<session-flags>/config.toml:pre_tool_use:0:0",
-         "command": "utk hook codex", "currentHash": "sha256:utk"},
+         "command": utk_hook_command(), "currentHash": "sha256:utk"},
         {**base, "key": "headroom-key", "command": "C:/Python/Scripts/headroom.EXE init hook ensure --profile init-user --marker headroom-init-codex"},
         {**base, "key": "user-hook", "command": "user-check", "trustStatus": "trusted"},
         {**base, "key": "unreviewed-hook", "command": "unreviewed-check"},

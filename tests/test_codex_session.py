@@ -30,7 +30,7 @@ def test_scoped_overrides_preserve_user_hooks_environment_and_model(tmp_path):
     assert not {"model", "model_reasoning_effort", "approval_policy"} & overrides.keys()
     assert parsed["shell_environment_policy"]["set"]["CUSTOM"] == "keep"
     assert len(parsed["hooks"]["PreToolUse"]) == 1
-    assert parsed["hooks"]["PreToolUse"][0]["hooks"][0]["command"] == "utk hook codex"
+    assert parsed["hooks"]["PreToolUse"][0]["hooks"][0]["command"] == codex_session.utk_hook_command()
     assert environment["UTK_CLIENT"] == "codex"
     assert parsed["mcp_servers"]["utk_recovery"]["env"]["UTK_SESSION_ID"] == environment["UTK_SESSION_ID"]
     assert parsed["model_providers"][parsed["model_provider"]]["env_http_headers"] == {"X-UTK-Session-Id": "UTK_SESSION_ID"}
@@ -70,6 +70,10 @@ def test_hook_correlation_preserves_other_fields_and_rejects_external_helpers():
     updated = codex_event(event, "a" * 32)["hookSpecificOutput"]["updatedInput"]
     assert "--hook-call-id " + hashlib.sha256(b"call-read").hexdigest() in updated["command"]
     assert updated["workdir"] == "/tmp" and updated["timeout_ms"] == 3000
+    for tool, key in [("exec_command", "cmd"), ("shell_command", "command"), ("shell", "command")]:
+        variant = {"hook_event_name": "PreToolUse", "tool_name": tool,
+                   "tool_use_id": "call-read", "tool_input": {key: "grep -n -H . calculator.py"}}
+        assert codex_event(variant, "a" * 32)["hookSpecificOutput"]["updatedInput"][key].startswith("utk exec ")
     assert rewrite_literal("rg -n --pre=program . file", "a" * 32) is None
     assert rewrite_literal("rg -n --hostname-bin=program . file", "a" * 32) is None
 

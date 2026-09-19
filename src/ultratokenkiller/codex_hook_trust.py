@@ -14,6 +14,14 @@ import time
 from .processes import WindowsJob
 
 
+CODEX_SHELL_MATCHER = ".*"
+
+
+def utk_hook_command():
+    arguments = [sys.executable, "-m", "ultratokenkiller.cli", "hook", "codex"]
+    return subprocess.list2cmdline(arguments) if os.name == "nt" else shlex.join(arguments)
+
+
 def list_hooks(executable, overrides, cwd, timeout=20):
     from .codex_session import toml_value
     command = list(executable) + ["app-server"]
@@ -92,8 +100,8 @@ def scoped_trust(response):
     if any(entry.get("errors") for entry in response.get("data", [])):
         raise ValueError("Codex reported hook configuration errors")
     ours = [hook for hook in hooks if hook.get("source") == "sessionFlags"
-            and hook.get("handlerType") == "command" and hook.get("command") == "utk hook codex"
-            and hook.get("matcher") == "^Bash$" and hook.get("eventName") == "preToolUse"]
+            and hook.get("handlerType") == "command" and hook.get("command") == utk_hook_command()
+            and hook.get("matcher") == CODEX_SHELL_MATCHER and hook.get("eventName") == "preToolUse"]
     if len(ours) != 1 or ours[0].get("isManaged") or not ours[0].get("currentHash"):
         raise ValueError("Exactly one identifiable UTK session hook is required")
     hook = ours[0]

@@ -140,12 +140,12 @@ def main():
             raise RuntimeError("Offline MCP preflight failed: "+str(checked.get("error", checked.get("result", {}))))
         if os.name == "nt":
             sandbox_session = secrets.token_hex(16)
-            sandbox_arguments = ["utk", "exec", "--session", sandbox_session, "--", "rg", "-n", "--with-filename", ".", fixture.name]
+            sandbox_arguments = ["utk", "exec", "--session", sandbox_session, "--", "grep", "-n", "-H", ".", fixture.name]
             sandbox_working = home
             if arguments.coding_task:
                 from ultratokenkiller.hooks import codex_event
                 event = {"hook_event_name": "PreToolUse", "tool_name": "Bash", "tool_use_id": "preflight-" + sandbox_session,
-                         "tool_input": {"command": "rg -n --with-filename . calculator.py"}}
+                         "tool_input": {"command": "grep -n -H . calculator.py"}}
                 rewrite = codex_event(event, sandbox_session)["hookSpecificOutput"]["updatedInput"]["command"]
                 sandbox_arguments = rewrite.split()
                 sandbox_working = working
@@ -194,7 +194,8 @@ def main():
             overrides.update(automatic)
             overrides.update(hook_trust)
             os.environ.update(scoped)
-            overrides["developer_instructions"] = "This is a bounded coding acceptance task. Only modify calculator.py, run its tests and inspect its diff. Preserve tests. Run the requested raw rg command exactly; UTK's installed hook wraps it. Do not wrap commands in rtk or headroom. Do not explore other directories or spawn agents."
+            overrides["developer_instructions"] = "This is a bounded coding acceptance task. Only modify calculator.py, run its tests and inspect its diff. Preserve tests. Run the requested raw grep command exactly; UTK's installed hook wraps it. Do not wrap commands in rtk or headroom. Do not explore other directories or spawn agents."
+            overrides["projects"] = {str(working): {"trust_level": "trusted"}}
         command += ["exec", "--ignore-user-config", "--ephemeral", "--json", "--skip-git-repo-check", "--sandbox", "workspace-write", "-C", str(working), "-m", model]
         for key, value in overrides.items():
             command += ["-c", key+"="+toml_value(value)]

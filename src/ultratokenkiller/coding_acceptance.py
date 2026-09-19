@@ -22,8 +22,8 @@ def prepare(root: Path):
     root.mkdir(parents=True, exist_ok=False)
     (root / ".hooks").mkdir()
     source = "# UTK_RECOVERY_PROOF\n" + "".join(
-        f"# Contract note {i}: retain the integer ceiling division API and do not modify its tests.\n"
-        for i in range(80))
+        f"# Contract note {i}: keep ceil_div API and tests unchanged.\n"
+        for i in range(220))
     source += ('\ndef ceil_div(numerator: int, denominator: int) -> int:\n'
                '    """Return the smallest integer >= numerator / denominator. Denominator must be positive."""\n'
                '    if denominator <= 0:\n'
@@ -67,7 +67,7 @@ def prompt():
     return (
         "Fix calculator.py so ceil_div follows its documented mathematical ceiling contract, preserving its API and denominator validation. "
         "Do not edit tests or any other file. You have exactly three tool rounds and then a final answer. "
-        "Round 1: one shell call with exactly: rg -n --with-filename . calculator.py\n"
+        "Round 1: one shell call with exactly: grep -n -H . calculator.py\n"
         "Use the raw command; the installed UTK hook wraps it automatically. "
         "Round 2: call utk_retrieve with the handle from the result, offset 0, limit 16000. Read the recovered source. "
         "Round 3: ONE shell call containing a script that edits calculator.py, runs python -m pytest -q, "

@@ -40,9 +40,11 @@ def codex_event(event: dict, session: str):
         return {}
     tool = event.get("tool_name")
     inputs = event.get("tool_input")
-    if tool not in {"Bash", "exec_command", "shell_command"} or not isinstance(inputs, dict):
+    if not isinstance(inputs, dict):
         return {}
-    key = "cmd" if tool == "exec_command" else "command"
+    key = "cmd" if isinstance(inputs.get("cmd"), str) else "command"
+    if not isinstance(inputs.get(key), str):
+        return {}
     original = inputs.get(key)
     updated = rewrite_literal(original, session)
     if updated is None:

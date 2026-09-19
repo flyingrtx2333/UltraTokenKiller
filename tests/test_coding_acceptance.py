@@ -2,7 +2,20 @@ import shutil
 
 import pytest
 
-from ultratokenkiller.coding_acceptance import prepare, verify
+from ultratokenkiller.coding_acceptance import prepare, prompt, verify
+
+
+def test_prompt_uses_portable_search_command():
+    assert "grep -n -H . calculator.py" in prompt()
+
+
+@pytest.mark.skipif(not shutil.which("git"), reason="Git unavailable")
+def test_fixture_is_large_enough_for_tool_output_compression(tmp_path):
+    root = tmp_path / "task"
+    prepare(root)
+    source = (root / "calculator.py").read_text(encoding="utf-8")
+    assert source.count("# Contract note ") == 220
+    assert 12_000 <= len(source) <= 16_000
 
 
 @pytest.mark.skipif(not shutil.which("git"), reason="Git unavailable")
