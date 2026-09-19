@@ -9,4 +9,6 @@ Historical integration releases referenced:
 
 Historical attributions remain here for provenance. No Caveman BSL engine code is bundled. The current response instructions are authored for UTK.
 
+PyYAML is used to validate managed Hermes configuration before activation and is distributed under the MIT license: https://github.com/yaml/pyyaml
+
 Runtime/build dependencies retain their own licenses: FastAPI (MIT), HTTPX (BSD-3-Clause), Textual (MIT), Typer (MIT), Uvicorn (BSD-3-Clause), Tomli (MIT), React (MIT), Vite (MIT), and their transitive dependencies. Bundled frontend assets retain upstream license comments.

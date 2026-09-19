@@ -16,7 +16,7 @@ UTK 是本地原生 Token 优化工具。输入压缩、工具输出压缩、回
 
 **已验证：**Windows 与 WSL Ubuntu 离线回归；Windows Codex 0.138.0 使用现有订阅和 `gpt-5.6-luna` 完成输入压缩、`utk exec` 压缩及 MCP 原文找回任务。验收使用隔离端口和临时配置覆盖，没有替换本机现用代理。
 
-真实模型账单用量未返回，仍显示未知。Hermes、全部 RTK 命令、上游效果对照、自动钩子和三平台干净安装尚未完整验收。详见 [兼容矩阵](COMPATIBILITY.md) 和 [Luna 验收记录](docs/acceptance-luna-2026-09-19.md)。
+真实模型账单用量未返回，仍显示未知。Hermes CLI／gateway 的受管 shell hook 已实现离线验证：只改写可证明安全的终端命令，只授权 `utk hermes-hook`，禁用时保留用户钩子与授权；真实 Hermes 客户端任务仍未验收。全部 RTK 命令、上游效果对照和三平台干净安装也尚未完整验收。详见 [兼容矩阵](COMPATIBILITY.md) 和 [Luna 验收记录](docs/acceptance-luna-2026-09-19.md)。
 
 ## 安装
 

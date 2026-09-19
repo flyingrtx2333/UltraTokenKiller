@@ -9,9 +9,15 @@ import time
 from dataclasses import dataclass, asdict
 from pathlib import Path
 
+import yaml
+
 
 START = "# >>> ultratokenkiller managed >>>"
 END = "# <<< ultratokenkiller managed <<<"
+HERMES_HOOK_START = "# >>> ultratokenkiller hermes hook >>>"
+HERMES_HOOK_END = "# <<< ultratokenkiller hermes hook <<<"
+HERMES_HOOK_COMMAND = "utk hermes-hook"
+HERMES_ALLOWLIST = "shell-hooks-allowlist.json"
 
 
 @dataclass
@@ -170,7 +176,8 @@ class HermesAdapter:
         detected = shutil.which("hermes") is not None or self.root.exists()
         text = self.config.read_text(encoding="utf-8") if self.config.exists() else ""
         supported = not bool(re.search(r"provider:\s*(anthropic|bedrock|vertex)", text, re.I))
-        detail = "OpenAI-compatible provider" if supported else "Current provider is not OpenAI-compatible"
+        hook = HERMES_HOOK_START in text
+        detail = ("OpenAI-compatible provider; managed tool hook " + ("enabled" if hook else "not enabled")) if supported else "Current provider is not OpenAI-compatible"
         return ClientState(self.name, detected, START in text, detected and supported, detail, str(self.config))
 
     def upstream_url(self) -> str | None:
@@ -195,12 +202,20 @@ class HermesAdapter:
         text = self.config.read_text(encoding="utf-8") if self.config.exists() else ""
         _backup(self.config, backup_root)
         text = _remove_hermes_block(text) if START in text else text
-        self.config.write_text(_add_hermes_block(text, proxy_port, caveman), encoding="utf-8")
+        text = _remove_hermes_hook(text)
+        managed = _add_hermes_hook(_add_hermes_block(text, proxy_port, caveman))
+        _validate_hermes_config(managed)
+        allowlist = self.root / HERMES_ALLOWLIST
+        _backup(allowlist, backup_root)
+        _approve_hermes_hook(allowlist)
+        _atomic_write_text(self.config, managed)
         return self.detect()
 
     def disable(self) -> ClientState:
         if self.config.exists():
-            self.config.write_text(_remove_hermes_block(self.config.read_text(encoding="utf-8")), encoding="utf-8")
+            text = _remove_hermes_hook(self.config.read_text(encoding="utf-8"))
+            self.config.write_text(_remove_hermes_block(text), encoding="utf-8")
+        _revoke_hermes_hook(self.root / HERMES_ALLOWLIST)
         return self.detect()
 
 
@@ -253,6 +268,153 @@ def _remove_hermes_block(text: str) -> str:
     if state.get("created"):
         clean = re.sub(r"(?m)^model:\s*\n(?=\S|\Z)", "", clean)
     return clean.strip() + "\n"
+
+
+def _add_hermes_hook(text: str) -> str:
+    """Merge one managed pre-tool hook without replacing user hook entries."""
+    if HERMES_HOOK_START in text:
+        return text
+    lines = text.splitlines()
+    hooks = [i for i, line in enumerate(lines) if re.match(r"^hooks:\s*(?:#.*)?$", line)]
+    if len(hooks) > 1:
+        raise ValueError("Hermes config has multiple root hooks sections")
+    command_lines = [
+        '- matcher: "^(terminal|shell)$"',
+        f'  command: "{HERMES_HOOK_COMMAND}"',
+        "  timeout: 5",
+        "  fail_closed: false",
+    ]
+    if not hooks:
+        block = [HERMES_HOOK_START, "hooks:", "  pre_tool_call:"]
+        block += ["    " + line for line in command_lines]
+        block.append(HERMES_HOOK_END)
+        return text.rstrip() + "\n\n" + "\n".join(block) + "\n"
+
+    root = hooks[0]
+    end = len(lines)
+    for i in range(root + 1, len(lines)):
+        line = lines[i]
+        if line and not line[0].isspace() and not line.lstrip().startswith("#"):
+            end = i
+            break
+    events = [i for i in range(root + 1, end) if re.match(r"^  pre_tool_call:\s*(?:#.*)?$", lines[i])]
+    if len(events) > 1:
+        raise ValueError("Hermes config has multiple pre_tool_call hook sections")
+    if not events:
+        block = ["  " + HERMES_HOOK_START, "  pre_tool_call:"]
+        block += ["    " + line for line in command_lines]
+        block.append("  " + HERMES_HOOK_END)
+        lines[end:end] = block
+    else:
+        event = events[0]
+        event_end = end
+        for i in range(event + 1, end):
+            if re.match(r"^  [A-Za-z0-9_-]+:\s*", lines[i]):
+                event_end = i
+                break
+        block = ["    " + HERMES_HOOK_START]
+        block += ["    " + line for line in command_lines]
+        block.append("    " + HERMES_HOOK_END)
+        lines[event_end:event_end] = block
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def _remove_hermes_hook(text: str) -> str:
+    pattern = re.compile(
+        rf"(?ms)^(?P<indent> *){re.escape(HERMES_HOOK_START)}\s*$.*?^(?P=indent){re.escape(HERMES_HOOK_END)}\s*$\n?"
+    )
+    return pattern.sub("", text).rstrip() + "\n"
+
+
+def _validate_hermes_config(text: str) -> None:
+    """Reject a merge unless Hermes' YAML shape remains usable."""
+    try:
+        data = yaml.safe_load(text) if text.strip() else {}
+    except yaml.YAMLError as exc:
+        raise ValueError("Hermes config is not valid YAML") from exc
+    if not isinstance(data, dict):
+        raise ValueError("Hermes config root must be a mapping")
+    hooks = data.get("hooks")
+    if not isinstance(hooks, dict):
+        raise ValueError("Hermes hooks must be a mapping")
+    entries = hooks.get("pre_tool_call")
+    if not isinstance(entries, list):
+        raise ValueError("Hermes pre_tool_call hooks must be a list")
+    matches = [
+        entry
+        for entry in entries
+        if isinstance(entry, dict) and entry.get("command") == HERMES_HOOK_COMMAND
+    ]
+    if len(matches) != 1 or matches[0].get("matcher") != "^(terminal|shell)$":
+        raise ValueError("Hermes managed hook did not merge exactly once")
+
+
+def _atomic_write_text(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + ".utk.tmp")
+    temporary.write_text(text, encoding="utf-8")
+    os.replace(temporary, path)
+
+
+def _approve_hermes_hook(path: Path) -> None:
+    data: dict = {"approvals": []}
+    if path.exists():
+        try:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            raise ValueError("Hermes hook allowlist is not valid JSON") from exc
+        if not isinstance(loaded, dict) or not isinstance(loaded.get("approvals", []), list):
+            raise ValueError("Hermes hook allowlist has an unsupported shape")
+        data = loaded
+        data.setdefault("approvals", [])
+    exists = any(
+        isinstance(entry, dict)
+        and entry.get("event") == "pre_tool_call"
+        and entry.get("command") == HERMES_HOOK_COMMAND
+        for entry in data["approvals"]
+    )
+    if exists:
+        return
+    data["approvals"].append(
+        {
+            "event": "pre_tool_call",
+            "command": HERMES_HOOK_COMMAND,
+            "approved_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "script_mtime_at_approval": None,
+            "managed_by": "utk",
+        }
+    )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + ".utk.tmp")
+    temporary.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    os.replace(temporary, path)
+
+
+def _revoke_hermes_hook(path: Path) -> None:
+    if not path.exists():
+        return
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return
+    if not isinstance(data, dict) or not isinstance(data.get("approvals"), list):
+        return
+    kept = [
+        entry
+        for entry in data["approvals"]
+        if not (
+            isinstance(entry, dict)
+            and entry.get("event") == "pre_tool_call"
+            and entry.get("command") == HERMES_HOOK_COMMAND
+            and entry.get("managed_by") == "utk"
+        )
+    ]
+    if len(kept) == len(data["approvals"]):
+        return
+    data["approvals"] = kept
+    temporary = path.with_name(path.name + ".utk.tmp")
+    temporary.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    os.replace(temporary, path)
 
 
 def _caveman_instruction(level: str) -> str:

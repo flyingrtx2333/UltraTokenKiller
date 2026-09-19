@@ -42,7 +42,9 @@ def test_inventory_does_not_claim_unreviewed_variants_complete():
     assert report["discovered_command_variants"] > 100
     assert report["reviewed_command_contracts"] >= 10
     assert report["total_core_capabilities"] >= 30
-    assert report["summary"]["not_implemented"] > 0
+    assert report["summary"]["implemented_unverified"] > 0
+    assert report["summary"]["upstream_parity_passed"] == 0
+    assert not report["parity_certified"]
 
 
 def test_missing_source_evidence_downgrades_claims(tmp_path):

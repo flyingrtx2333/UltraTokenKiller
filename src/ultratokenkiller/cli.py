@@ -45,6 +45,14 @@ def capabilities(
     )
 
 
+@app.command("hermes-hook", hidden=True)
+def hermes_hook_command():
+    """Run the managed Hermes pre-tool hook over one stdin payload."""
+    from .hermes_hook import main
+
+    raise typer.Exit(main())
+
+
 @app.command("assets")
 def assets(action: str = typer.Argument("status")):
     """校验或安装锁定的本地推理模型。"""
