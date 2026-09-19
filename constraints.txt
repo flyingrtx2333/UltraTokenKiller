@@ -4,3 +4,5 @@ textual==1.0.0
 tomli==2.4.0
 typer==0.21.1
 uvicorn==0.41.0
+websockets==15.0.1
+tree-sitter-language-pack==0.13.0
