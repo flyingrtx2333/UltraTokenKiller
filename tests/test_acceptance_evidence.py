@@ -7,6 +7,18 @@ module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 
 
+def test_config_diagnostics_distinguish_formatting_without_leaking_values():
+    original = b'model = "private-model"\n[projects."private-path"]\ntrust_level = "trusted"\n'
+    formatting = b'# comment\n' + original
+    result = module.config_change_summary(original, formatting)
+    assert result == {"bytes_unchanged": False, "semantic_unchanged": True,
+                      "changed_sections": [], "other_sections_changed": False}
+    changed = module.config_change_summary(original, original.replace(b'trusted', b'untrusted'))
+    assert changed["changed_sections"] == ["projects"]
+    assert not changed["semantic_unchanged"]
+    assert "private" not in str(changed)
+
+
 def report():
     return {"exit_code": 0, "timed_out": False, "final_marker": True,
             "original_config_unchanged": True, "scope": "input_tools_recovery_response_policy",

@@ -24,6 +24,23 @@ from ultratokenkiller.codex_session import session_overrides, toml_value, valida
 from ultratokenkiller import coding_acceptance
 
 
+def config_change_summary(before, after):
+    """Record changed section names only; never persist configuration values."""
+    try:
+        import tomllib
+    except ImportError:
+        import tomli as tomllib
+    left = tomllib.loads(before.decode("utf-8"))
+    right = tomllib.loads(after.decode("utf-8"))
+    known = {"model", "model_provider", "model_providers", "hooks", "mcp_servers",
+             "projects", "features", "notice", "windows", "sandbox_mode",
+             "approval_policy", "model_reasoning_effort"}
+    changed = {key for key in left.keys() | right.keys() if left.get(key) != right.get(key)}
+    return {"bytes_unchanged": before == after, "semantic_unchanged": left == right,
+            "changed_sections": sorted(changed & known),
+            "other_sections_changed": bool(changed - known)}
+
+
 def acceptance_passed(report):
     terminal = [t for t in report["tools"] if t.get("status") != "in_progress"]
     commands = [t for t in terminal if t.get("type") == "command_execution"]
@@ -155,6 +172,7 @@ def main():
             from ultratokenkiller.codex_hook_trust import approve_session_hook
             automatic, _ = session_overrides(settings, home, session)
             hook_trust = approve_session_hook(command, automatic, working)
+        after_preflight = adapter.config.read_bytes()
         if arguments.offline_preflight:
             print(json.dumps({"offline_mcp_preflight": "passed", "scoped_hook_trust_verified": bool(hook_trust),
                 "model_requests": 0, "budget": budget_status(home),
@@ -248,6 +266,10 @@ def main():
                   "provider_usage_records": sum(e["input_tokens"] is not None for e in events),
                   "optimized_command_records": sum(e["kind"] == "tool" and e["metadata"].get("optimized", False) for e in events),
                   "original_config_unchanged": hashlib.sha256(adapter.config.read_bytes()).digest() == hashlib.sha256(original).digest()}
+        report["config_changes"] = {
+            "preflight": config_change_summary(original, after_preflight),
+            "client_run": config_change_summary(after_preflight, adapter.config.read_bytes()),
+        }
         if completed.returncode and not event_types:
             # Classify initialization failure without persisting client logs.
             report["initialization_failure"] = "mcp" if "mcp" in completed.stderr.lower() else "client_startup"
