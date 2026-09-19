@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.playwright-cli/
+web/node_modules/
+dist/
+*.egg-info/
+output/playwright/*-temporary.png
+output/
