@@ -92,11 +92,19 @@ class BrokerClient:
         token = (self.home / "session-token").read_text(encoding="ascii").strip()
         return {"X-UTK-Token": token}
 
+    def client(self, timeout=10):
+        from .local_transport import broker_socket
+        path = broker_socket(self.home)
+        # Existing HTTP-only services remain usable; an advertised socket never
+        # silently falls back to TCP when its access policy rejects a connection.
+        transport = httpx.HTTPTransport(uds=str(path)) if path and path.exists() else None
+        return httpx.Client(timeout=timeout, trust_env=False, transport=transport)
+
     def compress(self, text: str, session: str, hint=None, query=""):
         if not session:
             return {"content": text, "fallback": "missing_session", "saved_tokens": 0}
         try:
-            with httpx.Client(timeout=10, trust_env=False) as client:
+            with self.client() as client:
                 response = client.post(self.url+"/api/v1/internal/compress", headers=self.headers(),
                                        json={"content": text, "session": session, "hint": hint, "query": query, "profile": self.settings.profile})
                 response.raise_for_status()
@@ -105,7 +113,7 @@ class BrokerClient:
             return {"content": text, "fallback": "broker_unavailable", "saved_tokens": 0}
 
     def retrieve(self, session: str, handle: str, offset=0, limit=32000):
-        with httpx.Client(timeout=10, trust_env=False) as client:
+        with self.client() as client:
             response = client.post(self.url+"/api/v1/internal/retrieve", headers=self.headers(),
                                    json={"session": session, "handle": handle, "offset": offset, "limit": limit})
             if response.status_code == 410:

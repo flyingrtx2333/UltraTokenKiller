@@ -45,7 +45,7 @@ class ToolEventSink:
             if os.environ.get("UTK_SESSION_ID"):
                 from .broker import BrokerClient
                 broker = BrokerClient(self.home)
-                with httpx.Client(timeout=3, trust_env=False) as client:
+                with broker.client(timeout=3) as client:
                     response = client.post(broker.url + "/api/v1/internal/tool-events",
                                            headers=broker.headers(), json=event)
                     response.raise_for_status()

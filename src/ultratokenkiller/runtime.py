@@ -64,7 +64,7 @@ def start_processes(settings: Settings, home: Path | None = None) -> dict[str, i
         (root / f"headroom-{port}.pid").write_text(str(proc.pid), encoding="ascii")
         result[f"native:{port}"] = proc.pid
     if not service_health(settings):
-        command = [sys.executable, "-m", "uvicorn", "ultratokenkiller.service:app", "--host", settings.host, "--port", str(settings.dashboard_port)]
+        command = [sys.executable, "-m", "ultratokenkiller.local_transport"]
         proc = _spawn(command, env, log)
         (root / "service.pid").write_text(str(proc.pid), encoding="ascii")
         result["service"] = proc.pid

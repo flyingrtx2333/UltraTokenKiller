@@ -51,6 +51,30 @@ def toml_value(value):
     raise ValueError("Unsupported Codex override value")
 
 
+def local_broker_permissions(home, profile="utk_acceptance"):
+    """Isolated acceptance policy: workspace writes, one socket, no domains.
+
+    Requires ignore-user-config so older sandbox settings cannot override it.
+    network.enabled alone is NOT restrictive; the proxy is mandatory.
+    """
+    from .local_transport import broker_socket
+    path = broker_socket(Path(home))
+    if path is None:
+        raise ValueError("Unix broker permissions require a Unix host")
+    from .config import choose_port
+    port = choose_port(19990)
+    return {
+        "default_permissions": profile,
+        "features.network_proxy": True,
+        f"permissions.{profile}.extends": ":workspace",
+        f"permissions.{profile}.network.enabled": True,
+        f"permissions.{profile}.network.proxy_url": f"http://127.0.0.1:{port}",
+        f"permissions.{profile}.network.enable_socks5": False,
+        f"permissions.{profile}.network.domains": {},
+        f"permissions.{profile}.network.unix_sockets": {str(path): "allow"},
+    }
+
+
 def session_overrides(settings, home, session, config=None):
     """Share one opaque session across HTTP, MCP and command hooks.
 
