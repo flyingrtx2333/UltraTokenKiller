@@ -6,6 +6,35 @@ from pathlib import Path
 
 import httpx
 
+
+def command_variants(content):
+    from tree_sitter_language_pack import get_parser
+    raw = content.encode("utf-8")
+    tree = get_parser("rust").parse(raw)
+    result = []
+    def text(node):
+        return raw[node.start_byte:node.end_byte].decode("utf-8") if node else ""
+    def visit(node):
+        if node.type == "enum_item":
+            name = text(node.child_by_field_name("name"))
+            body = node.child_by_field_name("body")
+            if body and ("Command" in name or name == "Commands"):
+                for variant in body.named_children:
+                    if variant.type != "enum_variant":
+                        continue
+                    fields = variant.child_by_field_name("body")
+                    arguments = []
+                    if fields:
+                        for field in fields.named_children:
+                            if field.type == "field_declaration":
+                                arguments.append({"name": text(field.child_by_field_name("name")), "type": text(field.child_by_field_name("type"))})
+                    result.append({"enum": name, "variant": text(variant.child_by_field_name("name")),
+                                   "line": variant.start_point[0]+1, "arguments": arguments})
+        for child in node.named_children:
+            visit(child)
+    visit(tree.root_node)
+    return result
+
 ROOT = Path(__file__).resolve().parents[1]
 BASELINES = {
     "headroom": ("chopratejas/headroom", "bc21c9370793f7e4aa94ac4c5d9a67a8d2dd0df9"),
@@ -41,23 +70,7 @@ def main():
                           "sha256": hashlib.sha256(response.content).hexdigest()}
                 if name == "rtk" and path.endswith(".rs"):
                     # Freeze all clap enum variants, including nested subcommands and aliases.
-                    lines = content.splitlines()
-                    enums = []
-                    active = None
-                    depth = 0
-                    for number, line in enumerate(lines, 1):
-                        match = re.search(r"(?:pub\s+)?enum\s+(\w+)", line)
-                        if match and ("Command" in match[1] or match[1] == "Commands"):
-                            active = match[1]
-                            depth = 0
-                        if active:
-                            if depth == 1:
-                                variant = re.match(r"^    ([A-Z]\w*)\s*(?:\{|\(|,|$)", line)
-                                if variant:
-                                    enums.append({"enum": active, "variant": variant[1], "line": number})
-                            depth += line.count("{") - line.count("}")
-                            if depth == 0:
-                                active = None
+                    enums = command_variants(content)
                     record["command_variants"] = enums
                     for entry in enums:
                         identifier = f"tools.{entry['enum']}.{entry['variant']}"

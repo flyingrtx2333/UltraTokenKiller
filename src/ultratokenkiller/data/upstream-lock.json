@@ -1775,932 +1775,2295 @@
           {
             "enum": "Commands",
             "variant": "Ls",
-            "line": 95
+            "line": 95,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Tree",
-            "line": 102
+            "line": 102,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Read",
-            "line": 109
+            "line": 109,
+            "arguments": [
+              {
+                "name": "files",
+                "type": "Vec<PathBuf>"
+              },
+              {
+                "name": "level",
+                "type": "core::filter::FilterLevel"
+              },
+              {
+                "name": "max_lines",
+                "type": "Option<usize>"
+              },
+              {
+                "name": "head_lines",
+                "type": "Option<usize>"
+              },
+              {
+                "name": "tail_lines",
+                "type": "Option<usize>"
+              },
+              {
+                "name": "line_numbers",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Smart",
-            "line": 133
+            "line": 133,
+            "arguments": [
+              {
+                "name": "file",
+                "type": "PathBuf"
+              },
+              {
+                "name": "model",
+                "type": "String"
+              },
+              {
+                "name": "force_download",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Git",
-            "line": 145
+            "line": 145,
+            "arguments": [
+              {
+                "name": "directory",
+                "type": "Vec<String>"
+              },
+              {
+                "name": "config_override",
+                "type": "Vec<String>"
+              },
+              {
+                "name": "git_dir",
+                "type": "Option<String>"
+              },
+              {
+                "name": "work_tree",
+                "type": "Option<String>"
+              },
+              {
+                "name": "no_pager",
+                "type": "bool"
+              },
+              {
+                "name": "no_optional_locks",
+                "type": "bool"
+              },
+              {
+                "name": "bare",
+                "type": "bool"
+              },
+              {
+                "name": "literal_pathspecs",
+                "type": "bool"
+              },
+              {
+                "name": "command",
+                "type": "GitCommands"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Gh",
-            "line": 183
+            "line": 183,
+            "arguments": [
+              {
+                "name": "subcommand",
+                "type": "String"
+              },
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Glab",
-            "line": 192
+            "line": 192,
+            "arguments": [
+              {
+                "name": "repo",
+                "type": "Option<String>"
+              },
+              {
+                "name": "group",
+                "type": "Option<String>"
+              },
+              {
+                "name": "subcommand",
+                "type": "String"
+              },
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Aws",
-            "line": 207
+            "line": 207,
+            "arguments": [
+              {
+                "name": "subcommand",
+                "type": "String"
+              },
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Psql",
-            "line": 217
+            "line": 217,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Pnpm",
-            "line": 224
+            "line": 224,
+            "arguments": [
+              {
+                "name": "filter",
+                "type": "Vec<String>"
+              },
+              {
+                "name": "recursive",
+                "type": "bool"
+              },
+              {
+                "name": "workspace_root",
+                "type": "bool"
+              },
+              {
+                "name": "command",
+                "type": "PnpmCommands"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Err",
-            "line": 242
+            "line": 242,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Test",
-            "line": 249
+            "line": 249,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Json",
-            "line": 256
+            "line": 256,
+            "arguments": [
+              {
+                "name": "file",
+                "type": "PathBuf"
+              },
+              {
+                "name": "depth",
+                "type": "usize"
+              },
+              {
+                "name": "keys_only",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Deps",
-            "line": 268
+            "line": 268,
+            "arguments": [
+              {
+                "name": "path",
+                "type": "PathBuf"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Env",
-            "line": 275
+            "line": 275,
+            "arguments": [
+              {
+                "name": "filter",
+                "type": "Option<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Find",
-            "line": 282
+            "line": 282,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Diff",
-            "line": 289
+            "line": 289,
+            "arguments": [
+              {
+                "name": "file1",
+                "type": "PathBuf"
+              },
+              {
+                "name": "file2",
+                "type": "Option<PathBuf>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Log",
-            "line": 297
+            "line": 297,
+            "arguments": [
+              {
+                "name": "file",
+                "type": "Option<PathBuf>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Dotnet",
-            "line": 303
+            "line": 303,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "DotnetCommands"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Docker",
-            "line": 309
+            "line": 309,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "DockerCommands"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Kubectl",
-            "line": 315
+            "line": 315,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "KubectlCommands"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Oc",
-            "line": 321
+            "line": 321,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "OcCommands"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Summary",
-            "line": 327
+            "line": 327,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Grep",
-            "line": 334
+            "line": 334,
+            "arguments": [
+              {
+                "name": "max_len",
+                "type": "usize"
+              },
+              {
+                "name": "max",
+                "type": "usize"
+              },
+              {
+                "name": "context_only",
+                "type": "bool"
+              },
+              {
+                "name": "extra_args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Rg",
-            "line": 367
+            "line": 367,
+            "arguments": [
+              {
+                "name": "extra_args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "AstGrep",
-            "line": 374
+            "line": 374,
+            "arguments": [
+              {
+                "name": "extra_args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Init",
-            "line": 381
+            "line": 381,
+            "arguments": [
+              {
+                "name": "global",
+                "type": "bool"
+              },
+              {
+                "name": "opencode",
+                "type": "bool"
+              },
+              {
+                "name": "gemini",
+                "type": "bool"
+              },
+              {
+                "name": "agent",
+                "type": "Option<AgentTarget>"
+              },
+              {
+                "name": "show",
+                "type": "bool"
+              },
+              {
+                "name": "claude_md",
+                "type": "bool"
+              },
+              {
+                "name": "hook_only",
+                "type": "bool"
+              },
+              {
+                "name": "auto_patch",
+                "type": "bool"
+              },
+              {
+                "name": "no_patch",
+                "type": "bool"
+              },
+              {
+                "name": "trust_filters",
+                "type": "bool"
+              },
+              {
+                "name": "no_trust_filters",
+                "type": "bool"
+              },
+              {
+                "name": "uninstall",
+                "type": "bool"
+              },
+              {
+                "name": "codex",
+                "type": "bool"
+              },
+              {
+                "name": "copilot",
+                "type": "bool"
+              },
+              {
+                "name": "dry_run",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Wget",
-            "line": 443
+            "line": 443,
+            "arguments": [
+              {
+                "name": "url",
+                "type": "String"
+              },
+              {
+                "name": "output",
+                "type": "Option<String>"
+              },
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Wc",
-            "line": 455
+            "line": 455,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Gain",
-            "line": 462
+            "line": 462,
+            "arguments": [
+              {
+                "name": "project",
+                "type": "bool"
+              },
+              {
+                "name": "graph",
+                "type": "bool"
+              },
+              {
+                "name": "history",
+                "type": "bool"
+              },
+              {
+                "name": "quota",
+                "type": "bool"
+              },
+              {
+                "name": "tier",
+                "type": "String"
+              },
+              {
+                "name": "daily",
+                "type": "bool"
+              },
+              {
+                "name": "weekly",
+                "type": "bool"
+              },
+              {
+                "name": "monthly",
+                "type": "bool"
+              },
+              {
+                "name": "all",
+                "type": "bool"
+              },
+              {
+                "name": "format",
+                "type": "String"
+              },
+              {
+                "name": "failures",
+                "type": "bool"
+              },
+              {
+                "name": "recalls",
+                "type": "bool"
+              },
+              {
+                "name": "reset",
+                "type": "bool"
+              },
+              {
+                "name": "yes",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "CcEconomics",
-            "line": 508
+            "line": 508,
+            "arguments": [
+              {
+                "name": "daily",
+                "type": "bool"
+              },
+              {
+                "name": "weekly",
+                "type": "bool"
+              },
+              {
+                "name": "monthly",
+                "type": "bool"
+              },
+              {
+                "name": "all",
+                "type": "bool"
+              },
+              {
+                "name": "format",
+                "type": "String"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Config",
-            "line": 527
+            "line": 527,
+            "arguments": [
+              {
+                "name": "create",
+                "type": "bool"
+              },
+              {
+                "name": "action",
+                "type": "Option<ConfigAction>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Jest",
-            "line": 536
+            "line": 536,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Vitest",
-            "line": 543
+            "line": 543,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Ctest",
-            "line": 551
+            "line": 551,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Prisma",
-            "line": 558
+            "line": 558,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "PrismaCommands"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Tsc",
-            "line": 564
+            "line": 564,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Next",
-            "line": 571
+            "line": 571,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Lint",
-            "line": 578
+            "line": 578,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Prettier",
-            "line": 585
+            "line": 585,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Format",
-            "line": 592
+            "line": 592,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Playwright",
-            "line": 599
+            "line": 599,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Cargo",
-            "line": 606
+            "line": 606,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "CargoCommands"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Npm",
-            "line": 612
+            "line": 612,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Npx",
-            "line": 619
+            "line": 619,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Bun",
-            "line": 626
+            "line": 626,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "BunCommands"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Bunx",
-            "line": 632
+            "line": 632,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Curl",
-            "line": 639
+            "line": 639,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Discover",
-            "line": 646
+            "line": 646,
+            "arguments": [
+              {
+                "name": "project",
+                "type": "Option<String>"
+              },
+              {
+                "name": "limit",
+                "type": "usize"
+              },
+              {
+                "name": "all",
+                "type": "bool"
+              },
+              {
+                "name": "since",
+                "type": "u64"
+              },
+              {
+                "name": "format",
+                "type": "String"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Session",
-            "line": 665
+            "line": 665,
+            "arguments": []
           },
           {
             "enum": "Commands",
             "variant": "Telemetry",
-            "line": 668
+            "line": 668,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "core::telemetry_cmd::TelemetrySubcommand"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Learn",
-            "line": 674
+            "line": 674,
+            "arguments": [
+              {
+                "name": "project",
+                "type": "Option<String>"
+              },
+              {
+                "name": "all",
+                "type": "bool"
+              },
+              {
+                "name": "since",
+                "type": "u64"
+              },
+              {
+                "name": "format",
+                "type": "String"
+              },
+              {
+                "name": "write_rules",
+                "type": "bool"
+              },
+              {
+                "name": "min_confidence",
+                "type": "f64"
+              },
+              {
+                "name": "min_occurrences",
+                "type": "usize"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Run",
-            "line": 699
+            "line": 699,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "Option<String>"
+              },
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Proxy",
-            "line": 709
+            "line": 709,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<OsString>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Recall",
-            "line": 716
+            "line": 716,
+            "arguments": [
+              {
+                "name": "hash",
+                "type": "Option<String>"
+              },
+              {
+                "name": "full",
+                "type": "bool"
+              },
+              {
+                "name": "from",
+                "type": "Option<usize>"
+              },
+              {
+                "name": "lines",
+                "type": "Option<usize>"
+              },
+              {
+                "name": "grep",
+                "type": "Option<String>"
+              },
+              {
+                "name": "list",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Pipe",
-            "line": 737
+            "line": 737,
+            "arguments": [
+              {
+                "name": "filter",
+                "type": "Option<String>"
+              },
+              {
+                "name": "passthrough",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Trust",
-            "line": 748
+            "line": 748,
+            "arguments": [
+              {
+                "name": "list",
+                "type": "bool"
+              },
+              {
+                "name": "yes",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Untrust",
-            "line": 758
+            "line": 758,
+            "arguments": []
           },
           {
             "enum": "Commands",
             "variant": "Verify",
-            "line": 761
+            "line": 761,
+            "arguments": [
+              {
+                "name": "filter",
+                "type": "Option<String>"
+              },
+              {
+                "name": "require_all",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Ruff",
-            "line": 771
+            "line": 771,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Sqlfluff",
-            "line": 778
+            "line": 778,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Pytest",
-            "line": 785
+            "line": 785,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Mypy",
-            "line": 792
+            "line": 792,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Php",
-            "line": 799
+            "line": 799,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Phpunit",
-            "line": 806
+            "line": 806,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Phpstan",
-            "line": 813
+            "line": 813,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Pest",
-            "line": 820
+            "line": 820,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Paratest",
-            "line": 827
+            "line": 827,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Ecs",
-            "line": 834
+            "line": 834,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Pint",
-            "line": 841
+            "line": 841,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Phpt",
-            "line": 848
+            "line": 848,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Rake",
-            "line": 855
+            "line": 855,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Rubocop",
-            "line": 862
+            "line": 862,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Rspec",
-            "line": 869
+            "line": 869,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Pip",
-            "line": 876
+            "line": 876,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Uv",
-            "line": 883
+            "line": 883,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Deno",
-            "line": 890
+            "line": 890,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "DenoCommands"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Go",
-            "line": 896
+            "line": 896,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "GoCommands"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Sbt",
-            "line": 902
+            "line": 902,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "SbtCommands"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Gt",
-            "line": 908
+            "line": 908,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "GtCommands"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "GolangciLint",
-            "line": 915
+            "line": 915,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Gradlew",
-            "line": 923
+            "line": 923,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Mvn",
-            "line": 931
+            "line": 931,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Mvnd",
-            "line": 939
+            "line": 939,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "HookAudit",
-            "line": 947
+            "line": 947,
+            "arguments": [
+              {
+                "name": "since",
+                "type": "u64"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Rewrite",
-            "line": 960
+            "line": 960,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "Commands",
             "variant": "Hook",
-            "line": 968
+            "line": 968,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "HookCommands"
+              }
+            ]
           },
           {
             "enum": "HookCommands",
             "variant": "Claude",
-            "line": 977
+            "line": 977,
+            "arguments": []
           },
           {
             "enum": "HookCommands",
             "variant": "Trae",
-            "line": 979
+            "line": 979,
+            "arguments": []
           },
           {
             "enum": "HookCommands",
             "variant": "Codex",
-            "line": 981
+            "line": 981,
+            "arguments": []
           },
           {
             "enum": "HookCommands",
             "variant": "Cursor",
-            "line": 983
+            "line": 983,
+            "arguments": []
           },
           {
             "enum": "HookCommands",
             "variant": "Gemini",
-            "line": 985
+            "line": 985,
+            "arguments": []
           },
           {
             "enum": "HookCommands",
             "variant": "Copilot",
-            "line": 987
+            "line": 987,
+            "arguments": []
           },
           {
             "enum": "HookCommands",
             "variant": "Droid",
-            "line": 989
+            "line": 989,
+            "arguments": []
           },
           {
             "enum": "HookCommands",
             "variant": "Vibe",
-            "line": 991
+            "line": 991,
+            "arguments": []
           },
           {
             "enum": "HookCommands",
             "variant": "Check",
-            "line": 993
+            "line": 993,
+            "arguments": [
+              {
+                "name": "agent",
+                "type": "String"
+              },
+              {
+                "name": "command",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommands",
             "variant": "Diff",
-            "line": 1006
+            "line": 1006,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommands",
             "variant": "Log",
-            "line": 1012
+            "line": 1012,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommands",
             "variant": "Status",
-            "line": 1018
+            "line": 1018,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommands",
             "variant": "Show",
-            "line": 1024
+            "line": 1024,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommands",
             "variant": "Add",
-            "line": 1030
+            "line": 1030,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommands",
             "variant": "Commit",
-            "line": 1036
+            "line": 1036,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommands",
             "variant": "Checkout",
-            "line": 1042
+            "line": 1042,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommands",
             "variant": "Push",
-            "line": 1048
+            "line": 1048,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommands",
             "variant": "Pull",
-            "line": 1054
+            "line": 1054,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommands",
             "variant": "Branch",
-            "line": 1060
+            "line": 1060,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommands",
             "variant": "Fetch",
-            "line": 1066
+            "line": 1066,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommands",
             "variant": "Stash",
-            "line": 1072
+            "line": 1072,
+            "arguments": [
+              {
+                "name": "subcommand",
+                "type": "Option<String>"
+              },
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommands",
             "variant": "Worktree",
-            "line": 1080
+            "line": 1080,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommands",
             "variant": "Other",
-            "line": 1087
+            "line": 1087,
+            "arguments": []
           },
           {
             "enum": "PnpmCommands",
             "variant": "List",
-            "line": 1093
+            "line": 1093,
+            "arguments": [
+              {
+                "name": "depth",
+                "type": "usize"
+              },
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "PnpmCommands",
             "variant": "Outdated",
-            "line": 1102
+            "line": 1102,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "PnpmCommands",
             "variant": "Install",
-            "line": 1108
+            "line": 1108,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "PnpmCommands",
             "variant": "Typecheck",
-            "line": 1114
+            "line": 1114,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "PnpmCommands",
             "variant": "Other",
-            "line": 1121
+            "line": 1121,
+            "arguments": []
           },
           {
             "enum": "DockerCommands",
             "variant": "Ps",
-            "line": 1127
+            "line": 1127,
+            "arguments": [
+              {
+                "name": "all",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "DockerCommands",
             "variant": "Images",
-            "line": 1132
+            "line": 1132,
+            "arguments": []
           },
           {
             "enum": "DockerCommands",
             "variant": "Logs",
-            "line": 1134
+            "line": 1134,
+            "arguments": [
+              {
+                "name": "container",
+                "type": "String"
+              }
+            ]
           },
           {
             "enum": "DockerCommands",
             "variant": "Compose",
-            "line": 1136
+            "line": 1136,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "ComposeCommands"
+              }
+            ]
           },
           {
             "enum": "DockerCommands",
             "variant": "Other",
-            "line": 1142
+            "line": 1142,
+            "arguments": []
           },
           {
             "enum": "ComposeCommands",
             "variant": "Ps",
-            "line": 1148
+            "line": 1148,
+            "arguments": [
+              {
+                "name": "all",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "ComposeCommands",
             "variant": "Logs",
-            "line": 1153
+            "line": 1153,
+            "arguments": [
+              {
+                "name": "service",
+                "type": "Option<String>"
+              },
+              {
+                "name": "tail",
+                "type": "u32"
+              }
+            ]
           },
           {
             "enum": "ComposeCommands",
             "variant": "Build",
-            "line": 1161
+            "line": 1161,
+            "arguments": [
+              {
+                "name": "service",
+                "type": "Option<String>"
+              }
+            ]
           },
           {
             "enum": "ComposeCommands",
             "variant": "Other",
-            "line": 1167
+            "line": 1167,
+            "arguments": []
           },
           {
             "enum": "KubectlCommands",
             "variant": "Get",
-            "line": 1173
+            "line": 1173,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "KubectlCommands",
             "variant": "Pods",
-            "line": 1179
+            "line": 1179,
+            "arguments": [
+              {
+                "name": "namespace",
+                "type": "Option<String>"
+              },
+              {
+                "name": "all",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "KubectlCommands",
             "variant": "Services",
-            "line": 1187
+            "line": 1187,
+            "arguments": [
+              {
+                "name": "namespace",
+                "type": "Option<String>"
+              },
+              {
+                "name": "all",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "KubectlCommands",
             "variant": "Logs",
-            "line": 1195
+            "line": 1195,
+            "arguments": [
+              {
+                "name": "pod",
+                "type": "String"
+              },
+              {
+                "name": "container",
+                "type": "Option<String>"
+              }
+            ]
           },
           {
             "enum": "KubectlCommands",
             "variant": "Other",
-            "line": 1202
+            "line": 1202,
+            "arguments": []
           },
           {
             "enum": "OcCommands",
             "variant": "Get",
-            "line": 1208
+            "line": 1208,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "OcCommands",
             "variant": "Pods",
-            "line": 1214
+            "line": 1214,
+            "arguments": [
+              {
+                "name": "namespace",
+                "type": "Option<String>"
+              },
+              {
+                "name": "all",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "OcCommands",
             "variant": "Services",
-            "line": 1222
+            "line": 1222,
+            "arguments": [
+              {
+                "name": "namespace",
+                "type": "Option<String>"
+              },
+              {
+                "name": "all",
+                "type": "bool"
+              }
+            ]
           },
           {
             "enum": "OcCommands",
             "variant": "Logs",
-            "line": 1230
+            "line": 1230,
+            "arguments": [
+              {
+                "name": "pod",
+                "type": "String"
+              },
+              {
+                "name": "container",
+                "type": "Option<String>"
+              }
+            ]
           },
           {
             "enum": "OcCommands",
             "variant": "Other",
-            "line": 1237
+            "line": 1237,
+            "arguments": []
           },
           {
             "enum": "PrismaCommands",
             "variant": "Generate",
-            "line": 1243
+            "line": 1243,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "PrismaCommands",
             "variant": "Migrate",
-            "line": 1249
+            "line": 1249,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "PrismaMigrateCommands"
+              }
+            ]
           },
           {
             "enum": "PrismaCommands",
             "variant": "DbPush",
-            "line": 1254
+            "line": 1254,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "PrismaMigrateCommands",
             "variant": "Dev",
-            "line": 1264
+            "line": 1264,
+            "arguments": [
+              {
+                "name": "name",
+                "type": "Option<String>"
+              },
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "PrismaMigrateCommands",
             "variant": "Status",
-            "line": 1273
+            "line": 1273,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "PrismaMigrateCommands",
             "variant": "Deploy",
-            "line": 1279
+            "line": 1279,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "CargoCommands",
             "variant": "Build",
-            "line": 1289
+            "line": 1289,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "CargoCommands",
             "variant": "Test",
-            "line": 1295
+            "line": 1295,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "CargoCommands",
             "variant": "Clippy",
-            "line": 1301
+            "line": 1301,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "CargoCommands",
             "variant": "Check",
-            "line": 1307
+            "line": 1307,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "CargoCommands",
             "variant": "Install",
-            "line": 1313
+            "line": 1313,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "CargoCommands",
             "variant": "Nextest",
-            "line": 1319
+            "line": 1319,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "CargoCommands",
             "variant": "Other",
-            "line": 1326
+            "line": 1326,
+            "arguments": []
           },
           {
             "enum": "DotnetCommands",
             "variant": "Build",
-            "line": 1332
+            "line": 1332,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "DotnetCommands",
             "variant": "Test",
-            "line": 1337
+            "line": 1337,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "DotnetCommands",
             "variant": "Restore",
-            "line": 1342
+            "line": 1342,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "DotnetCommands",
             "variant": "Format",
-            "line": 1347
+            "line": 1347,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "DotnetCommands",
             "variant": "Other",
-            "line": 1353
+            "line": 1353,
+            "arguments": []
           },
           {
             "enum": "GoCommands",
             "variant": "Test",
-            "line": 1359
+            "line": 1359,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GoCommands",
             "variant": "Build",
-            "line": 1365
+            "line": 1365,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GoCommands",
             "variant": "Vet",
-            "line": 1371
+            "line": 1371,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GoCommands",
             "variant": "Other",
-            "line": 1378
+            "line": 1378,
+            "arguments": []
           },
           {
             "enum": "SbtCommands",
             "variant": "Test",
-            "line": 1393
+            "line": 1393,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "SbtCommands",
             "variant": "Compile",
-            "line": 1399
+            "line": 1399,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "SbtCommands",
             "variant": "Run",
-            "line": 1405
+            "line": 1405,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "SbtCommands",
             "variant": "Other",
-            "line": 1412
+            "line": 1412,
+            "arguments": []
           },
           {
             "enum": "BunCommands",
             "variant": "Install",
-            "line": 1418
+            "line": 1418,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "BunCommands",
             "variant": "Run",
-            "line": 1423
+            "line": 1423,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "BunCommands",
             "variant": "Build",
-            "line": 1428
+            "line": 1428,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "BunCommands",
             "variant": "Test",
-            "line": 1433
+            "line": 1433,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "BunCommands",
             "variant": "Add",
-            "line": 1438
+            "line": 1438,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "BunCommands",
             "variant": "Remove",
-            "line": 1443
+            "line": 1443,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "BunCommands",
             "variant": "Pm",
-            "line": 1448
+            "line": 1448,
+            "arguments": [
+              {
+                "name": "command",
+                "type": "BunPmCommands"
+              }
+            ]
           },
           {
             "enum": "BunCommands",
             "variant": "X",
-            "line": 1453
+            "line": 1453,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "BunCommands",
             "variant": "Other",
-            "line": 1459
+            "line": 1459,
+            "arguments": []
           },
           {
             "enum": "BunPmCommands",
             "variant": "Ls",
-            "line": 1465
+            "line": 1465,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "BunPmCommands",
             "variant": "Other",
-            "line": 1471
+            "line": 1471,
+            "arguments": []
           },
           {
             "enum": "DenoCommands",
             "variant": "Run",
-            "line": 1477
+            "line": 1477,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "DenoCommands",
             "variant": "Check",
-            "line": 1482
+            "line": 1482,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "DenoCommands",
             "variant": "Lint",
-            "line": 1487
+            "line": 1487,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "DenoCommands",
             "variant": "Test",
-            "line": 1492
+            "line": 1492,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "DenoCommands",
             "variant": "Task",
-            "line": 1497
+            "line": 1497,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "DenoCommands",
             "variant": "Compile",
-            "line": 1502
+            "line": 1502,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "DenoCommands",
             "variant": "Install",
-            "line": 1507
+            "line": 1507,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "DenoCommands",
             "variant": "Other",
-            "line": 1513
+            "line": 1513,
+            "arguments": []
           },
           {
             "enum": "GtCommands",
             "variant": "Log",
-            "line": 1693
+            "line": 1693,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GtCommands",
             "variant": "Submit",
-            "line": 1698
+            "line": 1698,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GtCommands",
             "variant": "Sync",
-            "line": 1703
+            "line": 1703,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GtCommands",
             "variant": "Restack",
-            "line": 1708
+            "line": 1708,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GtCommands",
             "variant": "Create",
-            "line": 1713
+            "line": 1713,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GtCommands",
             "variant": "Branch",
-            "line": 1718
+            "line": 1718,
+            "arguments": [
+              {
+                "name": "args",
+                "type": "Vec<String>"
+              }
+            ]
           },
           {
             "enum": "GtCommands",
             "variant": "Other",
-            "line": 1724
+            "line": 1724,
+            "arguments": []
           }
         ]
       },
@@ -2790,67 +4153,85 @@
           {
             "enum": "GitCommand",
             "variant": "Diff",
-            "line": 22
+            "line": 22,
+            "arguments": []
           },
           {
             "enum": "GitCommand",
             "variant": "Log",
-            "line": 23
+            "line": 23,
+            "arguments": []
           },
           {
             "enum": "GitCommand",
             "variant": "Status",
-            "line": 24
+            "line": 24,
+            "arguments": []
           },
           {
             "enum": "GitCommand",
             "variant": "Show",
-            "line": 25
+            "line": 25,
+            "arguments": []
           },
           {
             "enum": "GitCommand",
             "variant": "Add",
-            "line": 26
+            "line": 26,
+            "arguments": []
           },
           {
             "enum": "GitCommand",
             "variant": "Commit",
-            "line": 27
+            "line": 27,
+            "arguments": []
           },
           {
             "enum": "GitCommand",
             "variant": "Checkout",
-            "line": 28
+            "line": 28,
+            "arguments": []
           },
           {
             "enum": "GitCommand",
             "variant": "Push",
-            "line": 29
+            "line": 29,
+            "arguments": []
           },
           {
             "enum": "GitCommand",
             "variant": "Pull",
-            "line": 30
+            "line": 30,
+            "arguments": []
           },
           {
             "enum": "GitCommand",
             "variant": "Branch",
-            "line": 31
+            "line": 31,
+            "arguments": []
           },
           {
             "enum": "GitCommand",
             "variant": "Fetch",
-            "line": 32
+            "line": 32,
+            "arguments": []
           },
           {
             "enum": "GitCommand",
             "variant": "Stash",
-            "line": 33
+            "line": 33,
+            "arguments": [
+              {
+                "name": "subcommand",
+                "type": "Option<String>"
+              }
+            ]
           },
           {
             "enum": "GitCommand",
             "variant": "Worktree",
-            "line": 34
+            "line": 34,
+            "arguments": []
           }
         ]
       },
@@ -2940,17 +4321,25 @@
           {
             "enum": "PnpmCommand",
             "variant": "List",
-            "line": 368
+            "line": 368,
+            "arguments": [
+              {
+                "name": "depth",
+                "type": "usize"
+              }
+            ]
           },
           {
             "enum": "PnpmCommand",
             "variant": "Outdated",
-            "line": 369
+            "line": 369,
+            "arguments": []
           },
           {
             "enum": "PnpmCommand",
             "variant": "Install",
-            "line": 370
+            "line": 370,
+            "arguments": []
           }
         ]
       },
@@ -2968,17 +4357,25 @@
           {
             "enum": "PrismaCommand",
             "variant": "Generate",
-            "line": 12
+            "line": 12,
+            "arguments": []
           },
           {
             "enum": "PrismaCommand",
             "variant": "Migrate",
-            "line": 13
+            "line": 13,
+            "arguments": [
+              {
+                "name": "subcommand",
+                "type": "MigrateSubcommand"
+              }
+            ]
           },
           {
             "enum": "PrismaCommand",
             "variant": "DbPush",
-            "line": 14
+            "line": 14,
+            "arguments": []
           }
         ]
       },
@@ -3164,32 +4561,38 @@
           {
             "enum": "CargoCommand",
             "variant": "Build",
-            "line": 17
+            "line": 17,
+            "arguments": []
           },
           {
             "enum": "CargoCommand",
             "variant": "Test",
-            "line": 18
+            "line": 18,
+            "arguments": []
           },
           {
             "enum": "CargoCommand",
             "variant": "Clippy",
-            "line": 19
+            "line": 19,
+            "arguments": []
           },
           {
             "enum": "CargoCommand",
             "variant": "Check",
-            "line": 20
+            "line": 20,
+            "arguments": []
           },
           {
             "enum": "CargoCommand",
             "variant": "Install",
-            "line": 21
+            "line": 21,
+            "arguments": []
           },
           {
             "enum": "CargoCommand",
             "variant": "Nextest",
-            "line": 22
+            "line": 22,
+            "arguments": []
           }
         ]
       },
