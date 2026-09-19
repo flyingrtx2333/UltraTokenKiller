@@ -69,7 +69,7 @@ def prompt():
         "Do not edit tests or any other file. You have exactly three tool rounds and then a final answer. "
         "Round 1: one shell call with exactly: grep -n -H . calculator.py\n"
         "Use the raw command; the installed UTK hook wraps it automatically. "
-        "Round 2: call utk_retrieve with the handle from the result, offset 0, limit 16000. Read the recovered source. "
+        "Round 2: call utk_retrieve with the handle from the result, offset 0, limit 32000. Read the recovered source. "
         "Round 3: ONE shell call containing a script that edits calculator.py, runs python -m pytest -q, "
         "and then runs git diff -- calculator.py. Do not use apply_patch or split this script into separate tool calls. "
         "After the tests pass and the diff shows only the intended fix, answer exactly UTK_REAL_RECOVERY_OK. "

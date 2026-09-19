@@ -5,6 +5,12 @@ from ultratokenkiller.hooks import codex_event, hermes_terminal, rewrite_literal
 SESSION = "a"*32
 
 
+def test_non_shell_tool_with_command_field_is_not_rewritten():
+    event = {"hook_event_name": "PreToolUse", "tool_name": "other_tool",
+             "tool_input": {"command": "git status"}}
+    assert codex_event(event, SESSION) == {}
+
+
 @pytest.mark.parametrize("command", ["git status | cat", "git diff > patch", 'rg -n "foo bar" .', "git status; exit", "git push", "git commit -m change", "utk exec -- git status", "git status && echo hi", "git diff $(whoami)"])
 def test_unsafe_and_write_commands_not_rewritten(command):
     assert rewrite_literal(command, SESSION) is None

@@ -16,6 +16,9 @@ def test_fixture_is_large_enough_for_tool_output_compression(tmp_path):
     source = (root / "calculator.py").read_text(encoding="utf-8")
     assert source.count("# Contract note ") == 220
     assert 12_000 <= len(source) <= 16_000
+    raw_search = "".join(f"calculator.py:{i}:{line}\n" for i, line in enumerate(source.splitlines(), 1))
+    assert len(raw_search) <= 32000
+    assert "limit 32000" in prompt()
 
 
 @pytest.mark.skipif(not shutil.which("git"), reason="Git unavailable")

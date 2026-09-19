@@ -39,6 +39,8 @@ def codex_event(event: dict, session: str):
     if event.get("hook_event_name") != "PreToolUse":
         return {}
     tool = event.get("tool_name")
+    if tool not in {"Bash", "shell", "shell_command", "exec_command", "functions.exec_command", "functions.shell", "functions.shell_command", "command_execution"}:
+        return {}
     inputs = event.get("tool_input")
     if not isinstance(inputs, dict):
         return {}

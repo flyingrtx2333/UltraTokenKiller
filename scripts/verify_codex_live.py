@@ -14,7 +14,7 @@ from pathlib import Path
 
 import httpx
 
-from ultratokenkiller.budgets import budget_status
+from ultratokenkiller.budgets import budget_status, authorize_ceiling
 from ultratokenkiller.config import Settings, choose_port
 from ultratokenkiller.integrations import CodexAdapter
 from ultratokenkiller.runtime import start_processes, stop_processes
@@ -67,6 +67,7 @@ def main():
     parser.add_argument("--model", required=True)
     parser.add_argument("--run-id", required=True)
     parser.add_argument("--request-limit", type=int, required=True)
+    parser.add_argument("--authorize-ceiling", type=int, help="Explicit cumulative ceiling authorized by the operator")
     parser.add_argument("--response-profile", choices=["off", "lite", "full", "ultra"], default="lite")
     parser.add_argument("--offline-preflight", action="store_true")
     scenario = parser.add_mutually_exclusive_group()
@@ -94,6 +95,10 @@ def main():
     except ValueError as error:
         raise SystemExit(str(error)) from error
     home.mkdir(parents=True, exist_ok=True)
+    if arguments.authorize_ceiling is not None:
+        if arguments.authorize_ceiling != arguments.request_limit:
+            raise SystemExit("Authorized ceiling must match request limit")
+        authorize_ceiling(home, arguments.authorize_ceiling)
     session = secrets.token_hex(16)
     working = home
     coding_baseline = None
@@ -138,7 +143,7 @@ def main():
         checked = json.loads(check.stdout)
         if checked.get("result", {}).get("isError") or "result" not in checked:
             raise RuntimeError("Offline MCP preflight failed: "+str(checked.get("error", checked.get("result", {}))))
-        if os.name == "nt":
+        if os.name == "nt" or sys.platform == "darwin":
             sandbox_session = secrets.token_hex(16)
             sandbox_arguments = ["utk", "exec", "--session", sandbox_session, "--", "grep", "-n", "-H", ".", fixture.name]
             sandbox_working = home
@@ -149,8 +154,11 @@ def main():
                 rewrite = codex_event(event, sandbox_session)["hookSpecificOutput"]["updatedInput"]["command"]
                 sandbox_arguments = rewrite.split()
                 sandbox_working = working
-            sandbox_check = run_owned(command + ["sandbox", "--permissions-profile", ":workspace",
-                "-c", 'windows.sandbox="unelevated"', "-C", str(sandbox_working)] + sandbox_arguments,
+            sandbox_flags = (["--permission-profile", "utk_acceptance",
+                "-c", 'permissions.utk_acceptance.extends=":workspace"',
+                "-c", "permissions.utk_acceptance.network.enabled=true"] if sys.platform == "darwin" else
+                ["--permissions-profile", ":workspace", "-c", 'windows.sandbox="unelevated"'])
+            sandbox_check = run_owned(command + ["sandbox"] + sandbox_flags + ["-C", str(sandbox_working)] + sandbox_arguments,
                 input="", timeout=30)
             if sandbox_check.returncode or "UTK original:" not in sandbox_check.stdout:
                 print("Sandbox preflight exit:", sandbox_check.returncode, flush=True)
@@ -159,9 +167,14 @@ def main():
                 raise RuntimeError("Offline sandbox tool compression failed; model submissions were not attempted")
             sandbox_hash = hashlib.sha256(sandbox_session.encode()).hexdigest()
             sandbox_events = Store(home / "metrics.sqlite3").events(100)
-            if not any(e["kind"] == "tool" and e["metadata"].get("session_id") == sandbox_hash
-                       and e["metadata"].get("optimized") for e in sandbox_events):
+            matching = [e for e in sandbox_events if e["kind"] == "tool"
+                        and e["metadata"].get("session_id") == sandbox_hash and e["metadata"].get("optimized")]
+            if not matching:
                 raise RuntimeError("Offline sandbox metrics preflight failed; model submissions were not attempted")
+            from ultratokenkiller.broker import BrokerClient
+            recovered = BrokerClient(home).retrieve(sandbox_session, matching[0]["metadata"]["recovery_id"], limit=32000)
+            if arguments.coding_task and "return numerator // denominator" not in recovered["content"]:
+                raise RuntimeError("Sandbox recovery omitted the target code; model submissions were not attempted")
         hook_trust = {}
         if arguments.coding_task:
             from ultratokenkiller.codex_hook_trust import approve_session_hook
@@ -189,6 +202,10 @@ def main():
         }
         if os.name == "nt":
             overrides["windows.sandbox"] = "unelevated"
+        if sys.platform == "darwin":
+            overrides["permissions.utk_acceptance.extends"] = ":workspace"
+            overrides["permissions.utk_acceptance.network.enabled"] = True
+            overrides["default_permissions"] = "utk_acceptance"
         if arguments.coding_task:
             automatic, scoped = session_overrides(settings, home, session)
             overrides.update(automatic)
@@ -196,7 +213,8 @@ def main():
             os.environ.update(scoped)
             overrides["developer_instructions"] = "This is a bounded coding acceptance task. Only modify calculator.py, run its tests and inspect its diff. Preserve tests. Run the requested raw grep command exactly; UTK's installed hook wraps it. Do not wrap commands in rtk or headroom. Do not explore other directories or spawn agents."
             overrides["projects"] = {str(working): {"trust_level": "trusted"}}
-        command += ["exec", "--ignore-user-config", "--ephemeral", "--json", "--skip-git-repo-check", "--sandbox", "workspace-write", "-C", str(working), "-m", model]
+        sandbox_flags = [] if sys.platform == "darwin" else ["--sandbox", "workspace-write"]
+        command += ["exec", "--ignore-user-config", "--ephemeral", "--json", "--skip-git-repo-check"] + sandbox_flags + ["-C", str(working), "-m", model]
         for key, value in overrides.items():
             command += ["-c", key+"="+toml_value(value)]
         command += ["-c", 'model_providers.utk_acceptance.env_http_headers={"X-UTK-Session-Id"="UTK_SESSION_ID"}']
@@ -280,7 +298,7 @@ def main():
             report["baseline_tests"] = {"failed": coding_baseline["baseline_failed"], "passed": coding_baseline["baseline_passed"]}
         report["passed"] = acceptance_passed(report)
         (home / "report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
-        (home / f"report-{report['budget']['consumed']:03d}.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+        (home / f"report-{report['budget']['consumed']:03d}-{time.time_ns()}.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
         print(json.dumps(report, indent=2), flush=True)
     finally:
         stop_processes(home)
