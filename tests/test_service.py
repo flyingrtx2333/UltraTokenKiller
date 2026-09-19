@@ -15,3 +15,4 @@ def test_management_writes_require_session_token(tmp_path, monkeypatch):
     response = client.patch("/api/v1/config", json={"profile": "off"}, headers={"X-UTK-Token": config["session_token"]})
     assert response.status_code == 200
     assert response.json()["profile"] == "off"
+    assert client.get("/api/v1/benchmarks/latest").status_code == 404

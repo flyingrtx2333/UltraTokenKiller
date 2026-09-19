@@ -27,7 +27,7 @@ if not token_path.exists():
     token_path.write_text(secrets.token_urlsafe(32), encoding="ascii")
 session_token = token_path.read_text(encoding="ascii").strip()
 
-app = FastAPI(title="UltraTokenKiller", version="0.1.0", docs_url=None, redoc_url=None)
+app = FastAPI(title="UltraTokenKiller", version="0.2.0", docs_url=None, redoc_url=None)
 from .broker import broker_router
 from .recovery import RecoveryVault
 
@@ -39,6 +39,20 @@ app.include_router(broker_router(recovery_vault, session_token, home))
 def api_capabilities():
     from .benchmark import capability_report
     return capability_report()
+
+
+@app.get("/api/v1/benchmarks/latest")
+def api_benchmark_latest(kind: str = Query("compression", pattern="^(compression|response)$")):
+    path = home / "reports" / f"{kind}-latest.json"
+    if not path.is_file():
+        return JSONResponse({"schema_version": 1, "status": "not_run", "kind": kind}, status_code=404)
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        raise HTTPException(500, "Stored benchmark report is invalid") from None
+    if not isinstance(data, dict) or data.get("status") != "completed":
+        raise HTTPException(500, "Stored benchmark report is invalid")
+    return data
 
 
 def clients() -> list[dict]:

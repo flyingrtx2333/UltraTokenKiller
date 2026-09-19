@@ -23,11 +23,26 @@ app = typer.Typer(help="UltraTokenKiller 本地 Token 优化控制台", no_args_
 
 
 @app.command()
-def capabilities():
+def capabilities(
+    json_output: bool = typer.Option(True, "--json/--no-json", help="输出机器可读 JSON；默认开启。"),
+):
     """显示固定对标基线和真实验证状态。"""
     import json
     from .benchmark import capability_report
-    typer.echo(json.dumps(capability_report(), ensure_ascii=False, indent=2))
+    report = capability_report()
+    if json_output:
+        typer.echo(json.dumps(report, ensure_ascii=False, indent=2))
+        return
+    summary = report["summary"]
+    typer.echo(
+        f"核心能力 {report['total_core_capabilities']} 项："
+        f"上游对标 {summary['upstream_parity_passed']}，真实客户端 {summary['real_client_passed']}，"
+        f"离线通过 {summary['offline_passed']}，待验证 {summary['implemented_unverified']}，"
+        f"未实现 {summary['not_implemented']}"
+    )
+    typer.echo(
+        f"命令契约 {report['reviewed_command_contracts']}；发现枚举 {report['discovered_command_variants']}（不作为覆盖率分母）"
+    )
 
 
 @app.command("assets")
@@ -45,22 +60,31 @@ def assets(action: str = typer.Argument("status")):
 @app.command()
 def benchmark(mode: str = typer.Option("native", help="passthrough、prototype、native、upstream"),
               output: Path | None = typer.Option(None), live: bool = typer.Option(False),
-              max_requests: int | None = typer.Option(None)):
+              max_requests: int | None = typer.Option(None),
+              reference: Path | None = typer.Option(None, help="固定上游隔离运行结果"),
+              model: str | None = typer.Option(None, help="离线 token 计数对应模型"),
+              response_pairs: Path | None = typer.Option(None, help="回答精简成对评测 JSON")):
     """离线对照评测；从不隐式调用模型。"""
     import json
-    from .benchmark import run_benchmark
+    from .benchmark import run_benchmark, save_report
     if live:
         if max_requests is None or max_requests <= 0:
             raise typer.BadParameter("真实评测必须设置正数 --max-requests")
         raise typer.BadParameter("真实模型评测运行器尚未验收；没有提交任何请求")
     try:
-        report = run_benchmark(mode)
+        if response_pairs:
+            from .response_benchmark import evaluate_pairs
+            report = evaluate_pairs(response_pairs, model)
+        else:
+            report = run_benchmark(mode, reference=reference, model=model)
     except ValueError as error:
         raise typer.BadParameter(str(error)) from error
     rendered = json.dumps(report, ensure_ascii=False, indent=2)
     if output:
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_text(rendered, encoding="utf-8")
+    if report["status"] == "completed":
+        save_report(report, "response" if response_pairs else "compression")
     typer.echo(rendered)
     if report["status"] != "completed":
         raise typer.Exit(2)

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ultratokenkiller"
-version = "0.1.0"
+version = "0.2.0"
 description = "Native local input compression, tool output compression and concise agent responses"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -22,6 +22,8 @@ dependencies = [
   "onnxruntime>=1.20,<2",
   "tokenizers>=0.20,<1",
   "numpy>=1.26,<3",
+  "tiktoken==0.14.0",
+  "pillow==12.3.0",
 ]
 
 [project.optional-dependencies]
