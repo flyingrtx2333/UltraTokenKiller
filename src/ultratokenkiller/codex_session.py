@@ -51,13 +51,15 @@ def toml_value(value):
     raise ValueError("Unsupported Codex override value")
 
 
-def local_broker_permissions(home, profile="utk_acceptance"):
+def local_broker_permissions(home, profile="utk_acceptance", parent=":workspace"):
     """Isolated acceptance policy: workspace writes, one socket, no domains.
 
     Requires ignore-user-config so older sandbox settings cannot override it.
     network.enabled alone is NOT restrictive; the proxy is mandatory.
     """
     from .local_transport import broker_socket
+    if parent not in {":workspace", ":read-only"}:
+        raise ValueError("Unsupported local broker filesystem policy")
     path = broker_socket(Path(home))
     if path is None:
         raise ValueError("Unix broker permissions require a Unix host")
@@ -66,13 +68,59 @@ def local_broker_permissions(home, profile="utk_acceptance"):
     return {
         "default_permissions": profile,
         "features.network_proxy": True,
-        f"permissions.{profile}.extends": ":workspace",
+        f"permissions.{profile}.extends": parent,
         f"permissions.{profile}.network.enabled": True,
         f"permissions.{profile}.network.proxy_url": f"http://127.0.0.1:{port}",
         f"permissions.{profile}.network.enable_socks5": False,
         f"permissions.{profile}.network.domains": {},
         f"permissions.{profile}.network.unix_sockets": {str(path): "allow"},
     }
+
+
+def macos_broker_overrides(home, working, session, config, arguments):
+    """Add local IPC only for verified basic policies, without rewriting config.
+
+    Explicit permission overrides, legacy settings and custom profiles must not
+    silently lose rules when adding the IPC proxy. Refuse these before startup.
+    """
+    if sys.platform != "darwin":
+        return {}
+    unsupported = {"sandbox_mode", "sandbox_workspace_write", "profile"} & config.keys()
+    feature = config.get("features", {}).get("network_proxy")
+    if unsupported or feature not in (None, False):
+        raise ValueError("Automatic Mac IPC is not verified with legacy sandbox or existing network proxy settings; original configuration was preserved")
+    try:
+        import tomllib
+    except ImportError:
+        import tomli as tomllib
+    restricted = {"sandbox_mode", "sandbox_workspace_write", "default_permissions", "permissions", "features", "profile", "profiles"}
+    for index, arg in enumerate(arguments):
+        if arg == "--":
+            break
+        if arg in {"-s", "--sandbox", "-p", "--profile", "--full-auto", "--approve-for-me", "--dangerously-bypass-approvals-and-sandbox"} or arg.startswith(("--sandbox=", "--profile=")) or (arg.startswith(("-s", "-p")) and not arg.startswith("--")):
+            raise ValueError("Explicit permission/profile flags cannot be combined with automatic Mac IPC")
+        value = arguments[index + 1] if arg in {"-c", "--config"} and index + 1 < len(arguments) else arg.split("=", 1)[1] if arg.startswith("--config=") else arg[2:] if arg.startswith("-c") else ""
+        key = value.split("=", 1)[0]
+        try:
+            roots = set(tomllib.loads(key + "=0")) if key else set()
+        except ValueError as error:
+            raise ValueError("Unparseable config override; automatic Mac IPC was not applied") from error
+        if roots & restricted:
+            raise ValueError("Explicit permission/profile overrides cannot be combined with automatic Mac IPC")
+    parent = config.get("default_permissions")
+    if parent is None:
+        # Match Codex's implicit profile: a known project (including explicitly
+        # untrusted ones) gets workspace policy; otherwise remain read-only.
+        known = False
+        for path, project in config.get("projects", {}).items():
+            candidate = Path(path).expanduser().resolve()
+            if (candidate == working or candidate in working.parents) and project.get("trust_level") in {"trusted", "untrusted"}:
+                known = True
+                break
+        parent = ":workspace" if known else ":read-only"
+    if parent not in {":workspace", ":read-only"}:
+        raise ValueError("Automatic Mac IPC is not verified with this custom permission profile; original configuration was preserved")
+    return local_broker_permissions(home, "utk_local_" + session[:12], parent)
 
 
 def session_overrides(settings, home, session, config=None):
@@ -123,6 +171,8 @@ def validate_client(adapter, executable):
     match = re.search(r"\b(\d+\.\d+\.\d+)\b", version)
     if not match or match[1] not in VERIFIED_CODEX:
         raise ValueError("This Codex version has not been verified for automatic UTK sessions")
+    if sys.platform == "darwin" and match[1] != "0.153.4":
+        raise ValueError("Automatic Mac IPC has only been verified with Codex 0.153.4")
     if not adapter._uses_chatgpt_auth():
         raise ValueError("Automatic sessions currently require verified existing subscription login; no API fallback")
     try:
@@ -180,9 +230,75 @@ def ensure_route(home):
     raise ValueError("UTK route identity could not be verified; no Codex request was submitted")
 
 
-def launch(arguments, home=None):
+def session_command(executable, arguments, overrides):
+    """Keep all config flags in the final CLI scope (Codex 0.153.4).
+
+    Clap drops root config flags when the subcommand also has config flags.
+    Collect user flags in order, then append managed flags in that same scope.
+    Arguments after -- are positional and must never be parsed or reordered.
+    """
+    command = list(executable)
+    configs = []
+    tail = []
+    index = 0
+    while index < len(arguments):
+        arg = arguments[index]
+        if arg == "--":
+            tail = arguments[index:]
+            break
+        if arg in {"-c", "--config"}:
+            index += 1
+            if index >= len(arguments):
+                raise ValueError("Missing Codex config override")
+            configs.extend(["-c", arguments[index]])
+        elif arg.startswith("--config="):
+            configs.extend(["-c", arg.split("=", 1)[1]])
+        elif arg.startswith("-c") and not arg.startswith("--"):
+            configs.extend(["-c", arg[2:]])
+        else:
+            command.append(arg)
+        index += 1
+    command.extend(configs)
+    for key, value in overrides.items():
+        command.extend(["-c", key + "=" + toml_value(value)])
+    return command + tail
+
+
+def verify_session_config(executable, command, working, overrides):
+    """Fail closed on effective route/MCP binding before any model submission."""
+    from .codex_hook_trust import inspect_codex
+    flags = []
+    args = command[len(executable):]
+    index = 0
+    while index < len(args):
+        if args[index] == "--":
+            break
+        if args[index] == "-c":
+            flags.extend(args[index:index + 2])
+            index += 1
+        index += 1
+    config = inspect_codex(list(executable) + ["app-server"] + flags, working,
+        "config/read", {"includeLayers": False, "cwd": str(working)})["config"]
+    provider = overrides["model_provider"]
+    expected_url = overrides[f"model_providers.{provider}.base_url"]
+    actual_url = config.get("model_providers", {}).get(provider, {}).get("base_url")
+    recovery = config.get("mcp_servers", {}).get("utk_recovery", {})
+    if (config.get("model_provider") != provider or actual_url != expected_url
+            or recovery.get("command") != overrides["mcp_servers.utk_recovery.command"]
+            or recovery.get("env") != overrides["mcp_servers.utk_recovery.env"]):
+        raise ValueError("Effective Codex route or recovery binding differs; no model request was submitted")
+
+
+def launch(arguments, home=None, *, session_id=None):
     if any(x in {"resume", "fork"} for x in arguments):
         raise ValueError("Resume/fork session recovery binding is not yet verified")
+    for argument in arguments:
+        if argument == "--":
+            break
+        if (argument in {"--oss", "--local-provider", "--profile", "-p"}
+                or argument.startswith(("--local-provider=", "--profile="))
+                or (argument.startswith("-p") and not argument.startswith("--"))):
+            raise ValueError("Provider/profile selection can bypass the verified UTK route; no request was submitted")
     root = Path(home or default_home()).expanduser().resolve()
     working = Path.cwd()
     for index, argument in enumerate(arguments):
@@ -199,15 +315,17 @@ def launch(arguments, home=None):
     executable = codex_executable()
     config = validate_client(CodexAdapter(), executable)
     # Validate conflicting MCP/hooks configuration before starting or writing anything.
-    session = secrets.token_hex(16)
+    session = session_id or secrets.token_hex(16)
+    if not re.fullmatch(r"[a-f0-9]{32}", session):
+        raise ValueError("Invalid UTK session")
+    permissions = macos_broker_overrides(root, working, session, config, arguments)
     session_overrides(Settings.load(root), root, session, config)
     settings = ensure_route(root)
     overrides, scoped = session_overrides(settings, root, session, config)
+    overrides.update(permissions)
     from .codex_hook_trust import approve_session_hook
     overrides.update(approve_session_hook(executable, overrides, working))
-    command = list(executable)
-    for key, value in overrides.items():
-        command.extend(["-c", key + "=" + toml_value(value)])
-    command.extend(arguments)
+    command = session_command(executable, arguments, overrides)
+    verify_session_config(executable, command, working, overrides)
     environment = {**os.environ, **scoped}
     return subprocess.call(command, env=environment)

@@ -1,0 +1,142 @@
+{
+  "client": "codex",
+  "model": "gpt-5.6-luna",
+  "authentication": "existing_subscription",
+  "exit_code": 0,
+  "timed_out": false,
+  "recovery_only": false,
+  "final_marker": true,
+  "event_types": [
+    "thread.started",
+    "turn.started",
+    "item.started",
+    "item.completed",
+    "item.started",
+    "item.completed",
+    "item.completed",
+    "turn.completed"
+  ],
+  "tools": [
+    {
+      "type": "command_execution",
+      "status": "in_progress",
+      "tool": null,
+      "error_types": [],
+      "exit_code": null,
+      "error_category": null
+    },
+    {
+      "type": "command_execution",
+      "status": "completed",
+      "tool": null,
+      "error_types": [],
+      "exit_code": 0,
+      "error_category": null
+    },
+    {
+      "type": "mcp_tool_call",
+      "status": "in_progress",
+      "tool": "utk_retrieve",
+      "error_types": [],
+      "exit_code": null,
+      "error_category": null
+    },
+    {
+      "type": "mcp_tool_call",
+      "status": "completed",
+      "tool": "utk_retrieve",
+      "error_types": [],
+      "exit_code": null,
+      "error_category": null
+    }
+  ],
+  "budget": {
+    "consumed": 52,
+    "ceiling": 60
+  },
+  "submissions_this_run": 4,
+  "provider_usage_records": 4,
+  "optimized_command_records": 1,
+  "original_config_unchanged": true,
+  "config_changes": {
+    "preflight": {
+      "bytes_unchanged": true,
+      "semantic_unchanged": true,
+      "changed_sections": [],
+      "other_sections_changed": false
+    },
+    "client_run": {
+      "bytes_unchanged": true,
+      "semantic_unchanged": true,
+      "changed_sections": [],
+      "other_sections_changed": false
+    }
+  },
+  "response_profile": "lite",
+  "launcher": true,
+  "automatic_hook_records": 1,
+  "client_reported_usage": {
+    "input_tokens": 48083,
+    "cached_input_tokens": 22016,
+    "output_tokens": 959
+  },
+  "proxy_usage_observations": [
+    {
+      "status": "observed",
+      "usage_objects": 1,
+      "terminal_events": 1,
+      "sse_content_type": false,
+      "sse_detected": true,
+      "bytes_seen": 63055,
+      "data_lines": 14,
+      "json_events": 14,
+      "parse_errors": 0,
+      "cr_seen": 0,
+      "lf_seen": 42
+    },
+    {
+      "status": "observed",
+      "usage_objects": 1,
+      "terminal_events": 1,
+      "sse_content_type": false,
+      "sse_detected": true,
+      "bytes_seen": 95640,
+      "data_lines": 105,
+      "json_events": 105,
+      "parse_errors": 0,
+      "cr_seen": 0,
+      "lf_seen": 315
+    },
+    {
+      "status": "observed",
+      "usage_objects": 1,
+      "terminal_events": 1,
+      "sse_content_type": false,
+      "sse_detected": true,
+      "bytes_seen": 73671,
+      "data_lines": 49,
+      "json_events": 49,
+      "parse_errors": 0,
+      "cr_seen": 0,
+      "lf_seen": 147
+    },
+    {
+      "status": "observed",
+      "usage_objects": 1,
+      "terminal_events": 1,
+      "sse_content_type": false,
+      "sse_detected": true,
+      "bytes_seen": 70944,
+      "data_lines": 38,
+      "json_events": 38,
+      "parse_errors": 0,
+      "cr_seen": 0,
+      "lf_seen": 114
+    }
+  ],
+  "sandbox_transport": "unix_socket_allowlist",
+  "sandbox_network_isolation_verified": true,
+  "input_compressed_records": 2,
+  "scope": "tools_recovery",
+  "passed": true
+}

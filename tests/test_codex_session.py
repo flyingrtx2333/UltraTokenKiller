@@ -47,7 +47,11 @@ def test_client_gate_preserves_config_and_rejects_unknown_version(tmp_path, monk
     (tmp_path / "auth.json").write_text('{"auth_mode":"chatgpt"}', encoding="utf-8")
     before = adapter.config.read_bytes()
     monkeypatch.setattr(subprocess, "run", lambda *a, **k: subprocess.CompletedProcess(a, 0, "codex-cli 0.138.0"))
-    assert codex_session.validate_client(adapter, ["codex"])["model"] == "kept"
+    if sys.platform == "darwin":
+        with pytest.raises(ValueError, match="only been verified"):
+            codex_session.validate_client(adapter, ["codex"])
+    else:
+        assert codex_session.validate_client(adapter, ["codex"])["model"] == "kept"
     monkeypatch.setattr(subprocess, "run", lambda *a, **k: subprocess.CompletedProcess(a, 0, "codex-cli 0.153.4"))
     assert codex_session.validate_client(adapter, ["codex"])["model"] == "kept"
     monkeypatch.setattr(subprocess, "run", lambda *a, **k: subprocess.CompletedProcess(a, 0, "codex-cli 0.139.0"))
@@ -91,6 +95,7 @@ def test_real_hook_stdio_utf8_produces_valid_rewrite(monkeypatch):
 
 def test_launcher_scopes_environment_and_uses_selected_directory(tmp_path, monkeypatch):
     seen = {}
+    monkeypatch.setattr(codex_session, "verify_session_config", lambda *a: None)
     monkeypatch.setattr(codex_session, "codex_executable", lambda: ["codex"])
     monkeypatch.setattr(codex_session, "validate_client", lambda *a: {"model": "preserved"})
     monkeypatch.setattr(codex_session, "ensure_route", lambda *a: Settings())
@@ -107,6 +112,6 @@ def test_launcher_scopes_environment_and_uses_selected_directory(tmp_path, monke
     arguments = ["exec", "-C", str(tmp_path), "--model", "gpt-5.6-luna", "task"]
     assert codex_session.launch(arguments, tmp_path / "utk") == 7
     assert seen["cwd"] == tmp_path
-    assert seen["command"][-len(arguments):] == arguments
+    assert seen["command"][1:1 + len(arguments)] == arguments
     assert seen["environment"]["UTK_CLIENT"] == "codex"
     assert dict(os.environ) == before

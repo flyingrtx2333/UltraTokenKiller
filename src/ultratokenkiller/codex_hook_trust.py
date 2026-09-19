@@ -23,10 +23,13 @@ def utk_hook_command():
 
 
 def list_hooks(executable, overrides, cwd, timeout=20):
-    from .codex_session import toml_value
-    command = list(executable) + ["app-server"]
-    for key, value in overrides.items():
-        command += ["-c", key + "=" + toml_value(value)]
+    from .codex_session import session_command
+    command = session_command(executable, ["app-server"], overrides)
+    return inspect_codex(command, cwd, "hooks/list", {"cwds": [str(Path(cwd).resolve())]}, timeout)
+
+
+def inspect_codex(command, cwd, method, params, timeout=20):
+    """Bounded metadata-only RPC; never starts a model turn."""
     job = WindowsJob() if sys.platform == "win32" else None
     process = None
     reader = None
@@ -71,7 +74,7 @@ def list_hooks(executable, overrides, cwd, timeout=20):
               "capabilities": {"experimentalApi": True}}})
         response(1)
         send({"method": "initialized", "params": {}})
-        send({"id": 2, "method": "hooks/list", "params": {"cwds": [str(Path(cwd).resolve())]}})
+        send({"id": 2, "method": method, "params": params})
         return response(2)
     finally:
         stop.set()

@@ -20,7 +20,7 @@ from ultratokenkiller.integrations import CodexAdapter
 from ultratokenkiller.runtime import start_processes, stop_processes
 from ultratokenkiller.store import Store
 from ultratokenkiller.processes import run_owned
-from ultratokenkiller.codex_session import codex_executable, session_overrides, toml_value, validate_client, local_broker_permissions
+from ultratokenkiller.codex_session import codex_executable, session_overrides, toml_value, validate_client, local_broker_permissions, macos_broker_overrides
 from ultratokenkiller import coding_acceptance
 
 
@@ -76,6 +76,13 @@ def config_change_summary(before, after):
             "other_sections_changed": bool(changed - known)}
 
 
+def recovery_marker(event, previous=False):
+    item = event.get("item", {})
+    if event.get("type") == "item.completed" and item.get("type") == "agent_message":
+        return item.get("text", "").strip() == "UTK_REAL_RECOVERY_OK"
+    return previous
+
+
 def acceptance_passed(report):
     terminal = [t for t in report["tools"] if t.get("status") != "in_progress"]
     commands = [t for t in terminal if t.get("type") == "command_execution"]
@@ -83,11 +90,14 @@ def acceptance_passed(report):
     needed = 0 if report["scope"] == "recovery_only" else 1 if report["scope"] in {"tools_recovery", "input_recovery"} else 2
     return bool(
         report["exit_code"] == 0 and not report["timed_out"] and report["final_marker"]
+        and report.get("submissions_this_run", 0) > 0
+        and report.get("provider_usage_records", 0) > 0
         and report["original_config_unchanged"] and len(commands) == needed
         and all(t.get("status") == "completed" and t.get("exit_code") in (None, 0) for t in commands)
         and recovery and all(t.get("status") == "completed" and not t.get("error_types") for t in recovery)
         and (needed == 0 or report["scope"] == "input_recovery" or report["optimized_command_records"] > 0)
         and (report["scope"] != "input_recovery" or report["input_compressed_records"] > 0)
+        and (not report.get("launcher") or report.get("automatic_hook_records", 0) > 0)
         and (needed < 2 or report["scope"] == "coding_task" or report["input_compressed_records"] > 0)
         and (report["scope"] != "coding_task" or (report.get("automatic_hook_records", 0) > 0
              and report.get("coding_verification", {}).get("passed", False)))
@@ -106,12 +116,15 @@ def main():
     parser.add_argument("--authorize-ceiling", type=int, help="Explicit cumulative ceiling authorized by the operator")
     parser.add_argument("--response-profile", choices=["off", "lite", "full", "ultra"], default="lite")
     parser.add_argument("--offline-preflight", action="store_true")
+    parser.add_argument("--launcher", action="store_true", help="Verify the everyday launch function with original user config")
     scenario = parser.add_mutually_exclusive_group()
     scenario.add_argument("--recovery-only", action="store_true")
     scenario.add_argument("--tools-only", action="store_true")
     scenario.add_argument("--coding-task", action="store_true")
     scenario.add_argument("--input-only", action="store_true")
     arguments = parser.parse_args()
+    if arguments.launcher and not arguments.tools_only:
+        raise SystemExit("Launcher acceptance currently requires --tools-only")
     root = Path(__file__).resolve().parents[1]
     import re
     if not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", arguments.run_id) or arguments.request_limit < 1:
@@ -181,6 +194,8 @@ def main():
         if checked.get("result", {}).get("isError") or "result" not in checked:
             raise RuntimeError("Offline MCP preflight failed: "+str(checked.get("error", checked.get("result", {}))))
         ipc_permissions = local_broker_permissions(home) if sys.platform == "darwin" else {}
+        if arguments.launcher:
+            ipc_permissions = macos_broker_overrides(home, working, session, config, [])
         if os.name == "nt" or sys.platform == "darwin":
             sandbox_session = secrets.token_hex(16)
             sandbox_arguments = ["utk", "exec", "--session", sandbox_session, "--", "grep", "-n", "-H", ".", fixture.name]
@@ -192,7 +207,7 @@ def main():
                 rewrite = codex_event(event, sandbox_session)["hookSpecificOutput"]["updatedInput"]["command"]
                 sandbox_arguments = rewrite.split()
                 sandbox_working = working
-            sandbox_flags = (["--permission-profile", "utk_acceptance"] +
+            sandbox_flags = (["--permission-profile", ipc_permissions["default_permissions"]] +
                 [part for key, value in ipc_permissions.items() for part in ("-c", key + "=" + toml_value(value))] if sys.platform == "darwin" else
                 ["--permissions-profile", ":workspace", "-c", 'windows.sandbox="unelevated"'])
             sandbox_check = run_owned(command + ["sandbox"] + sandbox_flags + ["-C", str(sandbox_working)] + sandbox_arguments,
@@ -290,6 +305,21 @@ def main():
                 "Verify UTK_RECOVERY_PROOF is in the recovered text, then answer exactly UTK_REAL_RECOVERY_OK. "
                 "Use no other tools or commands; if a step fails, stop and report the failure."
             )
+        if arguments.launcher:
+            command = [sys.executable, "-c",
+                "import os,sys; from ultratokenkiller.codex_session import launch; "
+                "raise SystemExit(launch(sys.argv[1:], session_id=os.environ['UTK_SESSION_ID']))",
+                "exec", "--ephemeral", "--json", "--skip-git-repo-check", "-C", str(working), "-m", model,
+                "-c", "approval_policy=\"never\"", "-c", "shell_environment_policy.inherit=\"all\"",
+                "-c", "projects=" + toml_value({str(working): {"trust_level": "trusted"}}), "-"]
+            prompt = (
+                "Bounded launcher acceptance. Run exactly ONE raw shell command: "
+                "grep -n -H . acceptance-fixture.log\n"
+                "Do not wrap it in utk or rtk; the installed UTK hook handles it. "
+                "Use utk_retrieve once on the recovery handle, offset 0, limit 2000. "
+                "Verify UTK_RECOVERY_PROOF, then answer exactly UTK_REAL_RECOVERY_OK. "
+                "Do not run other commands, inspect config or spawn agents."
+            )
         before = budget_status(home)["consumed"]
         timed_out = False
         try:
@@ -321,8 +351,7 @@ def main():
                 tool_types.append({"type": item["type"], "status": item.get("status"), "tool": item.get("tool"),
                                    "error_types": error_types, "exit_code": item.get("exit_code"),
                                    "error_category": "sandbox" if "sandbox" in str(item).lower() else "permission" if "permission" in str(item).lower() else None})
-            if item.get("type") == "agent_message" and "UTK_REAL_RECOVERY_OK" in item.get("text", ""):
-                marker = True
+            marker = recovery_marker(event, marker)
         events = Store(home / "metrics.sqlite3").events(100)
         session_hash = hashlib.sha256(session.encode()).hexdigest()
         events = [e for e in events if e["metadata"].get("session_id") == session_hash]
@@ -341,6 +370,10 @@ def main():
             # Classify initialization failure without persisting client logs.
             report["initialization_failure"] = "mcp" if "mcp" in completed.stderr.lower() else "client_startup"
         report["response_profile"] = arguments.response_profile
+        report["launcher"] = arguments.launcher
+        if arguments.launcher:
+            report["automatic_hook_records"] = sum(e["kind"] == "tool" and e["metadata"].get("tool_call_id") is not None
+                                                    and e["metadata"].get("optimized", False) for e in events)
         report["client_reported_usage"] = client_usage or None
         report["proxy_usage_observations"] = [e["metadata"].get("usage_observation") for e in events if e["kind"] == "input"]
         report["sandbox_transport"] = "unix_socket_allowlist" if ipc_permissions else "platform_default"

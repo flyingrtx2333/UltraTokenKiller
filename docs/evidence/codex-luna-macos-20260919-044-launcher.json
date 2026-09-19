@@ -1,0 +1,71 @@
+{
+  "client": "codex",
+  "model": "gpt-5.6-luna",
+  "authentication": "existing_subscription",
+  "exit_code": 0,
+  "timed_out": false,
+  "recovery_only": false,
+  "final_marker": true,
+  "event_types": [
+    "thread.started",
+    "turn.started",
+    "item.started",
+    "item.completed",
+    "item.completed",
+    "turn.completed"
+  ],
+  "tools": [
+    {
+      "type": "command_execution",
+      "status": "in_progress",
+      "tool": null,
+      "error_types": [],
+      "exit_code": null,
+      "error_category": null
+    },
+    {
+      "type": "command_execution",
+      "status": "completed",
+      "tool": null,
+      "error_types": [],
+      "exit_code": 0,
+      "error_category": null
+    }
+  ],
+  "budget": {
+    "consumed": 44,
+    "ceiling": 60
+  },
+  "submissions_this_run": 0,
+  "provider_usage_records": 0,
+  "optimized_command_records": 0,
+  "original_config_unchanged": true,
+  "config_changes": {
+    "preflight": {
+      "bytes_unchanged": true,
+      "semantic_unchanged": true,
+      "changed_sections": [],
+      "other_sections_changed": false
+    },
+    "client_run": {
+      "bytes_unchanged": true,
+      "semantic_unchanged": true,
+      "changed_sections": [],
+      "other_sections_changed": false
+    }
+  },
+  "response_profile": "lite",
+  "launcher": true,
+  "automatic_hook_records": 0,
+  "client_reported_usage": {
+    "input_tokens": 61200,
+    "cached_input_tokens": 41984,
+    "output_tokens": 697
+  },
+  "proxy_usage_observations": [],
+  "sandbox_transport": "unix_socket_allowlist",
+  "sandbox_network_isolation_verified": true,
+  "input_compressed_records": 0,
+  "scope": "tools_recovery",
+  "passed": false
+}
