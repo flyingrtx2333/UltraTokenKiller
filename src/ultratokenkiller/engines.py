@@ -92,6 +92,9 @@ def response_instruction(level: str) -> str:
         "lite": "Answer directly in concise complete sentences. Omit filler and repeated conclusions.",
         "full": "Give the result first, then only necessary evidence and next actions. Avoid repetition.",
         "ultra": "Use the fewest words that fully answer the task. Prefer short factual statements.",
+        "wenyan-lite": "以简洁中文作答，可用浅近文言；先述结论，再列必要依据。",
+        "wenyan-full": "以浅近文言简答，省赘语，明因果与行动；勿因省字损准确。",
+        "wenyan-ultra": "以极简文言答，存事实、条件与行动；难解术语用现代汉语。",
     }
     if level not in styles:
         raise ValueError("Unknown response style")
@@ -100,15 +103,35 @@ def response_instruction(level: str) -> str:
     return styles[level] + " Preserve correctness, uncertainty, warnings, negations, identifiers, numbers and code. Follow requests for detailed explanations."
 
 
-def apply_response_style(payload: dict, level: str) -> dict:
+def apply_response_style(payload: dict, level: str, protocol: str = "openai") -> dict:
     instruction = response_instruction(level)
     if not instruction:
         return payload
+    formatting = payload.get("response_format", payload.get("text", {}).get("format", {}) if isinstance(payload.get("text"), dict) else {})
+    if isinstance(formatting, dict) and formatting.get("type") in {"json_schema", "json_object"}:
+        return payload
+    items = payload.get("messages", payload.get("input", []))
+    last_user = next((item.get("content", "") for item in reversed(items) if isinstance(item, dict) and item.get("role") == "user"), "") if isinstance(items, list) else items
+    if isinstance(last_user, str):
+        if re.search(r"详细|逐步|完整解释|in detail|step.by.step|comprehensive", last_user, re.I):
+            return payload
+        if re.search(r"review|审查", last_user, re.I):
+            instruction += " For reviews, include location, concrete failure and actionable correction for each finding."
+        elif re.search(r"commit message|提交信息", last_user, re.I):
+            instruction += " For commit messages, state the change and its intent precisely."
+    instruction = "[UTK response policy]\n" + instruction
     result = copy.deepcopy(payload)
-    if "messages" in result and isinstance(result["messages"], list):
-        result["messages"].insert(0, {"role": "developer", "content": instruction})
+    if protocol == "anthropic":
+        system = result.get("system", "")
+        if isinstance(system, str) and "[UTK response policy]" not in system:
+            result["system"] = (system+"\n\n"+instruction).strip()
+        elif isinstance(system, list) and not any("[UTK response policy]" in str(item.get("text", "")) for item in system if isinstance(item, dict)):
+            result["system"].append({"type": "text", "text": instruction})
+    elif "messages" in result and isinstance(result["messages"], list):
+        if not any("[UTK response policy]" in str(item.get("content", "")) for item in result["messages"] if isinstance(item, dict) and item.get("role") == "developer"):
+            result["messages"].insert(0, {"role": "developer", "content": instruction})
     elif "input" in result:
         previous = result.get("instructions")
-        if previous is None or isinstance(previous, str):
+        if previous is None or isinstance(previous, str) and "[UTK response policy]" not in previous:
             result["instructions"] = ((previous or "") + "\n\n" + instruction).strip()
     return result
