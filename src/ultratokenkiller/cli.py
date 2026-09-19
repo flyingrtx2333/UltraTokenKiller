@@ -15,7 +15,6 @@ import typer
 from . import __version__
 from . import autostart
 from .config import Settings, choose_port, default_home
-from .dependencies import ensure_headroom, ensure_rtk, find_headroom, find_rtk
 from .integrations import CodexAdapter, HermesAdapter
 from .runtime import headroom_health, restart_managed_headrooms, run_command, service_health, start_processes, stop_processes
 from .store import Store
@@ -29,7 +28,7 @@ def _settings() -> tuple[Path, Settings]:
 
 
 @app.command()
-def install(no_clients: bool = typer.Option(False, help="不接入已检测到的客户端"), no_autostart: bool = typer.Option(False, help="不启用登录自启"), skip_downloads: bool = typer.Option(False, help="不下载缺失的 Headroom 和 RTK")):
+def install(no_clients: bool = typer.Option(False, help="不接入已检测到的客户端"), no_autostart: bool = typer.Option(False, help="不启用登录自启"), skip_downloads: bool = typer.Option(False, help="兼容旧参数；原生引擎无需下载")):
     """安装服务、选择端口并接入 Codex 和 Hermes。"""
     root = default_home()
     settings = Settings.load(root)
@@ -40,15 +39,8 @@ def install(no_clients: bool = typer.Option(False, help="不接入已检测到�
         settings.proxy_environment["HEADROOM_HTTP_PROXY"] = settings.proxy_environment["HTTP_PROXY"]
     Store(root / "metrics.sqlite3")
     typer.echo(f"数据目录: {root}")
-    if not skip_downloads:
-        headroom_ok, headroom_detail = ensure_headroom()
-        rtk_ok, rtk_detail = ensure_rtk(root)
-        typer.echo(f"Headroom: {'可用' if headroom_ok else '安装失败'} {headroom_detail}")
-        typer.echo(f"RTK: {'可用' if rtk_ok else '安装失败'} {rtk_detail}")
-    elif not find_headroom() or not find_rtk(root):
-        typer.echo("已跳过依赖下载；缺失的压缩层会显示为不可用。")
-
-    existing_headroom = next((port for port in dict.fromkeys((settings.headroom_port, 18787, 8787)) if _headroom_at(settings.host, port)), None)
+    typer.echo("UTK 原生输入压缩、工具输出压缩、回答精简引擎已内置。")
+    existing_headroom = None
     adapters = {"codex": CodexAdapter(), "hermes": HermesAdapter()}
     instances: dict[str, dict] = {}
     reserved = {existing_headroom} if existing_headroom else set()
@@ -58,14 +50,21 @@ def install(no_clients: bool = typer.Option(False, help="不接入已检测到�
             if not state.detected or not state.supported:
                 continue
             upstream = adapter.upstream_url()
+            previous = settings.clients.get(name, {})
+            if state.enabled and previous.get("upstream_url"):
+                upstream = previous["upstream_url"]
+            from urllib.parse import urlparse
+            if upstream and urlparse(upstream).hostname in {"127.0.0.1", "localhost", "::1"}:
+                typer.echo(f"{name}: 当前上游是本地代理，请先恢复原始上游后接入，避免重复压缩")
+                continue
             if not upstream:
                 typer.echo(f"{name}: 无法确定当前提供商上游，保留原配置")
                 continue
             shared = next((item for item in instances.values() if item["upstream_url"] == upstream), None)
             if shared:
                 port, managed = shared["proxy_port"], shared["managed"]
-            elif name == "codex" and existing_headroom:
-                port, managed = existing_headroom, False
+            elif previous.get("proxy_port") and headroom_health(settings, int(previous["proxy_port"])):
+                port, managed = int(previous["proxy_port"]), True
             else:
                 port = choose_port(18788, excluded={int(value) for value in reserved if value})
                 reserved.add(port)
@@ -82,7 +81,7 @@ def install(no_clients: bool = typer.Option(False, help="不接入已检测到�
         settings.headroom_managed = False
     else:
         settings.clients = {}
-        settings.headroom_port = choose_port(18788)
+        settings.headroom_port = settings.headroom_port if headroom_health(settings) else choose_port(18788)
         settings.headroom_managed = True
         reserved.add(settings.headroom_port)
     settings.dashboard_port = existing_dashboard or choose_port(18787, excluded={int(value) for value in reserved if value})
@@ -113,7 +112,7 @@ def _headroom_at(host: str, port: int) -> bool:
     try:
         health_response = httpx.get(f"http://{host}:{port}/health", timeout=2)
         stats_response = httpx.get(f"http://{host}:{port}/stats", timeout=2)
-        return health_response.is_success and stats_response.is_success and "tokens" in stats_response.json()
+        return health_response.is_success and stats_response.is_success and health_response.json().get("engine") == "utk-native"
     except (httpx.HTTPError, ValueError):
         return False
 
@@ -125,8 +124,8 @@ def doctor():
     checks = [
         ("配置", (root / "config.json").exists(), str(root / "config.json")),
         ("管理服务", service_health(settings), f"{settings.host}:{settings.dashboard_port}"),
-        ("Headroom", headroom_health(settings), find_headroom() or "未找到"),
-        ("RTK", find_rtk(root) is not None, find_rtk(root) or "未找到"),
+        ("UTK 输入代理", headroom_health(settings), "utk-native"),
+        ("UTK 工具压缩", True, "内置"),
     ]
     for name, ok, detail in checks:
         typer.echo(f"{'OK' if ok else 'FAIL'} {name}: {detail}")
@@ -142,8 +141,8 @@ def status():
     root, settings = _settings()
     typer.echo(f"UltraTokenKiller {__version__}")
     typer.echo(f"管理服务: {'在线' if service_health(settings) else '离线'}  http://{settings.host}:{settings.dashboard_port}")
-    typer.echo(f"Headroom: {'在线' if headroom_health(settings) else '离线'}  :{settings.headroom_port}")
-    typer.echo(f"档位: {settings.profile} / Caveman {settings.caveman}")
+    typer.echo(f"UTK 输入代理: {'在线' if headroom_health(settings) else '离线'}  :{settings.headroom_port}")
+    typer.echo(f"档位: {settings.profile} / 回答精简 {settings.caveman}")
 
 
 @app.command()
@@ -184,23 +183,21 @@ def profile(name: str = typer.Argument(..., help="safe、aggressive 或 off"), c
     if name not in {"safe", "aggressive", "off"}:
         raise typer.BadParameter("未知档位")
     if caveman and caveman not in {"lite", "full", "ultra", "off"}:
-        raise typer.BadParameter("未知 Caveman 档位")
+        raise typer.BadParameter("未知 回答精简 档位")
     managed_values = [bool(item.get("managed", True)) for item in settings.clients.values()]
     profile_controlled = all(managed_values) if managed_values else settings.headroom_managed
     if name != settings.profile and not profile_controlled:
-        raise typer.BadParameter("当前 Headroom 由外部服务管理，请在该服务中修改输入压缩档位")
+        raise typer.BadParameter("当前 UTK 输入代理 由外部服务管理，请在该服务中修改输入压缩档位")
     settings.profile = name
     if caveman:
         settings.caveman = caveman
     settings.save(root)
-    if profile_controlled:
-        restart_managed_headrooms(settings, root)
-    typer.echo(f"档位: {settings.profile} / Caveman {settings.caveman}")
+    typer.echo(f"档位: {settings.profile} / 回答精简 {settings.caveman}")
 
 
 @app.command(context_settings={"allow_extra_args": True, "ignore_unknown_options": True})
 def exec(ctx: typer.Context):
-    """通过 RTK 运行命令；复杂 shell 语法安全透传。"""
+    """通过 UTK 工具压缩 运行命令；复杂 shell 语法安全透传。"""
     command = list(ctx.args)
     if command and command[0] == "--":
         command = command[1:]

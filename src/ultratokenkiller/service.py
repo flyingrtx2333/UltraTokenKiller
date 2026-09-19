@@ -14,7 +14,6 @@ from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
 from .config import Settings, default_home
-from .dependencies import find_rtk
 from .integrations import CodexAdapter, HermesAdapter
 from .runtime import headroom_health, headroom_ports, restart_managed_headrooms
 from .store import Store
@@ -36,16 +35,7 @@ def clients() -> list[dict]:
 
 
 async def headroom_stats() -> dict:
-    instances = []
-    async with httpx.AsyncClient(timeout=2) as client:
-        for port in headroom_ports(settings):
-            try:
-                response = await client.get(f"http://{settings.host}:{port}/stats")
-                if response.is_success:
-                    instances.append({"port": port, "stats": response.json()})
-            except (httpx.HTTPError, ValueError):
-                continue
-    return {"instances": instances}
+    return {"instances": [], "engine": "utk-native"}
 
 
 def require_write(request: Request, x_utk_token: str | None) -> None:
@@ -70,7 +60,8 @@ async def api_status() -> dict:
     return {
         "service": True,
         "headroom": bool(headroom_ports(settings)) and all(headroom_health(settings, port) for port in headroom_ports(settings)),
-        "rtk": find_rtk(home) is not None,
+        "rtk": True,
+        "engine": "utk-native",
         "profile": settings.profile,
         "profile_controlled": all(managed_values) if managed_values else settings.headroom_managed,
         "caveman": settings.caveman,
@@ -125,14 +116,7 @@ def _ingest_headroom(headroom: dict) -> None:
 
 
 def _rtk_summary() -> dict:
-    executable = find_rtk(home)
-    if not executable:
-        return {}
-    try:
-        result = subprocess.run([executable, "gain", "--format", "json"], capture_output=True, text=True, timeout=2)
-        return json.loads(result.stdout).get("summary", {}) if result.returncode == 0 else {}
-    except (OSError, subprocess.SubprocessError, ValueError):
-        return {}
+    return {"engine": "utk-native"}
 
 
 @app.get("/api/v1/config")
@@ -147,7 +131,7 @@ async def update_config(request: Request, x_utk_token: str | None = Header(None)
     if "profile" in data:
         status = await api_status()
         if not status["profile_controlled"]:
-            raise HTTPException(409, "Headroom is externally managed; change its profile in the owning service")
+            raise HTTPException(409, "Legacy external proxy is not managed by UTK; reconnect to the native engine")
         if data["profile"] not in {"safe", "aggressive", "off"}:
             raise HTTPException(422, "Unknown profile")
         settings.profile = data["profile"]
@@ -156,8 +140,6 @@ async def update_config(request: Request, x_utk_token: str | None = Header(None)
             raise HTTPException(422, "Unknown caveman mode")
         settings.caveman = data["caveman"]
     settings.save(home)
-    if "profile" in data:
-        restart_managed_headrooms(settings, home)
     return await api_status()
 
 

@@ -1,80 +1,73 @@
 # UltraTokenKiller
 
-UltraTokenKiller (`utk`) combines three independent token controls behind one local control plane:
+UTK 是本地原生 Token 优化工具。输入压缩、工具输出压缩、回答精简由 UTK 自己实现，不安装或调用 Headroom、RTK、Caveman。普通 Python/Web 框架依赖仍由安装器安装。
 
-- Headroom compresses eligible model input while preserving a cache-first default.
-- RTK filters supported command output before it enters agent context.
-- Caveman instructions ask the model for concise answers without truncating generated text.
+## 当前原生能力
 
-The terminal dashboard and local web console report these layers separately. They never add Headroom estimates and RTK output savings together as billing savings. Prompt and response bodies are not stored.
+- 输入：处理 Responses API 和 OpenAI Chat Completions 历史工具结果中的连续重复行。保留系统/用户指令、多模态数据、工具调用 ID 和最新工具结果；JSON、补丁和代码块透传。压缩异常时转发原始请求。
+- 工具：`utk exec -- git status` 去除已知 Git 英文操作提示，保留文件和状态；Git stat、普通 rg/grep/pytest 输出折叠连续重复行。错误输出、非 UTF-8、未知命令和机器格式透传。保留退出码、工作目录与参数，不使用 shell 重写。
+- 回答：UTK 自有 lite/full/ultra 指令，在请求时应用；off 不附加精简指令，不截断生成结果。
+- 代理：直连指定原始上游；HTTP/SSE、认证头、错误状态透传，不自动重试。每个上游使用独立本地端口。
+- 看板：`utk dashboard` 和 `utk web` 展示同一 SQLite 元数据，不保存模型输入、回答正文或凭据。工具输出压缩使用临时文件，命令结束后关闭删除。
 
-When Codex and Hermes use different upstream providers, UTK starts one Headroom instance per upstream. Clients sharing the same upstream share an instance. This prevents a ChatGPT subscription route from being sent to an API-key endpoint, or vice versa.
+这是原生引擎的首个保守实现，并非三个参考项目的等价复刻。语义压缩、搜索结果相关性排序、复杂测试报告解析、WebSocket 和原生引擎真实客户端验收尚未完成。HTTP/SSE 单元测试不能替代 Codex/Hermes 真机验收。当前适配器关闭 Codex WebSocket 声明。
 
-## Install from this checkout
+## 安装
 
-Python 3.10 or newer is supported. Python 3.11 is recommended.
+Python 3.10+，推荐 3.11。从源码目录执行：
 
-One-click Windows install creates an isolated environment, installs verified dependencies, configures detected clients, and registers user logon startup:
+Windows：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
 ```
 
-macOS and Linux:
+macOS / Linux：
 
 ```sh
 sh ./scripts/install.sh
 ```
 
-For a development install without the isolated environment:
-
-```powershell
-python -m pip install -e .
-utk install
-```
-
-On macOS or Linux:
-
-```sh
-python3 -m pip install -e .
-utk install
-```
-
-Open the web console with `utk web`, or run the terminal dashboard with `utk dashboard`. Use `utk doctor` to distinguish an installed dependency from a working client route.
-
-Run a command through RTK with:
-
-```sh
-utk exec -- git status
-```
-
-`utk install` backs up client configuration before adding a marked managed block. `utk disable codex`, `utk disable hermes`, and `utk uninstall` remove only that block.
-
-## Supported clients
-
-| Client | Supported path | Notes |
-|---|---|---|
-| Codex | Responses API, API key or ChatGPT login | Uses user-level `config.toml`; credentials stay with Codex. |
-| NousResearch Hermes Agent | OpenAI-compatible providers | Providers using Anthropic, Bedrock, or Vertex protocols are detected but not automatically changed. |
-
-See [COMPATIBILITY.md](COMPATIBILITY.md) for the distinction between implemented adapters and live-verified combinations.
-
-Windows and WSL are separate installations and configurations. macOS uses a LaunchAgent, Linux uses user-level systemd when present, and Windows uses a per-user logon task.
-
-## Development
+开发安装：
 
 ```sh
 python -m pip install -e ".[test]"
-python -m pytest
-cd web && npm install && npm run build
+utk install
+utk doctor
+utk web
 ```
 
-The frontend build is copied into `src/ultratokenkiller/static` before packaging.
+隔离验证时设置 `UTK_HOME`，执行 `utk install --no-clients --no-autostart`。看板优先使用 127.0.0.1:18787，端口占用时选择空闲端口。无需另外下载压缩器；`--skip-downloads` 仅作为旧命令兼容参数。
 
-## Security and privacy
+已有本地 Headroom 等代理不会自动串联。客户端上游仍指向本地代理时，安装器保留配置并提示先恢复原始上游。旧版本配置中的 headroom/rtk/caveman 字段名暂保留为迁移兼容别名，不表示运行这些外部程序。
 
-All listeners bind to `127.0.0.1`. State-changing web requests require a random local session token and validate the browser origin. SQLite contains request metadata only. Authentication tokens and message bodies remain in the original clients and Headroom process.
+## 管理
 
-## Licenses
+`install`、`doctor`、`status`、`start`、`stop`、`enable`、`disable`、`profile`、`exec`、`dashboard`、`web`、`update`、`uninstall`。
 
-UltraTokenKiller is Apache-2.0. It integrates, but does not relicense, third-party projects. Headroom and RTK are Apache-2.0. The bundled concise-response instruction is derived from the MIT-licensed Caveman skill text and does not include Caveman's BSL engine directories. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+```sh
+utk exec -- git status
+utk profile safe --caveman lite
+utk profile off --caveman off
+```
+
+原生输入/回答档位按请求读取，不需要重启客户端代理。Git/测试输出在命令结束后显示，支持命令的 stdout 使用磁盘临时文件；大于 8 MiB 时原样分块输出。取消当前子进程已处理，跨平台进程树取消尚待验证。
+
+## 统计口径
+
+提供商 usage 单独记录实际输入、输出和缓存 token；缺失值显示未知。压缩量是 UTF-8 字节数除以 4 的粗略估算，不等同模型 tokenizer 或账单节省。输入压缩与工具输出估算不相加为账单节省，不宣称订阅现金节省。回答精简只展示状态和实际输出量，不宣称未经对照测试的减少比例。
+
+## 验证
+
+```sh
+python -m pytest
+cd web
+npm ci
+npm run build
+```
+
+网页构建资源随 Python 包提供；最终用户无需 Node.js。当前验证边界见 [COMPATIBILITY.md](COMPATIBILITY.md)。
+
+## 许可
+
+UTK 使用 Apache-2.0。原生代码在本仓库实现；历史版本引用项目及普通框架依赖见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。

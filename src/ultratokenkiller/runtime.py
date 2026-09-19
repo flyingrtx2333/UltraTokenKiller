@@ -13,7 +13,8 @@ from typing import Sequence
 import httpx
 
 from .config import Settings, default_home
-from .dependencies import find_headroom, find_rtk
+from .engines import compress_tool_output, estimate_tokens, supported_command
+import tempfile
 from .store import Store
 
 
@@ -25,7 +26,11 @@ def health(url: str, timeout: float = 1.0) -> bool:
 
 
 def headroom_health(settings: Settings, port: int | None = None) -> bool:
-    return health(f"http://{settings.host}:{port or settings.headroom_port}/health")
+    try:
+        response = httpx.get(f"http://{settings.host}:{port or settings.headroom_port}/health", timeout=1)
+        return response.is_success and response.json().get("engine") == "utk-native"
+    except (httpx.HTTPError, ValueError):
+        return False
 
 
 def headroom_ports(settings: Settings) -> list[int]:
@@ -52,18 +57,13 @@ def start_processes(settings: Settings, home: Path | None = None) -> dict[str, i
         port = int(instance["proxy_port"])
         if not instance.get("managed", True) or headroom_health(settings, port):
             continue
-        headroom = find_headroom()
-        if not headroom:
-            result[f"headroom:{port}"] = "missing"
-        else:
-            profile_args = {"safe": ["--mode", "cache"], "aggressive": ["--mode", "token", "--target-ratio", "0.35"], "off": ["--no-optimize"]}[settings.profile]
-            instance_env = env.copy()
-            if instance.get("upstream_url"):
-                instance_env["OPENAI_TARGET_API_URL"] = str(instance["upstream_url"])
-            command = [headroom, "proxy", "--host", settings.host, "--port", str(port), *profile_args, "--no-telemetry"]
-            proc = _spawn(command, instance_env, log)
-            (root / f"headroom-{port}.pid").write_text(str(proc.pid), encoding="ascii")
-            result[f"headroom:{port}"] = proc.pid
+        instance_env = env.copy()
+        instance_env["UTK_UPSTREAM_URL"] = str(instance.get("upstream_url") or "https://api.openai.com/v1")
+        instance_env["UTK_CLIENT"] = next((name for name, value in settings.clients.items() if value.get("proxy_port") == port), "unknown")
+        command = [sys.executable, "-m", "uvicorn", "ultratokenkiller.proxy:create_proxy", "--factory", "--host", settings.host, "--port", str(port)]
+        proc = _spawn(command, instance_env, log)
+        (root / f"headroom-{port}.pid").write_text(str(proc.pid), encoding="ascii")
+        result[f"native:{port}"] = proc.pid
     if not service_health(settings):
         command = [sys.executable, "-m", "uvicorn", "ultratokenkiller.service:app", "--host", settings.host, "--port", str(settings.dashboard_port)]
         proc = _spawn(command, env, log)
@@ -121,30 +121,54 @@ def run_command(command: list[str], store: Store) -> int:
     if not command:
         raise ValueError("A command is required after --")
     started = time.perf_counter()
-    rtk = find_rtk()
-    rewritten = None
-    actual = command
-    saved_before = _rtk_total_saved(rtk) if rtk else 0
-    if rtk:
-        check = subprocess.run([rtk, "rewrite", *command], capture_output=True, text=True)
-        candidate = check.stdout.strip()
-        if check.returncode == 0 and candidate and not _unsafe_shell(candidate):
-            rewritten = candidate
-            actual = [rtk, *command]
-    proc = subprocess.run(actual)
-    duration = int((time.perf_counter() - started) * 1000)
-    saved_after = _rtk_total_saved(rtk) if rtk else 0
-    store.add(kind="rtk", client="cli", success=proc.returncode == 0, duration_ms=duration, saved_tokens=max(0, saved_after - saved_before), metadata={"command": command[0], "optimized": bool(rewritten)})
-    return proc.returncode
+    optimized = supported_command(command)
+    saved = 0
+    if not optimized:
+        code = subprocess.call(command)
+    else:
+        # Disk-backed capture bounds memory. stderr and stdin retain original handles.
+        with tempfile.TemporaryFile() as output:
+            proc = subprocess.Popen(command, stdout=output)
+            try:
+                code = proc.wait()
+            except KeyboardInterrupt:
+                proc.terminate()
+                try:
+                    proc.wait(timeout=5)
+                except subprocess.TimeoutExpired:
+                    proc.kill()
+                    proc.wait()
+                raise
+            size = output.tell()
+            output.seek(0)
+            if size <= 8 * 1024 * 1024:
+                raw = output.read()
+                try:
+                    original = raw.decode("utf-8")
+                    try:
+                        compressed = compress_tool_output(command, original) if code == 0 else original
+                    except Exception:
+                        compressed = original
+                    rendered = compressed.encode("utf-8")
+                    saved = max(0, estimate_tokens(original)-estimate_tokens(compressed))
+                except UnicodeDecodeError:
+                    rendered = raw
+                _write_stdout(rendered)
+            else:
+                while chunk := output.read(65536):
+                    _write_stdout(chunk)
+    store.add(kind="tool", client="cli", success=code == 0,
+              duration_ms=int((time.perf_counter()-started)*1000), saved_tokens=saved,
+              metadata={"command": Path(command[0]).name, "optimized": optimized,
+                        "engine": "utk-native", "estimator": "utf8_bytes_div_4"})
+    return code
 
 
-def _rtk_total_saved(executable: str) -> int:
-    try:
-        result = subprocess.run([executable, "gain", "--format", "json"], capture_output=True, text=True, timeout=2)
-        return int(json.loads(result.stdout).get("summary", {}).get("total_saved", 0)) if result.returncode == 0 else 0
-    except (OSError, subprocess.SubprocessError, ValueError, TypeError):
-        return 0
-
-
-def _unsafe_shell(value: str) -> bool:
-    return any(token in value for token in ("|", ">", "<", ";", "&&", "||", "`", "$("))
+def _write_stdout(data: bytes):
+    target = getattr(sys.stdout, "buffer", None)
+    if target is not None:
+        target.write(data)
+        target.flush()
+    else:
+        sys.stdout.write(data.decode("utf-8", errors="replace"))
+        sys.stdout.flush()

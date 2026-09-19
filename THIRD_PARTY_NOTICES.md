@@ -1,10 +1,12 @@
 # Third-party notices
 
-UltraTokenKiller invokes separately installed third-party programs. Their names and licenses remain their owners' property.
+Current UTK input compression, tool output compression and response instructions are implemented in this repository. The native runtime does not install, import or launch Headroom, RTK or Caveman.
 
-- Headroom AI — Apache License 2.0 — https://github.com/chopratejas/headroom
-- RTK (Rust Token Killer) — Apache License 2.0 — https://github.com/rtk-ai/rtk
-- Caveman skill instructions — MIT License — https://github.com/JuliusBrussee/caveman
+Historical integration releases referenced:
+- Headroom AI, Apache-2.0: https://github.com/chopratejas/headroom
+- RTK, Apache-2.0: https://github.com/rtk-ai/rtk
+- Caveman skill instructions, MIT: https://github.com/JuliusBrussee/caveman
 
-No Caveman Engine-linked BSL component is copied or bundled. The concise output modes in this project are local instruction strings.
+Historical attributions remain here for provenance. No Caveman BSL engine code is bundled. The current response instructions are authored for UTK.
 
+Runtime/build dependencies retain their own licenses: FastAPI (MIT), HTTPX (BSD-3-Clause), Textual (MIT), Typer (MIT), Uvicorn (BSD-3-Clause), Tomli (MIT), React (MIT), Vite (MIT), and their transitive dependencies. Bundled frontend assets retain upstream license comments.

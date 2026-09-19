@@ -29,7 +29,6 @@ class Settings:
     retention_days: int = 30
     auto_start: bool = True
     headroom_managed: bool = True
-    headroom_command: list[str] = field(default_factory=lambda: ["headroom", "proxy"])
     clients: dict[str, dict[str, Any]] = field(default_factory=dict)
     proxy_environment: dict[str, str] = field(default_factory=dict)
 

@@ -71,11 +71,11 @@ class Store:
             args.append(model)
         predicate = " AND ".join(where)
         query = f"""SELECT COUNT(*) requests,
-          COALESCE(SUM(input_tokens),0) input_tokens,
-          COALESCE(SUM(output_tokens),0) output_tokens,
-          COALESCE(SUM(cached_tokens),0) cached_tokens,
-          COALESCE(SUM(CASE WHEN kind='rtk' THEN saved_tokens ELSE 0 END),0) rtk_saved_tokens,
-          COALESCE(SUM(CASE WHEN kind='headroom' THEN saved_tokens ELSE 0 END),0) headroom_saved_tokens,
+          SUM(input_tokens) input_tokens,
+          SUM(output_tokens) output_tokens,
+          SUM(cached_tokens) cached_tokens,
+          COALESCE(SUM(CASE WHEN kind IN ('rtk','tool') THEN saved_tokens ELSE 0 END),0) rtk_saved_tokens,
+          COALESCE(SUM(CASE WHEN kind IN ('headroom','input') THEN saved_tokens ELSE 0 END),0) headroom_saved_tokens,
           COALESCE(AVG(duration_ms),0) average_duration_ms,
           COALESCE(SUM(CASE WHEN success=0 THEN 1 ELSE 0 END),0) failures
           FROM events WHERE {predicate}"""

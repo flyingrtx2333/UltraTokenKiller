@@ -8,7 +8,8 @@ type Metrics = {requests:number;input_tokens:number;output_tokens:number;cached_
 type EventItem = {id:number;created_at:number;kind:string;client:string;model?:string;duration_ms?:number;success:boolean;metadata:Record<string,unknown>}
 
 const emptyMetrics: Metrics = {requests:0,input_tokens:0,output_tokens:0,cached_tokens:0,rtk_saved_tokens:0,headroom_saved_tokens:0,average_duration_ms:0,failures:0,error_rate:0}
-const number = new Intl.NumberFormat('zh-CN')
+const formatter = new Intl.NumberFormat('zh-CN')
+const number = {format: (value:number|null) => value == null ? '未知' : formatter.format(value)}
 
 function App(){
   const [status,setStatus]=useState<Status|null>(null)
@@ -61,7 +62,7 @@ function App(){
   }
 
   const coverage=useMemo(()=>{
-    const rtk=events.filter(e=>e.kind==='rtk')
+    const rtk=events.filter(e=>e.kind==='tool')
     if(!rtk.length)return null
     return Math.round(100*rtk.filter(e=>e.metadata.optimized).length/rtk.length)
   },[events])
@@ -80,19 +81,19 @@ function App(){
           <Metric label="请求记录" value={number.format(metrics.requests)} note={metrics.requests?'本地记录':'尚无真实请求'} />
           <Metric label="输入 Token" value={number.format(metrics.input_tokens)} note={`缓存 ${number.format(metrics.cached_tokens)}`} />
           <Metric label="输出 Token" value={number.format(metrics.output_tokens)} note="提供商 usage" />
-          <Metric label="RTK 覆盖率" value={coverage===null?'—':`${coverage}%`} note={coverage===null?'尚无命令记录':'实际调用记录'} />
+          <Metric label="工具压缩覆盖率" value={coverage===null?'—':`${coverage}%`} note={coverage===null?'尚无命令记录':'最近命令记录中受支持的比例'} />
         </div>
-        <div className="savings-note"><strong>节省口径分开显示</strong><span>Headroom 估算 {number.format(metrics.headroom_saved_tokens)} · RTK 工具输出 {number.format(metrics.rtk_saved_tokens)}。两项不合并为账单节省。</span></div>
+        <div className="savings-note"><strong>节省口径分开显示</strong><span>输入压缩估算 {number.format(metrics.headroom_saved_tokens)} · 工具输出估算 {number.format(metrics.rtk_saved_tokens)}。按 UTF-8 字节数估算，两项不合并为账单节省。</span></div>
       </section>
 
       <div className="workspace">
         <section aria-labelledby="layers-title"><div className="section-head"><h2 id="layers-title">三层优化</h2></div>
           <div className="layer-list">
-            <Layer name="输入压缩" tool="Headroom" active={!!status?.headroom} detail={status?.headroom?'缓存优先模式运行中':'服务未连接'} />
-            <Layer name="工具输出" tool="RTK" active={!!status?.rtk} detail={coverage===null?'等待实际调用':`${coverage}% 命令已优化`} />
-            <Layer name="回答精简" tool="Caveman" active={status?.caveman!=='off'} detail={`当前 ${status?.caveman||'—'} 档`} />
+            <Layer name="输入压缩" tool="UTK 原生" active={!!status?.headroom} detail={status?.headroom?'历史工具结果重复内容压缩':'服务未连接'} />
+            <Layer name="工具输出" tool="UTK 原生" active={!!status?.rtk} detail={coverage===null?'等待实际调用':`${coverage}% 命令进入压缩器`} />
+            <Layer name="回答精简" tool="UTK 原生" active={!!status&&status.caveman!=='off'} detail={`当前 ${status?.caveman||'—'} 档`} />
           </div>
-          <fieldset disabled={!status||busy==='config'||!status.profile_controlled}><legend>压缩档位{status&&!status.profile_controlled?'（由现有 Headroom 管理）':''}</legend><div className="segmented">
+          <fieldset disabled={!status||busy==='config'||!status.profile_controlled}><legend>压缩档位{status&&!status.profile_controlled?'（旧外部代理尚未迁移）':''}</legend><div className="segmented">
             {['safe','aggressive','off'].map(v=><button key={v} className={status?.profile===v?'selected':''} aria-pressed={status?.profile===v} onClick={()=>updateConfig({profile:v})}>{({safe:'稳妥',aggressive:'积极',off:'关闭'} as Record<string,string>)[v]}</button>)}
           </div></fieldset>
           <label className="field">回答精简<select value={status?.caveman||'lite'} onChange={e=>updateConfig({caveman:e.target.value})} disabled={!status||busy==='config'}><option value="lite">Lite</option><option value="full">Full</option><option value="ultra">Ultra</option><option value="off">关闭</option></select></label>

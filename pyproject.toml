@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "ultratokenkiller"
 version = "0.1.0"
-description = "One local control plane for Headroom, RTK, and concise agent output"
+description = "Native local input compression, tool output compression and concise agent responses"
 readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"

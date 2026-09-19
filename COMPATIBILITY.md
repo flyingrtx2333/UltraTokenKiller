@@ -1,13 +1,15 @@
-# Compatibility matrix
+# 原生引擎兼容性
 
-Status labels distinguish implementation from live acceptance. “Implemented” means the adapter and restoration tests pass. “Live verified” requires a real client request through the declared route.
+本表适用于当前原生实现。旧集成版的 Headroom/RTK 验证结果不能用于证明原生实现。
 
-| Platform / client | Status | Evidence |
+| 路径 | 当前证据 | 状态 |
 |---|---|---|
-| Windows 10/11, Codex with ChatGPT login | Live verified | A real Codex Responses request used the UTK-equivalent temporary provider route and returned `UTK_OK`. Headroom recorded complete accounting for `gpt-6-astra`, 150,145 input tokens before compression, 148,237 after, 7 output tokens, and 1,908 tokens removed. The persistent configuration path is covered by parse and restoration tests. |
-| Windows 10/11, Codex with API key | Implemented | Provider/base URL discovery and reversible managed configuration are tested; no paid API request was made during this build. |
-| Windows 10/11, NousResearch Hermes Agent | Implemented, live verification pending | OpenAI-compatible provider routing and reversible YAML changes are tested. Hermes was not installed as a native command on the build host. |
-| macOS 12+, Codex/Hermes | Implemented, platform verification pending | LaunchAgent and platform-specific RTK asset selection are included. |
-| Linux with user systemd, Codex/Hermes | Implemented, platform verification pending | User service and x86_64/aarch64 RTK asset selection are included. |
+| Responses HTTP/SSE | MockTransport 检查认证头、订阅路由、完整 SSE 字节、usage、429、异常回退 | 本地测试通过；真实 Codex 未验证 |
+| Chat Completions | 原生转发和历史 tool 消息压缩已实现 | 真实 Hermes 未验证 |
+| WebSocket | 暂未实现；Codex 配置声明关闭 | 不支持 |
+| 多模态 | 请求对象内非工具内容保留测试 | 真实多模态未验证 |
+| Git status/stat、普通 rg/grep/pytest | 原生输出规则、透传和退出码测试 | 保守能力，非 RTK 全命令覆盖 |
+| 回答 lite/full/ultra/off | 原生请求指令控制 | 不提供未经对照的节省比例 |
+| Windows / macOS / Linux | 保留安装、自启实现 | 原生版三平台干净安装和登录验收待完成 |
 
-Anthropic, Bedrock, and Vertex Hermes providers are detected and left unchanged because the first release only configures OpenAI-compatible Hermes model routes. Unknown providers without an explicit `base_url` are also left unchanged.
+缺失能力：语义输入压缩、复杂测试报告/搜索结果压缩、WebSocket、跨平台进程树取消、真实客户端关联验收。当前不标记为正式首版发布。

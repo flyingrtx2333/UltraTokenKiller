@@ -137,7 +137,7 @@ class CodexAdapter:
             'name = "UltraTokenKiller"\n'
             f'base_url = "http://127.0.0.1:{proxy_port}/v1"\n'
             'wire_api = "responses"\n'
-            'supports_websockets = true\n'
+            'supports_websockets = false\n'
             f'{auth}'
         )
         self.config.write_text(_replace_block(text, block, prepend=True), encoding="utf-8")
@@ -256,11 +256,5 @@ def _remove_hermes_block(text: str) -> str:
 
 
 def _caveman_instruction(level: str) -> str:
-    if level == "off":
-        return "Run supported shell commands through utk exec -- and preserve exact technical details."
-    styles = {
-        "lite": "Use concise complete sentences. Remove filler and hedging.",
-        "full": "Respond tersely. Keep technical substance, paths, numbers, errors, and code exact.",
-        "ultra": "Use minimum clear words. Keep all technical facts, negations, numbers, errors, and code exact.",
-    }
-    return f"Run supported shell commands through utk exec --. {styles.get(level, styles['lite'])}"
+    # Response style is applied by the native proxy on each request so toggles take effect.
+    return "Run supported shell commands through utk exec --. Preserve exact command arguments."

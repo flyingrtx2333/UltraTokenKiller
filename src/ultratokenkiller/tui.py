@@ -38,7 +38,7 @@ class Dashboard(App):
             yield Metric("请求", id="requests")
             yield Metric("输入 Token", id="input")
             yield Metric("输出 Token", id="output")
-            yield Metric("RTK 节省", id="rtk")
+            yield Metric("工具压缩估算", id="rtk")
         yield Label("正在连接本地服务…", id="state")
         yield DataTable(id="events")
         yield Footer()
@@ -62,10 +62,10 @@ class Dashboard(App):
             values = {"requests": metrics["requests"], "input": metrics["input_tokens"], "output": metrics["output_tokens"], "rtk": metrics["rtk_saved_tokens"]}
             for name, value in values.items():
                 widget = self.query_one(f"#{name}", Metric)
-                widget.value = f"{value:,}"
+                widget.value = "未知" if value is None else f"{value:,}"
                 widget.refresh()
             self.query_one("#state", Label).update(
-                f"Headroom {'在线' if status['headroom'] else '离线'} · RTK {'可用' if status['rtk'] else '缺失'} · {status['profile']} / {status['caveman']}"
+                f"输入代理 {'在线' if status['headroom'] else '离线'} · 内置工具压缩 {'可用' if status['rtk'] else '不可用'} · {status['profile']} / {status['caveman']}"
             )
             table = self.query_one("#events", DataTable)
             table.clear()
@@ -74,4 +74,3 @@ class Dashboard(App):
                 table.add_row(datetime.fromtimestamp(item["created_at"]).strftime("%H:%M:%S"), item["kind"], item["client"], "成功" if item["success"] else "失败", f"{item.get('duration_ms') or 0} ms")
         except (httpx.HTTPError, KeyError, ValueError):
             self.query_one("#state", Label).update("服务未运行。执行 utk start 后重试。")
-
