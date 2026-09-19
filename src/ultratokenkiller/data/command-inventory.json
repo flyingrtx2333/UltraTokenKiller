@@ -1,0 +1,3167 @@
+[
+  {
+    "id": "tools.Commands.Ls",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L95",
+    "input": "Ls",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Tree",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L102",
+    "input": "Tree",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Read",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L109",
+    "input": "Read",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Smart",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L133",
+    "input": "Smart",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Git",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L145",
+    "input": "Git",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Gh",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L183",
+    "input": "Gh",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Glab",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L192",
+    "input": "Glab",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Aws",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L207",
+    "input": "Aws",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Psql",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L217",
+    "input": "Psql",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Pnpm",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L224",
+    "input": "Pnpm",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Err",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L242",
+    "input": "Err",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Test",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L249",
+    "input": "Test",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Json",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L256",
+    "input": "Json",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Deps",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L268",
+    "input": "Deps",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Env",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L275",
+    "input": "Env",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Find",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L282",
+    "input": "Find",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Diff",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L289",
+    "input": "Diff",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Log",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L297",
+    "input": "Log",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Dotnet",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L303",
+    "input": "Dotnet",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Docker",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L309",
+    "input": "Docker",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Kubectl",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L315",
+    "input": "Kubectl",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Oc",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L321",
+    "input": "Oc",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Summary",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L327",
+    "input": "Summary",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Grep",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L334",
+    "input": "Grep",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Rg",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L367",
+    "input": "Rg",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.AstGrep",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L374",
+    "input": "AstGrep",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Init",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L381",
+    "input": "Init",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Wget",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L443",
+    "input": "Wget",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Wc",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L455",
+    "input": "Wc",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Gain",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L462",
+    "input": "Gain",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.CcEconomics",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L508",
+    "input": "CcEconomics",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Config",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L527",
+    "input": "Config",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Jest",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L536",
+    "input": "Jest",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Vitest",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L543",
+    "input": "Vitest",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Ctest",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L551",
+    "input": "Ctest",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Prisma",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L558",
+    "input": "Prisma",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Tsc",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L564",
+    "input": "Tsc",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Next",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L571",
+    "input": "Next",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Lint",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L578",
+    "input": "Lint",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Prettier",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L585",
+    "input": "Prettier",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Format",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L592",
+    "input": "Format",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Playwright",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L599",
+    "input": "Playwright",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Cargo",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L606",
+    "input": "Cargo",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Npm",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L612",
+    "input": "Npm",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Npx",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L619",
+    "input": "Npx",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Bun",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L626",
+    "input": "Bun",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Bunx",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L632",
+    "input": "Bunx",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Curl",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L639",
+    "input": "Curl",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Discover",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L646",
+    "input": "Discover",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Session",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L665",
+    "input": "Session",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Telemetry",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L668",
+    "input": "Telemetry",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Learn",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L674",
+    "input": "Learn",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Run",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L699",
+    "input": "Run",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Proxy",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L709",
+    "input": "Proxy",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Recall",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L716",
+    "input": "Recall",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Pipe",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L737",
+    "input": "Pipe",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Trust",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L748",
+    "input": "Trust",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Untrust",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L758",
+    "input": "Untrust",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Verify",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L761",
+    "input": "Verify",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Ruff",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L771",
+    "input": "Ruff",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Sqlfluff",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L778",
+    "input": "Sqlfluff",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Pytest",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L785",
+    "input": "Pytest",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Mypy",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L792",
+    "input": "Mypy",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Php",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L799",
+    "input": "Php",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Phpunit",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L806",
+    "input": "Phpunit",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Phpstan",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L813",
+    "input": "Phpstan",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Pest",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L820",
+    "input": "Pest",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Paratest",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L827",
+    "input": "Paratest",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Ecs",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L834",
+    "input": "Ecs",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Pint",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L841",
+    "input": "Pint",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Phpt",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L848",
+    "input": "Phpt",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Rake",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L855",
+    "input": "Rake",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Rubocop",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L862",
+    "input": "Rubocop",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Rspec",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L869",
+    "input": "Rspec",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Pip",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L876",
+    "input": "Pip",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Uv",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L883",
+    "input": "Uv",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Deno",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L890",
+    "input": "Deno",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Go",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L896",
+    "input": "Go",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Sbt",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L902",
+    "input": "Sbt",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Gt",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L908",
+    "input": "Gt",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.GolangciLint",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L915",
+    "input": "GolangciLint",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Gradlew",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L923",
+    "input": "Gradlew",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Mvn",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L931",
+    "input": "Mvn",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Mvnd",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L939",
+    "input": "Mvnd",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.HookAudit",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L947",
+    "input": "HookAudit",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Rewrite",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L960",
+    "input": "Rewrite",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.Commands.Hook",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L968",
+    "input": "Hook",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.HookCommands.Claude",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L977",
+    "input": "Claude",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.HookCommands.Trae",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L979",
+    "input": "Trae",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.HookCommands.Codex",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L981",
+    "input": "Codex",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.HookCommands.Cursor",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L983",
+    "input": "Cursor",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.HookCommands.Gemini",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L985",
+    "input": "Gemini",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.HookCommands.Copilot",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L987",
+    "input": "Copilot",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.HookCommands.Droid",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L989",
+    "input": "Droid",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.HookCommands.Vibe",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L991",
+    "input": "Vibe",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.HookCommands.Check",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L993",
+    "input": "Check",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommands.Diff",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1006",
+    "input": "Diff",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommands.Log",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1012",
+    "input": "Log",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommands.Status",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1018",
+    "input": "Status",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommands.Show",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1024",
+    "input": "Show",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommands.Add",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1030",
+    "input": "Add",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommands.Commit",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1036",
+    "input": "Commit",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommands.Checkout",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1042",
+    "input": "Checkout",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommands.Push",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1048",
+    "input": "Push",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommands.Pull",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1054",
+    "input": "Pull",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommands.Branch",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1060",
+    "input": "Branch",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommands.Fetch",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1066",
+    "input": "Fetch",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommands.Stash",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1072",
+    "input": "Stash",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommands.Worktree",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1080",
+    "input": "Worktree",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommands.Other",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1087",
+    "input": "Other",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PnpmCommands.List",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1093",
+    "input": "List",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PnpmCommands.Outdated",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1102",
+    "input": "Outdated",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PnpmCommands.Install",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1108",
+    "input": "Install",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PnpmCommands.Typecheck",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1114",
+    "input": "Typecheck",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PnpmCommands.Other",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1121",
+    "input": "Other",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DockerCommands.Ps",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1127",
+    "input": "Ps",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DockerCommands.Images",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1132",
+    "input": "Images",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DockerCommands.Logs",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1134",
+    "input": "Logs",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DockerCommands.Compose",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1136",
+    "input": "Compose",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DockerCommands.Other",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1142",
+    "input": "Other",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.ComposeCommands.Ps",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1148",
+    "input": "Ps",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.ComposeCommands.Logs",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1153",
+    "input": "Logs",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.ComposeCommands.Build",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1161",
+    "input": "Build",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.ComposeCommands.Other",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1167",
+    "input": "Other",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.KubectlCommands.Get",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1173",
+    "input": "Get",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.KubectlCommands.Pods",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1179",
+    "input": "Pods",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.KubectlCommands.Services",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1187",
+    "input": "Services",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.KubectlCommands.Logs",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1195",
+    "input": "Logs",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.KubectlCommands.Other",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1202",
+    "input": "Other",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.OcCommands.Get",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1208",
+    "input": "Get",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.OcCommands.Pods",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1214",
+    "input": "Pods",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.OcCommands.Services",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1222",
+    "input": "Services",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.OcCommands.Logs",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1230",
+    "input": "Logs",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.OcCommands.Other",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1237",
+    "input": "Other",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PrismaCommands.Generate",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1243",
+    "input": "Generate",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PrismaCommands.Migrate",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1249",
+    "input": "Migrate",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PrismaCommands.DbPush",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1254",
+    "input": "DbPush",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PrismaMigrateCommands.Dev",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1264",
+    "input": "Dev",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PrismaMigrateCommands.Status",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1273",
+    "input": "Status",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PrismaMigrateCommands.Deploy",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1279",
+    "input": "Deploy",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.CargoCommands.Build",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1289",
+    "input": "Build",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.CargoCommands.Test",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1295",
+    "input": "Test",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.CargoCommands.Clippy",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1301",
+    "input": "Clippy",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.CargoCommands.Check",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1307",
+    "input": "Check",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.CargoCommands.Install",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1313",
+    "input": "Install",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.CargoCommands.Nextest",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1319",
+    "input": "Nextest",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.CargoCommands.Other",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1326",
+    "input": "Other",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DotnetCommands.Build",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1332",
+    "input": "Build",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DotnetCommands.Test",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1337",
+    "input": "Test",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DotnetCommands.Restore",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1342",
+    "input": "Restore",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DotnetCommands.Format",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1347",
+    "input": "Format",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DotnetCommands.Other",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1353",
+    "input": "Other",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GoCommands.Test",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1359",
+    "input": "Test",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GoCommands.Build",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1365",
+    "input": "Build",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GoCommands.Vet",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1371",
+    "input": "Vet",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GoCommands.Other",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1378",
+    "input": "Other",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.SbtCommands.Test",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1393",
+    "input": "Test",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.SbtCommands.Compile",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1399",
+    "input": "Compile",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.SbtCommands.Run",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1405",
+    "input": "Run",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.SbtCommands.Other",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1412",
+    "input": "Other",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.BunCommands.Install",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1418",
+    "input": "Install",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.BunCommands.Run",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1423",
+    "input": "Run",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.BunCommands.Build",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1428",
+    "input": "Build",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.BunCommands.Test",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1433",
+    "input": "Test",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.BunCommands.Add",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1438",
+    "input": "Add",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.BunCommands.Remove",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1443",
+    "input": "Remove",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.BunCommands.Pm",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1448",
+    "input": "Pm",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.BunCommands.X",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1453",
+    "input": "X",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.BunCommands.Other",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1459",
+    "input": "Other",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.BunPmCommands.Ls",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1465",
+    "input": "Ls",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.BunPmCommands.Other",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1471",
+    "input": "Other",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DenoCommands.Run",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1477",
+    "input": "Run",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DenoCommands.Check",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1482",
+    "input": "Check",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DenoCommands.Lint",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1487",
+    "input": "Lint",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DenoCommands.Test",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1492",
+    "input": "Test",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DenoCommands.Task",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1497",
+    "input": "Task",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DenoCommands.Compile",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1502",
+    "input": "Compile",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DenoCommands.Install",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1507",
+    "input": "Install",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.DenoCommands.Other",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1513",
+    "input": "Other",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GtCommands.Log",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1693",
+    "input": "Log",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GtCommands.Submit",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1698",
+    "input": "Submit",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GtCommands.Sync",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1703",
+    "input": "Sync",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GtCommands.Restack",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1708",
+    "input": "Restack",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GtCommands.Create",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1713",
+    "input": "Create",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GtCommands.Branch",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1718",
+    "input": "Branch",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GtCommands.Other",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L1724",
+    "input": "Other",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommand.Diff",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/git_cmd.rs#L22",
+    "input": "Diff",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommand.Log",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/git_cmd.rs#L23",
+    "input": "Log",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommand.Status",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/git_cmd.rs#L24",
+    "input": "Status",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommand.Show",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/git_cmd.rs#L25",
+    "input": "Show",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommand.Add",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/git_cmd.rs#L26",
+    "input": "Add",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommand.Commit",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/git_cmd.rs#L27",
+    "input": "Commit",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommand.Checkout",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/git_cmd.rs#L28",
+    "input": "Checkout",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommand.Push",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/git_cmd.rs#L29",
+    "input": "Push",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommand.Pull",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/git_cmd.rs#L30",
+    "input": "Pull",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommand.Branch",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/git_cmd.rs#L31",
+    "input": "Branch",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommand.Fetch",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/git_cmd.rs#L32",
+    "input": "Fetch",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommand.Stash",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/git_cmd.rs#L33",
+    "input": "Stash",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.GitCommand.Worktree",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/git_cmd.rs#L34",
+    "input": "Worktree",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PnpmCommand.List",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/pnpm_cmd.rs#L368",
+    "input": "List",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PnpmCommand.Outdated",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/pnpm_cmd.rs#L369",
+    "input": "Outdated",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PnpmCommand.Install",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/pnpm_cmd.rs#L370",
+    "input": "Install",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PrismaCommand.Generate",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/prisma_cmd.rs#L12",
+    "input": "Generate",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PrismaCommand.Migrate",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/prisma_cmd.rs#L13",
+    "input": "Migrate",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.PrismaCommand.DbPush",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/prisma_cmd.rs#L14",
+    "input": "DbPush",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.CargoCommand.Build",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/rust/cargo_cmd.rs#L17",
+    "input": "Build",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.CargoCommand.Test",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/rust/cargo_cmd.rs#L18",
+    "input": "Test",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.CargoCommand.Clippy",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/rust/cargo_cmd.rs#L19",
+    "input": "Clippy",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.CargoCommand.Check",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/rust/cargo_cmd.rs#L20",
+    "input": "Check",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.CargoCommand.Install",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/rust/cargo_cmd.rs#L21",
+    "input": "Install",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  },
+  {
+    "id": "tools.CargoCommand.Nextest",
+    "upstream": "rtk",
+    "source": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/rust/cargo_cmd.rs#L22",
+    "input": "Nextest",
+    "behavior": "Match the frozen command's documented output and execution contract",
+    "exceptions": [
+      "unknown output version",
+      "binary/machine output",
+      "interactive execution"
+    ],
+    "status": "unverified",
+    "tests": [],
+    "scope": "requires_review"
+  }
+]

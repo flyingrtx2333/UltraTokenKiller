@@ -1,0 +1,4288 @@
+{
+  "headroom": {
+    "repository": "chopratejas/headroom",
+    "commit": "bc21c9370793f7e4aa94ac4c5d9a67a8d2dd0df9",
+    "sources": [
+      {
+        "path": "README.md",
+        "url": "https://github.com/chopratejas/headroom/blob/bc21c9370793f7e4aa94ac4c5d9a67a8d2dd0df9/README.md",
+        "sha256": "ac72ff71580e4d280db8db057ada0ecfe25c25949809cfba8c06479ed84404e9",
+        "documented_commands": []
+      }
+    ],
+    "test_paths": [
+      ".github/ISSUE_TEMPLATE/copilot-subscription-test-report.md",
+      "REALIGNMENT/11-phase-I-test-infra.md",
+      "TESTING-copilot-subscription.md",
+      "benchmarks/adversarial_ccr_tests.py",
+      "benchmarks/conftest.py",
+      "crates/headroom-core/proptest-regressions/transforms/tag_protector.txt",
+      "crates/headroom-core/tests/auth_mode.rs",
+      "crates/headroom-core/tests/cache_control.rs",
+      "crates/headroom-core/tests/ccr_backends.rs",
+      "crates/headroom-core/tests/ccr_roundtrip.rs",
+      "crates/headroom-core/tests/code_compressor_parity.rs",
+      "crates/headroom-core/tests/kompress_parity.rs",
+      "crates/headroom-core/tests/live_zone_ccr.rs",
+      "crates/headroom-core/tests/live_zone_dispatch.rs",
+      "crates/headroom-core/tests/live_zone_thresholds.rs",
+      "crates/headroom-core/tests/live_zone_token_validation.rs",
+      "crates/headroom-core/tests/recommendations_loader.rs",
+      "crates/headroom-core/tests/tokenizer_proptest.rs",
+      "crates/headroom-parity/examples/diff_fixture.rs",
+      "crates/headroom-proxy/tests/common/mod.rs",
+      "crates/headroom-proxy/tests/e2e_real.rs",
+      "crates/headroom-proxy/tests/e2e_simulators.rs",
+      "crates/headroom-proxy/tests/fixtures/anthropic_messages_request_real.json",
+      "crates/headroom-proxy/tests/integration_anthropic_model_sanitize.rs",
+      "crates/headroom-proxy/tests/integration_bedrock_authmode.rs",
+      "crates/headroom-proxy/tests/integration_bedrock_invoke.rs",
+      "crates/headroom-proxy/tests/integration_bedrock_metrics.rs",
+      "crates/headroom-proxy/tests/integration_bedrock_streaming.rs",
+      "crates/headroom-proxy/tests/integration_beta_header_sticky.rs",
+      "crates/headroom-proxy/tests/integration_body.rs",
+      "crates/headroom-proxy/tests/integration_body_size.rs",
+      "crates/headroom-proxy/tests/integration_cache_control.rs",
+      "crates/headroom-proxy/tests/integration_cache_drift.rs",
+      "crates/headroom-proxy/tests/integration_chat_completions.rs",
+      "crates/headroom-proxy/tests/integration_compression.rs",
+      "crates/headroom-proxy/tests/integration_conversations.rs",
+      "crates/headroom-proxy/tests/integration_e3_anthropic_cache_control.rs",
+      "crates/headroom-proxy/tests/integration_e4_openai_cache_key.rs",
+      "crates/headroom-proxy/tests/integration_headers.rs",
+      "crates/headroom-proxy/tests/integration_health.rs",
+      "crates/headroom-proxy/tests/integration_http.rs",
+      "crates/headroom-proxy/tests/integration_metrics.rs",
+      "crates/headroom-proxy/tests/integration_request_id.rs",
+      "crates/headroom-proxy/tests/integration_responses.rs",
+      "crates/headroom-proxy/tests/integration_responses_streaming.rs",
+      "crates/headroom-proxy/tests/integration_schema_sort.rs",
+      "crates/headroom-proxy/tests/integration_sse.rs",
+      "crates/headroom-proxy/tests/integration_tool_sort.rs",
+      "crates/headroom-proxy/tests/integration_vertex_raw_predict.rs",
+      "crates/headroom-proxy/tests/integration_volatile_detector.rs",
+      "crates/headroom-proxy/tests/integration_ws.rs",
+      "crates/headroom-proxy/tests/sse_anthropic.rs",
+      "crates/headroom-proxy/tests/sse_framing.rs",
+      "crates/headroom-proxy/tests/sse_openai_chat.rs",
+      "crates/headroom-proxy/tests/sse_openai_responses.rs",
+      "crates/headroom-simulators/tests/simulator_http.rs",
+      "deploy/beacon/test-rollup.mjs",
+      "deploy/beacon/test_query_bucket_validation.sh",
+      "examples/strands_mcp_dispatch_test.py",
+      "examples/test_ccr.py",
+      "headroom/learn/fixtures.py",
+      "headroom/testing/README.md",
+      "headroom/testing/__init__.py",
+      "headroom/testing/harness.py",
+      "plugins/headroom-oauth2/tests/test_oauth2.py",
+      "plugins/openclaw/test/convert.test.ts",
+      "plugins/openclaw/test/engine-normalization.test.ts",
+      "plugins/openclaw/test/engine.test.ts",
+      "plugins/openclaw/test/gateway-config.test.ts",
+      "plugins/openclaw/test/plugin-runtime-routing.test.ts",
+      "plugins/openclaw/test/proxy-manager.test.ts",
+      "plugins/openclaw/vitest.config.ts",
+      "plugins/opencode/src/plugin.test.ts",
+      "plugins/opencode/src/transport.test.ts",
+      "plugins/opencode/vitest.config.ts",
+      "scripts/fixtures/anthropic_replay_body.json",
+      "scripts/fixtures/codex_response_create_frame.json",
+      "scripts/record_code_compressor_fixtures.py",
+      "scripts/record_fixtures.py",
+      "scripts/record_kompress_fixtures.py",
+      "scripts/tests/test_changelog_gen.py",
+      "scripts/tests/test_ci_workflow.py",
+      "scripts/tests/test_pr_governance.py",
+      "scripts/tests/test_pr_health_labels.py",
+      "scripts/tests/test_pr_health_workflow.py",
+      "scripts/tests/test_sync_plugin_versions.py",
+      "scripts/tests/test_version_sync.py",
+      "sdk/typescript/test/adapters/anthropic.test.ts",
+      "sdk/typescript/test/adapters/gemini.test.ts",
+      "sdk/typescript/test/adapters/openai.test.ts",
+      "sdk/typescript/test/adapters/vercel-ai.test.ts",
+      "sdk/typescript/test/client-expanded.test.ts",
+      "sdk/typescript/test/client.test.ts",
+      "sdk/typescript/test/compress.test.ts",
+      "sdk/typescript/test/config.test.ts",
+      "sdk/typescript/test/errors.test.ts",
+      "sdk/typescript/test/format-integration.test.ts",
+      "sdk/typescript/test/hooks.test.ts",
+      "sdk/typescript/test/integration.test.ts",
+      "sdk/typescript/test/mdx-examples.test.ts",
+      "sdk/typescript/test/models.test.ts",
+      "sdk/typescript/test/parity.test.ts",
+      "sdk/typescript/test/paths.test.ts",
+      "sdk/typescript/test/shared-context.test.ts",
+      "sdk/typescript/test/simulate.test.ts",
+      "sdk/typescript/test/types.test.ts",
+      "sdk/typescript/test/utils/case.test.ts",
+      "sdk/typescript/test/utils/detect-format.test.ts",
+      "sdk/typescript/test/utils/format.test.ts",
+      "sdk/typescript/test/vercel-ai-e2e.test.ts",
+      "sdk/typescript/vitest.config.ts",
+      "tests/__init__.py",
+      "tests/_dotenv.py",
+      "tests/_gemini_live.py",
+      "tests/_mcp_stub.py",
+      "tests/_skip_helpers.py",
+      "tests/cli/__init__.py",
+      "tests/cli/test_memory.py",
+      "tests/cli/test_utils.py",
+      "tests/conftest.py",
+      "tests/e2e_cortex_latency.py",
+      "tests/e2e_cortex_mcp.py",
+      "tests/e2e_cortex_proxy.py",
+      "tests/e2e_cortex_proxy_mcp.py",
+      "tests/e2e_cortex_quality.py",
+      "tests/e2e_cortex_savings.py",
+      "tests/e2e_real_compression.py",
+      "tests/e2e_ws_codex_usage_headers.py",
+      "tests/e2e_ws_responses_compression.py",
+      "tests/fixtures/fidelity_golden/_generate.py",
+      "tests/fixtures/fidelity_golden/baseline.json",
+      "tests/fixtures/fidelity_golden/cases.json",
+      "tests/fixtures/headroom-issue-3054.json",
+      "tests/fixtures/headroom-issue-3570.json",
+      "tests/fixtures/issues/headroom_issue_2059.json",
+      "tests/fixtures/memory_tool_definitions/anthropic.json",
+      "tests/fixtures/memory_tool_definitions/openai.json",
+      "tests/fixtures/rollout_policy_vectors.json",
+      "tests/gateway/__init__.py",
+      "tests/gateway/conftest.py",
+      "tests/gateway/deferral_hook.py",
+      "tests/gateway/fake_gateway.py",
+      "tests/gateway/fake_provider.py",
+      "tests/gateway/fold_only_hook.py",
+      "tests/gateway/redrive_hook_ext.py",
+      "tests/gateway/samples.py",
+      "tests/gateway/test_cache_breakpoint_budget.py",
+      "tests/gateway/test_compress_turn_seam.py",
+      "tests/gateway/test_contract_request_half.py",
+      "tests/gateway/test_contract_response_half.py",
+      "tests/gateway/test_invariants.py",
+      "tests/gateway/test_kong_integration.py",
+      "tests/gateway/test_native_deferral.py",
+      "tests/gateway/test_output_steering.py",
+      "tests/gateway/test_parity_proxy_vs_gateway.py",
+      "tests/gateway/test_redrive_loop.py",
+      "tests/gateway/test_responses_shape.py",
+      "tests/gateway/test_usage_relay_openai_shape.py",
+      "tests/integrations/test_langgraph.py",
+      "tests/integrations/test_strands/__init__.py",
+      "tests/integrations/test_strands/test_ccr_exclusion.py",
+      "tests/integrations/test_strands/test_hooks.py",
+      "tests/integrations/test_strands/test_hooks_unit.py",
+      "tests/integrations/test_strands/test_model.py",
+      "tests/integrations/test_strands/test_model_unit.py",
+      "tests/parity/fixtures/cache_aligner/0225460359a992d9.json",
+      "tests/parity/fixtures/cache_aligner/231ab237501e106b.json",
+      "tests/parity/fixtures/cache_aligner/25683f67cbb74ece.json",
+      "tests/parity/fixtures/cache_aligner/31eb80356eeeb30d.json",
+      "tests/parity/fixtures/cache_aligner/336311b995b063d5.json",
+      "tests/parity/fixtures/cache_aligner/475e76a9f99c29ab.json",
+      "tests/parity/fixtures/cache_aligner/4b171a7f9af6e2d5.json",
+      "tests/parity/fixtures/cache_aligner/541daf83f5a1fda9.json",
+      "tests/parity/fixtures/cache_aligner/6502f683439de052.json",
+      "tests/parity/fixtures/cache_aligner/7b556192a56bca94.json",
+      "tests/parity/fixtures/cache_aligner/8822af1cf9a14254.json",
+      "tests/parity/fixtures/cache_aligner/92b25557cfbfa8db.json",
+      "tests/parity/fixtures/cache_aligner/acda633b1733c6e6.json",
+      "tests/parity/fixtures/cache_aligner/c2563e51d50a4da6.json",
+      "tests/parity/fixtures/cache_aligner/c43df917ec5d7d4c.json",
+      "tests/parity/fixtures/cache_aligner/c5ec19381964f8ef.json",
+      "tests/parity/fixtures/cache_aligner/e7a901cbf00a645f.json",
+      "tests/parity/fixtures/cache_aligner/ed9c7e7ca8f0ada6.json",
+      "tests/parity/fixtures/cache_aligner/efe495ffb2ff9922.json",
+      "tests/parity/fixtures/cache_aligner/f2b50b3cf76fe6a1.json",
+      "tests/parity/fixtures/ccr/15887705e46d70a3.json",
+      "tests/parity/fixtures/ccr/1e13216df83b1b24.json",
+      "tests/parity/fixtures/ccr/22e61aa4e1839aaf.json",
+      "tests/parity/fixtures/ccr/2670d5319d6ff242.json",
+      "tests/parity/fixtures/ccr/2c7824a6bc69ae89.json",
+      "tests/parity/fixtures/ccr/3d8773cdc4d3493c.json",
+      "tests/parity/fixtures/ccr/3de30e123dc02906.json",
+      "tests/parity/fixtures/ccr/7d7e15a8b88f7f62.json",
+      "tests/parity/fixtures/ccr/7f7179505206626f.json",
+      "tests/parity/fixtures/ccr/8bf62db276326e98.json",
+      "tests/parity/fixtures/ccr/8c605629cab1b723.json",
+      "tests/parity/fixtures/ccr/936e54516eae8e15.json",
+      "tests/parity/fixtures/ccr/93b84c8742a4a013.json",
+      "tests/parity/fixtures/ccr/a4395ce692509f23.json",
+      "tests/parity/fixtures/ccr/a960a03905b2305d.json",
+      "tests/parity/fixtures/ccr/a9a5944d23fe44c0.json",
+      "tests/parity/fixtures/ccr/aae9481c92191cd1.json",
+      "tests/parity/fixtures/ccr/b993d838f6a7aba0.json",
+      "tests/parity/fixtures/ccr/c171cef065b43a3e.json",
+      "tests/parity/fixtures/ccr/d22dc7c618d06703.json",
+      "tests/parity/fixtures/ccr/d266ff10965e9e45.json",
+      "tests/parity/fixtures/ccr/e240be82ab1c494b.json",
+      "tests/parity/fixtures/ccr/f76cad36ebb6cf4e.json",
+      "tests/parity/fixtures/ccr/f7f1e1ad4d5f25c5.json",
+      "tests/parity/fixtures/ccr/fd10707d5dc2526b.json",
+      "tests/parity/fixtures/code_aware_compressor/07dd1a61089c1e53.json",
+      "tests/parity/fixtures/code_aware_compressor/095be1adad76b588.json",
+      "tests/parity/fixtures/code_aware_compressor/1e319c5e33af4af1.json",
+      "tests/parity/fixtures/code_aware_compressor/1e496ebaf89fab96.json",
+      "tests/parity/fixtures/code_aware_compressor/2c239d4af41282c2.json",
+      "tests/parity/fixtures/code_aware_compressor/2d214f401618d639.json",
+      "tests/parity/fixtures/code_aware_compressor/36e5ff5093790e6f.json",
+      "tests/parity/fixtures/code_aware_compressor/3e706cfb03aa3c8e.json",
+      "tests/parity/fixtures/code_aware_compressor/411d5549bcd5f50d.json",
+      "tests/parity/fixtures/code_aware_compressor/420dd19a087526ca.json",
+      "tests/parity/fixtures/code_aware_compressor/53030c7c11ce0082.json",
+      "tests/parity/fixtures/code_aware_compressor/5c057f7bfd56af05.json",
+      "tests/parity/fixtures/code_aware_compressor/6c04d398f9c3014e.json",
+      "tests/parity/fixtures/code_aware_compressor/716a5a2380907e71.json",
+      "tests/parity/fixtures/code_aware_compressor/791805bff164ee9d.json",
+      "tests/parity/fixtures/code_aware_compressor/7cee85d20b3604dd.json",
+      "tests/parity/fixtures/code_aware_compressor/88fe6b4b0a9908c5.json",
+      "tests/parity/fixtures/code_aware_compressor/921876ad5dd26cf6.json",
+      "tests/parity/fixtures/code_aware_compressor/b16202e9b81a5bba.json",
+      "tests/parity/fixtures/code_aware_compressor/b753b4725da91f71.json",
+      "tests/parity/fixtures/code_aware_compressor/b8fa00d165cd059a.json",
+      "tests/parity/fixtures/code_aware_compressor/ba9c0fda1beda6ec.json",
+      "tests/parity/fixtures/code_aware_compressor/bd14bdd440e5a1ab.json",
+      "tests/parity/fixtures/code_aware_compressor/bfcb158739b34b43.json",
+      "tests/parity/fixtures/code_aware_compressor/d72fde8ea01cb782.json",
+      "tests/parity/fixtures/code_aware_compressor/da21f7240cb20e8b.json",
+      "tests/parity/fixtures/code_aware_compressor/e79625ba83a6f22d.json",
+      "tests/parity/fixtures/code_aware_compressor/e8ce85f0703b083b.json",
+      "tests/parity/fixtures/code_aware_compressor/f8a7f62203b3d8ba.json",
+      "tests/parity/fixtures/code_aware_compressor/f9a7c264592ff8c4.json",
+      "tests/parity/fixtures/codex_openai_contracts/codex-openai-interaction.schema.json",
+      "tests/parity/fixtures/content_detector/247811aecfdec556.json",
+      "tests/parity/fixtures/content_detector/37c86907c057e293.json",
+      "tests/parity/fixtures/content_detector/3a0b14d2dea7c876.json",
+      "tests/parity/fixtures/content_detector/3ba74a1f57c5351e.json",
+      "tests/parity/fixtures/content_detector/4efe946303371867.json",
+      "tests/parity/fixtures/content_detector/53400da2b7dd2428.json",
+      "tests/parity/fixtures/content_detector/552d30c30c2a6793.json",
+      "tests/parity/fixtures/content_detector/5e8e1bc29f6c71c5.json",
+      "tests/parity/fixtures/content_detector/628c8985c40adb7d.json",
+      "tests/parity/fixtures/content_detector/67f4b1a1697c8aa9.json",
+      "tests/parity/fixtures/content_detector/70fbb444a583fe3c.json",
+      "tests/parity/fixtures/content_detector/71d648a39e151a72.json",
+      "tests/parity/fixtures/content_detector/79e6b68a05a1c639.json",
+      "tests/parity/fixtures/content_detector/7e145153192c11a1.json",
+      "tests/parity/fixtures/content_detector/7fde660489bc47aa.json",
+      "tests/parity/fixtures/content_detector/837b272f1604eaaa.json",
+      "tests/parity/fixtures/content_detector/9fb76321d31ed64c.json",
+      "tests/parity/fixtures/content_detector/bc4488ce189d1c86.json",
+      "tests/parity/fixtures/content_detector/bf9b9ceb4b70dcd0.json",
+      "tests/parity/fixtures/content_detector/cabc55445af63e2f.json",
+      "tests/parity/fixtures/content_detector/d100a9ac7a3671da.json",
+      "tests/parity/fixtures/diff_compressor/066bc82007dc2dd4.json",
+      "tests/parity/fixtures/diff_compressor/0cf5e189bd42fab1.json",
+      "tests/parity/fixtures/diff_compressor/10f0106f40cbe2fa.json",
+      "tests/parity/fixtures/diff_compressor/1a4e35c597c7a001.json",
+      "tests/parity/fixtures/diff_compressor/1bdfa041108f0aad.json",
+      "tests/parity/fixtures/diff_compressor/1eeb1f7ae64c7744.json",
+      "tests/parity/fixtures/diff_compressor/2c07a365f52d6fa6.json",
+      "tests/parity/fixtures/diff_compressor/2cd095b132f5da3f.json",
+      "tests/parity/fixtures/diff_compressor/2eb4b13b37f376d6.json",
+      "tests/parity/fixtures/diff_compressor/433b2d25303645ed.json",
+      "tests/parity/fixtures/diff_compressor/4844a5f9605b8425.json",
+      "tests/parity/fixtures/diff_compressor/5d950a94b8c22480.json",
+      "tests/parity/fixtures/diff_compressor/649fd65ad3511191.json",
+      "tests/parity/fixtures/diff_compressor/66c86f64baebfc3f.json",
+      "tests/parity/fixtures/diff_compressor/88b4d4a7e93014e5.json",
+      "tests/parity/fixtures/diff_compressor/97bde326d96a1165.json",
+      "tests/parity/fixtures/diff_compressor/9b9a03215a7198bf.json",
+      "tests/parity/fixtures/diff_compressor/b0b83d16366edfed.json",
+      "tests/parity/fixtures/diff_compressor/b605bd89e234cbff.json",
+      "tests/parity/fixtures/diff_compressor/c6b6d5c9fd7f1ad2.json",
+      "tests/parity/fixtures/diff_compressor/c72662c635d1defa.json",
+      "tests/parity/fixtures/diff_compressor/d0ba5cae330722be.json",
+      "tests/parity/fixtures/diff_compressor/d0e62d2f1493bd72.json",
+      "tests/parity/fixtures/diff_compressor/d4ed44a6fc667358.json",
+      "tests/parity/fixtures/diff_compressor/da9afe00e9846ce4.json",
+      "tests/parity/fixtures/diff_compressor/e9c505e42b2b2edc.json",
+      "tests/parity/fixtures/diff_compressor/ea99ab1ea7449acf.json",
+      "tests/parity/fixtures/kompress/0321ef8700c1fd25.json",
+      "tests/parity/fixtures/kompress/1586e806db77fd58.json",
+      "tests/parity/fixtures/kompress/1730a6bdcfa35f6d.json",
+      "tests/parity/fixtures/kompress/2a4d2bed53060038.json",
+      "tests/parity/fixtures/kompress/4547d4fba3cb8234.json",
+      "tests/parity/fixtures/kompress/45d9e4200abaee4f.json",
+      "tests/parity/fixtures/kompress/6a76f5134c106f49.json",
+      "tests/parity/fixtures/kompress/717ac5c1b5a49c4e.json",
+      "tests/parity/fixtures/kompress/74fde229e9465c81.json",
+      "tests/parity/fixtures/kompress/76324e0469f6f979.json",
+      "tests/parity/fixtures/kompress/8417b9b5a308609c.json",
+      "tests/parity/fixtures/kompress/96fbac155a26ca59.json",
+      "tests/parity/fixtures/kompress/9a0fba0115477c8b.json",
+      "tests/parity/fixtures/kompress/9a4c0b3a49037be2.json",
+      "tests/parity/fixtures/kompress/9ef7db920a3d84e9.json",
+      "tests/parity/fixtures/kompress/a901398a6751d2d2.json",
+      "tests/parity/fixtures/kompress/a92c8ac9342234f5.json",
+      "tests/parity/fixtures/kompress/b4fc3e13ca821a10.json",
+      "tests/parity/fixtures/kompress/d9d334193be8ddeb.json",
+      "tests/parity/fixtures/kompress/e3387b34a2e2f5e0.json",
+      "tests/parity/fixtures/kompress/e63c879a46621bdb.json",
+      "tests/parity/fixtures/log_compressor/012c7bbeb96d95e9.json",
+      "tests/parity/fixtures/log_compressor/1fbaf88e12686704.json",
+      "tests/parity/fixtures/log_compressor/23112ae8ae41ba59.json",
+      "tests/parity/fixtures/log_compressor/305987ea77c385e6.json",
+      "tests/parity/fixtures/log_compressor/349121068ecbb26e.json",
+      "tests/parity/fixtures/log_compressor/3bc015edc0a36387.json",
+      "tests/parity/fixtures/log_compressor/3bf3f8bd70c80dad.json",
+      "tests/parity/fixtures/log_compressor/5533a8264a04dd61.json",
+      "tests/parity/fixtures/log_compressor/566491aacda8af92.json",
+      "tests/parity/fixtures/log_compressor/629d38929748b41e.json",
+      "tests/parity/fixtures/log_compressor/65bd6228add102ac.json",
+      "tests/parity/fixtures/log_compressor/79b59341f8159b3e.json",
+      "tests/parity/fixtures/log_compressor/7cd0d60fe9f4aad2.json",
+      "tests/parity/fixtures/log_compressor/9655ffc91d79aa47.json",
+      "tests/parity/fixtures/log_compressor/aa433e41aafed34e.json",
+      "tests/parity/fixtures/log_compressor/c472d986fe3b3192.json",
+      "tests/parity/fixtures/log_compressor/cbf376c989bdc9be.json",
+      "tests/parity/fixtures/log_compressor/d01455afa162c961.json",
+      "tests/parity/fixtures/log_compressor/d7e1352bc6d3df4d.json",
+      "tests/parity/fixtures/log_compressor/ef61ab0e0029aa96.json",
+      "tests/parity/fixtures/smart_crusher/dict_array_100_sequential_b91d1fff5ba3.json",
+      "tests/parity/fixtures/smart_crusher/dict_array_30_b0ba1d26fd03.json",
+      "tests/parity/fixtures/smart_crusher/dict_array_30_bias_high_dc3b36e60560.json",
+      "tests/parity/fixtures/smart_crusher/dict_array_30_bias_low_a850512901bd.json",
+      "tests/parity/fixtures/smart_crusher/duplicate_dicts_40_40a0670dec17.json",
+      "tests/parity/fixtures/smart_crusher/empty_array_41ecf20098c5.json",
+      "tests/parity/fixtures/smart_crusher/mixed_array_3f929019b62f.json",
+      "tests/parity/fixtures/smart_crusher/nested_3deep_with_array_bb5036c153aa.json",
+      "tests/parity/fixtures/smart_crusher/nested_object_with_array_b66d43299ea1.json",
+      "tests/parity/fixtures/smart_crusher/non_json_passthrough_4322abf677f3.json",
+      "tests/parity/fixtures/smart_crusher/nulls_and_bools_06d6fd6adcab.json",
+      "tests/parity/fixtures/smart_crusher/number_array_40_changepoint_8cd416c24d53.json",
+      "tests/parity/fixtures/smart_crusher/short_array_passthrough_aeb16224b61f.json",
+      "tests/parity/fixtures/smart_crusher/small_object_passthrough_801afa36a32c.json",
+      "tests/parity/fixtures/smart_crusher/string_array_25_6fe4a307de81.json",
+      "tests/parity/fixtures/smart_crusher/time_series_50_25cd28df5a50.json",
+      "tests/parity/fixtures/smart_crusher/unicode_dict_array_4820ed6c0c9a.json",
+      "tests/parity/fixtures/text_crusher/plain_prose_197195471bb9.json",
+      "tests/parity/fixtures/text_crusher/plain_prose_no_query_197195471bb9.json",
+      "tests/parity/fixtures/text_crusher/redundant_2eaa453c4719.json",
+      "tests/parity/fixtures/text_crusher/salient_heavy_57cb8ef778b5.json",
+      "tests/parity/fixtures/text_crusher/short_passthrough_d30100c6f67f.json",
+      "tests/parity/fixtures/text_crusher/unicode_d46b3fb761b1.json",
+      "tests/parity/fixtures/tokenizer/0c8d2e2560344a24.json",
+      "tests/parity/fixtures/tokenizer/19456eb333a094de.json",
+      "tests/parity/fixtures/tokenizer/1c75164f0c558b4d.json",
+      "tests/parity/fixtures/tokenizer/21e56c0d138797d6.json",
+      "tests/parity/fixtures/tokenizer/28837bb1444083d6.json",
+      "tests/parity/fixtures/tokenizer/29a04bdec859732f.json",
+      "tests/parity/fixtures/tokenizer/2c20d38a59b31925.json",
+      "tests/parity/fixtures/tokenizer/3058a9dd4d4590a7.json",
+      "tests/parity/fixtures/tokenizer/3658f2a54c201dcb.json",
+      "tests/parity/fixtures/tokenizer/3ae287cf54e20572.json",
+      "tests/parity/fixtures/tokenizer/3e27d2a91d7c8ef3.json",
+      "tests/parity/fixtures/tokenizer/43a16be994276c2a.json",
+      "tests/parity/fixtures/tokenizer/4a3533a2e42bbc61.json",
+      "tests/parity/fixtures/tokenizer/4b314afee956fb6e.json",
+      "tests/parity/fixtures/tokenizer/5e301439bac11b94.json",
+      "tests/parity/fixtures/tokenizer/5e9e501480519ebf.json",
+      "tests/parity/fixtures/tokenizer/5ea4afd66e350044.json",
+      "tests/parity/fixtures/tokenizer/64b92a621d26bb0a.json",
+      "tests/parity/fixtures/tokenizer/675ed2a00f670b59.json",
+      "tests/parity/fixtures/tokenizer/67f44d29b70020ae.json",
+      "tests/parity/fixtures/tokenizer/6dd3675c600e922d.json",
+      "tests/parity/fixtures/tokenizer/7421cdb88c6f14df.json",
+      "tests/parity/fixtures/tokenizer/7b0e5eb9ea094adc.json",
+      "tests/parity/fixtures/tokenizer/8d2a28d938e958e6.json",
+      "tests/parity/fixtures/tokenizer/ac459b9dbc008e75.json",
+      "tests/parity/fixtures/tokenizer/ae10c17413b82252.json",
+      "tests/parity/fixtures/tokenizer/b5fcd690c3829eba.json",
+      "tests/parity/fixtures/tokenizer/b714e53084605087.json",
+      "tests/parity/fixtures/tokenizer/c2ddce4c6eeb637d.json",
+      "tests/parity/fixtures/tokenizer/c787dbaa804482e4.json",
+      "tests/parity/fixtures/tokenizer/d94694095d50af14.json",
+      "tests/parity/fixtures/tokenizer/db97c1684b0d0b4f.json",
+      "tests/parity/fixtures/tokenizer/dba3a3310f24e9fd.json",
+      "tests/parity/fixtures/tokenizer/ddb0c93fe06909c7.json",
+      "tests/parity/fixtures/tokenizer/df1c3d2b4cea38a5.json",
+      "tests/parity/fixtures/tokenizer/dfab157ab6ff0bf9.json",
+      "tests/parity/fixtures/tokenizer/e9ff95fb7cdd0236.json",
+      "tests/parity/fixtures/tokenizer/ef39f30c64707d97.json",
+      "tests/parity/fixtures/tokenizer/f2890229e85eace8.json",
+      "tests/parity/fixtures/tokenizer/f689763e8643cc5e.json",
+      "tests/parity/record_smart_crusher.py",
+      "tests/parity/record_text_crusher.py",
+      "tests/parity/recorder.py",
+      "tests/repro_unsendable_panic.py",
+      "tests/test_5xx_accounting_all_providers.py",
+      "tests/test_acceptance.py",
+      "tests/test_adapter_hooks.py",
+      "tests/test_adaptive_sizer.py",
+      "tests/test_adversarial_grid.py",
+      "tests/test_agent_savings.py",
+      "tests/test_anthropic_beta_session_sticky.py",
+      "tests/test_anthropic_buffered_sse.py",
+      "tests/test_anthropic_ccr_workspace_unbound.py",
+      "tests/test_anthropic_compaction_transforms.py",
+      "tests/test_anthropic_pre_upstream_backpressure.py",
+      "tests/test_anthropic_stage_timings.py",
+      "tests/test_audit_codex.py",
+      "tests/test_audit_reads.py",
+      "tests/test_auth_mode.py",
+      "tests/test_auth_policy.py",
+      "tests/test_azure_foundry_claude_compression.py",
+      "tests/test_backend_anyllm.py",
+      "tests/test_backend_bugs.py",
+      "tests/test_backend_nonstreaming_cache_metrics.py",
+      "tests/test_backend_streaming_cache_metrics.py",
+      "tests/test_backends/__init__.py",
+      "tests/test_backends/test_bedrock_botocore_preflight.py",
+      "tests/test_backends/test_litellm_cache_stats.py",
+      "tests/test_banner_upstream_targets.py",
+      "tests/test_bash_search_lossless_fold.py",
+      "tests/test_bedrock_prefix_tracker_wiring.py",
+      "tests/test_bedrock_region.py",
+      "tests/test_bedrock_streaming_input_tokens.py",
+      "tests/test_bedrock_tool_result_cache_and_streaming_stats.py",
+      "tests/test_beta_header_merge.py",
+      "tests/test_beta_header_policy.py",
+      "tests/test_binaries.py",
+      "tests/test_buffered_ccr_accept_header.py",
+      "tests/test_buffered_ccr_grace_window.py",
+      "tests/test_buffered_ccr_salvage.py",
+      "tests/test_builtin_compressor_adapters.py",
+      "tests/test_bundled_tools_savings.py",
+      "tests/test_cache/__init__.py",
+      "tests/test_cache/test_anthropic.py",
+      "tests/test_cache/test_backends.py",
+      "tests/test_cache/test_base.py",
+      "tests/test_cache/test_client_integration.py",
+      "tests/test_cache/test_dynamic_detector.py",
+      "tests/test_cache/test_google.py",
+      "tests/test_cache/test_openai.py",
+      "tests/test_cache/test_prefix_tracker.py",
+      "tests/test_cache/test_registry.py",
+      "tests/test_cache/test_semantic.py",
+      "tests/test_cache/test_ttl_estimator.py",
+      "tests/test_cache_aligner_detector_only.py",
+      "tests/test_cache_aligner_prefix_stability.py",
+      "tests/test_cache_breakpoint_diagnostics.py",
+      "tests/test_cache_control_move_bust.py",
+      "tests/test_cache_control_ttl_order.py",
+      "tests/test_cache_mode_cold_start.py",
+      "tests/test_cache_mode_delta_marker.py",
+      "tests/test_cache_prefix_overlay.py",
+      "tests/test_cache_ttl_preserved.py",
+      "tests/test_canonical_pipeline.py",
+      "tests/test_ccr.py",
+      "tests/test_ccr_batch_processor.py",
+      "tests/test_ccr_batch_store.py",
+      "tests/test_ccr_buffered_stream_signed_thinking.py",
+      "tests/test_ccr_context_tracker.py",
+      "tests/test_ccr_feedback.py",
+      "tests/test_ccr_golden_policy.py",
+      "tests/test_ccr_inline_resolve_handlers.py",
+      "tests/test_ccr_marker_policy.py",
+      "tests/test_ccr_marker_resolution.py",
+      "tests/test_ccr_mcp_http.py",
+      "tests/test_ccr_mcp_server.py",
+      "tests/test_ccr_response_handler.py",
+      "tests/test_ccr_response_handler_extra.py",
+      "tests/test_ccr_response_handler_openai_responses.py",
+      "tests/test_ccr_retrieve_history_repair.py",
+      "tests/test_ccr_row_drop_store_bridge.py",
+      "tests/test_ccr_rust_marker_hash_bridge.py",
+      "tests/test_ccr_session_tracker.py",
+      "tests/test_ccr_sqlite_backend.py",
+      "tests/test_ccr_tag_placeholder_regression.py",
+      "tests/test_ccr_tool_always_on.py",
+      "tests/test_ccr_tool_calls.py",
+      "tests/test_ccr_tool_injection.py",
+      "tests/test_claude_session_branch_compare.py",
+      "tests/test_claude_session_mode_benchmark.py",
+      "tests/test_cli/conftest.py",
+      "tests/test_cli/test_copilot_auth.py",
+      "tests/test_cli/test_init_cli.py",
+      "tests/test_cli/test_init_enable_tool_search.py",
+      "tests/test_cli/test_install_cli.py",
+      "tests/test_cli/test_main_help_version.py",
+      "tests/test_cli/test_mcp.py",
+      "tests/test_cli/test_mcp_reconcile.py",
+      "tests/test_cli/test_mcp_status.py",
+      "tests/test_cli/test_recover_codex.py",
+      "tests/test_cli/test_serena_disable.py",
+      "tests/test_cli/test_serena_migrate.py",
+      "tests/test_cli/test_serena_reconcile.py",
+      "tests/test_cli/test_subprocess_utf8_encoding.py",
+      "tests/test_cli/test_unwrap_claude.py",
+      "tests/test_cli/test_wrap_aider.py",
+      "tests/test_cli/test_wrap_bridge.py",
+      "tests/test_cli/test_wrap_claude.py",
+      "tests/test_cli/test_wrap_claude_base_url.py",
+      "tests/test_cli/test_wrap_claude_finally_unbound.py",
+      "tests/test_cli/test_wrap_claude_vertex_proxy_env.py",
+      "tests/test_cli/test_wrap_codex.py",
+      "tests/test_cli/test_wrap_copilot.py",
+      "tests/test_cli/test_wrap_dead_marker_selfheal.py",
+      "tests/test_cli/test_wrap_encoding.py",
+      "tests/test_cli/test_wrap_goose.py",
+      "tests/test_cli/test_wrap_grok.py",
+      "tests/test_cli/test_wrap_helpers.py",
+      "tests/test_cli/test_wrap_kimi.py",
+      "tests/test_cli/test_wrap_omp.py",
+      "tests/test_cli/test_wrap_openclaude.py",
+      "tests/test_cli/test_wrap_openclaw.py",
+      "tests/test_cli/test_wrap_opencode.py",
+      "tests/test_cli/test_wrap_openhands.py",
+      "tests/test_cli/test_wrap_persistent.py",
+      "tests/test_cli/test_wrap_proxy_detach.py",
+      "tests/test_cli/test_wrap_serena_boost.py",
+      "tests/test_cli/test_wrap_stale_marker.py",
+      "tests/test_cli/test_wrap_vibe.py",
+      "tests/test_cli/test_wrap_vscode.py",
+      "tests/test_cli/test_wrap_vscode_claude.py",
+      "tests/test_cli/test_wrap_zcode.py",
+      "tests/test_cli_dashboard.py",
+      "tests/test_cli_doctor.py",
+      "tests/test_cli_extension_seam.py",
+      "tests/test_cli_inspect.py",
+      "tests/test_cli_learn.py",
+      "tests/test_cli_memory_index_sync.py",
+      "tests/test_cli_perf_format.py",
+      "tests/test_cli_proxy_embedding_server.py",
+      "tests/test_cli_proxy_env.py",
+      "tests/test_cli_proxy_improvements.py",
+      "tests/test_cli_proxy_malloc_reexec_guard.py",
+      "tests/test_cli_tools.py",
+      "tests/test_cli_update.py",
+      "tests/test_code_aware_brace_comment_regressions.py",
+      "tests/test_code_aware_regressions.py",
+      "tests/test_code_compressor_bash.py",
+      "tests/test_code_compressor_language_alias.py",
+      "tests/test_code_compressor_syntax_breaker.py",
+      "tests/test_code_compressor_thread_safety.py",
+      "tests/test_codex_client_stamp.py",
+      "tests/test_codex_live.py",
+      "tests/test_codex_openai_contract_parity.py",
+      "tests/test_codex_rate_limits.py",
+      "tests/test_codex_responses_passthrough_bytes.py",
+      "tests/test_codex_responses_waste_signals.py",
+      "tests/test_codex_ws_compression_scheduler.py",
+      "tests/test_codex_ws_per_frame_memory.py",
+      "tests/test_codex_ws_savings_deferral.py",
+      "tests/test_cold_prefix.py",
+      "tests/test_cold_start_fast_pass.py",
+      "tests/test_compaction_markdown_kv.py",
+      "tests/test_compress_api.py",
+      "tests/test_compress_failure.py",
+      "tests/test_compress_passthrough.py",
+      "tests/test_compress_route_tokenizer_by_model.py",
+      "tests/test_compress_session_mode.py",
+      "tests/test_compression/__init__.py",
+      "tests/test_compression/test_code_handler.py",
+      "tests/test_compression/test_evals.py",
+      "tests/test_compression/test_json_handler.py",
+      "tests/test_compression/test_llm_eval.py",
+      "tests/test_compression/test_masks.py",
+      "tests/test_compression/test_universal.py",
+      "tests/test_compression_batches.py",
+      "tests/test_compression_cache.py",
+      "tests/test_compression_cache_registry.py",
+      "tests/test_compression_decision.py",
+      "tests/test_compression_determinism.py",
+      "tests/test_compression_fidelity_regression.py",
+      "tests/test_compression_observability.py",
+      "tests/test_compression_policy.py",
+      "tests/test_compression_policy_toin_gate.py",
+      "tests/test_compression_safety_rails.py",
+      "tests/test_compression_store.py",
+      "tests/test_compression_strategy_outcomes.py",
+      "tests/test_compression_summary.py",
+      "tests/test_compression_summary_eval.py",
+      "tests/test_compression_summary_hard_eval.py",
+      "tests/test_compression_summary_integration.py",
+      "tests/test_compression_summary_tool_eval.py",
+      "tests/test_compression_units.py",
+      "tests/test_compressor_config_exposure.py",
+      "tests/test_compressor_registry.py",
+      "tests/test_compressor_selection.py",
+      "tests/test_config.py",
+      "tests/test_content_router_compact_json.py",
+      "tests/test_content_router_concurrency.py",
+      "tests/test_content_router_detection_dedup.py",
+      "tests/test_content_router_exclude_tools.py",
+      "tests/test_content_router_single_item_deadline.py",
+      "tests/test_content_router_token_units.py",
+      "tests/test_content_router_tool_role_reversibility.py",
+      "tests/test_content_router_user_blocks.py",
+      "tests/test_context_tool_cleanup.py",
+      "tests/test_copilot_auth.py",
+      "tests/test_copilot_integration_id_hmac.py",
+      "tests/test_copilot_linux_secret.py",
+      "tests/test_copilot_macos_keychain.py",
+      "tests/test_copilot_native_mode.py",
+      "tests/test_copilot_provider_label.py",
+      "tests/test_copilot_quota.py",
+      "tests/test_copilot_subscription_smoke.py",
+      "tests/test_copilot_vscode_completions_routing.py",
+      "tests/test_corrupt_golden_bytes_recovery.py",
+      "tests/test_cortex_code_compression.py",
+      "tests/test_cost_budget_basis.py",
+      "tests/test_cost_budget_total_prompt.py",
+      "tests/test_cost_card_attribution.py",
+      "tests/test_cost_pricing_warning_dedup.py",
+      "tests/test_cost_tracker_counterfactual.py",
+      "tests/test_cost_tracker_totals.py",
+      "tests/test_critical_fixes.py",
+      "tests/test_critical_gaps.py",
+      "tests/test_cross_turn_cache_safety.py",
+      "tests/test_cross_turn_dedup.py",
+      "tests/test_custom_base_passthrough_telemetry.py",
+      "tests/test_dashboard/test_live_feed.py",
+      "tests/test_dashboard_accessibility.py",
+      "tests/test_dashboard_agent_usage.py",
+      "tests/test_dashboard_cache_lifetime_playwright.py",
+      "tests/test_dashboard_cache_net_playwright.py",
+      "tests/test_dashboard_cache_ttl_playwright.py",
+      "tests/test_dashboard_poll_guard_playwright.py",
+      "tests/test_dashboard_static_assets.py",
+      "tests/test_dashboard_static_mime_types.py",
+      "tests/test_dashboard_token_savings.py",
+      "tests/test_dataset_recall_runner.py",
+      "tests/test_debug_dump_gating.py",
+      "tests/test_diagnostic_decode_policy.py",
+      "tests/test_docker_compose_persistence.py",
+      "tests/test_error_detection.py",
+      "tests/test_evals/test_html_extraction_eval.py",
+      "tests/test_evals/test_html_oss_benchmarks.py",
+      "tests/test_evals_cjk_tokenization.py",
+      "tests/test_evals_datasets.py",
+      "tests/test_evals_metrics.py",
+      "tests/test_evals_multilingual.py",
+      "tests/test_exceptions.py",
+      "tests/test_extension_attribution.py",
+      "tests/test_force_kompress_all.py",
+      "tests/test_forwarded_headers.py",
+      "tests/test_forwarded_policy.py",
+      "tests/test_fsutil.py",
+      "tests/test_garbled_compression_fixes.py",
+      "tests/test_gateway_sidecar_ports.py",
+      "tests/test_gateway_turn_unit.py",
+      "tests/test_gemini_ccr_continuation_usage.py",
+      "tests/test_gemini_compression_offload.py",
+      "tests/test_gemini_function_response_waste.py",
+      "tests/test_gemini_nonjson_status.py",
+      "tests/test_google_multimodal.py",
+      "tests/test_google_multimodal_e2e.py",
+      "tests/test_graceful_shutdown.py",
+      "tests/test_graph.py",
+      "tests/test_h2_stream_reset_retry.py",
+      "tests/test_handler_outcome_tag_invariant.py",
+      "tests/test_header_isolation.py",
+      "tests/test_hermes_passthrough_compression.py",
+      "tests/test_hermes_tool_call_unwrap.py",
+      "tests/test_hf_revision_pinning.py",
+      "tests/test_hnsw_only.py",
+      "tests/test_hooks.py",
+      "tests/test_huggingface_tokenizer_timeout.py",
+      "tests/test_identity_resolution.py",
+      "tests/test_image_compression.py",
+      "tests/test_image_compression_decision.py",
+      "tests/test_image_compression_isolation.py",
+      "tests/test_image_compression_offload.py",
+      "tests/test_image_compression_policy.py",
+      "tests/test_image_compressor.py",
+      "tests/test_image_compressor_singleton_reuse.py",
+      "tests/test_image_log_redaction.py",
+      "tests/test_image_ocr_api_compat.py",
+      "tests/test_image_types_torch_decoupling.py",
+      "tests/test_install/test_codex_install.py",
+      "tests/test_install/test_health.py",
+      "tests/test_install/test_native_installers.py",
+      "tests/test_install/test_paths.py",
+      "tests/test_install/test_planner.py",
+      "tests/test_install/test_providers.py",
+      "tests/test_install/test_proxy_mode_default.py",
+      "tests/test_install/test_runtime.py",
+      "tests/test_install/test_state.py",
+      "tests/test_install/test_supervisors.py",
+      "tests/test_integrations/__init__.py",
+      "tests/test_integrations/agno/__init__.py",
+      "tests/test_integrations/agno/test_hooks.py",
+      "tests/test_integrations/agno/test_model.py",
+      "tests/test_integrations/autogen/__init__.py",
+      "tests/test_integrations/autogen/test_agents.py",
+      "tests/test_integrations/crewai/__init__.py",
+      "tests/test_integrations/crewai/test_agents.py",
+      "tests/test_integrations/langchain/__init__.py",
+      "tests/test_integrations/langchain/test_agents.py",
+      "tests/test_integrations/langchain/test_chat_model.py",
+      "tests/test_integrations/langchain/test_evals.py",
+      "tests/test_integrations/langchain/test_extended.py",
+      "tests/test_integrations/langchain/test_langchain_1x_compat.py",
+      "tests/test_integrations/langchain/test_langchain_live.py",
+      "tests/test_integrations/langchain/test_langgraph.py",
+      "tests/test_integrations/langchain/test_memory.py",
+      "tests/test_integrations/langchain/test_retriever.py",
+      "tests/test_integrations/langchain/test_streaming.py",
+      "tests/test_integrations/mcp/__init__.py",
+      "tests/test_integrations/mcp/test_server.py",
+      "tests/test_integrations/test_litellm_callback.py",
+      "tests/test_internal_header_policy.py",
+      "tests/test_issue_1601_remote_control_gate.py",
+      "tests/test_issue_1779_remote_control_gate.py",
+      "tests/test_issue_2671_block_growth_cache.py",
+      "tests/test_issue_728_empty_tools_injection.py",
+      "tests/test_issue_746_tool_search.py",
+      "tests/test_kompress_download_backoff.py",
+      "tests/test_kompress_failsafe.py",
+      "tests/test_kompress_marker_gate.py",
+      "tests/test_kompress_mps_serialization.py",
+      "tests/test_kompress_must_keep.py",
+      "tests/test_kompress_preload_deferral.py",
+      "tests/test_kompress_remote_endpoint.py",
+      "tests/test_kompress_request_nonblocking.py",
+      "tests/test_learn/__init__.py",
+      "tests/test_learn/test_analyzer.py",
+      "tests/test_learn/test_claude_config_dir.py",
+      "tests/test_learn/test_error_classification.py",
+      "tests/test_learn/test_gemini_scanner.py",
+      "tests/test_learn/test_integration.py",
+      "tests/test_learn/test_loop_weighting.py",
+      "tests/test_learn/test_opencode_scanner.py",
+      "tests/test_learn/test_plugin_encoding.py",
+      "tests/test_learn/test_plugin_permission_errors.py",
+      "tests/test_learn/test_registry.py",
+      "tests/test_learn/test_scanner.py",
+      "tests/test_learn/test_subagent_scanning.py",
+      "tests/test_learn/test_writer.py",
+      "tests/test_learn_grok_plugin.py",
+      "tests/test_litellm_callback.py",
+      "tests/test_litellm_caller_key.py",
+      "tests/test_litellm_nonstream_cache_usage.py",
+      "tests/test_litellm_openai_passthrough.py",
+      "tests/test_litellm_optional.py",
+      "tests/test_litellm_thinking_fidelity.py",
+      "tests/test_litellm_upstream_timeout.py",
+      "tests/test_live/__init__.py",
+      "tests/test_live/conftest.py",
+      "tests/test_live/test_live_anthropic.py",
+      "tests/test_live/test_live_maturation.py",
+      "tests/test_live/test_live_openai.py",
+      "tests/test_local_backend_init_race.py",
+      "tests/test_log_compressor.py",
+      "tests/test_loop_callback_failure_policy.py",
+      "tests/test_lossless_diff_fold_guard.py",
+      "tests/test_lossless_excluded_compaction.py",
+      "tests/test_lossless_first_dispatch.py",
+      "tests/test_lossless_mode.py",
+      "tests/test_lossless_then_lossy.py",
+      "tests/test_lossless_timestamp_guard.py",
+      "tests/test_malloc_tuning.py",
+      "tests/test_mcp_dependency_contract.py",
+      "tests/test_mcp_registry/__init__.py",
+      "tests/test_mcp_registry/test_claude_registrar.py",
+      "tests/test_mcp_registry/test_codex_registrar.py",
+      "tests/test_mcp_registry/test_display.py",
+      "tests/test_mcp_registry/test_grok_registrar.py",
+      "tests/test_mcp_registry/test_install.py",
+      "tests/test_mcp_registry/test_ledger.py",
+      "tests/test_mcp_registry/test_server_json.py",
+      "tests/test_mcp_registry_grok.py",
+      "tests/test_mcp_registry_opencode.py",
+      "tests/test_mcp_stub.py",
+      "tests/test_memory/__init__.py",
+      "tests/test_memory/conftest.py",
+      "tests/test_memory/test_budget.py",
+      "tests/test_memory/test_core_metadata_index_sync.py",
+      "tests/test_memory/test_core_operations.py",
+      "tests/test_memory/test_direct_mem0.py",
+      "tests/test_memory/test_easy.py",
+      "tests/test_memory/test_embedder_mps_serialization.py",
+      "tests/test_memory/test_embedder_thread_cap.py",
+      "tests/test_memory/test_entity_ref_sanitization.py",
+      "tests/test_memory/test_extraction.py",
+      "tests/test_memory/test_factory.py",
+      "tests/test_memory/test_factory_embedder_cache.py",
+      "tests/test_memory/test_factory_external.py",
+      "tests/test_memory/test_hierarchical.py",
+      "tests/test_memory/test_hnsw_batch_capacity.py",
+      "tests/test_memory/test_learn_flag.py",
+      "tests/test_memory/test_local_backend_search.py",
+      "tests/test_memory/test_mcp_server.py",
+      "tests/test_memory/test_qdrant_env.py",
+      "tests/test_memory/test_query_conditions.py",
+      "tests/test_memory/test_skip_helpers.py",
+      "tests/test_memory/test_supersession_repair.py",
+      "tests/test_memory/test_traffic_learner.py",
+      "tests/test_memory/test_writers.py",
+      "tests/test_memory_auto_tail.py",
+      "tests/test_memory_bridge.py",
+      "tests/test_memory_decision.py",
+      "tests/test_memory_decision_policy.py",
+      "tests/test_memory_eval.py",
+      "tests/test_memory_golden_policy.py",
+      "tests/test_memory_handler_concurrent_init.py",
+      "tests/test_memory_handler_native_ops.py",
+      "tests/test_memory_handler_null_function.py",
+      "tests/test_memory_handler_project_isolation.py",
+      "tests/test_memory_injection_budget.py",
+      "tests/test_memory_injection_logging.py",
+      "tests/test_memory_injection_mode_policy.py",
+      "tests/test_memory_integration.py",
+      "tests/test_memory_invariants.py",
+      "tests/test_memory_query.py",
+      "tests/test_memory_query_policy.py",
+      "tests/test_memory_rank_policy.py",
+      "tests/test_memory_ranker.py",
+      "tests/test_memory_storage_router.py",
+      "tests/test_memory_sync.py",
+      "tests/test_memory_system.py",
+      "tests/test_memory_tool_adapter_null_fields.py",
+      "tests/test_memory_tool_mode.py",
+      "tests/test_memory_tool_session_sticky.py",
+      "tests/test_memory_tracker.py",
+      "tests/test_memory_tracker_integration.py",
+      "tests/test_memory_usage_integration.py",
+      "tests/test_memory_wrapper.py",
+      "tests/test_mid_turn_steering.py",
+      "tests/test_mixed_content_scan_cache.py",
+      "tests/test_mixed_content_sections.py",
+      "tests/test_ml_model_registry_lifecycle.py",
+      "tests/test_models.py",
+      "tests/test_netcost_gate.py",
+      "tests/test_netcost_suffix_image_tokens.py",
+      "tests/test_network_diff_capture.py",
+      "tests/test_no_ccr_disables_response_handling.py",
+      "tests/test_no_ccr_lossy.py",
+      "tests/test_nonstream_sse_policy.py",
+      "tests/test_oauth_bearer_routing.py",
+      "tests/test_observability_metrics.py",
+      "tests/test_observability_tracing.py",
+      "tests/test_observed_wire_shapes.py",
+      "tests/test_onnx_dependency_contract.py",
+      "tests/test_onnx_runtime.py",
+      "tests/test_openai_beta_session_sticky.py",
+      "tests/test_openai_chat_dedup_recoverability.py",
+      "tests/test_openai_chat_tool_desc_compaction.py",
+      "tests/test_openai_chat_turn_hooks.py",
+      "tests/test_openai_codex_routing.py",
+      "tests/test_openai_codex_ws_lifecycle.py",
+      "tests/test_openai_codex_ws_timings.py",
+      "tests/test_openai_max_completion_tokens.py",
+      "tests/test_openai_model_table_resolution.py",
+      "tests/test_openai_pricing_resolution.py",
+      "tests/test_openai_response_cache_key.py",
+      "tests/test_openai_responses_additional_tools.py",
+      "tests/test_openai_responses_buffered_sse.py",
+      "tests/test_openai_responses_compression_units.py",
+      "tests/test_openai_responses_context_compaction.py",
+      "tests/test_openai_responses_null_arguments.py",
+      "tests/test_openai_responses_output_shaper.py",
+      "tests/test_openai_responses_read_protection.py",
+      "tests/test_openai_responses_t3_replay_regression.py",
+      "tests/test_openai_responses_traffic_learner.py",
+      "tests/test_openai_streaming_backend.py",
+      "tests/test_openai_tool_search_deferral.py",
+      "tests/test_optional_dependencies.py",
+      "tests/test_org_scale_limits.py",
+      "tests/test_outcome_dual_ruler_funnel.py",
+      "tests/test_outcome_records_5xx_as_failed.py",
+      "tests/test_outcome_token_scale.py",
+      "tests/test_output_only_request_blocks.py",
+      "tests/test_output_savings.py",
+      "tests/test_output_savings_cli.py",
+      "tests/test_output_savings_policy.py",
+      "tests/test_output_shaper.py",
+      "tests/test_output_shaper_conversation_label.py",
+      "tests/test_output_shaper_responses.py",
+      "tests/test_output_shaping_rollup.py",
+      "tests/test_output_steering.py",
+      "tests/test_output_turn_policy.py",
+      "tests/test_output_verbosity_policy.py",
+      "tests/test_owned_asset_encoding.py",
+      "tests/test_package_init_lazy.py",
+      "tests/test_parser.py",
+      "tests/test_paths.py",
+      "tests/test_paths_backward_compat.py",
+      "tests/test_per_model_tool_savings.py",
+      "tests/test_perf_per_port_logs.py",
+      "tests/test_perl_scanner_safety.py",
+      "tests/test_persistent_metrics.py",
+      "tests/test_persistent_metrics_integration.py",
+      "tests/test_persistent_metrics_persistence.py",
+      "tests/test_pid_alive.py",
+      "tests/test_pipeline.py",
+      "tests/test_pipeline_outcome_stage.py",
+      "tests/test_platform_feature_matrix.py",
+      "tests/test_platform_stabilization_functional.py",
+      "tests/test_plugin_manifests.py",
+      "tests/test_plugins_hermes_retrieve.py",
+      "tests/test_pr208_changes.py",
+      "tests/test_pricing.py",
+      "tests/test_pricing_cache_ttl.py",
+      "tests/test_pricing_from_litellm.py",
+      "tests/test_pricing_litellm.py",
+      "tests/test_pricing_litellm_model_resolution.py",
+      "tests/test_probe_recorder.py",
+      "tests/test_project_name_policy.py",
+      "tests/test_project_policy.py",
+      "tests/test_prometheus_label_escaping.py",
+      "tests/test_prometheus_obs_counters.py",
+      "tests/test_prometheus_stage_timing_concurrency.py",
+      "tests/test_provider_aider.py",
+      "tests/test_provider_claude.py",
+      "tests/test_provider_claude_vscode_config.py",
+      "tests/test_provider_cloudcode_runtime.py",
+      "tests/test_provider_codex_endpoints.py",
+      "tests/test_provider_codex_headers.py",
+      "tests/test_provider_codex_images.py",
+      "tests/test_provider_codex_install.py",
+      "tests/test_provider_codex_model_metadata.py",
+      "tests/test_provider_codex_responses.py",
+      "tests/test_provider_codex_runtime.py",
+      "tests/test_provider_codex_threads.py",
+      "tests/test_provider_copilot_vscode_config.py",
+      "tests/test_provider_copilot_wrap.py",
+      "tests/test_provider_cortex_code.py",
+      "tests/test_provider_counter_content_blocks.py",
+      "tests/test_provider_cursor.py",
+      "tests/test_provider_display_classification.py",
+      "tests/test_provider_grok.py",
+      "tests/test_provider_grok_build.py",
+      "tests/test_provider_model_fallback.py",
+      "tests/test_provider_model_metadata.py",
+      "tests/test_provider_openai_images.py",
+      "tests/test_provider_openai_responses.py",
+      "tests/test_provider_openclaw_wrap.py",
+      "tests/test_provider_package_init.py",
+      "tests/test_provider_proxy_routes.py",
+      "tests/test_provider_proxy_targets.py",
+      "tests/test_provider_registry.py",
+      "tests/test_provider_registry_extended.py",
+      "tests/test_provider_route_specs.py",
+      "tests/test_provider_tokenizer_one_ruler.py",
+      "tests/test_provider_vertex_runtime.py",
+      "tests/test_providers/__init__.py",
+      "tests/test_providers/test_anthropic.py",
+      "tests/test_providers/test_cohere.py",
+      "tests/test_providers/test_deepseek.py",
+      "tests/test_providers/test_openai.py",
+      "tests/test_providers/test_universal.py",
+      "tests/test_providers_opencode_config.py",
+      "tests/test_providers_opencode_install.py",
+      "tests/test_providers_opencode_plugin_path.py",
+      "tests/test_proxy/test_anthropic_buffered_timeout.py",
+      "tests/test_proxy/test_anthropic_ccr_deferred_injection.py",
+      "tests/test_proxy/test_anthropic_ccr_raise.py",
+      "tests/test_proxy/test_anthropic_copilot_upstream_auth.py",
+      "tests/test_proxy/test_anthropic_no_optimize_history_passthrough.py",
+      "tests/test_proxy/test_anthropic_recount_and_reparse_safety.py",
+      "tests/test_proxy/test_anthropic_streaming_ccr_retrieve.py",
+      "tests/test_proxy/test_anthropic_upstream_header.py",
+      "tests/test_proxy/test_background_compression.py",
+      "tests/test_proxy/test_bedrock_passthrough.py",
+      "tests/test_proxy/test_bedrock_sse_ping.py",
+      "tests/test_proxy/test_cc_switch_reconciler.py",
+      "tests/test_proxy/test_ccr_frozen_prefix_coupling.py",
+      "tests/test_proxy/test_compression_failure_action.py",
+      "tests/test_proxy/test_compression_timeout_config.py",
+      "tests/test_proxy/test_compute_turn_id.py",
+      "tests/test_proxy/test_conversation_savings.py",
+      "tests/test_proxy/test_gemini_savings_profile.py",
+      "tests/test_proxy/test_header_safe_transforms.py",
+      "tests/test_proxy/test_kompress_background_warmup.py",
+      "tests/test_proxy/test_mcp_stats_aggregation.py",
+      "tests/test_proxy/test_model_router.py",
+      "tests/test_proxy/test_model_router_wiring.py",
+      "tests/test_proxy/test_openai_backend_path.py",
+      "tests/test_proxy/test_openai_chat_ccr_injection.py",
+      "tests/test_proxy/test_openai_chat_savings_profile.py",
+      "tests/test_proxy/test_openai_responses_ccr.py",
+      "tests/test_proxy/test_openai_stream_usage_option.py",
+      "tests/test_proxy/test_openai_transport_path_prefix.py",
+      "tests/test_proxy/test_openai_upstream_header.py",
+      "tests/test_proxy/test_phase3_byte_identity.py",
+      "tests/test_proxy/test_request_logger.py",
+      "tests/test_proxy/test_settings_fresh_process_precedence.py",
+      "tests/test_proxy/test_settings_store.py",
+      "tests/test_proxy/test_tool_search_repair_after_turn_hooks.py",
+      "tests/test_proxy/test_transformations_feed.py",
+      "tests/test_proxy_anthropic_cache_stability.py",
+      "tests/test_proxy_anthropic_compression_diagnostics.py",
+      "tests/test_proxy_anthropic_model_sanitization.py",
+      "tests/test_proxy_batch_integration.py",
+      "tests/test_proxy_byte_faithful_forwarding.py",
+      "tests/test_proxy_cache_telemetry.py",
+      "tests/test_proxy_cache_ttl_metrics.py",
+      "tests/test_proxy_ccr.py",
+      "tests/test_proxy_codex_route_aliases.py",
+      "tests/test_proxy_compress_endpoint.py",
+      "tests/test_proxy_compression_executor.py",
+      "tests/test_proxy_compression_headers.py",
+      "tests/test_proxy_config_qdrant_port.py",
+      "tests/test_proxy_config_rate_limit.py",
+      "tests/test_proxy_copilot_auth_hooks.py",
+      "tests/test_proxy_cors.py",
+      "tests/test_proxy_count_tokens_integration.py",
+      "tests/test_proxy_dashboard_stats_cache.py",
+      "tests/test_proxy_debug_endpoints.py",
+      "tests/test_proxy_disable_kompress.py",
+      "tests/test_proxy_eager_preload_bind.py",
+      "tests/test_proxy_extensions.py",
+      "tests/test_proxy_favicon_route.py",
+      "tests/test_proxy_gemini_integration.py",
+      "tests/test_proxy_gemini_native_integration.py",
+      "tests/test_proxy_google_cloudcode_route_aliases.py",
+      "tests/test_proxy_handler_helpers.py",
+      "tests/test_proxy_handlers_batch.py",
+      "tests/test_proxy_hardening.py",
+      "tests/test_proxy_health.py",
+      "tests/test_proxy_healthchecks.py",
+      "tests/test_proxy_hooks_regression.py",
+      "tests/test_proxy_loop_exception_health.py",
+      "tests/test_proxy_loopback_gating.py",
+      "tests/test_proxy_memory_integration.py",
+      "tests/test_proxy_mode_benchmark.py",
+      "tests/test_proxy_mode_policy.py",
+      "tests/test_proxy_modes.py",
+      "tests/test_proxy_openai.py",
+      "tests/test_proxy_openai_cache_key_integration.py",
+      "tests/test_proxy_openai_cache_stability.py",
+      "tests/test_proxy_openai_responses_bypass.py",
+      "tests/test_proxy_openai_responses_integration.py",
+      "tests/test_proxy_openai_responses_stream_ccr.py",
+      "tests/test_proxy_package_init.py",
+      "tests/test_proxy_passthrough.py",
+      "tests/test_proxy_passthrough_integration.py",
+      "tests/test_proxy_passthrough_transient_retry.py",
+      "tests/test_proxy_per_provider_kompress.py",
+      "tests/test_proxy_pipeline_lifecycle.py",
+      "tests/test_proxy_project_savings.py",
+      "tests/test_proxy_request_scope.py",
+      "tests/test_proxy_response_cache_replay.py",
+      "tests/test_proxy_retry_429.py",
+      "tests/test_proxy_savings_history.py",
+      "tests/test_proxy_scalability.py",
+      "tests/test_proxy_semantic_cache_key.py",
+      "tests/test_proxy_semantic_cache_key_integration.py",
+      "tests/test_proxy_semantic_cache_key_policy.py",
+      "tests/test_proxy_settings_endpoints.py",
+      "tests/test_proxy_stats_recent_requests.py",
+      "tests/test_proxy_streaming_ratelimit_headers.py",
+      "tests/test_proxy_streaming_request_logger.py",
+      "tests/test_proxy_streaming_resilience.py",
+      "tests/test_proxy_system_prompt_immutable.py",
+      "tests/test_proxy_telemetry_env.py",
+      "tests/test_proxy_warmup.py",
+      "tests/test_python_forwarder_mode_policy.py",
+      "tests/test_quality_retention.py",
+      "tests/test_query_log_policy.py",
+      "tests/test_quota_registry.py",
+      "tests/test_rate_limit_policy.py",
+      "tests/test_read_maturation.py",
+      "tests/test_read_maturation_handler_nobust.py",
+      "tests/test_realignment_live_multi_turn.py",
+      "tests/test_recursive_json.py",
+      "tests/test_release_version.py",
+      "tests/test_release_workflows.py",
+      "tests/test_relevance.py",
+      "tests/test_relevance_extra.py",
+      "tests/test_relevance_split.py",
+      "tests/test_remote_kompress_dropin.py",
+      "tests/test_reporting.py",
+      "tests/test_request_body_decompression_limits.py",
+      "tests/test_request_limit_policy.py",
+      "tests/test_request_log_redaction_policy.py",
+      "tests/test_request_outcome.py",
+      "tests/test_request_scope_no_fastapi.py",
+      "tests/test_reread_attribution.py",
+      "tests/test_responses_cross_turn_dedup.py",
+      "tests/test_responses_pyo3_compression.py",
+      "tests/test_responses_savings_denominator.py",
+      "tests/test_responses_ws_pyo3_compression.py",
+      "tests/test_retry_preserve_upstream_status.py",
+      "tests/test_rollout.py",
+      "tests/test_route_advice.py",
+      "tests/test_route_advice_native_providers.py",
+      "tests/test_router_external_dispatch.py",
+      "tests/test_router_registry_dispatch.py",
+      "tests/test_router_registry_smartcrusher.py",
+      "tests/test_routing_stats_seam.py",
+      "tests/test_runtime_env.py",
+      "tests/test_rust_core_smoke.py",
+      "tests/test_savings_ledger.py",
+      "tests/test_savings_ledger_before_forwarded.py",
+      "tests/test_savings_ledger_offload.py",
+      "tests/test_savings_tool_search_aggregation.py",
+      "tests/test_savings_tracker_litellm_resolution_cache.py",
+      "tests/test_savings_tracker_zero_price.py",
+      "tests/test_scripts/__init__.py",
+      "tests/test_scripts/test_repro_codex_replay_smoke.py",
+      "tests/test_search_compressor.py",
+      "tests/test_search_compressor_cjk.py",
+      "tests/test_security_validations.py",
+      "tests/test_semantic_cache_key_policy.py",
+      "tests/test_semantic_canonicalize.py",
+      "tests/test_session_engine.py",
+      "tests/test_session_probes.py",
+      "tests/test_settings_isolation.py",
+      "tests/test_shared_context.py",
+      "tests/test_signals_keyword_parity.py",
+      "tests/test_smart_crusher.py",
+      "tests/test_smart_crusher_toin_attachment.py",
+      "tests/test_sqlite_graph_store.py",
+      "tests/test_sqlite_vector_index.py",
+      "tests/test_sse_byte_buffer_policy.py",
+      "tests/test_sse_thinking_blocks.py",
+      "tests/test_sse_utf8_split.py",
+      "tests/test_ssl_context.py",
+      "tests/test_stage_timer.py",
+      "tests/test_startup_log_noise.py",
+      "tests/test_stateless_toin.py",
+      "tests/test_stateless_writers.py",
+      "tests/test_stats_new_input_savings_rate.py",
+      "tests/test_stats_output_reduction_gate.py",
+      "tests/test_storage/__init__.py",
+      "tests/test_storage/test_sqlite.py",
+      "tests/test_storage_backends.py",
+      "tests/test_strands_tokenizer.py",
+      "tests/test_stream_output_tokens.py",
+      "tests/test_streaming_usage_parser.py",
+      "tests/test_subprocess_encoding.py",
+      "tests/test_subscription_base.py",
+      "tests/test_subscription_client.py",
+      "tests/test_subscription_contribution.py",
+      "tests/test_subscription_session_tracking.py",
+      "tests/test_subscription_tracker.py",
+      "tests/test_subscription_window_render.py",
+      "tests/test_system_compaction.py",
+      "tests/test_tag_protection_integration.py",
+      "tests/test_tag_protector_invariant.py",
+      "tests/test_telemetry.py",
+      "tests/test_telemetry_context.py",
+      "tests/test_telemetry_warning.py",
+      "tests/test_testing_harness.py",
+      "tests/test_text_compressors.py",
+      "tests/test_thinking_signature_scope_live.py",
+      "tests/test_thinking_tokens.py",
+      "tests/test_toin.py",
+      "tests/test_toin_feedback.py",
+      "tests/test_toin_fixes.py",
+      "tests/test_toin_full_integration.py",
+      "tests/test_toin_integration.py",
+      "tests/test_toin_observation_only.py",
+      "tests/test_toin_publish.py",
+      "tests/test_toin_retention.py",
+      "tests/test_token_count_cache.py",
+      "tests/test_token_headroom_mode.py",
+      "tests/test_tokenizer.py",
+      "tests/test_tokenizer_count_offload.py",
+      "tests/test_tokenizer_encoding_resolution.py",
+      "tests/test_tokenizer_selection_coverage.py",
+      "tests/test_tokenizers.py",
+      "tests/test_tokenizers/test_tiktoken_load_timeout.py",
+      "tests/test_tool_call_arguments_not_a_string.py",
+      "tests/test_tool_definition_serialization.py",
+      "tests/test_tool_injection_config.py",
+      "tests/test_tool_injection_logging.py",
+      "tests/test_tool_injection_policy.py",
+      "tests/test_tool_injection_tracker.py",
+      "tests/test_tool_name_policy.py",
+      "tests/test_tool_result_interceptors.py",
+      "tests/test_tool_schema_compaction.py",
+      "tests/test_tool_schema_savings_policy.py",
+      "tests/test_transforms/__init__.py",
+      "tests/test_transforms/test_code_compressor.py",
+      "tests/test_transforms/test_code_compressor_cjk.py",
+      "tests/test_transforms/test_content_router.py",
+      "tests/test_transforms/test_content_router_ccr_retrieve_exemption.py",
+      "tests/test_transforms/test_detect_fallback_1123.py",
+      "tests/test_transforms/test_diff_compressor.py",
+      "tests/test_transforms/test_diff_compressor_rust_parity.py",
+      "tests/test_transforms/test_html_extractor.py",
+      "tests/test_transforms/test_kompress_compressor.py",
+      "tests/test_transforms/test_kompress_deadline.py",
+      "tests/test_transforms/test_kompress_remote.py",
+      "tests/test_transforms/test_kompress_size_gate.py",
+      "tests/test_transforms/test_ort_dylib.py",
+      "tests/test_transforms/test_pipeline_waste_signal_limit.py",
+      "tests/test_transforms/test_read_lifecycle.py",
+      "tests/test_transforms/test_smart_crusher_attribution.py",
+      "tests/test_transforms/test_smart_crusher_audit_safe.py",
+      "tests/test_transforms/test_smart_crusher_bugs.py",
+      "tests/test_transforms/test_smart_crusher_ccr_retrieve_exemption.py",
+      "tests/test_transforms/test_smart_crusher_ccr_roundtrip.py",
+      "tests/test_transforms/test_smart_crusher_lossless_default.py",
+      "tests/test_transforms/test_smart_crusher_rust_parity.py",
+      "tests/test_transforms/test_tag_protector.py",
+      "tests/test_transforms/test_text_crusher.py",
+      "tests/test_transforms/test_text_crusher_cjk_eval.py",
+      "tests/test_transforms/test_text_crusher_parity.py",
+      "tests/test_transforms/test_text_crusher_routing.py",
+      "tests/test_transforms/test_tree_sitter_thread_safety.py",
+      "tests/test_transforms_config_compressor.py",
+      "tests/test_transforms_content_detection.py",
+      "tests/test_transforms_content_router.py",
+      "tests/test_transforms_log_compressor.py",
+      "tests/test_transforms_package.py",
+      "tests/test_transforms_search_compressor.py",
+      "tests/test_transforms_stack_traces.py",
+      "tests/test_transforms_tabular.py",
+      "tests/test_turn_hook_seams.py",
+      "tests/test_turn_hook_usage.py",
+      "tests/test_turn_hooks.py",
+      "tests/test_update_check.py",
+      "tests/test_update_helpers.py",
+      "tests/test_upstream_credential_scoping.py",
+      "tests/test_upstream_guard.py",
+      "tests/test_upstream_write_timeout.py",
+      "tests/test_usage_reporter_snapshot.py",
+      "tests/test_utils.py",
+      "tests/test_uvicorn_log_level_env.py",
+      "tests/test_verbosity_controller.py",
+      "tests/test_verbosity_learn.py",
+      "tests/test_vertex_claude_compression.py",
+      "tests/test_websearch_tool_result_protection.py",
+      "tests/test_wire_debug_format_policy.py",
+      "tests/test_wire_debug_redaction_policy.py",
+      "tests/test_wrap_code_memory.py",
+      "tests/test_wrap_concurrent_settings.py",
+      "tests/test_wrap_quiet_cli.py",
+      "tests/test_ws_http_fallback.py",
+      "tests/test_ws_memory_relay.py",
+      "tests/test_ws_session_registry.py"
+    ]
+  },
+  "rtk": {
+    "repository": "rtk-ai/rtk",
+    "commit": "0924356b4caba4989607227b7c8824d3d8098719",
+    "sources": [
+      {
+        "path": "README.md",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/README.md",
+        "sha256": "d6ad6bca4b8cfef53c563b31f5dc48c429b8303f48bfc6de7f8a8a9a4c8b112c",
+        "documented_commands": [
+          {
+            "line": 37,
+            "command": "rtk filters and compresses command outputs before they reach your LLM context. Single Rust binary, 100+ supported commands, <10ms overhead."
+          },
+          {
+            "line": 115,
+            "command": "rtk --version  "
+          },
+          {
+            "line": 116,
+            "command": "rtk gain       "
+          },
+          {
+            "line": 125,
+            "command": "rtk init -g                    "
+          },
+          {
+            "line": 126,
+            "command": "rtk init -g --gemini           "
+          },
+          {
+            "line": 127,
+            "command": "rtk init -g --codex            "
+          },
+          {
+            "line": 128,
+            "command": "rtk init -g --agent cursor     "
+          },
+          {
+            "line": 129,
+            "command": "rtk init -g --agent windsurf   "
+          },
+          {
+            "line": 130,
+            "command": "rtk init --agent cline         "
+          },
+          {
+            "line": 131,
+            "command": "rtk init --agent kilocode      "
+          },
+          {
+            "line": 132,
+            "command": "rtk init --agent antigravity   "
+          },
+          {
+            "line": 133,
+            "command": "rtk init --agent kimi          "
+          },
+          {
+            "line": 134,
+            "command": "rtk init -g --agent pi         "
+          },
+          {
+            "line": 135,
+            "command": "rtk init --agent omp           "
+          },
+          {
+            "line": 136,
+            "command": "rtk init --agent hermes        "
+          },
+          {
+            "line": 137,
+            "command": "rtk init -g --agent droid      "
+          },
+          {
+            "line": 138,
+            "command": "rtk init --agent trae          "
+          },
+          {
+            "line": 139,
+            "command": "rtk init -g --agent trae       "
+          },
+          {
+            "line": 175,
+            "command": "rtk ls .                       "
+          },
+          {
+            "line": 176,
+            "command": "rtk read file.rs               "
+          },
+          {
+            "line": 177,
+            "command": "rtk read file.rs -l aggressive "
+          },
+          {
+            "line": 178,
+            "command": "rtk smart file.rs              "
+          },
+          {
+            "line": 179,
+            "command": "rtk find \"*.rs\" .              "
+          },
+          {
+            "line": 180,
+            "command": "rtk grep \"pattern\" .           "
+          },
+          {
+            "line": 181,
+            "command": "rtk diff file1 file2           "
+          },
+          {
+            "line": 186,
+            "command": "rtk git status                 "
+          },
+          {
+            "line": 187,
+            "command": "rtk git log -n 10              "
+          },
+          {
+            "line": 188,
+            "command": "rtk git diff                   "
+          },
+          {
+            "line": 189,
+            "command": "rtk git add                    "
+          },
+          {
+            "line": 190,
+            "command": "rtk git commit -m \"msg\"        "
+          },
+          {
+            "line": 191,
+            "command": "rtk git push                   "
+          },
+          {
+            "line": 192,
+            "command": "rtk git pull                   "
+          },
+          {
+            "line": 197,
+            "command": "rtk gh pr list                 "
+          },
+          {
+            "line": 198,
+            "command": "rtk gh pr view 42              "
+          },
+          {
+            "line": 199,
+            "command": "rtk gh issue list              "
+          },
+          {
+            "line": 200,
+            "command": "rtk gh run list                "
+          },
+          {
+            "line": 205,
+            "command": "rtk jest                       "
+          },
+          {
+            "line": 206,
+            "command": "rtk vitest                     "
+          },
+          {
+            "line": 207,
+            "command": "rtk playwright test            "
+          },
+          {
+            "line": 208,
+            "command": "rtk pytest                     "
+          },
+          {
+            "line": 209,
+            "command": "rtk phpt                       "
+          },
+          {
+            "line": 210,
+            "command": "rtk go test                    "
+          },
+          {
+            "line": 211,
+            "command": "rtk cargo test                 "
+          },
+          {
+            "line": 212,
+            "command": "rtk rake test                  "
+          },
+          {
+            "line": 213,
+            "command": "rtk rspec                      "
+          },
+          {
+            "line": 214,
+            "command": "rtk err <cmd>                  "
+          },
+          {
+            "line": 215,
+            "command": "rtk test <cmd>                 "
+          },
+          {
+            "line": 220,
+            "command": "rtk lint                       "
+          },
+          {
+            "line": 221,
+            "command": "rtk lint biome                 "
+          },
+          {
+            "line": 222,
+            "command": "rtk sqlfluff lint              "
+          },
+          {
+            "line": 223,
+            "command": "rtk sqlfluff lint models/      "
+          },
+          {
+            "line": 224,
+            "command": "rtk tsc                        "
+          },
+          {
+            "line": 225,
+            "command": "rtk next build                 "
+          },
+          {
+            "line": 226,
+            "command": "rtk prettier --check .         "
+          },
+          {
+            "line": 227,
+            "command": "rtk cargo build                "
+          },
+          {
+            "line": 228,
+            "command": "rtk cargo clippy               "
+          },
+          {
+            "line": 229,
+            "command": "rtk ruff check                 "
+          },
+          {
+            "line": 230,
+            "command": "rtk golangci-lint run          "
+          },
+          {
+            "line": 231,
+            "command": "rtk rubocop                    "
+          },
+          {
+            "line": 232,
+            "command": "rtk mvnd verify                "
+          },
+          {
+            "line": 233,
+            "command": "rtk sbt test                   "
+          },
+          {
+            "line": 234,
+            "command": "rtk sbt compile                "
+          },
+          {
+            "line": 235,
+            "command": "rtk sbt run                    "
+          },
+          {
+            "line": 240,
+            "command": "rtk pnpm list                  "
+          },
+          {
+            "line": 241,
+            "command": "rtk uv run pytest              "
+          },
+          {
+            "line": 242,
+            "command": "rtk pip list                   "
+          },
+          {
+            "line": 243,
+            "command": "rtk pip outdated               "
+          },
+          {
+            "line": 244,
+            "command": "rtk bundle install             "
+          },
+          {
+            "line": 245,
+            "command": "rtk prisma generate            "
+          },
+          {
+            "line": 250,
+            "command": "rtk bun install                 "
+          },
+          {
+            "line": 251,
+            "command": "rtk bun test                    "
+          },
+          {
+            "line": 252,
+            "command": "rtk bun build                   "
+          },
+          {
+            "line": 253,
+            "command": "rtk bunx tsc                    "
+          },
+          {
+            "line": 254,
+            "command": "rtk deno test                   "
+          },
+          {
+            "line": 255,
+            "command": "rtk deno lint                   "
+          },
+          {
+            "line": 256,
+            "command": "rtk deno check                  "
+          },
+          {
+            "line": 261,
+            "command": "rtk aws sts get-caller-identity"
+          },
+          {
+            "line": 262,
+            "command": "rtk aws ec2 describe-instances "
+          },
+          {
+            "line": 263,
+            "command": "rtk aws lambda list-functions  "
+          },
+          {
+            "line": 264,
+            "command": "rtk aws logs get-log-events    "
+          },
+          {
+            "line": 265,
+            "command": "rtk aws cloudformation describe-stack-events "
+          },
+          {
+            "line": 266,
+            "command": "rtk aws dynamodb scan          "
+          },
+          {
+            "line": 267,
+            "command": "rtk aws iam list-roles         "
+          },
+          {
+            "line": 268,
+            "command": "rtk aws s3 ls                  "
+          },
+          {
+            "line": 273,
+            "command": "rtk docker ps                  "
+          },
+          {
+            "line": 274,
+            "command": "rtk docker images              "
+          },
+          {
+            "line": 275,
+            "command": "rtk docker logs <container>    "
+          },
+          {
+            "line": 276,
+            "command": "rtk docker compose ps          "
+          },
+          {
+            "line": 277,
+            "command": "rtk kubectl pods               "
+          },
+          {
+            "line": 278,
+            "command": "rtk kubectl logs <pod>         "
+          },
+          {
+            "line": 279,
+            "command": "rtk kubectl services           "
+          },
+          {
+            "line": 280,
+            "command": "rtk oc get pods                "
+          },
+          {
+            "line": 281,
+            "command": "rtk oc get services            "
+          },
+          {
+            "line": 282,
+            "command": "rtk oc logs <pod>              "
+          },
+          {
+            "line": 287,
+            "command": "rtk pulumi preview             "
+          },
+          {
+            "line": 288,
+            "command": "rtk pulumi up                  "
+          },
+          {
+            "line": 289,
+            "command": "rtk pulumi destroy             "
+          },
+          {
+            "line": 290,
+            "command": "rtk pulumi refresh             "
+          },
+          {
+            "line": 291,
+            "command": "rtk pulumi stack               "
+          },
+          {
+            "line": 296,
+            "command": "rtk json config.json           "
+          },
+          {
+            "line": 297,
+            "command": "rtk deps                       "
+          },
+          {
+            "line": 298,
+            "command": "rtk env -f AWS                 "
+          },
+          {
+            "line": 299,
+            "command": "rtk log app.log                "
+          },
+          {
+            "line": 300,
+            "command": "rtk curl <url>                 "
+          },
+          {
+            "line": 301,
+            "command": "rtk wget <url>                 "
+          },
+          {
+            "line": 302,
+            "command": "rtk summary <long command>     "
+          },
+          {
+            "line": 303,
+            "command": "rtk proxy <command>            "
+          },
+          {
+            "line": 308,
+            "command": "rtk gain                       "
+          },
+          {
+            "line": 309,
+            "command": "rtk gain --graph               "
+          },
+          {
+            "line": 310,
+            "command": "rtk gain --history             "
+          },
+          {
+            "line": 311,
+            "command": "rtk gain --daily               "
+          },
+          {
+            "line": 312,
+            "command": "rtk gain --all --format json   "
+          },
+          {
+            "line": 314,
+            "command": "rtk discover                   "
+          },
+          {
+            "line": 315,
+            "command": "rtk discover --all --since 7   "
+          },
+          {
+            "line": 317,
+            "command": "rtk session                    "
+          },
+          {
+            "line": 367,
+            "command": "rtk init -g                "
+          },
+          {
+            "line": 368,
+            "command": "rtk init -g --opencode     "
+          },
+          {
+            "line": 369,
+            "command": "rtk init -g --auto-patch   "
+          },
+          {
+            "line": 370,
+            "command": "rtk init -g --hook-only    "
+          },
+          {
+            "line": 371,
+            "command": "rtk init --show            "
+          },
+          {
+            "line": 390,
+            "command": "rtk init -g"
+          },
+          {
+            "line": 406,
+            "command": "rtk init -g"
+          },
+          {
+            "line": 472,
+            "command": "rtk init -g --uninstall    "
+          },
+          {
+            "line": 510,
+            "command": "rtk telemetry status    "
+          },
+          {
+            "line": 511,
+            "command": "rtk telemetry enable    "
+          },
+          {
+            "line": 512,
+            "command": "rtk telemetry disable   "
+          },
+          {
+            "line": 513,
+            "command": "rtk telemetry forget    "
+          }
+        ]
+      },
+      {
+        "path": "src/main.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs",
+        "sha256": "3ea90908b306354d2f897ad2a20a9196544724d82be3d5345558dd4249429aae",
+        "command_variants": [
+          {
+            "enum": "Commands",
+            "variant": "Ls",
+            "line": 95
+          },
+          {
+            "enum": "Commands",
+            "variant": "Tree",
+            "line": 102
+          },
+          {
+            "enum": "Commands",
+            "variant": "Read",
+            "line": 109
+          },
+          {
+            "enum": "Commands",
+            "variant": "Smart",
+            "line": 133
+          },
+          {
+            "enum": "Commands",
+            "variant": "Git",
+            "line": 145
+          },
+          {
+            "enum": "Commands",
+            "variant": "Gh",
+            "line": 183
+          },
+          {
+            "enum": "Commands",
+            "variant": "Glab",
+            "line": 192
+          },
+          {
+            "enum": "Commands",
+            "variant": "Aws",
+            "line": 207
+          },
+          {
+            "enum": "Commands",
+            "variant": "Psql",
+            "line": 217
+          },
+          {
+            "enum": "Commands",
+            "variant": "Pnpm",
+            "line": 224
+          },
+          {
+            "enum": "Commands",
+            "variant": "Err",
+            "line": 242
+          },
+          {
+            "enum": "Commands",
+            "variant": "Test",
+            "line": 249
+          },
+          {
+            "enum": "Commands",
+            "variant": "Json",
+            "line": 256
+          },
+          {
+            "enum": "Commands",
+            "variant": "Deps",
+            "line": 268
+          },
+          {
+            "enum": "Commands",
+            "variant": "Env",
+            "line": 275
+          },
+          {
+            "enum": "Commands",
+            "variant": "Find",
+            "line": 282
+          },
+          {
+            "enum": "Commands",
+            "variant": "Diff",
+            "line": 289
+          },
+          {
+            "enum": "Commands",
+            "variant": "Log",
+            "line": 297
+          },
+          {
+            "enum": "Commands",
+            "variant": "Dotnet",
+            "line": 303
+          },
+          {
+            "enum": "Commands",
+            "variant": "Docker",
+            "line": 309
+          },
+          {
+            "enum": "Commands",
+            "variant": "Kubectl",
+            "line": 315
+          },
+          {
+            "enum": "Commands",
+            "variant": "Oc",
+            "line": 321
+          },
+          {
+            "enum": "Commands",
+            "variant": "Summary",
+            "line": 327
+          },
+          {
+            "enum": "Commands",
+            "variant": "Grep",
+            "line": 334
+          },
+          {
+            "enum": "Commands",
+            "variant": "Rg",
+            "line": 367
+          },
+          {
+            "enum": "Commands",
+            "variant": "AstGrep",
+            "line": 374
+          },
+          {
+            "enum": "Commands",
+            "variant": "Init",
+            "line": 381
+          },
+          {
+            "enum": "Commands",
+            "variant": "Wget",
+            "line": 443
+          },
+          {
+            "enum": "Commands",
+            "variant": "Wc",
+            "line": 455
+          },
+          {
+            "enum": "Commands",
+            "variant": "Gain",
+            "line": 462
+          },
+          {
+            "enum": "Commands",
+            "variant": "CcEconomics",
+            "line": 508
+          },
+          {
+            "enum": "Commands",
+            "variant": "Config",
+            "line": 527
+          },
+          {
+            "enum": "Commands",
+            "variant": "Jest",
+            "line": 536
+          },
+          {
+            "enum": "Commands",
+            "variant": "Vitest",
+            "line": 543
+          },
+          {
+            "enum": "Commands",
+            "variant": "Ctest",
+            "line": 551
+          },
+          {
+            "enum": "Commands",
+            "variant": "Prisma",
+            "line": 558
+          },
+          {
+            "enum": "Commands",
+            "variant": "Tsc",
+            "line": 564
+          },
+          {
+            "enum": "Commands",
+            "variant": "Next",
+            "line": 571
+          },
+          {
+            "enum": "Commands",
+            "variant": "Lint",
+            "line": 578
+          },
+          {
+            "enum": "Commands",
+            "variant": "Prettier",
+            "line": 585
+          },
+          {
+            "enum": "Commands",
+            "variant": "Format",
+            "line": 592
+          },
+          {
+            "enum": "Commands",
+            "variant": "Playwright",
+            "line": 599
+          },
+          {
+            "enum": "Commands",
+            "variant": "Cargo",
+            "line": 606
+          },
+          {
+            "enum": "Commands",
+            "variant": "Npm",
+            "line": 612
+          },
+          {
+            "enum": "Commands",
+            "variant": "Npx",
+            "line": 619
+          },
+          {
+            "enum": "Commands",
+            "variant": "Bun",
+            "line": 626
+          },
+          {
+            "enum": "Commands",
+            "variant": "Bunx",
+            "line": 632
+          },
+          {
+            "enum": "Commands",
+            "variant": "Curl",
+            "line": 639
+          },
+          {
+            "enum": "Commands",
+            "variant": "Discover",
+            "line": 646
+          },
+          {
+            "enum": "Commands",
+            "variant": "Session",
+            "line": 665
+          },
+          {
+            "enum": "Commands",
+            "variant": "Telemetry",
+            "line": 668
+          },
+          {
+            "enum": "Commands",
+            "variant": "Learn",
+            "line": 674
+          },
+          {
+            "enum": "Commands",
+            "variant": "Run",
+            "line": 699
+          },
+          {
+            "enum": "Commands",
+            "variant": "Proxy",
+            "line": 709
+          },
+          {
+            "enum": "Commands",
+            "variant": "Recall",
+            "line": 716
+          },
+          {
+            "enum": "Commands",
+            "variant": "Pipe",
+            "line": 737
+          },
+          {
+            "enum": "Commands",
+            "variant": "Trust",
+            "line": 748
+          },
+          {
+            "enum": "Commands",
+            "variant": "Untrust",
+            "line": 758
+          },
+          {
+            "enum": "Commands",
+            "variant": "Verify",
+            "line": 761
+          },
+          {
+            "enum": "Commands",
+            "variant": "Ruff",
+            "line": 771
+          },
+          {
+            "enum": "Commands",
+            "variant": "Sqlfluff",
+            "line": 778
+          },
+          {
+            "enum": "Commands",
+            "variant": "Pytest",
+            "line": 785
+          },
+          {
+            "enum": "Commands",
+            "variant": "Mypy",
+            "line": 792
+          },
+          {
+            "enum": "Commands",
+            "variant": "Php",
+            "line": 799
+          },
+          {
+            "enum": "Commands",
+            "variant": "Phpunit",
+            "line": 806
+          },
+          {
+            "enum": "Commands",
+            "variant": "Phpstan",
+            "line": 813
+          },
+          {
+            "enum": "Commands",
+            "variant": "Pest",
+            "line": 820
+          },
+          {
+            "enum": "Commands",
+            "variant": "Paratest",
+            "line": 827
+          },
+          {
+            "enum": "Commands",
+            "variant": "Ecs",
+            "line": 834
+          },
+          {
+            "enum": "Commands",
+            "variant": "Pint",
+            "line": 841
+          },
+          {
+            "enum": "Commands",
+            "variant": "Phpt",
+            "line": 848
+          },
+          {
+            "enum": "Commands",
+            "variant": "Rake",
+            "line": 855
+          },
+          {
+            "enum": "Commands",
+            "variant": "Rubocop",
+            "line": 862
+          },
+          {
+            "enum": "Commands",
+            "variant": "Rspec",
+            "line": 869
+          },
+          {
+            "enum": "Commands",
+            "variant": "Pip",
+            "line": 876
+          },
+          {
+            "enum": "Commands",
+            "variant": "Uv",
+            "line": 883
+          },
+          {
+            "enum": "Commands",
+            "variant": "Deno",
+            "line": 890
+          },
+          {
+            "enum": "Commands",
+            "variant": "Go",
+            "line": 896
+          },
+          {
+            "enum": "Commands",
+            "variant": "Sbt",
+            "line": 902
+          },
+          {
+            "enum": "Commands",
+            "variant": "Gt",
+            "line": 908
+          },
+          {
+            "enum": "Commands",
+            "variant": "GolangciLint",
+            "line": 915
+          },
+          {
+            "enum": "Commands",
+            "variant": "Gradlew",
+            "line": 923
+          },
+          {
+            "enum": "Commands",
+            "variant": "Mvn",
+            "line": 931
+          },
+          {
+            "enum": "Commands",
+            "variant": "Mvnd",
+            "line": 939
+          },
+          {
+            "enum": "Commands",
+            "variant": "HookAudit",
+            "line": 947
+          },
+          {
+            "enum": "Commands",
+            "variant": "Rewrite",
+            "line": 960
+          },
+          {
+            "enum": "Commands",
+            "variant": "Hook",
+            "line": 968
+          },
+          {
+            "enum": "HookCommands",
+            "variant": "Claude",
+            "line": 977
+          },
+          {
+            "enum": "HookCommands",
+            "variant": "Trae",
+            "line": 979
+          },
+          {
+            "enum": "HookCommands",
+            "variant": "Codex",
+            "line": 981
+          },
+          {
+            "enum": "HookCommands",
+            "variant": "Cursor",
+            "line": 983
+          },
+          {
+            "enum": "HookCommands",
+            "variant": "Gemini",
+            "line": 985
+          },
+          {
+            "enum": "HookCommands",
+            "variant": "Copilot",
+            "line": 987
+          },
+          {
+            "enum": "HookCommands",
+            "variant": "Droid",
+            "line": 989
+          },
+          {
+            "enum": "HookCommands",
+            "variant": "Vibe",
+            "line": 991
+          },
+          {
+            "enum": "HookCommands",
+            "variant": "Check",
+            "line": 993
+          },
+          {
+            "enum": "GitCommands",
+            "variant": "Diff",
+            "line": 1006
+          },
+          {
+            "enum": "GitCommands",
+            "variant": "Log",
+            "line": 1012
+          },
+          {
+            "enum": "GitCommands",
+            "variant": "Status",
+            "line": 1018
+          },
+          {
+            "enum": "GitCommands",
+            "variant": "Show",
+            "line": 1024
+          },
+          {
+            "enum": "GitCommands",
+            "variant": "Add",
+            "line": 1030
+          },
+          {
+            "enum": "GitCommands",
+            "variant": "Commit",
+            "line": 1036
+          },
+          {
+            "enum": "GitCommands",
+            "variant": "Checkout",
+            "line": 1042
+          },
+          {
+            "enum": "GitCommands",
+            "variant": "Push",
+            "line": 1048
+          },
+          {
+            "enum": "GitCommands",
+            "variant": "Pull",
+            "line": 1054
+          },
+          {
+            "enum": "GitCommands",
+            "variant": "Branch",
+            "line": 1060
+          },
+          {
+            "enum": "GitCommands",
+            "variant": "Fetch",
+            "line": 1066
+          },
+          {
+            "enum": "GitCommands",
+            "variant": "Stash",
+            "line": 1072
+          },
+          {
+            "enum": "GitCommands",
+            "variant": "Worktree",
+            "line": 1080
+          },
+          {
+            "enum": "GitCommands",
+            "variant": "Other",
+            "line": 1087
+          },
+          {
+            "enum": "PnpmCommands",
+            "variant": "List",
+            "line": 1093
+          },
+          {
+            "enum": "PnpmCommands",
+            "variant": "Outdated",
+            "line": 1102
+          },
+          {
+            "enum": "PnpmCommands",
+            "variant": "Install",
+            "line": 1108
+          },
+          {
+            "enum": "PnpmCommands",
+            "variant": "Typecheck",
+            "line": 1114
+          },
+          {
+            "enum": "PnpmCommands",
+            "variant": "Other",
+            "line": 1121
+          },
+          {
+            "enum": "DockerCommands",
+            "variant": "Ps",
+            "line": 1127
+          },
+          {
+            "enum": "DockerCommands",
+            "variant": "Images",
+            "line": 1132
+          },
+          {
+            "enum": "DockerCommands",
+            "variant": "Logs",
+            "line": 1134
+          },
+          {
+            "enum": "DockerCommands",
+            "variant": "Compose",
+            "line": 1136
+          },
+          {
+            "enum": "DockerCommands",
+            "variant": "Other",
+            "line": 1142
+          },
+          {
+            "enum": "ComposeCommands",
+            "variant": "Ps",
+            "line": 1148
+          },
+          {
+            "enum": "ComposeCommands",
+            "variant": "Logs",
+            "line": 1153
+          },
+          {
+            "enum": "ComposeCommands",
+            "variant": "Build",
+            "line": 1161
+          },
+          {
+            "enum": "ComposeCommands",
+            "variant": "Other",
+            "line": 1167
+          },
+          {
+            "enum": "KubectlCommands",
+            "variant": "Get",
+            "line": 1173
+          },
+          {
+            "enum": "KubectlCommands",
+            "variant": "Pods",
+            "line": 1179
+          },
+          {
+            "enum": "KubectlCommands",
+            "variant": "Services",
+            "line": 1187
+          },
+          {
+            "enum": "KubectlCommands",
+            "variant": "Logs",
+            "line": 1195
+          },
+          {
+            "enum": "KubectlCommands",
+            "variant": "Other",
+            "line": 1202
+          },
+          {
+            "enum": "OcCommands",
+            "variant": "Get",
+            "line": 1208
+          },
+          {
+            "enum": "OcCommands",
+            "variant": "Pods",
+            "line": 1214
+          },
+          {
+            "enum": "OcCommands",
+            "variant": "Services",
+            "line": 1222
+          },
+          {
+            "enum": "OcCommands",
+            "variant": "Logs",
+            "line": 1230
+          },
+          {
+            "enum": "OcCommands",
+            "variant": "Other",
+            "line": 1237
+          },
+          {
+            "enum": "PrismaCommands",
+            "variant": "Generate",
+            "line": 1243
+          },
+          {
+            "enum": "PrismaCommands",
+            "variant": "Migrate",
+            "line": 1249
+          },
+          {
+            "enum": "PrismaCommands",
+            "variant": "DbPush",
+            "line": 1254
+          },
+          {
+            "enum": "PrismaMigrateCommands",
+            "variant": "Dev",
+            "line": 1264
+          },
+          {
+            "enum": "PrismaMigrateCommands",
+            "variant": "Status",
+            "line": 1273
+          },
+          {
+            "enum": "PrismaMigrateCommands",
+            "variant": "Deploy",
+            "line": 1279
+          },
+          {
+            "enum": "CargoCommands",
+            "variant": "Build",
+            "line": 1289
+          },
+          {
+            "enum": "CargoCommands",
+            "variant": "Test",
+            "line": 1295
+          },
+          {
+            "enum": "CargoCommands",
+            "variant": "Clippy",
+            "line": 1301
+          },
+          {
+            "enum": "CargoCommands",
+            "variant": "Check",
+            "line": 1307
+          },
+          {
+            "enum": "CargoCommands",
+            "variant": "Install",
+            "line": 1313
+          },
+          {
+            "enum": "CargoCommands",
+            "variant": "Nextest",
+            "line": 1319
+          },
+          {
+            "enum": "CargoCommands",
+            "variant": "Other",
+            "line": 1326
+          },
+          {
+            "enum": "DotnetCommands",
+            "variant": "Build",
+            "line": 1332
+          },
+          {
+            "enum": "DotnetCommands",
+            "variant": "Test",
+            "line": 1337
+          },
+          {
+            "enum": "DotnetCommands",
+            "variant": "Restore",
+            "line": 1342
+          },
+          {
+            "enum": "DotnetCommands",
+            "variant": "Format",
+            "line": 1347
+          },
+          {
+            "enum": "DotnetCommands",
+            "variant": "Other",
+            "line": 1353
+          },
+          {
+            "enum": "GoCommands",
+            "variant": "Test",
+            "line": 1359
+          },
+          {
+            "enum": "GoCommands",
+            "variant": "Build",
+            "line": 1365
+          },
+          {
+            "enum": "GoCommands",
+            "variant": "Vet",
+            "line": 1371
+          },
+          {
+            "enum": "GoCommands",
+            "variant": "Other",
+            "line": 1378
+          },
+          {
+            "enum": "SbtCommands",
+            "variant": "Test",
+            "line": 1393
+          },
+          {
+            "enum": "SbtCommands",
+            "variant": "Compile",
+            "line": 1399
+          },
+          {
+            "enum": "SbtCommands",
+            "variant": "Run",
+            "line": 1405
+          },
+          {
+            "enum": "SbtCommands",
+            "variant": "Other",
+            "line": 1412
+          },
+          {
+            "enum": "BunCommands",
+            "variant": "Install",
+            "line": 1418
+          },
+          {
+            "enum": "BunCommands",
+            "variant": "Run",
+            "line": 1423
+          },
+          {
+            "enum": "BunCommands",
+            "variant": "Build",
+            "line": 1428
+          },
+          {
+            "enum": "BunCommands",
+            "variant": "Test",
+            "line": 1433
+          },
+          {
+            "enum": "BunCommands",
+            "variant": "Add",
+            "line": 1438
+          },
+          {
+            "enum": "BunCommands",
+            "variant": "Remove",
+            "line": 1443
+          },
+          {
+            "enum": "BunCommands",
+            "variant": "Pm",
+            "line": 1448
+          },
+          {
+            "enum": "BunCommands",
+            "variant": "X",
+            "line": 1453
+          },
+          {
+            "enum": "BunCommands",
+            "variant": "Other",
+            "line": 1459
+          },
+          {
+            "enum": "BunPmCommands",
+            "variant": "Ls",
+            "line": 1465
+          },
+          {
+            "enum": "BunPmCommands",
+            "variant": "Other",
+            "line": 1471
+          },
+          {
+            "enum": "DenoCommands",
+            "variant": "Run",
+            "line": 1477
+          },
+          {
+            "enum": "DenoCommands",
+            "variant": "Check",
+            "line": 1482
+          },
+          {
+            "enum": "DenoCommands",
+            "variant": "Lint",
+            "line": 1487
+          },
+          {
+            "enum": "DenoCommands",
+            "variant": "Test",
+            "line": 1492
+          },
+          {
+            "enum": "DenoCommands",
+            "variant": "Task",
+            "line": 1497
+          },
+          {
+            "enum": "DenoCommands",
+            "variant": "Compile",
+            "line": 1502
+          },
+          {
+            "enum": "DenoCommands",
+            "variant": "Install",
+            "line": 1507
+          },
+          {
+            "enum": "DenoCommands",
+            "variant": "Other",
+            "line": 1513
+          },
+          {
+            "enum": "GtCommands",
+            "variant": "Log",
+            "line": 1693
+          },
+          {
+            "enum": "GtCommands",
+            "variant": "Submit",
+            "line": 1698
+          },
+          {
+            "enum": "GtCommands",
+            "variant": "Sync",
+            "line": 1703
+          },
+          {
+            "enum": "GtCommands",
+            "variant": "Restack",
+            "line": 1708
+          },
+          {
+            "enum": "GtCommands",
+            "variant": "Create",
+            "line": 1713
+          },
+          {
+            "enum": "GtCommands",
+            "variant": "Branch",
+            "line": 1718
+          },
+          {
+            "enum": "GtCommands",
+            "variant": "Other",
+            "line": 1724
+          }
+        ]
+      },
+      {
+        "path": "src/cmds/cloud/aws_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/cloud/aws_cmd.rs",
+        "sha256": "a8c38661b214890abbb67b6e8d5f7dcd5b4766a3ccb2b9575fc34e8b4657bef8",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/cloud/container.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/cloud/container.rs",
+        "sha256": "9295c680d6dbb0bd63b547b3c1809dfa8dd6ff46897ad7016e6497ced693cd3b",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/cloud/curl_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/cloud/curl_cmd.rs",
+        "sha256": "fb105ccbc1c38bd041937168a8fb3f1b68f9f6200c78709242d18fb9a6dee89d",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/cloud/mod.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/cloud/mod.rs",
+        "sha256": "a6c3ceff3a832cb39640e4d207a3563ee1bf2ad07915856052b1af6c2922c0fd",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/cloud/psql_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/cloud/psql_cmd.rs",
+        "sha256": "75eabdd2b4b2910ec7d0f9f9a86ab8c7fb8757678f3b727f30519265fcfcf6ed",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/cloud/wget_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/cloud/wget_cmd.rs",
+        "sha256": "6cd914ab43ea470ee17247a718c6775f73e38f17cf48e85e2d3b1f3a76d5f0e7",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/dotnet/binlog.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/dotnet/binlog.rs",
+        "sha256": "2e6b6522e207c751ccf0866c3afe1acb2155ef486b9de7c54f2a05aa7192ee1a",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/dotnet/dotnet_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/dotnet/dotnet_cmd.rs",
+        "sha256": "180a02796c787051aa5380e911eb4b2afaa2ebaf17cb57626bb49dfbfab18f87",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/dotnet/dotnet_format_report.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/dotnet/dotnet_format_report.rs",
+        "sha256": "192907a5aec304759c8c7fb00c52f82ff61498b71a7e3e6324d32429e9005019",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/dotnet/dotnet_trx.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/dotnet/dotnet_trx.rs",
+        "sha256": "4f487be45ee09828673d793609f37ac366624c4812cf153a49c24fe38a6064d0",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/dotnet/mod.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/dotnet/mod.rs",
+        "sha256": "c3b4ae3f324f11c451f83e0e52af9166db847d5a2905d2c498e26931a72f2ffb",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/git/diff_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/diff_cmd.rs",
+        "sha256": "d84611910237a689c8093c2bd35a1d933d5e13872ab070ee1284307ecc6496a9",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/git/gh_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/gh_cmd.rs",
+        "sha256": "c52ae73a8665008ee7b1a3ca76a94c48ad70d14985880a09a4309eef37d04fc6",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/git/git_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/git_cmd.rs",
+        "sha256": "a1714eb15ec4c40cff5108f635a13f842797e548340cfd9eff28881505cc60aa",
+        "command_variants": [
+          {
+            "enum": "GitCommand",
+            "variant": "Diff",
+            "line": 22
+          },
+          {
+            "enum": "GitCommand",
+            "variant": "Log",
+            "line": 23
+          },
+          {
+            "enum": "GitCommand",
+            "variant": "Status",
+            "line": 24
+          },
+          {
+            "enum": "GitCommand",
+            "variant": "Show",
+            "line": 25
+          },
+          {
+            "enum": "GitCommand",
+            "variant": "Add",
+            "line": 26
+          },
+          {
+            "enum": "GitCommand",
+            "variant": "Commit",
+            "line": 27
+          },
+          {
+            "enum": "GitCommand",
+            "variant": "Checkout",
+            "line": 28
+          },
+          {
+            "enum": "GitCommand",
+            "variant": "Push",
+            "line": 29
+          },
+          {
+            "enum": "GitCommand",
+            "variant": "Pull",
+            "line": 30
+          },
+          {
+            "enum": "GitCommand",
+            "variant": "Branch",
+            "line": 31
+          },
+          {
+            "enum": "GitCommand",
+            "variant": "Fetch",
+            "line": 32
+          },
+          {
+            "enum": "GitCommand",
+            "variant": "Stash",
+            "line": 33
+          },
+          {
+            "enum": "GitCommand",
+            "variant": "Worktree",
+            "line": 34
+          }
+        ]
+      },
+      {
+        "path": "src/cmds/git/glab_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/glab_cmd.rs",
+        "sha256": "8814f9c90ccc3a86f2e0f7053d096327c6075d159d82aacb89f6d755b6e866de",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/git/gt_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/gt_cmd.rs",
+        "sha256": "d1b077ec52cbc3a4945e47a037321c3503849f4fbb685eea2ca62fbb5b346ba7",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/git/mod.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/git/mod.rs",
+        "sha256": "ff30b476e4cc5b238c07cb384da5a90913158a0f13916afef5e266063042bdd0",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/go/go_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/go/go_cmd.rs",
+        "sha256": "3c53ceea5b8e8d6a49cfa26a14156a0f3371550a23d2927878119d51ed0551d3",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/go/golangci_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/go/golangci_cmd.rs",
+        "sha256": "307376fb6c78595b090dbfc314cd963ef127042b32e571a55d3384fe5adcdf13",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/go/mod.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/go/mod.rs",
+        "sha256": "ff2550e5f46d360a13312d0fc42dd7335a0dc048aa45251f45775723f85fc2d9",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/js/bun_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/bun_cmd.rs",
+        "sha256": "2a3697e1761a5e4fb305fa9c6994cf8b68305951bb9b6e23989089c99ea42aea",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/js/deno_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/deno_cmd.rs",
+        "sha256": "b19385a6510193925d48065ca5a36da7d72be00aa194f86873d3767db081c6d4",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/js/lint_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/lint_cmd.rs",
+        "sha256": "64858b39557b32fbec2edf05ce250bfa9d90dacc6f7d4785607cb89fd28ba0a3",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/js/mod.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/mod.rs",
+        "sha256": "e6381c2f22a0641f3fe9c7426fdac538c147a941631f95be2339a2217d3f9a7e",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/js/next_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/next_cmd.rs",
+        "sha256": "7b8d2aa289c23b2628a2ca008b69d18f413b74e8590f00ffb7c25e85b5dfb621",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/js/npm_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/npm_cmd.rs",
+        "sha256": "bc2e2e104db40a08acd59736c9240fbf9dec674bc7cff3bb2b88472894ab6502",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/js/playwright_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/playwright_cmd.rs",
+        "sha256": "66f2e38ea255aa6e8c85af395da238782236738b0acae4be361f6f5e45ed2aa6",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/js/pnpm_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/pnpm_cmd.rs",
+        "sha256": "06f293d43602fb1c6fb72747494be01628c0a48478ec9a19a33289f3c855b5fb",
+        "command_variants": [
+          {
+            "enum": "PnpmCommand",
+            "variant": "List",
+            "line": 368
+          },
+          {
+            "enum": "PnpmCommand",
+            "variant": "Outdated",
+            "line": 369
+          },
+          {
+            "enum": "PnpmCommand",
+            "variant": "Install",
+            "line": 370
+          }
+        ]
+      },
+      {
+        "path": "src/cmds/js/prettier_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/prettier_cmd.rs",
+        "sha256": "89ed42784d5ff5d1d959c87f7273381c881f53d187258772de75b8a9ad646ab7",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/js/prisma_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/prisma_cmd.rs",
+        "sha256": "cf42fe038fc49bb37cd463db6c5b2a659834e4c72a0b949ad363a4264dd605da",
+        "command_variants": [
+          {
+            "enum": "PrismaCommand",
+            "variant": "Generate",
+            "line": 12
+          },
+          {
+            "enum": "PrismaCommand",
+            "variant": "Migrate",
+            "line": 13
+          },
+          {
+            "enum": "PrismaCommand",
+            "variant": "DbPush",
+            "line": 14
+          }
+        ]
+      },
+      {
+        "path": "src/cmds/js/tsc_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/tsc_cmd.rs",
+        "sha256": "dd1ce7c63869acdea05c10336bcfc6ddacb2c79a8affb16c82925fe6c716bdc1",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/js/vitest_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/js/vitest_cmd.rs",
+        "sha256": "c21d704ca315ce98f6833aeb3d5d6b71355f504848fa8aa711102d619e96ba3d",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/jvm/gradlew_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/jvm/gradlew_cmd.rs",
+        "sha256": "181083ce376c3be69855ce70a0d7ab10186ae839b922b6891ce134c5aaeebd19",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/jvm/mod.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/jvm/mod.rs",
+        "sha256": "0df53bfca92e3231e596be8aefd43673238f154161a7985dbe2fac37055bb915",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/jvm/mvn_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/jvm/mvn_cmd.rs",
+        "sha256": "227b33232d96b053c897038e879c9246af66841286a0cb0ba6d0e15feaf7bedb",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/mod.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/mod.rs",
+        "sha256": "2fee53dd6118b6b1e104690e451559a90388ce2fd2f7cc880acea88d580f1a95",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/php/artisan_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/php/artisan_cmd.rs",
+        "sha256": "b58ca2eb736dcaab08caf84f62ab3d5568926a9204231580afe73442c37e295f",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/php/ecs_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/php/ecs_cmd.rs",
+        "sha256": "821c8bc51e6f8b6b7f3e141aa0376483c052277c302a7484e40037b433a73241",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/php/mod.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/php/mod.rs",
+        "sha256": "665246b2b63e40b547bf436b5338334ff3d25afe7aee4f2e30f4bc00c1618601",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/php/paratest_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/php/paratest_cmd.rs",
+        "sha256": "4731fe878e13dd4dcf9623a414e7641f0952a02f92e6043fb2639744ff320e32",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/php/pest_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/php/pest_cmd.rs",
+        "sha256": "2bc9efd36b71f4c3ff1830123f09e2240a17cebd965b4cb063e5b35e24bba74c",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/php/php_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/php/php_cmd.rs",
+        "sha256": "064cab7e0725c1bebbeb8df28071aae938636d49985abbdcb32f9ef7a93d0b3a",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/php/phpstan_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/php/phpstan_cmd.rs",
+        "sha256": "4df6b7553738f0d9ad58a269b1b18f605196bc99c5c7360061325a90cf22ea8f",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/php/phpt_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/php/phpt_cmd.rs",
+        "sha256": "0425a55f96f7609e383ba38d26ee9d6ccb29be0edead6678756ed42cf99bda34",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/php/phpunit_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/php/phpunit_cmd.rs",
+        "sha256": "e367746b2b3a550225ebc6da834e70b69c9327395d8d73999f898c5a5249a5a9",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/php/pint_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/php/pint_cmd.rs",
+        "sha256": "072262bbf33d65c2419b27fca388842b70e51cdf1045d2cda6a4315a133546d1",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/php/test_output.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/php/test_output.rs",
+        "sha256": "c82c420121856ba0ddb494a5b7c93d9b3cd0d9a37d41f27023006ecdada7f120",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/php/utils.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/php/utils.rs",
+        "sha256": "626e442bc676c69d521b6eb39b246c1c12472ecf91d7330cbd205e6d305ba799",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/python/mod.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/python/mod.rs",
+        "sha256": "fdf17c17a24b46ad57723dafcdfa3f82cf2a6dba29809a00ab12733785a35bd3",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/python/mypy_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/python/mypy_cmd.rs",
+        "sha256": "0076dd3466792342d8cd90ca003332f422c9e603912410150b01097dc333ec0d",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/python/pip_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/python/pip_cmd.rs",
+        "sha256": "26afd58b58c5c6a0be1dd89118f7fb41bad0dd8e55cfad3b7fd99ae3e7c8b03c",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/python/pytest_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/python/pytest_cmd.rs",
+        "sha256": "e186a7cd4332010404d9068d30cd37837704390af7fffb7492cc7189f3711bf1",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/python/ruff_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/python/ruff_cmd.rs",
+        "sha256": "fb22197afd424eafc722e253044a36805b9949996382277bf8169731fc934901",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/python/sqlfluff_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/python/sqlfluff_cmd.rs",
+        "sha256": "ab68d4bc575515424caec2b7f16f08ae337eecb82bdd302b7dd5b2102ff563dc",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/python/uv_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/python/uv_cmd.rs",
+        "sha256": "92f0d328995d219c1ed150465036d1eaf54267a2815c3d5c8c4d3f9a5679a3c0",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/ruby/mod.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/ruby/mod.rs",
+        "sha256": "83812d88722fb4833631da2ba10aa6e5cc38681cf152da4e6e44216aae9936e6",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/ruby/rake_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/ruby/rake_cmd.rs",
+        "sha256": "4d6e5da4337f96cfda27215c05596b24066d5a5e4d8d632c37c617477c44e827",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/ruby/rspec_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/ruby/rspec_cmd.rs",
+        "sha256": "92df64e72e36c5e7d708554a859b8bd1153e3480a9d82d67413e154b8373b1f1",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/ruby/rubocop_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/ruby/rubocop_cmd.rs",
+        "sha256": "442c512568d8e0e4cde1d5e1d3d85f3b785500450aade98b127f514e86b84c67",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/rust/cargo_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/rust/cargo_cmd.rs",
+        "sha256": "87aac95895e4418fd6abcee0a4f99a2504e830e0e5da02b9e92a65bb570c559c",
+        "command_variants": [
+          {
+            "enum": "CargoCommand",
+            "variant": "Build",
+            "line": 17
+          },
+          {
+            "enum": "CargoCommand",
+            "variant": "Test",
+            "line": 18
+          },
+          {
+            "enum": "CargoCommand",
+            "variant": "Clippy",
+            "line": 19
+          },
+          {
+            "enum": "CargoCommand",
+            "variant": "Check",
+            "line": 20
+          },
+          {
+            "enum": "CargoCommand",
+            "variant": "Install",
+            "line": 21
+          },
+          {
+            "enum": "CargoCommand",
+            "variant": "Nextest",
+            "line": 22
+          }
+        ]
+      },
+      {
+        "path": "src/cmds/rust/mod.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/rust/mod.rs",
+        "sha256": "e020695099c748737588d969335829263ce88898ca1dfb6fd419f97587ea8445",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/rust/runner.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/rust/runner.rs",
+        "sha256": "45bd486b66a30c3228bb1b037a85f7a65c9cf3375c16d09f67252f44324197fd",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/scala/mod.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/scala/mod.rs",
+        "sha256": "5eac162d0dd63c67dc456417427f94b68b1220a1518e05f723d3d99cefd63084",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/scala/sbt_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/scala/sbt_cmd.rs",
+        "sha256": "0535563c52440881913caff35bc32710b992acf2e9d993462e5fdb649315eaf0",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/ast_grep_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/ast_grep_cmd.rs",
+        "sha256": "4c4da0d423661786bb2a2536d7c5aa2775254e5fcdd28caa9bb2446ca4ccab2b",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/constants.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/constants.rs",
+        "sha256": "5f849fb63cd53c7ad64237495aa40be5b47795d234bb468f63cd252818fa5b38",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/ctest_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/ctest_cmd.rs",
+        "sha256": "bc3c98433c8b8fbedafb8e4edada240ac80cb4b252947607f4f0afc4c1d856e5",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/deps.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/deps.rs",
+        "sha256": "bbf17a5e765b7160a284feedf157baecb41def730fc22846c77586d10ba9f533",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/env_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/env_cmd.rs",
+        "sha256": "f3454e7bc3d192863da930baef5704b9192dfc882434a707a542b5e1d1cc5bcf",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/find_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/find_cmd.rs",
+        "sha256": "56754f4d2713f1072dcb244ce29e2e3bce939ec25a14cb6c2360e4ac175b63e7",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/format_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/format_cmd.rs",
+        "sha256": "cf2b0e2c8ffdeac57925e44e6ea22cc481c345649ed3ff3e68ff2c0ca91a2611",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/json_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/json_cmd.rs",
+        "sha256": "d093f2c804c2f66df5e559caacd73237b003647d37d7d1b3ecdbb733bfd5d40a",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/local_llm.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/local_llm.rs",
+        "sha256": "a06a13fbf5e681b536e56927e802c1d5403dd52759b06ad22cc673c8cf90b5ff",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/log_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/log_cmd.rs",
+        "sha256": "6002d5d998fa7a00fd0c044a075bf0fe949b6d7728966f6bae740bc55f7a91bd",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/ls.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/ls.rs",
+        "sha256": "4b065a397d9c4302130fba8c447114ee4770f6b127d6e1576dc81379ea6b513d",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/mod.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/mod.rs",
+        "sha256": "bed563392fdbacda2f8314d598202434c426f462ebfd0408d2b98ea36bc73cb2",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/pipe_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/pipe_cmd.rs",
+        "sha256": "bbc1e7c65beb03927365611434ca90afa2e16c6dd7e042a74702810a04c5621d",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/read.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/read.rs",
+        "sha256": "e543359f4fcdc3e971e42635c4fb449de9dcd5bb3ad8c4914a664bab6989f0c2",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/search.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/search.rs",
+        "sha256": "1389311d71721fa1590a32902f5e837514a14ae5b6e917625d2f3ea4ddd01a7e",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/summary.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/summary.rs",
+        "sha256": "a5aa986076ffe0764ad8d19fa560990a426a464e018c0d5e3a002605bc7c7bf5",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/tree.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/tree.rs",
+        "sha256": "a3e04681323985c83ec286fb0e9b6a3f14d06965f1c9f6435f157ff71c1b2acf",
+        "command_variants": []
+      },
+      {
+        "path": "src/cmds/system/wc_cmd.rs",
+        "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/cmds/system/wc_cmd.rs",
+        "sha256": "f3597bb06d0167993b1308366ea28386755ea2aa197853869f435e87a250933d",
+        "command_variants": []
+      }
+    ],
+    "test_paths": [
+      ".claude/agents/rtk-testing-specialist.md",
+      ".claude/commands/rtk-test-before-merge.md",
+      ".claude/commands/test-routing.md",
+      ".claude/rules/cli-testing.md",
+      ".claude/skills/rtk-tdd/references/testing-patterns.md",
+      "hooks/claude/test-rtk-rewrite.sh",
+      "hooks/copilot/test-rtk-rewrite.sh",
+      "hooks/hermes/tests/__init__.py",
+      "hooks/hermes/tests/test_rtk_rewrite_plugin.py",
+      "scripts/benchmark/lib/test.ts",
+      "scripts/check-test-presence.sh",
+      "scripts/test-all.sh",
+      "scripts/test-aristote.sh",
+      "scripts/test-install.sh",
+      "scripts/test-ruby.sh",
+      "scripts/test-tracking.sh",
+      "src/cmds/js/vitest_cmd.rs",
+      "src/cmds/php/paratest_cmd.rs",
+      "src/cmds/php/test_output.rs",
+      "src/cmds/python/pytest_cmd.rs",
+      "src/cmds/system/ctest_cmd.rs",
+      "tests/copilot_selfheal_test.rs",
+      "tests/diff_byte_accuracy_test.rs",
+      "tests/dotnet_double_dash_test.rs",
+      "tests/fixtures/ast_grep_lazylock_raw.json",
+      "tests/fixtures/ast_grep_lazylock_raw.txt",
+      "tests/fixtures/aws_backup_describe_global_settings.json",
+      "tests/fixtures/bun_install_raw.txt",
+      "tests/fixtures/bun_pm_ls_all_raw.txt",
+      "tests/fixtures/bun_test_failures_raw.txt",
+      "tests/fixtures/bun_test_green_raw.txt",
+      "tests/fixtures/bun_test_load_error_raw.txt",
+      "tests/fixtures/ctest_discovery_fail_output_on_failure_raw.txt",
+      "tests/fixtures/ctest_green_skipped_raw.txt",
+      "tests/fixtures/ctest_killed_forwarded_suite_raw.txt",
+      "tests/fixtures/ctest_killed_smaller_forwarded_suite_raw.txt",
+      "tests/fixtures/ctest_long_regex_list_raw.txt",
+      "tests/fixtures/ctest_mixed_raw.txt",
+      "tests/fixtures/ctest_nested_result_raw.txt",
+      "tests/fixtures/ctest_noisy_fail_output_on_failure_raw.txt",
+      "tests/fixtures/ctest_parallel_output_on_failure_raw.txt",
+      "tests/fixtures/ctest_regex_fail_output_on_failure_raw.txt",
+      "tests/fixtures/ctest_repeat_until_pass_raw.txt",
+      "tests/fixtures/ctest_spoofed_framing_raw.txt",
+      "tests/fixtures/ctest_stop_on_failure_raw.txt",
+      "tests/fixtures/deno_check_raw.txt",
+      "tests/fixtures/deno_lint_raw.txt",
+      "tests/fixtures/deno_test_failures_raw.txt",
+      "tests/fixtures/deno_test_green_raw.txt",
+      "tests/fixtures/deno_test_load_error_raw.txt",
+      "tests/fixtures/deno_test_twoleak_raw.txt",
+      "tests/fixtures/deno_test_typecheck_raw.txt",
+      "tests/fixtures/diff/diff_rn_raw.txt",
+      "tests/fixtures/diff/diff_rq_fifo_first_raw.txt",
+      "tests/fixtures/diff/diff_rq_raw.txt",
+      "tests/fixtures/diff/diff_ru_310_colon_dirs_raw.txt",
+      "tests/fixtures/diff/diff_ru_312_apostrophe_dirs_raw.txt",
+      "tests/fixtures/diff/diff_ru_312_apostrophe_raw.txt",
+      "tests/fixtures/diff/diff_ru_312_colon_dirs_raw.txt",
+      "tests/fixtures/diff/diff_ru_ab_raw.txt",
+      "tests/fixtures/diff/diff_ru_dir_vs_file_raw.txt",
+      "tests/fixtures/diff/diff_ru_dot_raw.txt",
+      "tests/fixtures/diff/diff_ru_fifo_symlink_raw.txt",
+      "tests/fixtures/diff/diff_ru_fr_fact_after_section_raw.txt",
+      "tests/fixtures/diff/diff_ru_fr_raw.txt",
+      "tests/fixtures/diff/diff_ru_quoted_310_raw.txt",
+      "tests/fixtures/diff/diff_ru_quoted_312_c_raw.txt",
+      "tests/fixtures/diff/diff_ru_quoted_312_utf8_raw.txt",
+      "tests/fixtures/diff/diff_ru_raw.txt",
+      "tests/fixtures/diff/diff_rus_raw.txt",
+      "tests/fixtures/diff/diff_u_common_subdirs_raw.txt",
+      "tests/fixtures/diff/diff_u_crlf_raw.txt",
+      "tests/fixtures/diff/diff_u_fr_no_newline_raw.txt",
+      "tests/fixtures/diff/diff_u_label_raw.txt",
+      "tests/fixtures/diff/diff_u_raw.txt",
+      "tests/fixtures/diff/git_diff_bom_raw.txt",
+      "tests/fixtures/diff/git_diff_cc_binary_raw.txt",
+      "tests/fixtures/diff/git_diff_color_raw.txt",
+      "tests/fixtures/diff/git_diff_copy_raw.txt",
+      "tests/fixtures/diff/git_diff_custom_prefix_raw.txt",
+      "tests/fixtures/diff/git_diff_emoji_rename_raw.txt",
+      "tests/fixtures/diff/git_diff_empty_new_deleted_raw.txt",
+      "tests/fixtures/diff/git_diff_function_context_raw.txt",
+      "tests/fixtures/diff/git_diff_latin1_raw.txt",
+      "tests/fixtures/diff/git_diff_mnemonic_raw.txt",
+      "tests/fixtures/diff/git_diff_mode_raw.txt",
+      "tests/fixtures/diff/git_diff_multifile_raw.txt",
+      "tests/fixtures/diff/git_diff_no_eol_raw.txt",
+      "tests/fixtures/diff/git_diff_no_index_dirs_raw.txt",
+      "tests/fixtures/diff/git_diff_no_index_no_prefix_bin_raw.txt",
+      "tests/fixtures/diff/git_diff_no_newline_raw.txt",
+      "tests/fixtures/diff/git_diff_no_prefix_raw.txt",
+      "tests/fixtures/diff/git_diff_no_prefix_rename_raw.txt",
+      "tests/fixtures/diff/git_diff_ours_mnemonic_raw.txt",
+      "tests/fixtures/diff/git_diff_ours_newline_raw.txt",
+      "tests/fixtures/diff/git_diff_quotepath_raw.txt",
+      "tests/fixtures/diff/git_diff_rename_delete_binary_raw.txt",
+      "tests/fixtures/diff/git_diff_submodule_diff_raw.txt",
+      "tests/fixtures/diff/git_diff_submodule_dirty_moved_raw.txt",
+      "tests/fixtures/diff/git_diff_submodule_dirty_raw.txt",
+      "tests/fixtures/diff/git_diff_submodule_raw.txt",
+      "tests/fixtures/diff/git_diff_tree_combined_raw.txt",
+      "tests/fixtures/diff/git_diff_truncated_raw.txt",
+      "tests/fixtures/diff/git_diff_typechange_raw.txt",
+      "tests/fixtures/diff/git_diff_u0_raw.txt",
+      "tests/fixtures/diff/git_diff_unmerged_raw.txt",
+      "tests/fixtures/diff/git_diff_word_diff_raw.txt",
+      "tests/fixtures/diff/git_format_patch_cover_raw.txt",
+      "tests/fixtures/diff/git_format_patch_interdiff_raw.txt",
+      "tests/fixtures/diff/git_format_patch_no_stat_cover_raw.txt",
+      "tests/fixtures/diff/git_format_patch_quoted_hunk_raw.txt",
+      "tests/fixtures/diff/git_format_patch_series_raw.txt",
+      "tests/fixtures/diff/git_format_patch_sha256_raw.txt",
+      "tests/fixtures/diff/git_format_patch_single_raw.txt",
+      "tests/fixtures/diff/git_format_patch_submodule_raw.txt",
+      "tests/fixtures/diff/git_log_numstat_p_raw.txt",
+      "tests/fixtures/diff/git_log_p_quoted_renames_raw.txt",
+      "tests/fixtures/diff/git_log_p_raw.txt",
+      "tests/fixtures/diff/git_log_p_stat_raw.txt",
+      "tests/fixtures/diff/git_show_cc_octopus_raw.txt",
+      "tests/fixtures/diff/git_show_cc_raw.txt",
+      "tests/fixtures/diff/git_show_format_B_raw.txt",
+      "tests/fixtures/diff/hg_diff_nodates_tab_raw.txt",
+      "tests/fixtures/diff/hg_diff_raw.txt",
+      "tests/fixtures/diff/hg_export_binary_only_raw.txt",
+      "tests/fixtures/diff/hg_export_binary_raw.txt",
+      "tests/fixtures/diff/hg_export_raw.txt",
+      "tests/fixtures/diff/hg_log_p_raw.txt",
+      "tests/fixtures/diff/hg_log_p_template_raw.txt",
+      "tests/fixtures/diff/svn_diff_git_raw.txt",
+      "tests/fixtures/diff/svn_diff_move_raw.txt",
+      "tests/fixtures/diff/svn_diff_propchange_raw.txt",
+      "tests/fixtures/diff/svn_diff_raw.txt",
+      "tests/fixtures/dotnet/build_failed.txt",
+      "tests/fixtures/dotnet/format_changes.json",
+      "tests/fixtures/dotnet/format_empty.json",
+      "tests/fixtures/dotnet/format_success.json",
+      "tests/fixtures/dotnet/test_failed.txt",
+      "tests/fixtures/git/blob_large.txt",
+      "tests/fixtures/git/latin1_blob.pck",
+      "tests/fixtures/git/tree_listing.txt",
+      "tests/fixtures/glab_ci_trace_raw.txt",
+      "tests/fixtures/glab_issue_list_raw.json",
+      "tests/fixtures/glab_mr_list_raw.json",
+      "tests/fixtures/glab_release_list_raw.txt",
+      "tests/fixtures/glab_release_view_raw.txt",
+      "tests/fixtures/golangci_v1_go127_error_stderr.txt",
+      "tests/fixtures/golangci_v2_clean_raw.json",
+      "tests/fixtures/golangci_v2_issues_raw.json",
+      "tests/fixtures/gradlew_build_failed_raw.txt",
+      "tests/fixtures/gradlew_build_raw.txt",
+      "tests/fixtures/gradlew_connected_raw.txt",
+      "tests/fixtures/gradlew_lint_raw.txt",
+      "tests/fixtures/gradlew_test_failed_raw.txt",
+      "tests/fixtures/gradlew_test_raw.txt",
+      "tests/fixtures/multi-module-fail-skeleton/child-a/pom.xml",
+      "tests/fixtures/multi-module-fail-skeleton/child-a/src/test/java/com/example/rtk/ParallelFailTest.java",
+      "tests/fixtures/multi-module-fail-skeleton/child-a/src/test/java/com/example/rtk/PassAlphaTest.java",
+      "tests/fixtures/multi-module-fail-skeleton/child-b/pom.xml",
+      "tests/fixtures/multi-module-fail-skeleton/child-b/src/test/java/com/example/rtk/PassBetaTest.java",
+      "tests/fixtures/multi-module-fail-skeleton/child-b/src/test/java/com/example/rtk/PassGammaTest.java",
+      "tests/fixtures/multi-module-fail-skeleton/pom.xml",
+      "tests/fixtures/multi-module-skeleton/child-a/pom.xml",
+      "tests/fixtures/multi-module-skeleton/child-a/src/main/java/Empty.java",
+      "tests/fixtures/multi-module-skeleton/child-b/pom.xml",
+      "tests/fixtures/multi-module-skeleton/child-b/src/main/java/Empty.java",
+      "tests/fixtures/multi-module-skeleton/pom.xml",
+      "tests/fixtures/multifail-skeleton/pom.xml",
+      "tests/fixtures/multifail-skeleton/src/main/java/com/example/rtk/Calc.java",
+      "tests/fixtures/multifail-skeleton/src/test/java/com/example/rtk/BoomTest.java",
+      "tests/fixtures/multifail-skeleton/src/test/java/com/example/rtk/CalcTest.java",
+      "tests/fixtures/multifail-skeleton/src/test/java/com/example/rtk/PassFiveTest.java",
+      "tests/fixtures/multifail-skeleton/src/test/java/com/example/rtk/PassFourTest.java",
+      "tests/fixtures/multifail-skeleton/src/test/java/com/example/rtk/PassOneTest.java",
+      "tests/fixtures/multifail-skeleton/src/test/java/com/example/rtk/PassSixTest.java",
+      "tests/fixtures/multifail-skeleton/src/test/java/com/example/rtk/PassThreeTest.java",
+      "tests/fixtures/multifail-skeleton/src/test/java/com/example/rtk/PassTwoTest.java",
+      "tests/fixtures/mvn_clean_raw.txt",
+      "tests/fixtures/mvn_compile_error_slice_raw.txt",
+      "tests/fixtures/mvn_install_full_raw.txt.gz",
+      "tests/fixtures/mvn_install_slice_raw.txt",
+      "tests/fixtures/mvn_locale_fr_raw.txt",
+      "tests/fixtures/mvn_no_pom_raw.txt",
+      "tests/fixtures/mvn_quiet_fail_raw.txt",
+      "tests/fixtures/mvn_reactor_fail_slice_raw.txt",
+      "tests/fixtures/mvn_reactor_pass_slice_raw.txt",
+      "tests/fixtures/mvn_test_compile_fail_slice_raw.txt",
+      "tests/fixtures/mvn_test_fail_slice_raw.txt",
+      "tests/fixtures/mvn_test_multifail_slice_raw.txt",
+      "tests/fixtures/mvn_test_pass_full_raw.txt.gz",
+      "tests/fixtures/mvn_test_pass_slice_raw.txt",
+      "tests/fixtures/mvnd_compile_error_expected.txt",
+      "tests/fixtures/mvnd_compile_error_raw.txt",
+      "tests/fixtures/mvnd_reactor_fail_expected.txt",
+      "tests/fixtures/mvnd_reactor_fail_raw.txt",
+      "tests/fixtures/mvnd_reactor_pass_expected.txt",
+      "tests/fixtures/mvnd_reactor_pass_raw.txt",
+      "tests/fixtures/mvnd_test_fail_expected.txt",
+      "tests/fixtures/mvnd_test_fail_raw.txt",
+      "tests/fixtures/oc_pods.json",
+      "tests/fixtures/phpstan_raw.json",
+      "tests/fixtures/sbt/sbt_compile_error.txt",
+      "tests/fixtures/sbt/sbt_it_test_pass.txt",
+      "tests/fixtures/sbt/sbt_test_fail.txt",
+      "tests/fixtures/sbt/sbt_test_mockito_fail.txt",
+      "tests/fixtures/sbt/sbt_test_munit_fail.txt",
+      "tests/fixtures/sbt/sbt_test_munit_pass.txt",
+      "tests/fixtures/sbt/sbt_test_pass.txt",
+      "tests/fixtures/sbt/sbt_test_scalamock_fail.txt",
+      "tests/fixtures/sqlfluff_lint_v2_raw.json",
+      "tests/fixtures/sqlfluff_lint_v4_raw.json",
+      "tests/fixtures/tsc_global_config_error_raw.txt",
+      "tests/fixtures/tsc_no_project_raw.txt",
+      "tests/fixtures/tsc_pretty_raw.txt",
+      "tests/fixtures/uv_run_pytest_failure.txt",
+      "tests/gh_pr_checks_failure_test.rs",
+      "tests/git_show_blob_differential_test.rs",
+      "tests/grep_context_test.rs",
+      "tests/grep_faithful_format_test.rs",
+      "tests/guard_integration_test.rs",
+      "tests/hook_decision_protocol_test.rs",
+      "tests/hook_warning_scope_test.rs",
+      "tests/native_test_expression_test.rs",
+      "tests/omp_init_test.rs",
+      "tests/pipeline_stdin_test.rs",
+      "tests/read_window_bytes_test.rs",
+      "tests/search_compress_test.rs",
+      "tests/search_error_test.rs",
+      "tests/search_faithful_test.rs",
+      "tests/search_stdin_test.rs",
+      "tests/signal_flush_test.rs",
+      "tests/stderr_only_failure_test.rs",
+      "tests/trae_hook_test.rs",
+      "tests/windows_child_quoting_test.rs"
+    ]
+  },
+  "caveman": {
+    "repository": "JuliusBrussee/caveman",
+    "commit": "542442bab314973709f95b85b1ac0b3f6f5b5dc6",
+    "sources": [
+      {
+        "path": "README.md",
+        "url": "https://github.com/JuliusBrussee/caveman/blob/542442bab314973709f95b85b1ac0b3f6f5b5dc6/README.md",
+        "sha256": "bf772f2e53550bdfb1b620c11ae2d6bbe0d55c4996d0df2c392d4bf22be018e9",
+        "documented_commands": []
+      },
+      {
+        "path": "skills/caveman/SKILL.md",
+        "url": "https://github.com/JuliusBrussee/caveman/blob/542442bab314973709f95b85b1ac0b3f6f5b5dc6/skills/caveman/SKILL.md",
+        "sha256": "0bf09a0a9a017d004a81d4b693e5a2d830e1a28230a5885df773e1ed9c0571cc"
+      }
+    ],
+    "test_paths": [
+      "agents/delegate/portable-process.test.mjs",
+      "browse/bin/launcher.test.mjs",
+      "browse/cdp_integration_test.go",
+      "browse/cdp_test.go",
+      "browse/cmd/caveman-browse/main_integration_test.go",
+      "browse/cmd/caveman-browse/main_test.go",
+      "browse/session_test.go",
+      "browse/testdata/agent_checkout.html",
+      "browse/testdata/order_dashboard.html",
+      "browse/tests/package.test.mjs",
+      "docs/technical/testing-and-benchmarks.md",
+      "docs/testing-session-modes.md",
+      "engine/axtree_test.go",
+      "engine/ccr/retry_busy_test.go",
+      "engine/ccr/sqlite_parent_security_windows_test.go",
+      "engine/ccr/store_full_test.go",
+      "engine/ccr/store_generation_test.go",
+      "engine/ccr/store_locking_procfs_linux_test.go",
+      "engine/ccr/store_locking_test.go",
+      "engine/ccr/store_permissions_test.go",
+      "engine/ccr/store_reopen_race_test.go",
+      "engine/ccr/store_repositorymap_dedup_test.go",
+      "engine/ccr/store_test.go",
+      "engine/cmd/caveman-engine/main_test.go",
+      "engine/cmd/caveman-engine/pixel_density_test.go",
+      "engine/compressors/axtree_test.go",
+      "engine/compressors/breadth_test.go",
+      "engine/compressors/capabilities_test.go",
+      "engine/compressors/code_cgo_test.go",
+      "engine/compressors/code_langs_test.go",
+      "engine/compressors/code_listing_test.go",
+      "engine/compressors/code_test.go",
+      "engine/compressors/config_test.go",
+      "engine/compressors/html_test.go",
+      "engine/compressors/invariants_test.go",
+      "engine/compressors/json_test.go",
+      "engine/compressors/lineends_test.go",
+      "engine/compressors/log_match_test.go",
+      "engine/compressors/log_test.go",
+      "engine/compressors/redundancy_test.go",
+      "engine/compressors/repetition_test.go",
+      "engine/compressors/tabular_test.go",
+      "engine/compressors/terminal_test.go",
+      "engine/compressors/testdata/axtree_cdp_local_page.json",
+      "engine/compressors/testdata/axtree_high_noise.json",
+      "engine/compressors/testdata/fuzz/FuzzTOONRoundTrip/e011846e6c4f04ee",
+      "engine/compressors/testdata/toolschema_constraints_catalog.golden.json",
+      "engine/compressors/testdata/toolschema_constraints_catalog.json",
+      "engine/compressors/tokenize_equivalence_test.go",
+      "engine/compressors/toolschema_annotations_test.go",
+      "engine/compressors/toolschema_test.go",
+      "engine/compressors/toon_roundtrip_test.go",
+      "engine/compressors/toon_test.go",
+      "engine/compressors/zz_adversarial_probe2_test.go",
+      "engine/compressors/zz_adversarial_probe3_test.go",
+      "engine/compressors/zz_adversarial_probe_test.go",
+      "engine/contextwindow/contextwindow_test.go",
+      "engine/detect_html_test.go",
+      "engine/detect_test.go",
+      "engine/engine_test.go",
+      "engine/evals/cgo_off_test.go",
+      "engine/evals/cgo_on_test.go",
+      "engine/evals/fixtures/article.html",
+      "engine/evals/fixtures/build.log",
+      "engine/evals/fixtures/customer_revenue.csv",
+      "engine/evals/fixtures/json_smartcrusher.json",
+      "engine/evals/fixtures/manifest.yaml",
+      "engine/evals/fixtures/passthrough.txt",
+      "engine/evals/fixtures/repetition_log.txt",
+      "engine/evals/fixtures/sample.go",
+      "engine/evals/fixtures/sample.py",
+      "engine/evals/fixtures/sample.ts",
+      "engine/evals/fixtures/service_features.yaml",
+      "engine/evals/fixtures/terminal_passthrough.txt",
+      "engine/evals/fixtures/terminal_session.txt",
+      "engine/evals/fixtures/tool_catalog.json",
+      "engine/evals/fixtures/tool_output.json",
+      "engine/evals/fixtures/toon_nested_passthrough.json",
+      "engine/evals/fixtures/toon_strings.json",
+      "engine/evals/fixtures/toon_tabular.json",
+      "engine/evals/harness_test.go",
+      "engine/filewrap_test.go",
+      "engine/image/image_test.go",
+      "engine/listing_test.go",
+      "engine/pixel/applicability_test.go",
+      "engine/pixel/atlas_test.go",
+      "engine/pixel/density_gate_test.go",
+      "engine/pixel/density_test.go",
+      "engine/pixel/factsheet_test.go",
+      "engine/pixel/gate_test.go",
+      "engine/pixel/glyphs_test.go",
+      "engine/pixel/golden_test.go",
+      "engine/pixel/history_anthropic_test.go",
+      "engine/pixel/history_openai_test.go",
+      "engine/pixel/overlay_test.go",
+      "engine/pixel/pricing_test.go",
+      "engine/pixel/render_density_test.go",
+      "engine/pixel/render_test.go",
+      "engine/pixel/schemastrip_test.go",
+      "engine/pixel/testdata/golden/ascii_code-dense-00.png",
+      "engine/pixel/testdata/golden/ascii_code-multicol2-00.png",
+      "engine/pixel/testdata/golden/ascii_code-single-00.png",
+      "engine/pixel/testdata/golden/cjk_emoji-dense-00.png",
+      "engine/pixel/testdata/golden/cjk_emoji-multicol2-00.png",
+      "engine/pixel/testdata/golden/cjk_emoji-single-00.png",
+      "engine/pixel/testdata/golden/density_balanced-00.png",
+      "engine/pixel/testdata/golden/density_conservative-00.png",
+      "engine/pixel/testdata/golden/forty_k_log-dense-00.png",
+      "engine/pixel/testdata/golden/forty_k_log-dense-01.png",
+      "engine/pixel/testdata/golden/forty_k_log-dense-02.png",
+      "engine/pixel/testdata/golden/forty_k_log-multicol2-00.png",
+      "engine/pixel/testdata/golden/forty_k_log-multicol2-01.png",
+      "engine/pixel/testdata/golden/forty_k_log-multicol2-02.png",
+      "engine/pixel/testdata/golden/forty_k_log-multicol2-03.png",
+      "engine/pixel/testdata/golden/forty_k_log-multicol2-04.png",
+      "engine/pixel/testdata/golden/forty_k_log-multicol2-05.png",
+      "engine/pixel/testdata/golden/forty_k_log-single-00.png",
+      "engine/pixel/testdata/golden/forty_k_log-single-01.png",
+      "engine/pixel/testdata/golden/forty_k_log-single-02.png",
+      "engine/pixel/testdata/golden/forty_k_log-single-03.png",
+      "engine/pixel/testdata/golden/forty_k_log-single-04.png",
+      "engine/pixel/testdata/golden/forty_k_log-single-05.png",
+      "engine/pixel/testdata/golden/forty_k_log-single-06.png",
+      "engine/pixel/testdata/golden/forty_k_log-single-07.png",
+      "engine/pixel/testdata/golden/forty_k_log-single-08.png",
+      "engine/pixel/testdata/golden/forty_k_log-single-09.png",
+      "engine/pixel/testdata/golden/forty_k_log-single-10.png",
+      "engine/pixel/testdata/golden/forty_k_log-single-11.png",
+      "engine/pixel/testdata/golden/json_tabs-dense-00.png",
+      "engine/pixel/testdata/golden/json_tabs-multicol2-00.png",
+      "engine/pixel/testdata/golden/json_tabs-single-00.png",
+      "engine/pixel/testdata/golden/literal_newline_arrow-dense-00.png",
+      "engine/pixel/testdata/golden/literal_newline_arrow-multicol2-00.png",
+      "engine/pixel/testdata/golden/literal_newline_arrow-single-00.png",
+      "engine/pixel/testdata/golden/manifest.json",
+      "engine/pixel/testdata/golden/twolayer_overlay-00.png",
+      "engine/pixel/testdata/transform_anthropic/early_history_only.expected.json",
+      "engine/pixel/testdata/transform_anthropic/early_history_only.input.json",
+      "engine/pixel/testdata/transform_anthropic/history_relocation.expected.json",
+      "engine/pixel/testdata/transform_anthropic/history_relocation.input.json",
+      "engine/pixel/testdata/transform_anthropic/manifest.json",
+      "engine/pixel/testdata/transform_anthropic/slab_tool_result.expected.json",
+      "engine/pixel/testdata/transform_anthropic/slab_tool_result.input.json",
+      "engine/pixel/testdata/transform_openai/chat-00.png",
+      "engine/pixel/testdata/transform_openai/chat-input.json",
+      "engine/pixel/testdata/transform_openai/chat-output.json",
+      "engine/pixel/testdata/transform_openai/manifest.json",
+      "engine/pixel/testdata/transform_openai/responses-00.png",
+      "engine/pixel/testdata/transform_openai/responses-01.png",
+      "engine/pixel/testdata/transform_openai/responses-input.json",
+      "engine/pixel/testdata/transform_openai/responses-output.json",
+      "engine/pixel/textprep_test.go",
+      "engine/pixel/transform_anthropic_density_test.go",
+      "engine/pixel/transform_anthropic_test.go",
+      "engine/pixel/transform_anthropic_twolayer_test.go",
+      "engine/pixel/transform_gemini_test.go",
+      "engine/pixel/transform_numbers_test.go",
+      "engine/pixel/transform_openai_density_test.go",
+      "engine/pixel/transform_openai_regression_test.go",
+      "engine/pixel/transform_openai_test.go",
+      "engine/pixel/types_test.go",
+      "engine/retrieve_query_test.go",
+      "engine/safety/safety_test.go",
+      "engine/simulate_test.go",
+      "engine/terminal_test.go",
+      "engine/tokens/tokens_test.go",
+      "engine/toolschema_input_test.go",
+      "extension/test/background.test.mjs",
+      "extension/test/content-script.spec.mjs",
+      "extension/test/directive.test.mjs",
+      "extension/test/firefox-launch.test.mjs",
+      "extension/test/harness.html",
+      "extension/test/package.test.mjs",
+      "extension/test/popup.spec.mjs",
+      "extension/test/provider-composer.spec.mjs",
+      "extension/test/provider-harness.html",
+      "mcp/cmd/caveman-mcp/main_test.go",
+      "mcp/cmd/caveman-mcp/recovery_process_test.go",
+      "mcp/engine_tools_retrieve_test.go",
+      "mcp/engine_tools_stats_test.go",
+      "mcp/retrieve_integration_test.go",
+      "mcp/server_test.go",
+      "mcp/testdata/inventory_catalog_page.json",
+      "mcp/testdata/inventory_stock_page.csv",
+      "mcp/testdata/webhook_delivery_events_page.json",
+      "mcp/tests/launcher.test.mjs",
+      "mcp/tests/package.test.mjs",
+      "mem/bm25_test.go",
+      "mem/cmd/cavemem/main_test.go",
+      "mem/js/tests/client.test.mjs",
+      "mem/py/tests/test_cavemem.py",
+      "mem/recall_budget_test.go",
+      "mem/store_concurrency_test.go",
+      "mem/store_test.go",
+      "packages/agent/tests/adapters.runtime.mjs",
+      "packages/agent/tests/breakers.runtime.mjs",
+      "packages/agent/tests/budget-regressions.runtime.mjs",
+      "packages/agent/tests/budget.runtime.mjs",
+      "packages/agent/tests/catalog.drift.runtime.mjs",
+      "packages/agent/tests/claude.runtime.mjs",
+      "packages/agent/tests/code.runtime.mjs",
+      "packages/agent/tests/compaction.runtime.mjs",
+      "packages/agent/tests/compiler.runtime.mjs",
+      "packages/agent/tests/concurrency.runtime.mjs",
+      "packages/agent/tests/fixtures/conditional-sandbox-agent.mjs",
+      "packages/agent/tests/fixtures/fake-engine-env.mjs",
+      "packages/agent/tests/fixtures/fake-engine-tokens.mjs",
+      "packages/agent/tests/fixtures/fake-engine.mjs",
+      "packages/agent/tests/fixtures/lying-engine.mjs",
+      "packages/agent/tests/fixtures/nested-sandbox-agent.mjs",
+      "packages/agent/tests/fixtures/sandbox-agent.mjs",
+      "packages/agent/tests/framework.runtime.mjs",
+      "packages/agent/tests/framework.test.ts",
+      "packages/agent/tests/sandbox-credentials.runtime.mjs",
+      "packages/agent/tests/source-graph.runtime.mjs",
+      "packages/agent/tests/tool-modules/sandbox-tool-module.mjs",
+      "packages/agent/tests/windows-process.runtime.mjs",
+      "packages/agent/tests/windows-shell-smoke.runtime.mjs",
+      "packages/agent/tsconfig.test.json",
+      "packages/cli/tests/_cli.mjs",
+      "packages/cli/tests/agent-binary-probe.runtime.mjs",
+      "packages/cli/tests/agent-compression-conformance.runtime.mjs",
+      "packages/cli/tests/agent-config-home.runtime.mjs",
+      "packages/cli/tests/agent-mcp.runtime.mjs",
+      "packages/cli/tests/agent-native.runtime.mjs",
+      "packages/cli/tests/agent-registry.runtime.mjs",
+      "packages/cli/tests/agent-shortcut.runtime.mjs",
+      "packages/cli/tests/agent.runtime.mjs",
+      "packages/cli/tests/aider-routing.runtime.mjs",
+      "packages/cli/tests/bedrock-wrap.runtime.mjs",
+      "packages/cli/tests/billing.runtime.mjs",
+      "packages/cli/tests/binary-cold-empty.runtime.mjs",
+      "packages/cli/tests/binary-cold-quickstart.runtime.mjs",
+      "packages/cli/tests/binary-pin.runtime.mjs",
+      "packages/cli/tests/browse.runtime.mjs",
+      "packages/cli/tests/capability-config.runtime.mjs",
+      "packages/cli/tests/catalog-compress.runtime.mjs",
+      "packages/cli/tests/caveman-bin-resolution.runtime.mjs",
+      "packages/cli/tests/codex-home.runtime.mjs",
+      "packages/cli/tests/codex-mcp-environment.runtime.mjs",
+      "packages/cli/tests/codex-subscription-wrap.runtime.mjs",
+      "packages/cli/tests/cohesive-ux.runtime.mjs",
+      "packages/cli/tests/compress.runtime.mjs",
+      "packages/cli/tests/config-file-injection.runtime.mjs",
+      "packages/cli/tests/convert.runtime.mjs",
+      "packages/cli/tests/credentials.runtime.mjs",
+      "packages/cli/tests/delegate-packaging.runtime.mjs",
+      "packages/cli/tests/delegate-runtime.runtime.mjs",
+      "packages/cli/tests/delegate-windows.runtime.mjs",
+      "packages/cli/tests/explore.runtime.mjs",
+      "packages/cli/tests/first-run-budget.runtime.mjs",
+      "packages/cli/tests/fixtures/binary-release/checksums.txt",
+      "packages/cli/tests/fixtures/binary-release/checksums.txt.keysig",
+      "packages/cli/tests/fixtures/claude-root/projects/payments-api/session.jsonl",
+      "packages/cli/tests/fixtures/claude-root/projects/reporting-worker/session.jsonl",
+      "packages/cli/tests/fixtures/claude-root/projects/support-agent/session.jsonl",
+      "packages/cli/tests/fixtures/generate-openclaw-compat-oracle.mjs",
+      "packages/cli/tests/fixtures/make-claude-root.mjs",
+      "packages/cli/tests/fixtures/openclaw-2026.8.2-compat.json",
+      "packages/cli/tests/fixtures/receipts-bundle.json",
+      "packages/cli/tests/harness-agent-upstream.runtime.mjs",
+      "packages/cli/tests/harness-control-api.runtime.mjs",
+      "packages/cli/tests/harness-session-history.runtime.mjs",
+      "packages/cli/tests/harness/index.mjs",
+      "packages/cli/tests/harness/run-cli.mjs",
+      "packages/cli/tests/harness/static-release-server.mjs",
+      "packages/cli/tests/harness/stub-agent.mjs",
+      "packages/cli/tests/harness/stub-bin.mjs",
+      "packages/cli/tests/harness/stub-control-api.mjs",
+      "packages/cli/tests/harness/stub-upstream.mjs",
+      "packages/cli/tests/hermes-direct.runtime.mjs",
+      "packages/cli/tests/hermes-home.runtime.mjs",
+      "packages/cli/tests/hermes-wrap.runtime.mjs",
+      "packages/cli/tests/hooks.runtime.mjs",
+      "packages/cli/tests/init-base-url.runtime.mjs",
+      "packages/cli/tests/kilo-wrap.runtime.mjs",
+      "packages/cli/tests/learn-implement.runtime.mjs",
+      "packages/cli/tests/learn-porcelain.runtime.mjs",
+      "packages/cli/tests/learn-savings.runtime.mjs",
+      "packages/cli/tests/learn-tui.runtime.mjs",
+      "packages/cli/tests/learn-v2.runtime.mjs",
+      "packages/cli/tests/login-base-url.runtime.mjs",
+      "packages/cli/tests/login-private.runtime.mjs",
+      "packages/cli/tests/login.runtime.mjs",
+      "packages/cli/tests/mcp-surface.runtime.mjs",
+      "packages/cli/tests/mcp-version.runtime.mjs",
+      "packages/cli/tests/mem.runtime.mjs",
+      "packages/cli/tests/native-enable.runtime.mjs",
+      "packages/cli/tests/openclaw-provider-compat.runtime.mjs",
+      "packages/cli/tests/openclaw-provider-route.runtime.mjs",
+      "packages/cli/tests/openclaw-wrap.runtime.mjs",
+      "packages/cli/tests/opencode-wrap.runtime.mjs",
+      "packages/cli/tests/pi-enable.runtime.mjs",
+      "packages/cli/tests/pi-wrap.runtime.mjs",
+      "packages/cli/tests/pixel-density.runtime.mjs",
+      "packages/cli/tests/pixel-wrap.runtime.mjs",
+      "packages/cli/tests/porcelain-alias.runtime.mjs",
+      "packages/cli/tests/porcelain.runtime.mjs",
+      "packages/cli/tests/portable-command.runtime.mjs",
+      "packages/cli/tests/practice-registry.runtime.mjs",
+      "packages/cli/tests/practices.runtime.mjs",
+      "packages/cli/tests/provider-headers.review.runtime.mjs",
+      "packages/cli/tests/provider-routing.runtime.mjs",
+      "packages/cli/tests/providers-verify.runtime.mjs",
+      "packages/cli/tests/proxy-fetch.runtime.mjs",
+      "packages/cli/tests/qwen-wrap.runtime.mjs",
+      "packages/cli/tests/recall-hook.install.runtime.mjs",
+      "packages/cli/tests/receipts.runtime.mjs",
+      "packages/cli/tests/registry-gates.runtime.mjs",
+      "packages/cli/tests/setup-install.runtime.mjs",
+      "packages/cli/tests/setup.runtime.mjs",
+      "packages/cli/tests/shrink.runtime.mjs",
+      "packages/cli/tests/skills-add.runtime.mjs",
+      "packages/cli/tests/skills.runtime.mjs",
+      "packages/cli/tests/snippets.runtime.mjs",
+      "packages/cli/tests/stats.runtime.mjs",
+      "packages/cli/tests/status.runtime.mjs",
+      "packages/cli/tests/subscription-recovery.runtime.mjs",
+      "packages/cli/tests/sync.runtime.mjs",
+      "packages/cli/tests/telemetry.runtime.mjs",
+      "packages/cli/tests/toon.runtime.mjs",
+      "packages/cli/tests/trial-usage.runtime.mjs",
+      "packages/cli/tests/update.runtime.mjs",
+      "packages/cli/tests/verbs-gate.runtime.mjs",
+      "packages/cli/tests/verify.runtime.mjs",
+      "packages/cli/tests/windows-platform.runtime.mjs",
+      "packages/cli/tests/wrap-bootstrap.runtime.mjs",
+      "packages/cli/tests/wrap-gate.runtime.mjs",
+      "packages/cli/tests/wrap-restart.runtime.mjs",
+      "packages/cli/tests/wrap-weekly-refresh.runtime.mjs",
+      "packages/cli/tests/wrap.runtime.mjs",
+      "packages/create-caveman-agent/tests/initializer.test.mjs",
+      "packages/device-auth/tests/device-flow.test.mjs",
+      "packages/middleware/python/tests/conftest.py",
+      "packages/middleware/python/tests/test_adapters.py",
+      "packages/middleware/python/tests/test_fail_open.py",
+      "packages/middleware/python/tests/test_versions.py",
+      "packages/middleware/typescript/tests/adapters.test.mjs",
+      "packages/middleware/typescript/tests/fail-open.test.mjs",
+      "packages/middleware/typescript/tests/versions.test.mjs",
+      "packages/middleware/typescript/tests/wire.test.mjs",
+      "packages/pi-extension/src/testable.ts",
+      "packages/pi-extension/tests/fixtures/stub-caveman-mcp.mjs",
+      "packages/pi-extension/tests/fixtures/stub-provider-extension.mjs",
+      "packages/pi-extension/tests/integration.runtime.mjs",
+      "packages/pi-extension/tests/portable-command.runtime.mjs",
+      "packages/pi-extension/tests/protocol.runtime.mjs",
+      "packages/pi-extension/tests/provider-compat.runtime.mjs",
+      "packages/pi-extension/tests/provider.runtime.mjs",
+      "packages/pi-extension/tests/recovery.runtime.mjs",
+      "packages/sdk/parity/fixtures.json",
+      "packages/sdk/parity/middleware.fixtures.json",
+      "packages/sdk/parity/runtime-policy.fixtures.json",
+      "packages/sdk/python/tests/test_assembly.py",
+      "packages/sdk/python/tests/test_context_pack.py",
+      "packages/sdk/python/tests/test_exporter.py",
+      "packages/sdk/python/tests/test_middleware.py",
+      "packages/sdk/python/tests/test_middleware_reports.py",
+      "packages/sdk/python/tests/test_packaging.py",
+      "packages/sdk/python/tests/test_parity.py",
+      "packages/sdk/python/tests/test_runtime_policy.py",
+      "packages/sdk/python/tests/test_sdk.py",
+      "packages/sdk/python/tests/test_shared_context.py",
+      "packages/sdk/python/tests/test_structural.py",
+      "packages/sdk/python/tests/test_task_profile.py",
+      "packages/sdk/python/tests/test_tool_events.py",
+      "packages/sdk/python/tests/test_trace_continuity.py",
+      "packages/sdk/python/tests/test_transport.py",
+      "packages/sdk/typescript/tests/assembly.runtime.mjs",
+      "packages/sdk/typescript/tests/assembly.test.ts",
+      "packages/sdk/typescript/tests/cave-plan.runtime.mjs",
+      "packages/sdk/typescript/tests/context-pack.runtime.mjs",
+      "packages/sdk/typescript/tests/context-pack.test.ts",
+      "packages/sdk/typescript/tests/exporter.runtime.mjs",
+      "packages/sdk/typescript/tests/exporter.test.ts",
+      "packages/sdk/typescript/tests/middleware-reports.runtime.mjs",
+      "packages/sdk/typescript/tests/middleware.runtime.mjs",
+      "packages/sdk/typescript/tests/packaging.runtime.mjs",
+      "packages/sdk/typescript/tests/parity.runtime.mjs",
+      "packages/sdk/typescript/tests/runtime-policy.runtime.mjs",
+      "packages/sdk/typescript/tests/runtime-policy.test.ts",
+      "packages/sdk/typescript/tests/shared-context.runtime.mjs",
+      "packages/sdk/typescript/tests/structural.runtime.mjs",
+      "packages/sdk/typescript/tests/task-profile.runtime.mjs",
+      "packages/sdk/typescript/tests/task-profile.test.ts",
+      "packages/sdk/typescript/tests/tool-events.runtime.mjs",
+      "packages/sdk/typescript/tests/tool-search.runtime.mjs",
+      "packages/sdk/typescript/tests/tool-search.test.ts",
+      "packages/sdk/typescript/tests/trace-continuity.runtime.mjs",
+      "packages/sdk/typescript/tests/transport-security.runtime.mjs",
+      "packages/sdk/typescript/tests/transport.runtime.mjs",
+      "packages/sdk/typescript/tsconfig.test.json",
+      "packages/shared/contracts/fixtures/agent/claude-conformance.json",
+      "packages/shared/contracts/fixtures/agent/pi-conformance.json",
+      "packages/subagent-tax/fixtures/anthropic-first-request.json",
+      "packages/subagent-tax/fixtures/example-report.json",
+      "packages/subagent-tax/tests/analyze.test.mjs",
+      "packages/subagent-tax/tests/args.test.mjs",
+      "packages/subagent-tax/tests/e2e.test.mjs",
+      "packages/subagent-tax/tests/process-tree.test.mjs",
+      "packages/subagent-tax/tests/report.test.mjs",
+      "packages/subagent-tax/tests/sink.test.mjs",
+      "packages/subagent-tax/tests/tokens.test.mjs",
+      "proxy/cmd/caveman-proxy/lifetime_test.go",
+      "proxy/cmd/caveman-proxy/main_test.go",
+      "proxy/cmd/caveman-proxy/stats_test.go",
+      "proxy/cmd/caveman-proxy/status_test.go",
+      "proxy/internal/config/config_test.go",
+      "proxy/internal/gateway/agent_evidence_test.go",
+      "proxy/internal/gateway/agent_path_protocol_test.go",
+      "proxy/internal/gateway/auth_fallback_test.go",
+      "proxy/internal/gateway/authmode_test.go",
+      "proxy/internal/gateway/breakpoint_plan_test.go",
+      "proxy/internal/gateway/cache_epoch_once_test.go",
+      "proxy/internal/gateway/capture_test.go",
+      "proxy/internal/gateway/chatgpt_test.go",
+      "proxy/internal/gateway/codex_native_route_test.go",
+      "proxy/internal/gateway/compress_test.go",
+      "proxy/internal/gateway/compression_query_test.go",
+      "proxy/internal/gateway/compression_savings_test.go",
+      "proxy/internal/gateway/estimate_test.go",
+      "proxy/internal/gateway/gemini_bare_route_test.go",
+      "proxy/internal/gateway/headers_test.go",
+      "proxy/internal/gateway/ledger_test.go",
+      "proxy/internal/gateway/live_zone_test.go",
+      "proxy/internal/gateway/pixel_density_test.go",
+      "proxy/internal/gateway/pixel_test.go",
+      "proxy/internal/gateway/prefix_monitor_test.go",
+      "proxy/internal/gateway/prefix_stability_payg_test.go",
+      "proxy/internal/gateway/prefix_stability_test.go",
+      "proxy/internal/gateway/pricing_semantics_test.go",
+      "proxy/internal/gateway/recovery_exempt_test.go",
+      "proxy/internal/gateway/reliability_test.go",
+      "proxy/internal/gateway/retrieve_tool_test.go",
+      "proxy/internal/gateway/server_test.go",
+      "proxy/internal/gateway/stats_accounting_test.go",
+      "proxy/internal/gateway/subscription_live_zone_test.go",
+      "proxy/internal/gateway/toolschema_strip_test.go",
+      "proxy/internal/gateway/upstream_body_test.go",
+      "proxy/internal/gateway/upstream_bounds_test.go",
+      "proxy/internal/gateway/upstream_log_redaction_test.go",
+      "proxy/internal/gateway/upstream_retry_test.go",
+      "proxy/internal/gateway/usage_aggregation_test.go",
+      "proxy/internal/gitsafe/gitsafe_test.go",
+      "proxy/internal/middleware/acceptance_test.go",
+      "proxy/internal/middleware/benchmark_test.go",
+      "proxy/internal/middleware/runtime_test.go",
+      "proxy/internal/nativehook/hook_repostate_test.go",
+      "proxy/internal/nativehook/hook_unix_test.go",
+      "proxy/internal/nativepack/pack_test.go",
+      "proxy/internal/nativeruntime/marker_test.go",
+      "proxy/internal/nativeruntime/mask_elidable_test.go",
+      "proxy/internal/nativeruntime/mask_recoverability_test.go",
+      "proxy/internal/nativeruntime/runtime_test.go",
+      "proxy/internal/nativeruntime/server_test.go",
+      "proxy/internal/nativeruntime/server_unix_path_test.go",
+      "proxy/internal/nativeruntime/server_windows_test.go",
+      "proxy/internal/repointel/index_test.go",
+      "proxy/internal/runstate/runstate_test.go",
+      "proxy/internal/standalone/auth_token_test.go",
+      "proxy/internal/standalone/bedrock_chain_test.go",
+      "proxy/internal/standalone/compat_headers_test.go",
+      "proxy/internal/standalone/concurrent_encoding_review_test.go",
+      "proxy/internal/standalone/gemini_query_auth_test.go",
+      "proxy/internal/standalone/provider_routes_test.go",
+      "proxy/internal/standalone/provider_stream_test.go",
+      "proxy/internal/standalone/standalone_test.go",
+      "proxy/internal/standalone/toon_test.go",
+      "proxy/internal/standalone/vertex_express_auth_test.go",
+      "proxy/internal/standalone/zzsplit_test.go",
+      "proxy/internal/store/agent_evidence_test.go",
+      "proxy/internal/store/cache_columns_test.go",
+      "proxy/internal/store/detect_cache_hygiene_test.go",
+      "proxy/internal/store/detect_compaction_test.go",
+      "proxy/internal/store/detect_config_trend_test.go",
+      "proxy/internal/store/detect_mcp_tax_test.go",
+      "proxy/internal/store/detect_outcomes_test.go",
+      "proxy/internal/store/detect_procedures_test.go",
+      "proxy/internal/store/detect_reread_test.go",
+      "proxy/internal/store/detect_sections_test.go",
+      "proxy/internal/store/detect_subagent_spend_test.go",
+      "proxy/internal/store/detect_tool_portfolio_test.go",
+      "proxy/internal/store/learn_attribution_test.go",
+      "proxy/internal/store/learn_digest_test.go",
+      "proxy/internal/store/learn_experiment_test.go",
+      "proxy/internal/store/learn_loops_test.go",
+      "proxy/internal/store/learn_outcomes_test.go",
+      "proxy/internal/store/learn_portfolio_test.go",
+      "proxy/internal/store/learn_pricing_test.go",
+      "proxy/internal/store/learn_reconcile_test.go",
+      "proxy/internal/store/learn_retro_test.go",
+      "proxy/internal/store/learn_savings_test.go",
+      "proxy/internal/store/learn_sidecar_test.go",
+      "proxy/internal/store/learn_simulate_test.go",
+      "proxy/internal/store/learn_v2_p0_test.go",
+      "proxy/internal/store/middleware_test.go",
+      "proxy/internal/store/observe_test.go",
+      "proxy/internal/store/practice_mapping_test.go",
+      "proxy/internal/store/prefix_cache_test.go",
+      "proxy/internal/store/prefix_stability_e2e_test.go",
+      "proxy/internal/store/prefix_stability_openai_e2e_test.go",
+      "proxy/internal/store/report_chart_test.go",
+      "proxy/internal/store/session_usage_test.go",
+      "proxy/internal/store/source_aider_test.go",
+      "proxy/internal/store/source_claude_test.go",
+      "proxy/internal/store/source_codex_test.go",
+      "proxy/internal/store/source_gemini_test.go",
+      "proxy/internal/store/source_opencode_test.go",
+      "proxy/internal/store/stats_report_test.go",
+      "proxy/internal/store/stats_test.go",
+      "proxy/internal/store/store_test.go",
+      "proxy/internal/store/trial_feature_test.go",
+      "proxy/providers/adapter_contract_test.go",
+      "proxy/providers/adapter_raw_usage_test.go",
+      "proxy/providers/adapter_usage_test.go",
+      "proxy/providers/agentpath_test.go",
+      "proxy/providers/anthropic/automatic_cache_test.go",
+      "proxy/providers/anthropic/breakpoint_plan_test.go",
+      "proxy/providers/anthropic/cache_breakpoints_test.go",
+      "proxy/providers/anthropic/cogs_bench_test.go",
+      "proxy/providers/anthropic/content_compress_test.go",
+      "proxy/providers/anthropic/count_tokens_test.go",
+      "proxy/providers/anthropic/fixtures/sonnet_current_model.json",
+      "proxy/providers/anthropic/testdata/count_tokens_expected.json",
+      "proxy/providers/anthropic/testdata/count_tokens_input.json",
+      "proxy/providers/azureopenai/azure_routing_test.go",
+      "proxy/providers/azureopenai/content_compress_test.go",
+      "proxy/providers/azureopenai/fixtures/prompt_cache_retention_current.json",
+      "proxy/providers/bedrock/bedrock_test.go",
+      "proxy/providers/bedrock/cache_points_test.go",
+      "proxy/providers/bedrock/compress_sign_test.go",
+      "proxy/providers/bedrock/count_tokens_test.go",
+      "proxy/providers/bedrock/proxy_preflight_test.go",
+      "proxy/providers/bedrock/testdata/count_tokens_expected.json",
+      "proxy/providers/bedrock/testdata/count_tokens_input.json",
+      "proxy/providers/bedrock/usage_test.go",
+      "proxy/providers/compression_coverage_test.go",
+      "proxy/providers/gemini/content_compress_test.go",
+      "proxy/providers/gemini/count_tokens_test.go",
+      "proxy/providers/gemini/explicit_cache_test.go",
+      "proxy/providers/gemini/gemini_test.go",
+      "proxy/providers/gemini/prefix_stability_test.go",
+      "proxy/providers/gemini/recovery_exempt_test.go",
+      "proxy/providers/gemini/testdata/count_tokens_expected.json",
+      "proxy/providers/gemini/testdata/count_tokens_input.json",
+      "proxy/providers/internal/counttokens/counttokens_test.go",
+      "proxy/providers/jsonsplice/jsonsplice_test.go",
+      "proxy/providers/openai/cache_key_test.go",
+      "proxy/providers/openai/content_compress_test.go",
+      "proxy/providers/openai/count_tokens_test.go",
+      "proxy/providers/openai/output_brevity_test.go",
+      "proxy/providers/openai/prefix_stability_test.go",
+      "proxy/providers/openai/reasoning_effort_test.go",
+      "proxy/providers/openai/recovery_exempt_test.go",
+      "proxy/providers/openai/session_cache_key_test.go",
+      "proxy/providers/openai/stream_usage_test.go",
+      "proxy/providers/openaicompat/content_compress_test.go",
+      "proxy/providers/openaicompat/forward_headers_review_test.go",
+      "proxy/providers/openaicompat/openaicompat_test.go",
+      "proxy/providers/openaicompat/provider_attribution_test.go",
+      "proxy/providers/openaicompat/wire_dialect_test.go",
+      "proxy/providers/openaicompat/wire_dialect_zones_test.go",
+      "proxy/providers/stream_error_test.go",
+      "proxy/providers/toolzone_test.go",
+      "proxy/providers/vertex/adc_test.go",
+      "proxy/providers/vertex/credentials_test.go",
+      "proxy/providers/vertex/proxy_preflight_test.go",
+      "proxy/providers/vertex/usage_test.go",
+      "proxy/providers/vertex/vertex_test.go",
+      "proxy/routing/benchmark_test.go",
+      "proxy/routing/cascade_test.go",
+      "proxy/routing/confidence_test.go",
+      "proxy/routing/routing_test.go",
+      "proxy/routing/session_value_test.go",
+      "rewriter/gate_test.go",
+      "rewriter/gate_windows_test.go",
+      "rewriter/prompt_test.go",
+      "rewriter/rewriter_test.go",
+      "scripts/test-windows-compat.mjs",
+      "shared/platform/awscreds/awscreds_test.go",
+      "shared/platform/awssig/awssig_test.go",
+      "shared/platform/awssig/testdata/botocore-1.43.89.json",
+      "shared/platform/cabundle/cabundle_test.go",
+      "shared/platform/cacheguard/cacheguard_test.go",
+      "shared/platform/catalog/catalog_test.go",
+      "shared/platform/catalog/context_window_test.go",
+      "shared/platform/chhttp/chhttp_test.go",
+      "shared/platform/cost/cost_contract_test.go",
+      "shared/platform/cost/cost_test.go",
+      "shared/platform/env/env_test.go",
+      "shared/platform/envelope/envelope_test.go",
+      "shared/platform/githubapp/githubapp_test.go",
+      "shared/platform/httpx/httpx_test.go",
+      "shared/platform/id/id_test.go",
+      "shared/platform/importers/importers_test.go",
+      "shared/platform/importers/provenance_test.go",
+      "shared/platform/importers/testdata/caveman.jsonl",
+      "shared/platform/importers/testdata/generic.json",
+      "shared/platform/importers/testdata/helicone.json",
+      "shared/platform/importers/testdata/langfuse.json",
+      "shared/platform/importers/testdata/otlp.json",
+      "shared/platform/kms/kms_test.go",
+      "shared/platform/objectstore/compress_test.go",
+      "shared/platform/objectstore/objectstore_test.go",
+      "shared/platform/optimizers/optimizers_test.go",
+      "shared/platform/postgresconfig/postgresconfig_test.go",
+      "shared/platform/proposalrun/proposalrun_test.go",
+      "shared/platform/providerorigin/providerorigin_test.go",
+      "shared/platform/redact/payload_test.go",
+      "shared/platform/redact/redact_test.go",
+      "shared/platform/redact/residual_test.go",
+      "shared/platform/redact/url_error_test.go",
+      "shared/platform/runtimeenv/runtimeenv_test.go",
+      "shared/platform/safety/safety_test.go",
+      "shared/platform/sampling/sampling_test.go",
+      "shared/platform/secretbox/secretbox_test.go",
+      "shared/platform/security/keys_test.go",
+      "shared/platform/ssrf/ssrf_test.go",
+      "shared/platform/ssrf/ssrf_zone_test.go",
+      "shared/platform/telemetry/span_test.go",
+      "shared/platform/tenantkey/tenantkey_test.go",
+      "shared/provider-catalog/catalog_test.go",
+      "shared/provider-catalog/tests/test_validate_catalog.py",
+      "shrink/cmd/caveman-shrink/main_test.go",
+      "shrink/shrink_test.go",
+      "shrink/testdata/catalog.json",
+      "shrink/tests/package.test.mjs",
+      "skills/caveman-explore/tests/skill-file.test.mjs",
+      "skills/caveman-learn/tests/index.js",
+      "skills/caveman-learn/tests/skill-file.test.mjs",
+      "tests/caveman-compress/claude-md-preferences.md",
+      "tests/caveman-compress/claude-md-preferences.original.md",
+      "tests/caveman-compress/claude-md-project.md",
+      "tests/caveman-compress/claude-md-project.original.md",
+      "tests/caveman-compress/mixed-with-code.md",
+      "tests/caveman-compress/mixed-with-code.original.md",
+      "tests/caveman-compress/project-notes.md",
+      "tests/caveman-compress/project-notes.original.md",
+      "tests/caveman-compress/todo-list.md",
+      "tests/caveman-compress/todo-list.original.md",
+      "tests/fixtures/mode-activation/cases.json",
+      "tests/hooks/caveman-config.test.mjs",
+      "tests/hooks/plugin-json-windows-hook-path.test.mjs",
+      "tests/hooks/standalone-install-safety.test.mjs",
+      "tests/installer/agent-registry-compile.test.mjs",
+      "tests/installer/agent-registry-drift.test.mjs",
+      "tests/installer/agent-registry-scope.test.mjs",
+      "tests/installer/binary-installer-platform.test.mjs",
+      "tests/installer/docs-plugin-commands.test.mjs",
+      "tests/installer/e2e.dryrun.test.mjs",
+      "tests/installer/e2e.freshinstall.test.mjs",
+      "tests/installer/gemini-agents.test.mjs",
+      "tests/installer/gemini-install.test.mjs",
+      "tests/installer/hermes.test.mjs",
+      "tests/installer/manifest-version.test.mjs",
+      "tests/installer/mcp-command-args.test.mjs",
+      "tests/installer/mcp-shrink-windows.test.mjs",
+      "tests/installer/mcp-shrink.runtime.test.mjs",
+      "tests/installer/node-floor.test.mjs",
+      "tests/installer/opencode-agent.test.mjs",
+      "tests/installer/opencode.test.mjs",
+      "tests/installer/owned-install.test.mjs",
+      "tests/installer/package-bin.test.mjs",
+      "tests/installer/platform-paths.test.mjs",
+      "tests/installer/portable-process.test.mjs",
+      "tests/installer/provider-skills-integration.test.mjs",
+      "tests/installer/provider-skills.test.mjs",
+      "tests/installer/ps1-pipe.test.mjs",
+      "tests/installer/release-binaries.test.mjs",
+      "tests/installer/shim-security.test.mjs",
+      "tests/installer/skills-global-install.test.mjs",
+      "tests/installer/slash-commands.test.mjs",
+      "tests/installer/uninstall-safety.test.mjs",
+      "tests/installer/unit.argv.test.mjs",
+      "tests/installer/unit.settings.test.mjs",
+      "tests/installer/unit.wedge-installer.test.mjs",
+      "tests/installer/windows-source-install.test.mjs",
+      "tests/manual/session-mode-smoke.sh",
+      "tests/test_benchmark_contract.py",
+      "tests/test_call_claude_timeout.py",
+      "tests/test_cavecrew_model_overrides.js",
+      "tests/test_caveman_init.js",
+      "tests/test_caveman_parse.js",
+      "tests/test_caveman_stats.js",
+      "tests/test_caveman_stats_usage_review.js",
+      "tests/test_compress_cli.py",
+      "tests/test_compress_concurrency.py",
+      "tests/test_compress_safety.py",
+      "tests/test_detect.py",
+      "tests/test_hook_language_rule.js",
+      "tests/test_hook_missing_sibling.js",
+      "tests/test_hook_stdin_lifecycle.js",
+      "tests/test_hooks.py",
+      "tests/test_mcp_shrink.js",
+      "tests/test_mode_activation_corpus.js",
+      "tests/test_mode_tracker.py",
+      "tests/test_mode_tracker_ruleset.js",
+      "tests/test_mode_tracker_stdin.js",
+      "tests/test_mode_tracker_stdout.js",
+      "tests/test_repo_local_config.js",
+      "tests/test_symlink_flag.js",
+      "tests/test_validate_inline.py",
+      "tests/verify_repo.py"
+    ]
+  }
+}
