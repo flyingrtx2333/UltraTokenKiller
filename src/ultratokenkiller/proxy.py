@@ -8,7 +8,7 @@ import asyncio
 import copy
 import uuid
 import hashlib
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, suppress
 
 import httpx
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
@@ -267,8 +267,14 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
         finally:
             for task in tasks:
                 task.cancel()
-            await asyncio.gather(*tasks, return_exceptions=True)
-            await remote.close()
+            # A client disconnect can cancel the enclosing ASGI task before
+            # the receive loop observes its disconnect frame (reproducible
+            # with Starlette's TestClient on macOS).  Child cleanup must not
+            # leak that cancellation back through the WebSocket context.
+            with suppress(asyncio.CancelledError):
+                await asyncio.gather(*tasks, return_exceptions=True)
+            with suppress(asyncio.CancelledError, ConnectionClosed):
+                await remote.close()
             try:
                 await socket.close(code=remote.close_code if remote.close_code in {1000, 1001, 1008, 1011, 1013} else 1011)
             except (RuntimeError, WebSocketDisconnect):
