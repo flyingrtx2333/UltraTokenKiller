@@ -1,0 +1,140 @@
+"""Owned process trees and bounded, disk-free stdout capture."""
+from __future__ import annotations
+
+import os
+import queue
+import signal
+import subprocess
+import sys
+import threading
+
+
+class WindowsJob:
+    def __init__(self):
+        import ctypes
+        from ctypes import wintypes
+        self.ctypes = ctypes
+        self.kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+        self.kernel.CreateJobObjectW.restype = wintypes.HANDLE
+        self.kernel.CreateJobObjectW.argtypes = [ctypes.c_void_p, wintypes.LPCWSTR]
+        self.kernel.SetInformationJobObject.argtypes = [wintypes.HANDLE, ctypes.c_int, ctypes.c_void_p, wintypes.DWORD]
+        self.kernel.AssignProcessToJobObject.argtypes = [wintypes.HANDLE, wintypes.HANDLE]
+        self.kernel.CloseHandle.argtypes = [wintypes.HANDLE]
+        self.kernel.TerminateJobObject.argtypes = [wintypes.HANDLE, wintypes.UINT]
+        class Basic(ctypes.Structure):
+            _fields_ = [("process_time", ctypes.c_int64), ("job_time", ctypes.c_int64), ("flags", wintypes.DWORD),
+                        ("min_working", ctypes.c_size_t), ("max_working", ctypes.c_size_t), ("active", wintypes.DWORD),
+                        ("affinity", ctypes.c_size_t), ("priority", wintypes.DWORD), ("scheduling", wintypes.DWORD)]
+        class IO(ctypes.Structure):
+            _fields_ = [(name, ctypes.c_uint64) for name in ("read_ops", "write_ops", "other_ops", "read_bytes", "write_bytes", "other_bytes")]
+        class Extended(ctypes.Structure):
+            _fields_ = [("basic", Basic), ("io", IO), ("process_memory", ctypes.c_size_t), ("job_memory", ctypes.c_size_t),
+                        ("peak_process", ctypes.c_size_t), ("peak_job", ctypes.c_size_t)]
+        self.handle = self.kernel.CreateJobObjectW(None, None)
+        if not self.handle:
+            raise ctypes.WinError(ctypes.get_last_error())
+        info = Extended()
+        info.basic.flags = 0x2000  # JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE
+        if not self.kernel.SetInformationJobObject(self.handle, 9, ctypes.byref(info), ctypes.sizeof(info)):
+            self.close()
+            raise ctypes.WinError(ctypes.get_last_error())
+
+    def attach_and_resume(self, process):
+        from ctypes import wintypes
+        if not self.kernel.AssignProcessToJobObject(self.handle, wintypes.HANDLE(int(process._handle))):
+            raise self.ctypes.WinError(self.ctypes.get_last_error())
+        resume = self.ctypes.WinDLL("ntdll").NtResumeProcess
+        resume.argtypes = [wintypes.HANDLE]
+        resume.restype = self.ctypes.c_long
+        if resume(wintypes.HANDLE(int(process._handle))) != 0:
+            raise OSError("Could not resume owned command process")
+
+    def terminate(self):
+        self.kernel.TerminateJobObject(self.handle, 130)
+
+    def close(self):
+        if self.handle:
+            self.kernel.CloseHandle(self.handle)
+            self.handle = None
+
+
+def execute(command, *, capture: bool, write, memory_limit=8*1024*1024):
+    """Return exit status, captured bytes (or None if streamed), and fallback reason."""
+    if not capture:
+        return subprocess.call(command), None, "passthrough"
+    job = WindowsJob() if sys.platform == "win32" else None
+    process = None
+    reader = None
+    try:
+        process = subprocess.Popen(command, stdout=subprocess.PIPE if capture else None,
+                                   creationflags=0x00000004 if job else 0, start_new_session=job is None)
+        if job:
+            job.attach_and_resume(process)
+        if not capture:
+            return process.wait(), None, "passthrough"
+        messages = queue.Queue(maxsize=4)
+        stop = threading.Event()
+        def enqueue(item):
+            while not stop.is_set():
+                try:
+                    messages.put(item, timeout=.1)
+                    return
+                except queue.Full:
+                    continue
+        def read():
+            try:
+                while chunk := process.stdout.read1(65536):
+                    enqueue(chunk)
+            finally:
+                enqueue(None)
+        reader = threading.Thread(target=read, daemon=True)
+        reader.start()
+        content = bytearray()
+        streamed = False
+        while True:
+            try:
+                part = messages.get(timeout=.1)
+            except queue.Empty:
+                continue
+            if part is None:
+                break
+            if streamed:
+                write(part)
+            elif len(content)+len(part) > memory_limit:
+                write(bytes(content))
+                content.clear()
+                write(part)
+                streamed = True
+            else:
+                content.extend(part)
+        code = process.wait()
+        return code, None if streamed else bytes(content), "memory_limit_passthrough" if streamed else None
+    except BaseException:
+        if process is not None:
+            if job:
+                job.terminate()
+                if process.poll() is None:
+                    process.kill()
+            else:
+                try:
+                    os.killpg(process.pid, signal.SIGTERM)
+                except ProcessLookupError:
+                    pass
+            try:
+                process.wait(timeout=3)
+            except subprocess.TimeoutExpired:
+                if not job:
+                    try:
+                        os.killpg(process.pid, signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
+                process.wait()
+        raise
+    finally:
+        if reader:
+            stop.set()
+            reader.join(timeout=1)
+        if process and process.stdout:
+            process.stdout.close()
+        if job:
+            job.close()

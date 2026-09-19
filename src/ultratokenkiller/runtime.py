@@ -14,7 +14,6 @@ import httpx
 
 from .config import Settings, default_home
 from .engines import compress_tool_output, estimate_tokens, supported_command
-import tempfile
 from .store import Store
 
 
@@ -118,49 +117,49 @@ def restart_managed_headrooms(settings: Settings, home: Path | None = None) -> N
 
 
 def run_command(command: list[str], store: Store) -> int:
+    import hashlib
+    import uuid
+    from .broker import BrokerClient
+    from .processes import execute
+    from .tool_filters import command_filter
     if not command:
         raise ValueError("A command is required after --")
+    settings = Settings.load()
     started = time.perf_counter()
-    optimized = supported_command(command)
+    kind = command_filter(command) if settings.tools_enabled else None
     saved = 0
-    if not optimized:
-        code = subprocess.call(command)
-    else:
-        # Disk-backed capture bounds memory. stderr and stdin retain original handles.
-        with tempfile.TemporaryFile() as output:
-            proc = subprocess.Popen(command, stdout=output)
-            try:
-                code = proc.wait()
-            except KeyboardInterrupt:
-                proc.terminate()
-                try:
-                    proc.wait(timeout=5)
-                except subprocess.TimeoutExpired:
-                    proc.kill()
-                    proc.wait()
-                raise
-            size = output.tell()
-            output.seek(0)
-            if size <= 8 * 1024 * 1024:
-                raw = output.read()
-                try:
-                    original = raw.decode("utf-8")
-                    try:
-                        compressed = compress_tool_output(command, original) if code == 0 else original
-                    except Exception:
-                        compressed = original
-                    rendered = compressed.encode("utf-8")
-                    saved = max(0, estimate_tokens(original)-estimate_tokens(compressed))
-                except UnicodeDecodeError:
-                    rendered = raw
-                _write_stdout(rendered)
+    metadata = {"command": Path(command[0]).name, "optimized": False, "engine": "utk-native",
+                "estimator": "utf8_bytes_div_4", "filter": kind, "execution_id": uuid.uuid4().hex}
+    if os.environ.get("UTK_SESSION_ID"):
+        metadata["session_id"] = hashlib.sha256(os.environ["UTK_SESSION_ID"].encode()).hexdigest()
+    code, raw, fallback = execute(command, capture=bool(kind), write=_write_stdout)
+    if raw is not None:
+        rendered = raw
+        try:
+            original = raw.decode("utf-8")
+            session = os.environ.get("UTK_SESSION_ID", "")
+            if session:
+                hint = kind if kind in {"diff", "search", "log"} else "tool:"+kind
+                result = BrokerClient().compress(original, session, hint=hint)
+                rendered = result["content"].encode("utf-8")
+                saved = result.get("saved_tokens", 0)
+                metadata["optimized"] = rendered != raw
+                metadata["recovery_id"] = result.get("recovery_id")
+                fallback = result.get("fallback")
+            elif kind == "git-status":
+                # Removing Git's fixed instructional boilerplate remains available without recovery.
+                rendered = compress_tool_output(command, original).encode("utf-8")
+                saved = max(0, estimate_tokens(original)-estimate_tokens(rendered.decode("utf-8")))
+                metadata["optimized"] = rendered != raw
             else:
-                while chunk := output.read(65536):
-                    _write_stdout(chunk)
+                fallback = "missing_session"
+        except (UnicodeDecodeError, ValueError, OSError):
+            rendered = raw
+            fallback = "encoding_or_compression_error"
+        _write_stdout(rendered)
+    metadata["fallback"] = fallback
     store.add(kind="tool", client="cli", success=code == 0,
-              duration_ms=int((time.perf_counter()-started)*1000), saved_tokens=saved,
-              metadata={"command": Path(command[0]).name, "optimized": optimized,
-                        "engine": "utk-native", "estimator": "utf8_bytes_div_4"})
+              duration_ms=int((time.perf_counter()-started)*1000), saved_tokens=saved, metadata=metadata)
     return code
 
 

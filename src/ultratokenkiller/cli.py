@@ -22,6 +22,50 @@ from .store import Store
 app = typer.Typer(help="UltraTokenKiller 本地 Token 优化控制台", no_args_is_help=True)
 
 
+@app.command()
+def capabilities():
+    """显示固定对标基线和真实验证状态。"""
+    import json
+    from .benchmark import capability_report
+    typer.echo(json.dumps(capability_report(), ensure_ascii=False, indent=2))
+
+
+@app.command("assets")
+def assets(action: str = typer.Argument("status")):
+    """校验或安装锁定的本地推理模型。"""
+    from .assets import install_assets, verify_assets
+    if action not in {"status", "install"}:
+        raise typer.BadParameter("action 必须是 status 或 install")
+    ready = install_assets() if action == "install" else verify_assets()
+    typer.echo("本地文本模型：已校验" if ready else "本地文本模型：未就绪")
+    if not ready:
+        raise typer.Exit(2)
+
+
+@app.command()
+def benchmark(mode: str = typer.Option("native", help="passthrough、prototype、native、upstream"),
+              output: Path | None = typer.Option(None), live: bool = typer.Option(False),
+              max_requests: int | None = typer.Option(None)):
+    """离线对照评测；从不隐式调用模型。"""
+    import json
+    from .benchmark import run_benchmark
+    if live:
+        if max_requests is None or max_requests <= 0:
+            raise typer.BadParameter("真实评测必须设置正数 --max-requests")
+        raise typer.BadParameter("真实模型评测运行器尚未验收；没有提交任何请求")
+    try:
+        report = run_benchmark(mode)
+    except ValueError as error:
+        raise typer.BadParameter(str(error)) from error
+    rendered = json.dumps(report, ensure_ascii=False, indent=2)
+    if output:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(rendered, encoding="utf-8")
+    typer.echo(rendered)
+    if report["status"] != "completed":
+        raise typer.Exit(2)
+
+
 def _settings() -> tuple[Path, Settings]:
     root = default_home()
     return root, Settings.load(root)
@@ -182,7 +226,7 @@ def profile(name: str = typer.Argument(..., help="safe、aggressive 或 off"), c
     root, settings = _settings()
     if name not in {"safe", "aggressive", "off"}:
         raise typer.BadParameter("未知档位")
-    if caveman and caveman not in {"lite", "full", "ultra", "off"}:
+    if caveman and caveman not in {"lite", "full", "ultra", "off", "wenyan-lite", "wenyan-full", "wenyan-ultra"}:
         raise typer.BadParameter("未知 回答精简 档位")
     managed_values = [bool(item.get("managed", True)) for item in settings.clients.values()]
     profile_controlled = all(managed_values) if managed_values else settings.headroom_managed
