@@ -42,7 +42,9 @@ def capabilities(
     )
     typer.echo(
         f"命令契约已验证 {report['verified_command_contracts']} / 已审阅 {report['reviewed_command_contracts']}；"
-        f"发现枚举 {report['discovered_command_variants']}（不作为覆盖率分母）"
+        f"RTK 分母 {report['command_inventory_coverage_denominator']}："
+        f"已映射 {report['command_inventory_status_counts'].get('contract_mapped', 0)}，"
+        f"待验证 {report['command_inventory_status_counts'].get('unverified', 0)}"
     )
     verification = report["verification"]
     typer.echo(

@@ -77,7 +77,7 @@ class Dashboard(App):
             reports = f"压缩对照 {'已有' if compression_report.is_success else '未运行'} / 回答评测 {'已有' if response_report.is_success else '未运行'}"
             self.query_one("#readiness", Label).update(
                 f"能力 {capabilities['total_core_capabilities']} 项：对标 {summary['upstream_parity_passed']}，真实 {summary['real_client_passed']}，离线 {summary['offline_passed']}，待验证 {summary['implemented_unverified']}，未实现 {summary['not_implemented']} · "
-                f"源码绑定 {capabilities['verification']['source_bound_capabilities']} · 命令契约 {capabilities['verified_command_contracts']}/{capabilities['reviewed_command_contracts']} / 发现 {capabilities['discovered_command_variants']}（发现数不作分母）· {reports} · 原文内存 {recovery['used_bytes'] / 1048576:.1f}/{recovery['capacity_bytes'] / 1048576:.0f} MiB"
+                f"源码 {capabilities['verification']['source_bound_capabilities']} · 契约 {capabilities['verified_command_contracts']}/{capabilities['reviewed_command_contracts']} · RTK {capabilities['command_inventory_coverage_denominator']}（映射 {capabilities['command_inventory_status_counts'].get('contract_mapped', 0)} / 待验证 {capabilities['command_inventory_status_counts'].get('unverified', 0)}） · {reports} · 原文 {recovery['used_bytes'] / 1048576:.1f}/{recovery['capacity_bytes'] / 1048576:.0f} MiB"
             )
             table = self.query_one("#events", DataTable)
             table.clear()

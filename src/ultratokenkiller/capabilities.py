@@ -137,16 +137,21 @@ def capability_report(root: Path | None = None) -> dict:
         rendered_contracts.append(entry)
     reviewed = [item for item in rendered_contracts if item.get("reviewed")]
     parity = bool(rendered) and all(item["status"] == "upstream_parity_passed" for item in rendered)
+    inventory_core = [item for item in discovered if item.get("disposition") == "core"]
+    inventory_status_counts = Counter(item.get("status", "unverified") for item in inventory_core)
     return {
         "schema_version": 3,
         "baselines": {key: value["commit"] for key, value in lock.items()},
         "summary": {state: counts.get(state, 0) for state in STATES},
         "total_core_capabilities": len(rendered),
         "discovered_command_variants": len(discovered),
+        "command_inventory_coverage_denominator": len(inventory_core),
+        "command_inventory_status_counts": dict(sorted(inventory_status_counts.items())),
+        "command_inventory_exclusions": len(discovered) - len(inventory_core),
         "reviewed_command_contracts": len(reviewed),
         "verified_command_contracts": sum(item["verification_current"] for item in rendered_contracts),
         "command_contract_coverage_denominator": None,
-        "command_inventory_note": "Discovery enums and reviewed behavior contracts have different granularity; no percentage is claimed",
+        "command_inventory_note": "All frozen RTK variants are in the coverage denominator; only evidence-bound reviewed contracts count as verified",
         "upstream_comparisons_missing": sum(item["status"] != "upstream_parity_passed" for item in rendered),
         "command_inventory": discovered,
         "command_contracts": rendered_contracts,

@@ -102,7 +102,7 @@ python scripts/generate-rtk-reference.py --checkout path/to/rtk --binary path/to
 
 当前 8 个捕获输出样例均保留关键事实，UTK 压缩率达到对应固定 RTK 的 95.5% 至 157.1%。这只是已验证命令族证据，不代表已覆盖全部 RTK 清单，详见 [固定 RTK 捕获输出对照](docs/upstream-rtk-reference-2026-09-20.md)。
 
-能力状态的源码绑定和自动降级规则见 [能力证据绑定](docs/capability-evidence-2026-09-20.md)。当前 32/36 个核心能力及 22/22 个已审阅命令契约通过离线套件并绑定当前源码；211 个固定 RTK 发现项仍不是覆盖率分母。剩余 4 项是 Caveman 成对质量、固定上游四路对照及 Hermes CLI/gateway 真实验收，不能以透传或测试文件存在冒充通过。
+能力状态的源码绑定和自动降级规则见 [能力证据绑定](docs/capability-evidence-2026-09-20.md)。当前 32/36 个核心能力及 22/22 个已审阅命令契约通过离线套件并绑定当前源码；211 个固定 RTK 命令变体已全部纳入覆盖分母；55 项已映射现有审阅契约，156 项仍待逐项验证。分母来源、命令族统计和剩余证据要求见 [RTK 命令覆盖分母](docs/rtk-command-denominator-2026-09-20.md)。剩余 4 项是 Caveman 成对质量、固定上游四路对照及 Hermes CLI/gateway 真实验收，不能以透传或测试文件存在冒充通过。
 
 Caveman 固定策略契约可离线复现，不调用模型：
 

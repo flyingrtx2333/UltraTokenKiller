@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-20T12:31:33.112257+00:00",
+  "generated_at": "2026-09-20T13:36:27.456613+00:00",
   "suite_passed": true,
   "test_command": [
     "C:\\Users\\17489\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
@@ -186,7 +186,7 @@
       "upstream_source_fingerprint": null
     },
     "dashboard.metrics": {
-      "source_fingerprint": "5089f3a1a683c82de129088c38766f99df838e05771af9c826a93857301a7fd9",
+      "source_fingerprint": "e5b8177fe1d1145cbd497f7bf186a170a53aa40b93476b1f335732177527a4be",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
