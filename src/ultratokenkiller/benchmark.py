@@ -44,7 +44,7 @@ def fixture_options(name):
 def _reference_outputs(reference, cases, baselines):
     path = Path(reference or os.environ.get("UTK_REFERENCE_RESULTS", ""))
     if not path.is_file():
-        return None, "Set --reference to a validated fixed-baseline result file"
+        return None, "Set --reference to a validated fixed-baseline result file", None
     data = json.loads(path.read_text(encoding="utf-8"))
     if data.get("baselines") != baselines:
         raise ValueError("Reference result baseline does not match the frozen commits")
@@ -56,7 +56,12 @@ def _reference_outputs(reference, cases, baselines):
         raise ValueError("Reference fixtures differ from this benchmark revision")
     if not all(isinstance(value, str) for value in outputs.values()):
         raise ValueError("Reference outputs must be text")
-    return outputs, None
+    metadata = {
+        "suite_scope": data.get("suite_scope", "legacy-unspecified"),
+        "coverage": data.get("coverage"),
+        "generator": data.get("generator", "legacy-manual"),
+    }
+    return outputs, None, metadata
 
 
 def run_benchmark(mode="native", *, reference=None, model=None):
@@ -66,8 +71,9 @@ def run_benchmark(mode="native", *, reference=None, model=None):
     lock = json.loads(files("ultratokenkiller").joinpath("data/upstream-lock.json").read_text(encoding="utf-8"))
     baselines = {key: value["commit"] for key, value in lock.items()}
     reference_outputs = None
+    reference_metadata = None
     if mode == "upstream":
-        reference_outputs, reason = _reference_outputs(reference, cases, baselines)
+        reference_outputs, reason, reference_metadata = _reference_outputs(reference, cases, baselines)
         if reference_outputs is None:
             return {"schema_version": 2, "mode": mode, "status": "unavailable",
                     "reason": reason, "baselines": baselines, "cases": [], "live_model_calls": 0,
@@ -103,7 +109,8 @@ def run_benchmark(mode="native", *, reference=None, model=None):
                         "engine": metadata, "estimator": before_count.method,
                         "exact_for_model": before_count.exact_for_model})
     return {"schema_version": 2, "mode": mode, "status": "completed", "cases": reports,
-            "baselines": baselines, "model": model, "live_model_calls": 0, "parity_certified": False}
+            "baselines": baselines, "model": model, "live_model_calls": 0,
+            "parity_certified": False, "reference": reference_metadata}
 
 
 def save_report(report: dict, kind="compression", home=None) -> Path:

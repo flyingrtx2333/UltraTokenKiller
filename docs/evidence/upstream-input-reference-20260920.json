@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "generator": "utk-fixed-upstream-reference",
+  "generated_at": "2026-09-20T00:47:25.556608Z",
+  "suite_scope": "input-compression",
+  "baselines": {
+    "caveman": "542442bab314973709f95b85b1ac0b3f6f5b5dc6",
+    "headroom": "bc21c9370793f7e4aa94ac4c5d9a67a8d2dd0df9",
+    "rtk": "0924356b4caba4989607227b7c8824d3d8098719"
+  },
+  "fixture_sha256": {
+    "json-outlier": "300e9c22ab8dd4b6b7ab416b2fc91f275b57b446f43ef9e5f794e6e2eff383ec",
+    "log-failure": "e0b175e28024c09c96a11906899e171c840b172bcf39c179294a6e43fa69eb28",
+    "python-signature": "6c886e68eadfc06ee5083382650b7b39cbaac76e651f5ffbfc1a1459d446780f",
+    "search-location": "accbf7f37d6b448fef2409ff1d628319f06c2ef0d663386aec498fff5a6697b4",
+    "prose-negation": "c020e254b382123bed2c2d2394c14c8a10643bbccff5768d928a7e9507d4d095",
+    "patch-change": "ba58f4c608e10a72f3f2ff02370475f4abe8833288851c7aa2eb7a57213ec750",
+    "unicode-log": "496fb4a6fae281f4cb2025a984a84e1acd29a176966f177e554cae68773ae391",
+    "unknown-format": "252279908fb536718349e1f921f892c2ed5e2d64f96171e0e95d5488f5818bf7",
+    "json-minority": "5ef90413b772e69cf7ca88342e669250716719a38be00f6bd2eb3f6e480829a8",
+    "log-trace": "e4bd8b5d9154d6ff28ea93494c3fa77cd6bb5f3ad9e0593bdf5399852f1aca1e",
+    "typescript-signature": "d63ba9eb61a088c7a84400c9d05a54bad46c5d249561bd85ed662bc269232b7b",
+    "long-identifier": "eb2714530bb9421fcadf4d62c4bc8417091714ef065890476a6491922ed36fd1"
+  },
+  "outputs": {
+    "json-outlier": "\"[100]{id:int,value:int}\\n0,10\\n1,10\\n2,10\\n3,10\\n4,10\\n5,10\\n6,10\\n7,10\\n8,10\\n9,10\\n10,10\\n11,10\\n12,10\\n13,10\\n14,10\\n15,10\\n16,10\\n17,10\\n18,10\\n19,10\\n20,10\\n21,10\\n22,10\\n23,10\\n24,10\\n25,10\\n26,10\\n27,10\\n28,10\\n29,10\\n30,10\\n31,10\\n32,10\\n33,10\\n34,10\\n35,10\\n36,10\\n37,10\\n38,10\\n39,10\\n40,10\\n41,10\\n42,10\\n43,10\\n44,10\\n45,10\\n46,10\\n47,10\\n48,10\\n49,10\\n50,9000\\n51,10\\n52,10\\n53,10\\n54,10\\n55,10\\n56,10\\n57,10\\n58,10\\n59,10\\n60,10\\n61,10\\n62,10\\n63,10\\n64,10\\n65,10\\n66,10\\n67,10\\n68,10\\n69,10\\n70,10\\n71,10\\n72,10\\n73,10\\n74,10\\n75,10\\n76,10\\n77,10\\n78,10\\n79,10\\n80,10\\n81,10\\n82,10\\n83,10\\n84,10\\n85,10\\n86,10\\n87,10\\n88,10\\n89,10\\n90,10\\n91,10\\n92,10\\n93,10\\n94,10\\n95,10\\n96,10\\n97,10\\n98,10\\n99,10\\n\"",
+    "log-failure": "INFO processing request 47\nINFO processing request 48\nINFO processing request 49\nERROR do not delete record 778\nINFO processing request 51\nINFO processing request 52\nINFO processing request 53\n[93 lines omitted: 1 ERROR, 99 INFO]\n[100 lines compressed to 7. Retrieve more: hash=78a9829f03197060268215e1]",
+    "python-signature": "def total(value: int) -> int:\n    value += 1\n... (repeated 100 times)\n    return value\n",
+    "search-location": "src/very/long/path/source.py\n0:symbol_0\n1:symbol_1\n2:symbol_2\n3:symbol_3\n4:symbol_4\n5:symbol_5\n6:symbol_6\n7:symbol_7\n8:symbol_8\n9:symbol_9\n10:symbol_10\n11:symbol_11\n12:symbol_12\n13:symbol_13\n14:symbol_14\n15:symbol_15\n16:symbol_16\n17:symbol_17\n18:symbol_18\n19:symbol_19\n20:symbol_20\n21:symbol_21\n22:symbol_22\n23:symbol_23\n24:symbol_24\n25:symbol_25\n26:symbol_26\n27:symbol_27\n28:symbol_28\n29:symbol_29\n30:symbol_30\n31:symbol_31\n32:symbol_32\n33:symbol_33\n34:symbol_34\n35:symbol_35\n36:symbol_36\n37:symbol_37\n38:symbol_38\n39:symbol_39\n40:symbol_40\n41:symbol_41\n42:symbol_42\n43:symbol_43\n44:symbol_44\n45:symbol_45\n46:symbol_46\n47:symbol_47\n48:symbol_48\n49:symbol_49\n50:symbol_50\n51:symbol_51\n52:symbol_52\n53:symbol_53\n54:symbol_54\n55:symbol_55\n56:symbol_56\n57:symbol_57\n58:symbol_58\n59:symbol_59\n60:symbol_60\n61:symbol_61\n62:symbol_62\n63:symbol_63\n64:symbol_64\n65:symbol_65\n66:symbol_66\n67:symbol_67\n68:symbol_68\n69:symbol_69\n70:symbol_70\n71:symbol_71\n72:symbol_72\n73:symbol_73\n74:symbol_74\n75:symbol_75\n76:symbol_76\n77:symbol_77\n78:symbol_78\n79:symbol_79\n80:symbol_80\n81:symbol_81\n82:symbol_82\n83:symbol_83\n84:symbol_84\n85:symbol_85\n86:symbol_86\n87:symbol_87\n88:symbol_88\n89:symbol_89\n90:symbol_90\n91:symbol_91\n92:symbol_92\n93:symbol_93\n94:symbol_94\n95:symbol_95\n96:symbol_96\n97:symbol_97\n98:symbol_98\n99:symbol_99",
+    "prose-negation": "Do not delete /data/patient.json. The limit is 73 requests.\n... (repeated 50 times)\n",
+    "patch-change": "diff --git a/a.py b/a.py\n--- a/a.py\n+++ b/a.py\n@@ -1,101 +1,101 @@\n context\n... (repeated 100 times)\n-unsafe\n+safe\n",
+    "unicode-log": "INFO 请求 0 完成\nINFO 请求 1 完成\nINFO 请求 2 完成\nINFO 请求 3 完成\nINFO 请求 4 完成\nINFO 请求 5 完成\nINFO 请求 6 完成\nINFO 请求 7 完成\nINFO 请求 8 完成\nINFO 请求 9 完成\nINFO 请求 10 完成\nINFO 请求 11 完成\nINFO 请求 12 完成\nINFO 请求 13 完成\nINFO 请求 14 完成\nINFO 请求 15 完成\nINFO 请求 16 完成\nINFO 请求 17 完成\nINFO 请求 18 完成\nINFO 请求 19 完成\nINFO 请求 20 完成\nINFO 请求 21 完成\nINFO 请求 22 完成\nINFO 请求 23 完成\nINFO 请求 24 完成\nINFO 请求 25 完成\nINFO 请求 26 完成\nINFO 请求 27 完成\nINFO 请求 28 完成\nINFO 请求 29 完成\nINFO 请求 30 完成\nINFO 请求 31 完成\nINFO 请求 32 完成\nINFO 请求 33 完成\nINFO 请求 34 完成\nINFO 请求 35 完成\nINFO 请求 36 完成\nINFO 请求 37 完成\nINFO 请求 38 完成\nINFO 请求 39 完成\nINFO 请求 40 完成\nINFO 请求 41 完成\nINFO 请求 42 完成\nINFO 请求 43 完成\nINFO 请求 44 完成\nINFO 请求 45 完成\nINFO 请求 46 完成\nINFO 请求 47 完成\nINFO 请求 48 完成\nINFO 请求 49 完成\nINFO 请求 50 完成\nINFO 请求 51 完成\nINFO 请求 52 完成\nINFO 请求 53 完成\nINFO 请求 54 完成\nINFO 请求 55 完成\nINFO 请求 56 完成\nINFO 请求 57 完成\nINFO 请求 58 完成\nINFO 请求 59 完成\nINFO 请求 60 完成\nINFO 请求 61 完成\nINFO 请求 62 完成\nINFO 请求 63 完成\nINFO 请求 64 完成\nINFO 请求 65 完成\nINFO 请求 66 完成\nINFO 请求 67 完成\nINFO 请求 68 完成\nINFO 请求 69 完成\nINFO 请求 70 完成\nINFO 请求 71 完成\nINFO 请求 72 完成\nINFO 请求 73 完成\nINFO 请求 74 完成\nINFO 请求 75 完成\nINFO 请求 76 完成\nINFO 请求 77 完成\nINFO 请求 78 完成\nINFO 请求 79 完成\nERROR 不得删除 病历-73.json",
+    "unknown-format": "opaque record | preserve=all | code=73\n... (repeated 4 times)\n",
+    "json-minority": "\"[61]{enabled:bool,state:string}\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\ntrue,ready\\nfalse,blocked\\n\"",
+    "log-trace": "INFO ok\n... (repeated 40 times)\nTraceback (most recent call last):\n  File \"worker.py\", line 73\nValueError: must not retry\nINFO ok\n... (repeated 40 times)\n",
+    "typescript-signature": "export async function calculate(value: number): Promise<number> {\n  value += 1;\n... (repeated 100 times)\n  return value;\n}\n",
+    "long-identifier": "Do not rename CustomerAuthorizationRevocationHandler_v2. Limit: 128 MiB.\n... (repeated 40 times)\n"
+  },
+  "engines": {
+    "json-outlier": {
+      "component": "headroom",
+      "tokens_before": 1209,
+      "tokens_after": 418,
+      "transforms": [
+        "router:smart_crusher:0.23"
+      ]
+    },
+    "log-failure": {
+      "component": "headroom",
+      "tokens_before": 608,
+      "tokens_after": 90,
+      "transforms": [
+        "router:log:0.11"
+      ]
+    },
+    "python-signature": {
+      "component": "headroom",
+      "tokens_before": 620,
+      "tokens_after": 34,
+      "transforms": [
+        "router:text:0.04"
+      ]
+    },
+    "search-location": {
+      "component": "headroom",
+      "tokens_before": 1506,
+      "tokens_after": 615,
+      "transforms": [
+        "router:search:0.41"
+      ]
+    },
+    "prose-negation": {
+      "component": "headroom",
+      "tokens_before": 807,
+      "tokens_after": 31,
+      "transforms": [
+        "router:text:0.03"
+      ]
+    },
+    "patch-change": {
+      "component": "headroom",
+      "tokens_before": 244,
+      "tokens_after": 54,
+      "transforms": [
+        "router:diff:0.20"
+      ]
+    },
+    "unicode-log": {
+      "component": "headroom",
+      "tokens_before": 496,
+      "tokens_after": 496,
+      "transforms": [
+        "router:noop"
+      ]
+    },
+    "unknown-format": {
+      "component": "headroom",
+      "tokens_before": 51,
+      "tokens_after": 26,
+      "transforms": [
+        "router:tabular:0.43"
+      ]
+    },
+    "json-minority": {
+      "component": "headroom",
+      "tokens_before": 679,
+      "tokens_after": 262,
+      "transforms": [
+        "router:smart_crusher:0.27"
+      ]
+    },
+    "log-trace": {
+      "component": "headroom",
+      "tokens_before": 272,
+      "tokens_after": 54,
+      "transforms": [
+        "router:log:0.18"
+      ]
+    },
+    "typescript-signature": {
+      "component": "headroom",
+      "tokens_before": 624,
+      "tokens_after": 38,
+      "transforms": [
+        "router:text:0.05"
+      ]
+    },
+    "long-identifier": {
+      "component": "headroom",
+      "tokens_before": 727,
+      "tokens_after": 33,
+      "transforms": [
+        "router:text:0.04"
+      ]
+    }
+  },
+  "runtime": {
+    "headroom": {
+      "version": "0.37.0",
+      "python_module_sha256": "4ea23119219bb4d881d1359a540b5ab4f848a582e3b3404f2b7f27dbb5275781",
+      "native_module_sha256": "e6e1341fbd06ddd2fb70762839fdb8e0cf884062146eb484f96dd8f54f99ed1e"
+    }
+  },
+  "coverage": {
+    "headroom": 12,
+    "rtk": 0,
+    "caveman": 0
+  },
+  "live_model_calls": 0,
+  "notes": [
+    "RTK captured-output parity is not part of this input fixture suite.",
+    "Caveman paired-response parity is not part of this input fixture suite.",
+    "Headroom local ML compression is disabled; deterministic native transforms remain enabled."
+  ]
+}
