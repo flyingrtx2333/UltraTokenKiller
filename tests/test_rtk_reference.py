@@ -25,4 +25,6 @@ def test_comparison_uses_captured_output_without_executing_commands(tmp_path: Pa
     assert report["case_count"] == len(CASES)
     assert report["live_model_calls"] == 0
     assert all(item["required_facts_upstream"] for item in report["cases"])
-    assert all(item["exit_code"] != 0 for item in report["cases"])
+    assert {item["case"]: item["exit_code"] for item in report["cases"]} == {
+        case["id"]: case["exit_code"] for case in CASES
+    }

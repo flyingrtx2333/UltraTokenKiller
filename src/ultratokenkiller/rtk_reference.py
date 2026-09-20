@@ -43,17 +43,112 @@ CASES = (
         "exit_code": 1,
         "required": ["RtkInducedFailTest", "expected", "BUILD FAILURE"],
     },
+    {
+        "id": "bun-test-failure",
+        "fixture": "bun_test_failures_raw.txt",
+        "program": "bun",
+        "argv": ["bun", "test"],
+        "kind": "bun-test",
+        "exit_code": 1,
+        "required": ["t2 fails", "Expected: 3", "Received: 2"],
+    },
+    {
+        "id": "deno-test-failure",
+        "fixture": "deno_test_failures_raw.txt",
+        "program": "deno",
+        "argv": ["deno", "test"],
+        "kind": "deno-test",
+        "exit_code": 1,
+        "required": ["plain assertion", "Values are not equal", "3 passed", "2 failed"],
+    },
+    {
+        "id": "gradle-test-failure",
+        "fixture": "gradlew_test_failed_raw.txt",
+        "program": "gradle",
+        "argv": ["gradlew", "test"],
+        "kind": "gradle-test",
+        "exit_code": 1,
+        "required": ["testSubtraction FAILED", "expected:<3> but was:<-1>", "5 tests completed, 2 failed", "BUILD FAILED"],
+    },
+    {
+        "id": "golangci-v2-issues",
+        "fixture": "golangci_v2_issues_raw.json",
+        "program": "golangci-lint",
+        "argv": ["golangci-lint", "run"],
+        "kind": "golangci",
+        "exit_code": 1,
+        "version_stdout": "golangci-lint has version 2.1.0 built with go1.24.0",
+        "required": ["6 issues", "main.go", "errcheck", "ineffassign"],
+    },
+    {
+        "id": "git-diff-multifile",
+        "fixture": "diff/git_diff_multifile_raw.txt",
+        "program": "git",
+        "argv": ["git", "diff"],
+        "kind": "diff",
+        "exit_code": 0,
+        "empty_first_args": ["config"],
+        "empty_any_args": ["--no-patch"],
+        "required": ["main.rs", "println!(\"2\")", "println!(\"five\")", "-- legacy column"],
+    },
 )
 
 
-def _write_emitter(directory: Path, program: str, fixture: Path, exit_code: int) -> None:
+def _write_emitter(
+    directory: Path,
+    program: str,
+    fixture: Path,
+    exit_code: int,
+    version_stdout: str | None = None,
+    empty_first_args: tuple[str, ...] = (),
+    empty_any_args: tuple[str, ...] = (),
+) -> None:
     if os.name == "nt":
         target = directory / f"{program}.cmd"
-        target.write_text(f'@type "{fixture}"\r\n@exit /b {exit_code}\r\n', encoding="utf-8")
+        version_branch = ""
+        if version_stdout:
+            version_branch = (
+                f'@if "%~1"=="--version" (\r\n'
+                f'  @echo {version_stdout}\r\n'
+                "  @exit /b 0\r\n"
+                ")\r\n"
+            )
+        empty_branches = "".join(
+            f'@if "%~1"=="{argument}" @exit /b 1\r\n'
+            for argument in empty_first_args
+        )
+        empty_any_branches = "".join(
+            f'@for %%A in (%*) do @if "%%~A"=="{argument}" @exit /b 0\r\n'
+            for argument in empty_any_args
+        )
+        target.write_text(
+            version_branch + empty_branches + empty_any_branches
+            + f'@type "{fixture}"\r\n@exit /b {exit_code}\r\n',
+            encoding="utf-8",
+        )
         return
     target = directory / program
+    version_branch = ""
+    if version_stdout:
+        escaped_version = version_stdout.replace("'", "'\\''")
+        version_branch = (
+            'if [ "$1" = "--version" ]; then\n'
+            f"  printf '%s\\n' '{escaped_version}'\n"
+            "  exit 0\n"
+            "fi\n"
+        )
+    empty_branches = "".join(
+        f"if [ \"$1\" = '{argument}' ]; then exit 1; fi\n"
+        for argument in empty_first_args
+    )
+    empty_any_branches = "".join(
+        f"for arg in \"$@\"; do [ \"$arg\" = '{argument}' ] && exit 0; done\n"
+        for argument in empty_any_args
+    )
+    escaped_fixture = str(fixture).replace("'", "'\\''")
     target.write_text(
-        f"#!/bin/sh\ncat '{fixture}'\nexit {exit_code}\n",
+        f"#!/bin/sh\n{version_branch}{empty_branches}{empty_any_branches}"
+        f"cat '{escaped_fixture}'\nexit {exit_code}\n",
         encoding="utf-8",
     )
     target.chmod(target.stat().st_mode | stat.S_IXUSR)
@@ -66,7 +161,15 @@ def _run_case(binary: Path, checkout: Path, case: dict[str, Any]) -> dict[str, A
     raw = fixture.read_text(encoding="utf-8", errors="replace")
     with tempfile.TemporaryDirectory(prefix="utk-rtk-reference-") as temporary:
         root = Path(temporary)
-        _write_emitter(root, case["program"], fixture.resolve(), case["exit_code"])
+        _write_emitter(
+            root,
+            case["program"],
+            fixture.resolve(),
+            case["exit_code"],
+            case.get("version_stdout"),
+            tuple(case.get("empty_first_args", ())),
+            tuple(case.get("empty_any_args", ())),
+        )
         env = {
             **os.environ,
             "PATH": str(root) + os.pathsep + os.environ.get("PATH", ""),
@@ -81,6 +184,8 @@ def _run_case(binary: Path, checkout: Path, case: dict[str, Any]) -> dict[str, A
             cwd=root,
             env=env,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             capture_output=True,
             check=False,
         )

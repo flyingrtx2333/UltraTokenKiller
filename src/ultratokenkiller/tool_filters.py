@@ -1,5 +1,7 @@
 """Command-specific dispatch; unknown flags/formats are never guessed."""
+import json
 import re
+from collections import Counter
 from pathlib import Path
 
 
@@ -55,6 +57,31 @@ def command_filter(argv: list[str]) -> str | None:
         return "go-test"
     if name in {"jest", "vitest"} and not any(x.startswith("--reporter") for x in args):
         return "js-test"
+    structured_test_output = any(
+        value == "--reporter"
+        or value.startswith("--reporter=")
+        or value.startswith("--junit-path")
+        for value in args
+    )
+    watch_mode = any(value in {"--watch", "--watch-all"} for value in args)
+    if name == "bun" and args[:1] == ["test"] and not structured_test_output and not watch_mode:
+        return "bun-test"
+    if name == "deno" and args[:1] == ["test"] and not structured_test_output and not watch_mode:
+        return "deno-test"
+    if name in {"gradle", "gradlew"} and any(
+        part == "test" or "test" in part.lower() for part in args
+    ) and not any(value in {"--stacktrace", "--info", "--debug", "--full-stacktrace"} for value in args):
+        return "gradle-test"
+    if name == "golangci-lint" and args == ["run"]:
+        return "golangci"
+    if name in {"bun", "deno"} and args[:1] == ["test"]:
+        return None
+    if name in {"gradle", "gradlew"} and any(
+        part == "test" or "test" in part.lower() for part in args
+    ):
+        return None
+    if name == "golangci-lint" and "run" in args:
+        return None
     if name in {"rspec", "phpunit", "pest", "paratest"}:
         return "generic-test"
     if name in {"dotnet", "mvn", "mvnw", "gradle", "gradlew", "sbt", "rake", "bun", "deno"} and any(
@@ -76,9 +103,47 @@ def command_filter(argv: list[str]) -> str | None:
 
 
 def compress_tool(text: str, kind: str) -> str:
-    if kind in {"diff", "search"}:
-        from .compression import _diff_compact, _search_compact
-        return (_diff_compact if kind == "diff" else _search_compact)(text)
+    if kind == "diff":
+        lines = text.splitlines()
+        if not lines or not lines[0].startswith("diff --git ") or not any(line.startswith("@@ ") for line in lines):
+            return text
+        output = ["Changes:"]
+        current_file: str | None = None
+        additions = deletions = 0
+        in_hunk = False
+
+        def finish_file() -> None:
+            nonlocal additions, deletions
+            if current_file is not None:
+                output.append(f"  +{additions} -{deletions}")
+            additions = deletions = 0
+
+        for line in lines:
+            if line.startswith("diff --git "):
+                finish_file()
+                match = re.match(r"diff --git a/(.+) b/(.+)$", line)
+                if not match:
+                    return text
+                current_file = match.group(2)
+                output.extend(["", current_file])
+                in_hunk = False
+            elif line.startswith("@@ "):
+                output.append(line)
+                in_hunk = True
+            elif in_hunk and line.startswith("+"):
+                output.append(line)
+                additions += 1
+            elif in_hunk and line.startswith("-"):
+                output.append(line)
+                deletions += 1
+            elif in_hunk and line.startswith("\\ No newline at end of file"):
+                output.append(line)
+        finish_file()
+        rendered = "\n".join(output).strip() + "\n"
+        return rendered if len(rendered) < len(text) else text
+    if kind == "search":
+        from .compression import _search_compact
+        return _search_compact(text)
     lines = text.splitlines()
     if kind == "git-status":
         if not lines or not lines[0].startswith(("On branch ", "HEAD detached ")):
@@ -118,6 +183,76 @@ def compress_tool(text: str, kind: str) -> str:
         rendered = "\n".join(rendered_lines)
         rendered += "\n" if text.endswith("\n") else ""
         return rendered if len(rendered) <= len(text) else text
+    if kind == "bun-test":
+        cleaned = re.sub(r"\x1b\[[0-9;]*[A-Za-z]", "", text)
+        kept = []
+        for line in cleaned.splitlines():
+            stripped = line.strip()
+            if (
+                stripped.startswith("✗ ")
+                or (stripped.startswith("error:") and "logged between real failures" not in stripped)
+                or stripped.startswith(("Expected:", "Received:", "at <anonymous>"))
+                or re.fullmatch(r"\d+ (?:pass|skip|todo|fail)", stripped)
+                or stripped.startswith("Ran ")
+            ):
+                kept.append(stripped)
+        rendered = "\n".join(dict.fromkeys(kept))
+        return rendered + "\n" if rendered else text
+    if kind == "deno-test":
+        cleaned = re.sub(r"\x1b\[[0-9;]*[A-Za-z]", "", text)
+        kept = []
+        for line in cleaned.splitlines():
+            stripped = line.strip()
+            if (
+                re.search(r"=> \./.+:\d+:\d+$", stripped)
+                or stripped.startswith("error: AssertionError:")
+                or stripped == "[Diff] Actual / Expected"
+                or re.match(r"^[+-]\s+\S", stripped)
+                or re.match(r"^FAILED\s*\|\s*\d+ passed\s*\|\s*\d+ failed", stripped)
+            ):
+                kept.append(stripped)
+        rendered = "\n".join(dict.fromkeys(kept))
+        return rendered + "\n" if rendered else text
+    if kind == "gradle-test":
+        kept = []
+        for line in text.splitlines():
+            stripped = line.strip()
+            if (
+                (" FAILED" in line and not stripped.startswith("BUILD"))
+                or re.search(r"(?:AssertionError|NotImplementedError|Exception|Error):", stripped)
+                or (
+                    re.match(r"at (?:[A-Za-z_]\w*\.)+[A-Za-z_]\w*\([^)]*:\d+\)$", stripped)
+                    and not stripped.startswith(("at org.", "at java.", "at kotlin.", "at sun.", "at jdk."))
+                )
+                or re.match(r"^\d+ tests completed, \d+ failed$", stripped)
+                or stripped.startswith("BUILD FAILED")
+            ):
+                kept.append(stripped)
+        rendered = "\n".join(dict.fromkeys(kept))
+        return rendered + "\n" if rendered else text
+    if kind == "golangci":
+        try:
+            payload = json.loads(text)
+            issues = payload["Issues"]
+            if not isinstance(issues, list) or not issues:
+                return text
+            linters = Counter(item["FromLinter"] for item in issues)
+            files = Counter(item["Pos"]["Filename"] for item in issues)
+            output = [f"golangci-lint: {len(issues)} issues in {len(files)} files", "Top linters:"]
+            output.extend(f"  {name} ({count}x)" for name, count in linters.most_common())
+            output.append("Top files:")
+            for filename, count in files.most_common():
+                output.append(f"  {filename} ({count} issues)")
+                file_issues = [item for item in issues if item["Pos"]["Filename"] == filename]
+                for linter, linter_count in Counter(item["FromLinter"] for item in file_issues).most_common(3):
+                    output.append(f"    {linter} ({linter_count})")
+                    first = next(item for item in file_issues if item["FromLinter"] == linter)
+                    source = first.get("SourceLines") or []
+                    if source:
+                        output.append(f"      → {source[0].strip()[:80]}")
+            return "\n".join(output) + "\n"
+        except (KeyError, TypeError, ValueError, json.JSONDecodeError):
+            return text
     if kind in {"pytest", "cargo-test", "go-test", "js-test", "generic-test"}:
         from .compression import CRITICAL
         has_failure = bool(CRITICAL.search(re.sub(r"\b0 (?:failed|failures|errors|warnings)\b", "", text)))

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "baseline": "0924356b4caba4989607227b7c8824d3d8098719",
   "model": "gpt-5.6-luna",
-  "case_count": 3,
+  "case_count": 8,
   "live_model_calls": 0,
   "cases": [
     {
@@ -34,6 +34,56 @@
       "utk_reduction": 0.6998535871156661,
       "ratio": 1.3277777777777777,
       "exit_code": 1
+    },
+    {
+      "case": "bun-test-failure",
+      "kind": "bun-test",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.5446985446985447,
+      "utk_reduction": 0.632016632016632,
+      "ratio": 1.1603053435114503,
+      "exit_code": 1
+    },
+    {
+      "case": "deno-test-failure",
+      "kind": "deno-test",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.8943598925693823,
+      "utk_reduction": 0.9176365264100269,
+      "ratio": 1.026026026026026,
+      "exit_code": 1
+    },
+    {
+      "case": "gradle-test-failure",
+      "kind": "gradle-test",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.33189655172413796,
+      "utk_reduction": 0.521551724137931,
+      "ratio": 1.5714285714285714,
+      "exit_code": 1
+    },
+    {
+      "case": "golangci-v2-issues",
+      "kind": "golangci",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.941541186891054,
+      "utk_reduction": 0.9406554472984943,
+      "ratio": 0.9990592662276576,
+      "exit_code": 0
+    },
+    {
+      "case": "git-diff-multifile",
+      "kind": "diff",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.3463203463203463,
+      "utk_reduction": 0.5411255411255411,
+      "ratio": 1.5625,
+      "exit_code": 0
     }
   ]
 }
