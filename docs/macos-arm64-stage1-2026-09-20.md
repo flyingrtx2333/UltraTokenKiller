@@ -49,3 +49,19 @@
 - `docs/assets/dashboard-macos-arm64-mobile.png`
 
 截图数据性质：真实页面、隔离空状态；无提示词、回答正文、用户名、凭据或日常目录。
+
+## RTK 最终分母复验
+
+- 被测提交：`78dab2c`（包含 RTK 211 项最终分母提交 `94da31f`）
+- 传输方式：本地 `git bundle`，未推送远端
+- 隔离目录：`/tmp/utk-stage1-94da31f`
+- 运行时：macOS arm64、Homebrew Python 3.14.7
+- 配置隔离：独立 `UTK_HOME=/tmp/utk-stage1-94da31f/utk-home`
+- 模型请求：0
+- 完整测试：`211 passed, 1 skipped, 2 warnings`
+- Windows 对照：`209 passed, 3 skipped, 1 warning`
+- 能力摘要：核心能力 32/36 离线通过、4 项待验证；RTK 最终分母 211，其中 55 项映射现有审阅契约、156 项待逐项验证
+
+首次复验暴露了超时清理对同一进程组执行两次终止的问题：第一次已成功终止并回收，第二次在 macOS 返回 `PermissionError`。`78dab2c` 将终止操作改为幂等，并新增“只终止一次”的回归断言；修复后后代进程逃逸测试和完整套件均通过。
+
+本轮没有读取、启动或修改日常 Codex/Hermes 配置。已跳过的用例和 156 个未验证命令变体仍按缺口处理，本报告不声明完整 RTK 对标通过。
