@@ -1,0 +1,46 @@
+{
+  "project": "UltraTokenKiller",
+  "category": "logo-brand",
+  "created_at": "2026-09-20",
+  "selected_concept": "B",
+  "selection_status": "implemented",
+  "source_palette": {
+    "background": "#091016",
+    "primary": "#38D4A7",
+    "text": "#E9F0F4",
+    "slate": "#263440",
+    "optional_accent": "#F3BB60"
+  },
+  "source_files": [
+    "web/src/styles.css",
+    "web/src/main.tsx",
+    "web/index.html"
+  ],
+  "concepts": [
+    {
+      "id": "A",
+      "name": "Precision Cut Core",
+      "file": "concept-a-precision-cut.png",
+      "direction": "Geometric UTK monogram with a precise diagonal compression cut and disappearing token fragments.",
+      "tradeoff": "Strongest name recognition and cutting action; the monogram needs careful manual vector simplification for 16px use.",
+      "prompt": "Design a professional logo concept board for a local developer tool named UltraTokenKiller, abbreviated UTK. Direction A: Precision Cut Core. Create one bold vector-friendly emblem: a geometric UTK monogram built from compact angular strokes, with a clean diagonal compression cut and a small disappearing token segment, expressing precise token reduction without any literal weapon, blood, skull, crypto coin, mascot, or gaming aesthetic. Brand palette must fit an existing dark dashboard: near-black #091016 background, primary mint-teal #38D4A7, cool off-white #E9F0F4, subtle slate #263440; use at most a tiny restrained teal-to-cyan highlight. Strong silhouette, flat design, minimal details, readable at 16-32px, suitable for CLI app icon and favicon. Show the standalone emblem large plus a neat horizontal lockup reading exactly UltraTokenKiller and a small label UTK on a polished dark presentation board. Use crisp modern sans-serif typography. Ensure spelling is exact. No mockups on devices, no extra prose, no stock logo feel. logo-brand category, original brand identity concept."
+    },
+    {
+      "id": "B",
+      "name": "Context Compression Gate",
+      "file": "concept-b-context-gate.png",
+      "direction": "Opposing code brackets compress token blocks toward a compact central core.",
+      "tradeoff": "Clearest at small sizes and most closely tied to developer tooling; less literal connection to the three-layer product architecture.",
+      "prompt": "Design a professional logo concept board for a local developer tool named UltraTokenKiller, abbreviated UTK. Direction B: Context Compression Gate. Create one distinctive vector-friendly emblem based on two precise code brackets or data rails compressing a stream of small rectangular token blocks toward a compact central core. The negative space should subtly suggest the letters U and K, while one centered vertical stroke hints at T. This must feel like context becoming smaller and cleaner, not cybersecurity, crypto, a chip, a literal trash compactor, or a weapon. Brand palette must fit an existing dark dashboard: near-black #091016 background, primary mint-teal #38D4A7, cool off-white #E9F0F4, slate #263440. Flat geometric construction, balanced symmetry with one intentional asymmetry, strong silhouette, very few elements, crisp at 16-32px, suitable for CLI, app icon, and favicon. Show the standalone emblem large plus a refined horizontal lockup reading exactly UltraTokenKiller and a small label UTK on a polished dark presentation board. Modern technical sans-serif typography, exact spelling. No device mockups, no extra marketing prose, no glow-heavy cyberpunk, no stock logo feel. logo-brand category, original identity concept."
+    },
+    {
+      "id": "C",
+      "name": "Three-Layer Token Stack",
+      "file": "concept-c-three-layer-stack.png",
+      "direction": "Exactly three progressively smaller layers represent input, tool output, and response optimization.",
+      "tradeoff": "Best expression of the product architecture and most product-like; introduces amber beyond the current teal dashboard palette.",
+      "prompt": "Design a professional logo concept board for a local developer tool named UltraTokenKiller, abbreviated UTK. Direction C: Three-Layer Token Stack. Create one calm, product-grade vector emblem made of exactly three horizontal or isometric data layers that progressively become shorter and cleaner from top to bottom, representing input compression, tool-output compression, and concise model response. Integrate a subtle forward flow or downward tightening motion and, through negative space, a restrained abstract U shape. Do not use letters as the main symbol, no literal blade, weapon, skull, crypto coin, funnel cliché, database cylinder, or mascot. Brand palette must fit an existing dark dashboard: near-black #091016 background, mint-teal #38D4A7, cool off-white #E9F0F4, slate #263440, with a restrained amber #F3BB60 accent only on the smallest final layer. Flat geometric construction, strong silhouette, generous negative space, highly readable at 16-32px, suitable for CLI, app icon, and favicon. Show the standalone emblem large plus a refined horizontal lockup reading exactly UltraTokenKiller and a small label UTK on a polished dark presentation board. Modern technical sans-serif typography, exact spelling. No device mockups, no extra prose, no excessive glow, no stock logo feel. logo-brand category, original identity concept."
+    }
+  ],
+  "selection_gate": "Concept B selected. Production SVG, transparent PNG, monochrome, favicon, and horizontal lockup assets created under web/public/brand."
+}

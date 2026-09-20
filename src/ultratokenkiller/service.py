@@ -216,6 +216,9 @@ async def stream(request: Request, hours: int = Query(24, ge=1, le=24 * 90)):
 static = Path(__file__).parent / "static"
 if static.exists():
     app.mount("/assets", StaticFiles(directory=static / "assets"), name="assets")
+    brand = static / "brand"
+    if brand.exists():
+        app.mount("/brand", StaticFiles(directory=brand), name="brand")
 
 
 @app.get("/dashboard")

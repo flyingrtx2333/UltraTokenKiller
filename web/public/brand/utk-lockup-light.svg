@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 80" role="img" aria-labelledby="title desc">
+  <title id="title">UltraTokenKiller</title>
+  <desc id="desc">UltraTokenKiller logo and wordmark for light backgrounds.</desc>
+  <g transform="translate(8 8)">
+    <path fill="#111820" d="M20 6 5 18v28l15 12v-9L13 43V21l7-6Z"/>
+    <path fill="#159F82" d="m44 6 15 12v28L44 58v-9l7-6V21l-7-6Z"/>
+    <path fill="#111820" d="M22 23h3v18h-3zM27 27h2v10h-2z"/>
+    <path fill="#159F82" d="M39 23h3v18h-3zM35 27h2v10h-2zM31.25 25h1.5v17h-1.5zM30.25 22h3.5v4h-3.5z"/>
+  </g>
+  <text x="90" y="51" fill="#111820" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="31" font-weight="700" letter-spacing="-0.7">Ultra<tspan fill="#159F82">Token</tspan>Killer</text>
+</svg>

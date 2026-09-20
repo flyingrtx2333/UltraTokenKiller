@@ -82,7 +82,7 @@ function App(){
   return <>
     <a className="skip" href="#main">跳到主要内容</a>
     <header className="topbar">
-      <div className="brand"><span className="mark" aria-hidden="true">UTK</span><div><h1>UltraTokenKiller</h1><p>本地 Token 控制台</p></div></div>
+      <div className="brand"><img className="brand-mark" src="/brand/utk-icon.svg" alt="" width="44" height="44"/><div><h1>UltraTokenKiller</h1><p>本地 Token 控制台</p></div></div>
       <div className="top-actions"><label>时间范围<select value={hours} onChange={e=>setHours(Number(e.target.value))}><option value="24">24 小时</option><option value="168">7 天</option><option value="720">30 天</option></select></label><button className="quiet" onClick={load}>刷新</button></div>
     </header>
     <main id="main">

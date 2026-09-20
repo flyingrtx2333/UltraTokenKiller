@@ -1,6 +1,41 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="web/public/brand/utk-lockup.svg">
+  <img src="web/public/brand/utk-lockup-light.svg" alt="UltraTokenKiller" width="430">
+</picture>
+
 # UltraTokenKiller
 
 UTK 是本地原生 Token 优化工具。输入压缩、工具输出压缩、回答精简由 UTK 自己实现，不安装或调用 Headroom、RTK、Caveman。普通 Python/Web 框架依赖仍由安装器安装。
+
+## 产品预览
+
+![UTK 网页看板桌面空状态](docs/assets/dashboard-desktop-empty.png)
+
+<details>
+<summary>查看窄屏网页和终端看板</summary>
+
+![UTK 网页看板窄屏空状态](docs/assets/dashboard-mobile-empty.png)
+
+![UTK 终端看板空状态](docs/assets/terminal-dashboard.svg)
+
+</details>
+
+截图来自 2026-09-20 的本地打包服务，网页分别使用 1440×1100 和 390×844 视口。数据为隔离 `UTK_HOME` 的真实空状态，不含提示词、回答、凭据或用户指标。能力数字表示当前清单状态，不表示完整对标已经完成。
+
+```mermaid
+flowchart LR
+  Client[Codex / Hermes] --> Input[输入内容识别与压缩]
+  Input --> Provider[模型提供商]
+  Provider --> Response[回答精简策略]
+  Client --> Tools[工具命令与输出压缩]
+  Input -. 会话绑定 .-> Recovery[(内存原文恢复)]
+  Tools -. 会话绑定 .-> Recovery
+  Input --> Metrics[(本地元数据与指标)]
+  Tools --> Metrics
+  Response --> Metrics
+```
+
+输入与工具压缩估算分别展示，不相加为账单节省。原文只存守护进程内存，过期或重启后不可恢复。
 
 ## 当前原生能力
 
@@ -104,6 +139,15 @@ npm run build
 ```
 
 网页构建资源随 Python 包提供；最终用户无需 Node.js。当前验证边界见 [COMPATIBILITY.md](COMPATIBILITY.md)。
+
+## 后续计划
+
+- 扩展 Headroom 固定基线测试，使结构化数据、日志、代码、长文本和图像均有正常、异常、未知格式及恢复证据。
+- 将 RTK 的发现清单细化为可验收命令契约；每项要求成功、失败、未知格式和适用平台证据，透传不计为压缩支持。
+- 对 Caveman 各档位运行固定模型的成对质量评测，同时验证回答正确性和长度；取得明确模型调用预算后执行。
+- 完成 Codex、Hermes 与 Windows、macOS、Linux 的真实客户端及安装恢复矩阵。未通过的组合继续标记为预览或候选支持。
+
+最新 Mac、协议及客户端证据以 [兼容矩阵](COMPATIBILITY.md) 为准；README 截图只展示当前产品界面，不代替功能验收。
 
 ## 许可
 
