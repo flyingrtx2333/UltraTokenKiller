@@ -39,7 +39,32 @@ def classify(text: str, hint: str | None = None) -> str:
         return "log"
     if len(lines) > 3 and sum(bool(re.match(r".+?:\d+(?::\d+)?:", line)) for line in lines) >= len(lines) * .8:
         return "search"
+    table_lines = [line for line in lines if line.strip()]
+    if len(table_lines) >= 4:
+        columns = [len(line.split("|")) for line in table_lines]
+        if min(columns) >= 3 and len(set(columns)) == 1:
+            return "table"
     return "text"
+
+
+def _table_compact(text: str) -> str:
+    """Collapse only exact consecutive rows in a confidently parsed pipe table."""
+    lines = text.splitlines()
+    output: list[str] = []
+    previous: str | None = None
+    repeated = 0
+    for line in lines:
+        if line == previous:
+            repeated += 1
+            continue
+        if repeated:
+            output.append(f"[UTK: {repeated} repeated table rows omitted]")
+            repeated = 0
+        output.append(line)
+        previous = line
+    if repeated:
+        output.append(f"[UTK: {repeated} repeated table rows omitted]")
+    return "\n".join(output) + ("\n" if text.endswith("\n") else "")
 
 
 def _json_compact(text: str) -> str:
@@ -203,7 +228,8 @@ def compress_content(text: str, *, session: str, vault: RecoveryVault, profile="
     if profile == "off":
         return unchanged("disabled")
     processors = {"json": _json_compact, "log": _log_compact,
-                  "diff": _diff_compact, "search": _search_compact}
+                  "diff": _diff_compact, "search": _search_compact,
+                  "table": _table_compact}
     processor = processors.get(kind)
     if kind == "code:python":
         processor = lambda value: _python_compact(value, query)

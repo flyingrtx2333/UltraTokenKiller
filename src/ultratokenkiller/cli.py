@@ -41,7 +41,14 @@ def capabilities(
         f"未实现 {summary['not_implemented']}"
     )
     typer.echo(
-        f"命令契约 {report['reviewed_command_contracts']}；发现枚举 {report['discovered_command_variants']}（不作为覆盖率分母）"
+        f"命令契约已验证 {report['verified_command_contracts']} / 已审阅 {report['reviewed_command_contracts']}；"
+        f"发现枚举 {report['discovered_command_variants']}（不作为覆盖率分母）"
+    )
+    verification = report["verification"]
+    typer.echo(
+        f"当前源码绑定 {verification['source_bound_capabilities']} 项；"
+        f"真实客户端源码绑定 {verification['real_client_source_bound']} 项；"
+        f"过期或未绑定 {len(verification['stale_capabilities'])} 项"
     )
 
 

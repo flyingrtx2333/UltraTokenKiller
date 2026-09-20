@@ -48,6 +48,7 @@ flowchart LR
 - 回答：lite/full/ultra/off 与文言档位；结构化输出和详细解释要求优先。不截断已生成内容，不声称未经对照的节省比例。
 - 协议：Responses、Chat Completions、Anthropic Messages 的 HTTP/SSE 转发；WebSocket 透传有离线测试，但未完成真实客户端验收。
 - 看板：终端与网页读取统一统计。网页显示原文内存状态、已观测命令的压缩比例与未完成对标提示。
+- 证据：能力与命令契约绑定实现、测试和固定基线的源码指纹；代码变化会自动将旧状态降级，避免把“文件存在”当作验证通过。
 
 **已验证：**Windows 与 WSL Ubuntu 离线回归；Windows Codex 0.138.0 使用现有订阅和 `gpt-5.6-luna` 完成输入压缩、`utk exec` 压缩及 MCP 原文找回任务。验收使用隔离端口和临时配置覆盖，没有替换本机现用代理。
 
@@ -100,6 +101,8 @@ python scripts/generate-rtk-reference.py --checkout path/to/rtk --binary path/to
 ```
 
 当前 8 个捕获输出样例均保留关键事实，UTK 压缩率达到对应固定 RTK 的 95.5% 至 157.1%。这只是已验证命令族证据，不代表已覆盖全部 RTK 清单，详见 [固定 RTK 捕获输出对照](docs/upstream-rtk-reference-2026-09-20.md)。
+
+能力状态的源码绑定和自动降级规则见 [能力证据绑定](docs/capability-evidence-2026-09-20.md)。当前 22 个命令契约已通过离线套件并绑定当前源码；211 个固定 RTK 发现项仍不是覆盖率分母。
 
 Caveman 固定策略契约可离线复现，不调用模型：
 

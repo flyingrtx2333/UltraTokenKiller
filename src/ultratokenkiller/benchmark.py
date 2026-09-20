@@ -7,6 +7,7 @@ import json
 import os
 import time
 import tempfile
+import tracemalloc
 from importlib.resources import files
 from pathlib import Path
 
@@ -15,6 +16,17 @@ from .engines import estimate_tokens
 from .recovery import RecoveryVault
 from .token_count import count_text
 from .config import default_home
+
+
+def _implementation_fingerprint() -> str:
+    digest = hashlib.sha256()
+    root = Path(__file__).parent
+    for name in ("benchmark.py", "compression.py", "code_compression.py",
+                 "text_compression.py", "image_compression.py", "token_count.py"):
+        path = root / name
+        digest.update(name.encode("ascii"))
+        digest.update(path.read_bytes())
+    return digest.hexdigest()
 
 
 def fixtures():
@@ -76,9 +88,10 @@ def run_benchmark(mode="native", *, reference=None, model=None):
     if mode == "upstream":
         reference_outputs, reason, reference_metadata = _reference_outputs(reference, cases, baselines)
         if reference_outputs is None:
-            return {"schema_version": 2, "mode": mode, "status": "unavailable",
+            return {"schema_version": 3, "mode": mode, "status": "unavailable",
                     "reason": reason, "baselines": baselines, "cases": [], "live_model_calls": 0,
-                    "parity_certified": False}
+                    "parity_certified": False,
+                    "implementation_fingerprint": _implementation_fingerprint()}
     if mode == "prototype":
         from .baselines.native_v1 import compress_request
     reports = []
@@ -86,6 +99,7 @@ def run_benchmark(mode="native", *, reference=None, model=None):
         digest = hashlib.sha256(name.encode("utf-8")).digest()[:16]
         stable_handle = base64.urlsafe_b64encode(digest).decode("ascii").rstrip("=")
         vault = RecoveryVault(handle_factory=lambda value=stable_handle: value)
+        tracemalloc.start()
         start = time.perf_counter()
         metadata = {}
         restored = True
@@ -103,17 +117,23 @@ def run_benchmark(mode="native", *, reference=None, model=None):
             rendered = reference_outputs[name]
         else:
             rendered = original
+        duration_ms = (time.perf_counter() - start) * 1000
+        _, peak_memory_bytes = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
         before_count, after_count = count_text(original, model), count_text(rendered, model)
         before, after = before_count.value, after_count.value
         reports.append({"case": name, "fixture_sha256": hashlib.sha256(original.encode()).hexdigest(),
                         "before_tokens": before, "after_tokens": after, "reduction": (before-after)/before if before else 0,
                         "required_facts_preserved": all(value in rendered for value in required),
-                        "recoverable": restored, "duration_ms": (time.perf_counter()-start)*1000,
+                        "recoverable": restored, "duration_ms": duration_ms,
+                        "peak_memory_bytes": peak_memory_bytes,
+                        "execution_result": "not_applicable_fixture_transform",
                         "engine": metadata, "estimator": before_count.method,
                         "exact_for_model": before_count.exact_for_model})
-    return {"schema_version": 2, "mode": mode, "status": "completed", "cases": reports,
+    return {"schema_version": 3, "mode": mode, "status": "completed", "cases": reports,
             "baselines": baselines, "model": model, "live_model_calls": 0,
-            "parity_certified": False, "reference": reference_metadata}
+            "parity_certified": False, "reference": reference_metadata,
+            "implementation_fingerprint": _implementation_fingerprint()}
 
 
 def save_report(report: dict, kind="compression", home=None) -> Path:

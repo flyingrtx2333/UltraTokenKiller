@@ -10,9 +10,12 @@ def test_offline_report_is_metadata_only_and_honest():
         assert report["status"] == "completed"
         assert report["live_model_calls"] == 0
         assert report["parity_certified"] is False
+        assert report["schema_version"] == 3
+        assert len(report["implementation_fingerprint"]) == 64
         assert len(report["cases"]) >= 6
         assert all(item["required_facts_preserved"] for item in report["cases"])
         assert all("content" not in item["engine"] for item in report["cases"])
+        assert all(item["peak_memory_bytes"] >= 0 for item in report["cases"])
     assert run_benchmark("upstream")["status"] == "unavailable"
 
 
@@ -20,8 +23,9 @@ def test_native_benchmark_is_deterministic_except_duration():
     first = run_benchmark("native", model="gpt-5.6-luna")
     second = run_benchmark("native", model="gpt-5.6-luna")
     for left, right in zip(first["cases"], second["cases"]):
-        left = {key: value for key, value in left.items() if key != "duration_ms"}
-        right = {key: value for key, value in right.items() if key != "duration_ms"}
+        volatile = {"duration_ms", "peak_memory_bytes"}
+        left = {key: value for key, value in left.items() if key not in volatile}
+        right = {key: value for key, value in right.items() if key not in volatile}
         assert left == right
 
 
