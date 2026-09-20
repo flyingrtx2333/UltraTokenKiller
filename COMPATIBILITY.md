@@ -33,7 +33,7 @@ Luna 手动包装命令链路通过时累计使用 16/20 次，随后自动钩�
 
 | 项目 | 当前证据 |
 |---|---|
-| 最新源码离线测试 | `d4e37e9`，207 passed / 1 skipped |
+| 最新源码离线测试 | `4680791`，208 passed / 1 skipped |
 | Python 运行时准备 | 系统 Python 不满足要求时由 uv 创建 Python 3.11.16，已通过实机安装 |
 | 重复安装与回滚 | `venv.previous` 保留；Codex/Hermes 配置与 LaunchAgent 清单未变化 |
 | 离线资产校验 | 错误 SHA-256 被拒绝，未产生活动运行时 |
