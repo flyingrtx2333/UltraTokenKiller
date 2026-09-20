@@ -9,7 +9,7 @@ UTK 是本地原生 Token 优化工具。输入压缩、工具输出压缩、回
 
 ## 产品预览
 
-![UTK 网页看板桌面空状态](docs/assets/dashboard-desktop-empty.png)
+![UTK 网页看板桌面空状态](docs/assets/dashboard-macos-arm64-desktop.png)
 
 <details>
 <summary>查看窄屏网页和终端看板</summary>
@@ -20,7 +20,7 @@ UTK 是本地原生 Token 优化工具。输入压缩、工具输出压缩、回
 
 </details>
 
-截图来自 2026-09-20 的本地打包服务，网页分别使用 1440×1100 和 390×844 视口。数据为隔离 `UTK_HOME` 的真实空状态，不含提示词、回答、凭据或用户指标。能力数字表示当前清单状态，不表示完整对标已经完成。
+桌面截图来自 2026-09-20 的 macOS arm64 实机打包服务，窄屏截图来自同一提交的 Windows 隔离实例，分别使用 1440×1100 和 390×844 视口。数据均为隔离 `UTK_HOME` 的真实空状态，不含提示词、回答、凭据或用户指标。能力数字表示当前清单状态，不表示完整对标已经完成。
 
 ```mermaid
 flowchart LR
