@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-20T10:51:47.786809+00:00",
+  "generated_at": "2026-09-20T12:21:53.389234+00:00",
   "suite_passed": true,
   "test_command": [
     "C:\\Users\\17489\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
@@ -187,6 +187,18 @@
     },
     "dashboard.metrics": {
       "source_fingerprint": "5089f3a1a683c82de129088c38766f99df838e05771af9c826a93857301a7fd9",
+      "offline_passed": true,
+      "real_client_source_fingerprint": null,
+      "upstream_source_fingerprint": null
+    },
+    "install.windows": {
+      "source_fingerprint": "769ba479d05f5ca0fc6ca15cc202ee078f4979200d550913a43d854f0beb4c64",
+      "offline_passed": true,
+      "real_client_source_fingerprint": null,
+      "upstream_source_fingerprint": null
+    },
+    "install.macos_linux": {
+      "source_fingerprint": "03b1ae818e7d290a0aaeccced5f6566dc6c3a33df53eca1f3a429e699a1ca94b",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
