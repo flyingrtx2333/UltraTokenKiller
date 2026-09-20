@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-20T12:21:53.389234+00:00",
+  "generated_at": "2026-09-20T12:31:33.112257+00:00",
   "suite_passed": true,
   "test_command": [
     "C:\\Users\\17489\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
@@ -60,7 +60,7 @@
       "upstream_source_fingerprint": null
     },
     "input.long_text_en": {
-      "source_fingerprint": "4cc2e19c5205e4785f0a0a61694faf0df6eaaa5cc6b67c6a3bc1abd7fa453cf9",
+      "source_fingerprint": "140f8c8b91d9f35878ad0aaa3e2f3c5d5d48e0d56b2c6560403a3118ea1bfa3a",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null

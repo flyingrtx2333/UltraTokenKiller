@@ -38,3 +38,20 @@ def test_contract_fingerprint_requires_reviewed_tests(tmp_path):
     assert _contract_fingerprint(tmp_path, contract)
     contract["reviewed"] = False
     assert _contract_fingerprint(tmp_path, contract) is None
+
+
+def test_evidence_fingerprints_are_stable_across_git_line_endings(tmp_path):
+    implementation = tmp_path / "src" / "feature.py"
+    test = tmp_path / "tests" / "test_feature.py"
+    implementation.parent.mkdir(parents=True)
+    test.parent.mkdir(parents=True)
+    implementation.write_bytes(b"VALUE = 1\n")
+    test.write_bytes(b"def test_value(): pass\n")
+    item = {"id": "feature", "implementation": ["src/feature.py"],
+            "tests": ["tests/test_feature.py"], "verification": "offline_passed"}
+    lf_fingerprint = _source_fingerprint(tmp_path, item, "fixed-upstream")
+
+    implementation.write_bytes(b"VALUE = 1\r\n")
+    test.write_bytes(b"def test_value(): pass\r\n")
+
+    assert _source_fingerprint(tmp_path, item, "fixed-upstream") == lf_fingerprint

@@ -16,6 +16,11 @@ def _exists(root: Path, value: str) -> bool:
     return (root / value).is_file()
 
 
+def _fingerprint_bytes(path: Path) -> bytes:
+    """Return Git-text-stable bytes for cross-platform evidence hashes."""
+    return path.read_bytes().replace(b"\r\n", b"\n")
+
+
 def _source_fingerprint(root: Path, item: dict, upstream_commit: str) -> str | None:
     """Bind a verification result to the exact implementation and tests."""
     paths = [*item.get("implementation", []),
@@ -27,7 +32,7 @@ def _source_fingerprint(root: Path, item: dict, upstream_commit: str) -> str | N
     digest.update(json.dumps(item, ensure_ascii=False, sort_keys=True).encode("utf-8"))
     for value in sorted(set(paths)):
         digest.update(value.replace("\\", "/").encode("utf-8"))
-        digest.update((root / value).read_bytes())
+        digest.update(_fingerprint_bytes(root / value))
     return digest.hexdigest()
 
 
@@ -39,7 +44,7 @@ def _contract_fingerprint(root: Path, contract: dict) -> str | None:
     digest = hashlib.sha256(json.dumps(contract, sort_keys=True).encode("utf-8"))
     for value in sorted(set(paths)):
         digest.update(value.encode("utf-8"))
-        digest.update((root / value).read_bytes())
+        digest.update(_fingerprint_bytes(root / value))
     return digest.hexdigest()
 
 
