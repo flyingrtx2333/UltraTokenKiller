@@ -27,3 +27,14 @@ Hermes CLI 与 gateway 共用的 `pre_tool_call` shell hook 已完成离线实�
 macOS 实机证据见 [最新阶段一报告](docs/macos-arm64-stage1-2026-09-20.md)、[离线验收](docs/macos-arm64-acceptance-2026-09-19.md)、[真实编码复验](docs/macos-codex-live-followup-2026-09-19.md) 和 [socket / usage / 输入复验](docs/macos-native-ipc-2026-09-19.md)。
 
 Luna 手动包装命令链路通过时累计使用 16/20 次，随后自动钩子编码尝试未通过，累计达到 19/20。钩子信任与冲突隔离已修复并通过离线预检，真实重验等待新增预算。提供商实际 usage 缺失，不展示推算成实际的 token 或现金节省。详见 [原验收记录](docs/acceptance-luna-2026-09-19.md) 与 [自动会话进度](docs/codex-auto-session-2026-09-19.md)。
+
+
+## macOS arm64 安装器复验（2026-09-20）
+
+| 项目 | 当前证据 |
+|---|---|
+| 最新源码离线测试 | `d4e37e9`，207 passed / 1 skipped |
+| Python 运行时准备 | 系统 Python 不满足要求时由 uv 创建 Python 3.11.16，已通过实机安装 |
+| 重复安装与回滚 | `venv.previous` 保留；Codex/Hermes 配置与 LaunchAgent 清单未变化 |
+| 离线资产校验 | 错误 SHA-256 被拒绝，未产生活动运行时 |
+| 实际页面 | `/dashboard` 桌面 1440×1100、窄屏 390×844 已重新验收 |
