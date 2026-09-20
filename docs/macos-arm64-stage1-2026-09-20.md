@@ -78,3 +78,5 @@
 后续 Windows 隔离运行已生成并验证固定上游输入参考包：Headroom 12 个合成样例、RTK/Caveman 提交锁定检查、0 次模型调用，四路事实保持全部通过。`benchmark.fixed_upstream` 因而提升为“离线通过”；RTK 工具输出及 Caveman 回答质量仍由各自独立能力项验收，不由这份输入报告代替。
 
 提交 `c22bf65` 在 Mac arm64 隔离环境完成复验：`215 passed, 1 skipped, 2 warnings`。短输入恢复标识的 token 回归用例通过，能力状态保持 33/36，模型请求为 0。
+
+提交 `a647912` 在 Mac arm64 隔离环境完成复验：`216 passed, 1 skipped, 2 warnings`。Caveman 冻结语料与 180 次发布级请求预算计算通过，实际模型请求为 0，`response.paired_quality` 继续保持待验证。
