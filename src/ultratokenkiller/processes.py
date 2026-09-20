@@ -17,7 +17,12 @@ def run_owned(command, *, input: str, timeout: float, env=None, cwd=None):
     """
     job = WindowsJob() if sys.platform == "win32" else None
     process = None
+    terminated = False
     def terminate():
+        nonlocal terminated
+        if terminated:
+            return
+        terminated = True
         if job:
             job.terminate()
         elif process is not None:

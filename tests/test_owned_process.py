@@ -1,3 +1,4 @@
+import os
 import subprocess
 import sys
 import time
@@ -15,7 +16,16 @@ def test_owned_process_preserves_utf8_and_exit_code():
     assert result.stderr == "diagnostic"
 
 
-def test_timeout_terminates_descendants_before_they_can_write(tmp_path):
+def test_timeout_terminates_descendants_before_they_can_write(tmp_path, monkeypatch):
+    killpg_calls: list[tuple[int, int]] = []
+    if os.name != "nt":
+        original_killpg = os.killpg
+
+        def recording_killpg(process_group: int, sig: int) -> None:
+            killpg_calls.append((process_group, sig))
+            original_killpg(process_group, sig)
+
+        monkeypatch.setattr(os, "killpg", recording_killpg)
     marker = tmp_path / "should-not-exist"
     child = f"import time,pathlib; time.sleep(2); pathlib.Path({str(marker)!r}).write_text('escaped')"
     parent = f"import subprocess,sys,time; subprocess.Popen([sys.executable,'-c',{child!r}]); print('started',flush=True); time.sleep(30)"
@@ -24,3 +34,5 @@ def test_timeout_terminates_descendants_before_they_can_write(tmp_path):
     assert "started" in error.value.output
     time.sleep(2)
     assert not marker.exists()
+    if os.name != "nt":
+        assert len(killpg_calls) == 1
