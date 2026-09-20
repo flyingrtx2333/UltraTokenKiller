@@ -20,3 +20,9 @@ utk capabilities --json
 ```
 
 账本位于 `src/ultratokenkiller/data/verification-ledger.json`，随 wheel 分发。真实客户端和上游状态只能由另行生成、且包含同一源码指纹的证据提升。
+
+## 固定上游四路输入证据
+
+固定 Headroom、RTK、Caveman 提交均通过 checkout 哈希验证。Headroom 12 个合成输入样例已完成透传、冻结基础版、固定上游和当前 UTK 四路对齐，事实保持全部通过，模型调用为 0。元数据报告见 `docs/evidence/four-route-matrix-20260920.json`；报告不包含提示词、回答正文或认证信息。
+
+当前源码绑定状态为 33/36 离线通过，剩余 3 项为 Caveman 成对质量及 Hermes CLI/gateway 真实客户端验收。RTK 工具输出及 Caveman 回答质量继续由各自独立能力项验收，不由输入参考报告代替。

@@ -1,5 +1,6 @@
 import hashlib
 import json
+from pathlib import Path
 
 from ultratokenkiller.benchmark import (
     capability_report,
@@ -113,3 +114,42 @@ def test_four_route_matrix_aligns_validated_reference(tmp_path):
     assert report["live_model_calls"] == 0
     assert all(set(case["routes"]) == set(report["route_order"]) for case in report["cases"])
     assert all(case["routes"]["upstream"]["required_facts_preserved"] for case in report["cases"])
+
+
+def test_native_route_rejects_recovery_marker_token_regression():
+    report = run_benchmark("native")
+    unknown = next(case for case in report["cases"] if case["case"] == "unknown-format")
+
+    assert unknown["after_tokens"] <= unknown["before_tokens"]
+
+
+def test_checked_in_four_route_evidence_is_complete_and_metadata_only():
+    report = json.loads(
+        Path("docs/evidence/four-route-matrix-20260920.json").read_text(encoding="utf-8")
+    )
+
+    assert report["status"] == "completed"
+    assert report["route_order"] == ["passthrough", "prototype", "upstream", "native"]
+    assert report["live_model_calls"] == 0
+    assert report["baselines"] == {
+        "headroom": "bc21c9370793f7e4aa94ac4c5d9a67a8d2dd0df9",
+        "rtk": "0924356b4caba4989607227b7c8824d3d8098719",
+        "caveman": "542442bab314973709f95b85b1ac0b3f6f5b5dc6",
+    }
+    assert len(report["cases"]) == len(fixtures())
+    assert all(
+        route["required_facts_preserved"]
+        for case in report["cases"]
+        for route in case["routes"].values()
+    )
+    unknown = next(case for case in report["cases"] if case["case"] == "unknown-format")
+    assert unknown["routes"]["native"]["after_tokens"] <= unknown["routes"]["native"]["before_tokens"]
+
+    def keys(value):
+        if isinstance(value, dict):
+            return set(value).union(*(keys(item) for item in value.values()))
+        if isinstance(value, list):
+            return set().union(*(keys(item) for item in value)) if value else set()
+        return set()
+
+    assert not {"original", "content", "outputs"}.intersection(keys(report))

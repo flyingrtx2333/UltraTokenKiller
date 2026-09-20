@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-20T14:16:52.558508+00:00",
+  "generated_at": "2026-09-20T15:29:39.730402+00:00",
   "suite_passed": true,
   "test_command": [
     "C:\\Users\\17489\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
@@ -78,7 +78,7 @@
       "upstream_source_fingerprint": null
     },
     "recovery.memory": {
-      "source_fingerprint": "e131f8bf3686f66fb1e5edaf3becba38ae3f5b39dae2494b41014f6de1d095ff",
+      "source_fingerprint": "a3fb4ce11af6421af6c219bf15ef88c6db635fcc1b437267dc128c56b4a0ac0d",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
@@ -90,7 +90,7 @@
       "upstream_source_fingerprint": null
     },
     "cache.stable_prefix": {
-      "source_fingerprint": "9aac00549a50d5ebe60f5ff1aeb6d81356fbcc4f745a6b1f4b2ebcf4957c23db",
+      "source_fingerprint": "0deb078feb020c48e9d7693445b4028222540d86f849f87bae708f633071840f",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
@@ -169,6 +169,12 @@
     },
     "response.modes": {
       "source_fingerprint": "74b11296c24923b89ed12b6dff40aec3d150a740ebcd3e0ec7f106715000849d",
+      "offline_passed": true,
+      "real_client_source_fingerprint": null,
+      "upstream_source_fingerprint": null
+    },
+    "benchmark.fixed_upstream": {
+      "source_fingerprint": "cec1248f29ef39d87e32b9f7e5107387e63bfc1603415d21ed63e3b7e850a1a7",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null

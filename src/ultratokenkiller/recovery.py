@@ -8,6 +8,7 @@ import time
 from dataclasses import dataclass, field, replace
 
 from .contracts import CompressionResult
+from .token_count import count_text
 
 
 class RecoveryUnavailable(LookupError):
@@ -106,7 +107,16 @@ class RecoveryVault:
             result = factory(handle)
             # Conservatively charge Python Unicode storage and per-entry overhead.
             size = 4 * (len(original) + len(result.content)) + 2048
-            if size > self.capacity - self.used or result.after_tokens >= result.before_tokens:
+            rendered_tokens = count_text(result.content).value
+            original_tokens = count_text(original).value
+            if (
+                size > self.capacity - self.used
+                or result.after_tokens >= result.before_tokens
+                or (
+                    result.before_tokens - result.after_tokens <= 10
+                    and rendered_tokens >= original_tokens
+                )
+            ):
                 return None
             current = self.sessions.setdefault(session, Session(self.clock()))
             current.touched = self.clock()
