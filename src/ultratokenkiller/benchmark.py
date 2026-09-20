@@ -1,6 +1,7 @@
 """Offline evidence runner. No network or model calls are implicit."""
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 import os
@@ -82,7 +83,9 @@ def run_benchmark(mode="native", *, reference=None, model=None):
         from .baselines.native_v1 import compress_request
     reports = []
     for name, original, required in cases:
-        vault = RecoveryVault()
+        digest = hashlib.sha256(name.encode("utf-8")).digest()[:16]
+        stable_handle = base64.urlsafe_b64encode(digest).decode("ascii").rstrip("=")
+        vault = RecoveryVault(handle_factory=lambda value=stable_handle: value)
         start = time.perf_counter()
         metadata = {}
         restored = True

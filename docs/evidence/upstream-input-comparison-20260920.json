@@ -3,55 +3,55 @@
   "reference": "upstream-input-reference-20260920.json",
   "model": "gpt-5.6-luna",
   "criterion": "UTK reduction / upstream reduction >= 0.90 when upstream reduction > 0, with required facts preserved",
-  "passing_cases": 5,
+  "passing_cases": 11,
   "case_count": 12,
   "cases": [
     {
       "case": "json-outlier",
       "upstream_reduction": 0.6580698835274542,
-      "utk_reduction": 0.9209650582362728,
-      "upstream_ratio": 1.3994943109987357,
+      "utk_reduction": 0.9242928452579035,
+      "upstream_ratio": 1.404551201011378,
       "required_facts_preserved": true
     },
     {
       "case": "log-failure",
       "upstream_reduction": 0.8618968386023295,
-      "utk_reduction": 0.7903494176372712,
-      "upstream_ratio": 0.9169884169884169,
+      "utk_reduction": 0.8985024958402662,
+      "upstream_ratio": 1.0424710424710424,
       "required_facts_preserved": true
     },
     {
       "case": "python-signature",
       "upstream_reduction": 0.9559543230016313,
-      "utk_reduction": 0.9086460032626428,
-      "upstream_ratio": 0.9505119453924915,
+      "utk_reduction": 0.9298531810766721,
+      "upstream_ratio": 0.9726962457337884,
       "required_facts_preserved": true
     },
     {
       "case": "search-location",
       "upstream_reduction": 0.5943962641761175,
-      "utk_reduction": 0.43829219479653103,
-      "upstream_ratio": 0.7373737373737373,
+      "utk_reduction": 0.8879252835223482,
+      "upstream_ratio": 1.4938271604938271,
       "required_facts_preserved": true
     },
     {
       "case": "prose-negation",
       "upstream_reduction": 0.97,
-      "utk_reduction": 0.0,
-      "upstream_ratio": 0.0,
+      "utk_reduction": 0.93875,
+      "upstream_ratio": 0.9677835051546392,
       "required_facts_preserved": true
     },
     {
       "case": "patch-change",
       "upstream_reduction": 0.8016877637130801,
-      "utk_reduction": 0.6413502109704642,
-      "upstream_ratio": 0.8,
+      "utk_reduction": 0.7215189873417721,
+      "upstream_ratio": 0.9,
       "required_facts_preserved": true
     },
     {
       "case": "unicode-log",
       "upstream_reduction": 0.0,
-      "utk_reduction": 0.8456140350877193,
+      "utk_reduction": 0.9122807017543859,
       "upstream_ratio": null,
       "required_facts_preserved": true
     },
@@ -65,29 +65,29 @@
     {
       "case": "json-minority",
       "upstream_reduction": 0.6205357142857143,
-      "utk_reduction": 0.8854166666666666,
-      "upstream_ratio": 1.4268585131894485,
+      "utk_reduction": 0.8988095238095238,
+      "upstream_ratio": 1.4484412470023982,
       "required_facts_preserved": true
     },
     {
       "case": "log-trace",
       "upstream_reduction": 0.8226415094339623,
-      "utk_reduction": 0.5773584905660377,
-      "upstream_ratio": 0.701834862385321,
+      "utk_reduction": 0.7509433962264151,
+      "upstream_ratio": 0.9128440366972478,
       "required_facts_preserved": true
     },
     {
       "case": "typescript-signature",
       "upstream_reduction": 0.9497568881685575,
-      "utk_reduction": 0.0,
-      "upstream_ratio": 0.0,
+      "utk_reduction": 0.9286871961102107,
+      "upstream_ratio": 0.9778156996587031,
       "required_facts_preserved": true
     },
     {
       "case": "long-identifier",
       "upstream_reduction": 0.9638888888888889,
-      "utk_reduction": 0.0,
-      "upstream_ratio": 0.0,
+      "utk_reduction": 0.9305555555555556,
+      "upstream_ratio": 0.9654178674351586,
       "required_facts_preserved": true
     }
   ]

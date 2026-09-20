@@ -24,12 +24,19 @@ class Session:
 
 
 class RecoveryVault:
-    def __init__(self, capacity: int = 256 * 1024 * 1024, idle_seconds: float = 3600, clock=time.monotonic):
+    def __init__(
+        self,
+        capacity: int = 256 * 1024 * 1024,
+        idle_seconds: float = 3600,
+        clock=time.monotonic,
+        handle_factory=None,
+    ):
         if capacity <= 0 or idle_seconds <= 0:
             raise ValueError("Memory and expiry limits must be positive")
         self.capacity = capacity
         self.idle_seconds = idle_seconds
         self.clock = clock
+        self.handle_factory = handle_factory or (lambda: secrets.token_urlsafe(16))
         self.sessions: dict[str, Session] = {}
         self.used = 0
         self.frozen_until = 0.0
@@ -91,7 +98,11 @@ class RecoveryVault:
                 return existing
             if self.frozen_until > self.clock():
                 return None
-            handle = secrets.token_urlsafe(24)
+            # 128 bits is sufficient for a session-bound, memory-only capability
+            # while keeping the in-context recovery marker compact.
+            handle = self.handle_factory()
+            if not isinstance(handle, str) or not handle:
+                raise ValueError("Recovery handle factory must return a non-empty string")
             result = factory(handle)
             # Conservatively charge Python Unicode storage and per-entry overhead.
             size = 4 * (len(original) + len(result.content)) + 2048

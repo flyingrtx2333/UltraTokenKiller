@@ -16,6 +16,15 @@ def test_offline_report_is_metadata_only_and_honest():
     assert run_benchmark("upstream")["status"] == "unavailable"
 
 
+def test_native_benchmark_is_deterministic_except_duration():
+    first = run_benchmark("native", model="gpt-5.6-luna")
+    second = run_benchmark("native", model="gpt-5.6-luna")
+    for left, right in zip(first["cases"], second["cases"]):
+        left = {key: value for key, value in left.items() if key != "duration_ms"}
+        right = {key: value for key, value in right.items() if key != "duration_ms"}
+        assert left == right
+
+
 def test_fixed_reference_results_are_validated_before_comparison(tmp_path):
     base = run_benchmark("passthrough")
     cases = fixtures()

@@ -1,4 +1,5 @@
 """Syntax-aware summaries built with general-purpose tree-sitter grammars."""
+import re
 from functools import lru_cache
 
 LANGUAGES = {"javascript", "typescript", "tsx", "go", "rust", "java", "c", "cpp", "perl"}
@@ -28,7 +29,10 @@ def summarize_code(text: str, language: str, query: str = "") -> str:
             name = node.child_by_field_name("name")
             if name is not None:
                 identifier = source[name.start_byte:name.end_byte].decode("utf-8", errors="ignore")
-                if identifier and identifier in query:
+                signature_only = bool(
+                    re.search(r"\b(signature|declaration|prototype|type|api)\b", query, re.I)
+                )
+                if identifier and identifier in query and not signature_only:
                     return
             body = node.child_by_field_name("body")
             if body is None:

@@ -96,10 +96,10 @@ def _json_compact(text: str) -> str:
 
 def _log_compact(text: str) -> str:
     lines = text.splitlines()
-    keep = set(range(min(3, len(lines)))) | set(range(max(0, len(lines)-3), len(lines)))
+    keep = set(range(min(1, len(lines)))) | set(range(max(0, len(lines)-1), len(lines)))
     for i, line in enumerate(lines):
         if CRITICAL.search(line) or line.startswith(("Traceback", "  File ", "Caused by:", "\tat ")):
-            keep.update(range(max(0, i-2), min(len(lines), i+4)))
+            keep.update(range(max(0, i-1), min(len(lines), i+2)))
     seen = set()
     for i, line in enumerate(lines):
         template = re.sub(r"\b\d+(?:[.:/-]\d+)*\b", "#", line)
@@ -111,13 +111,13 @@ def _log_compact(text: str) -> str:
     for i, line in enumerate(lines):
         if i in keep:
             if removed:
-                output.append(f"[UTK: {removed} repetitive log lines omitted]")
+                output.append(f"[{removed} repeated]")
                 removed = 0
             output.append(line)
         else:
             removed += 1
     if removed:
-        output.append(f"[UTK: {removed} repetitive log lines omitted]")
+        output.append(f"[{removed} repeated]")
     return "\n".join(output) + ("\n" if text.endswith("\n") else "")
 
 
@@ -157,11 +157,11 @@ def _diff_compact(text: str) -> str:
             omitted += 1
             continue
         if omitted:
-            output.append(f"[UTK: {omitted} context lines omitted; not an applicable patch]\n")
+            output.append(f"[UTK: {omitted} context omitted; summary]\n")
             omitted = 0
         output.append(line)
     if omitted:
-        output.append(f"[UTK: {omitted} context lines omitted; not an applicable patch]\n")
+        output.append(f"[UTK: {omitted} context omitted; summary]\n")
     return "".join(output)
 
 
@@ -176,8 +176,14 @@ def _search_compact(text: str) -> str:
     output = []
     for path, hits in groups.items():
         output.append(path)
-        for location, content in hits:
-            # All hits retained: grouping saves repeated path prefixes without ranking loss.
+        visible = hits
+        omitted = 0
+        if len(hits) > 20:
+            visible = hits[:8] + hits[-8:]
+            omitted = len(hits) - len(visible)
+        for index, (location, content) in enumerate(visible):
+            if omitted and index == 8:
+                output.append(f"  [UTK: {omitted} middle hits omitted]")
             output.append(f"  {location}: {content}")
     return "\n".join(output) + ("\n" if text.endswith("\n") else "")
 
@@ -223,7 +229,7 @@ def compress_content(text: str, *, session: str, vault: RecoveryVault, profile="
             elif kind == "image":
                 content = candidate
             else:
-                marker = f"UTK original: {handle}; use utk_retrieve"
+                marker = f"UTK retrieve: {handle}"
                 prefix = "# " if kind in {"code:python", "code:perl"} else "// " if kind.startswith("code:") else ""
                 content = candidate.rstrip()+"\n"+prefix+marker+"\n"
             return CompressionResult(content, kind, before, estimate_tokens(content), recovery_id=handle,

@@ -5,6 +5,29 @@ from functools import lru_cache
 from .assets import model_directory, verify_assets
 
 
+def _collapse_exact_line_runs(text: str) -> str:
+    """Collapse only consecutive byte-equal lines, retaining order and count."""
+    lines = text.splitlines(keepends=True)
+    if len(lines) < 3:
+        return text
+    output: list[str] = []
+    index = 0
+    while index < len(lines):
+        end = index + 1
+        while end < len(lines) and lines[end] == lines[index]:
+            end += 1
+        count = end - index
+        output.append(lines[index])
+        if count >= 3:
+            newline = "\n" if lines[index].endswith(("\n", "\r")) else ""
+            output.append(f"[UTK: identical line repeated {count - 1} more times]{newline}")
+        elif count == 2:
+            output.append(lines[index])
+        index = end
+    candidate = "".join(output)
+    return candidate if len(candidate) < len(text) else text
+
+
 @lru_cache(maxsize=2)
 def load_encoder(directory: str):
     import onnxruntime as ort
@@ -26,6 +49,9 @@ def summarize_text(text: str, query: str, home=None, aggressive=False) -> str:
     import numpy as np
     if not query:
         return text
+    collapsed = _collapse_exact_line_runs(text)
+    if collapsed != text:
+        return collapsed
     if re.search(r"[\u3400-\u9fff]", text + query):
         return summarize_cjk_text(text, query, aggressive)
     chunks = re.split(r"(?<=\n)\n+|(?<=[.!?])\s+(?=[A-Z])", text)
