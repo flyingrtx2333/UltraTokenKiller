@@ -89,18 +89,34 @@ def compress_tool_output(command: list[str], text: str) -> str:
 def response_instruction(level: str) -> str:
     styles = {
         "off": "",
-        "lite": "Answer directly in concise complete sentences. Omit filler and repeated conclusions.",
-        "full": "Give the result first, then only necessary evidence and next actions. Avoid repetition.",
-        "ultra": "Use the fewest words that fully answer the task. Prefer short factual statements.",
-        "wenyan-lite": "以简洁中文作答，可用浅近文言；先述结论，再列必要依据。",
-        "wenyan-full": "以浅近文言简答，省赘语，明因果与行动；勿因省字损准确。",
-        "wenyan-ultra": "以极简文言答，存事实、条件与行动；难解术语用现代汉语。",
+        "lite": (
+            "Answer directly in concise complete sentences. Remove filler, hedging, pleasantries, "
+            "and repeated conclusions. Keep articles and full sentences."
+        ),
+        "full": (
+            "Lead with the result. Use compact sentences or clear fragments and only necessary "
+            "evidence and actions. Remove filler, articles, and repetition. Do not narrate tool calls "
+            "or add decorative tables or emoji."
+        ),
+        "ultra": (
+            "Use the fewest words that fully answer. State each fact once. Omit conjunctions only "
+            "when causality stays unambiguous. Never invent prose abbreviations or use causal arrows."
+        ),
+        "wenyan-lite": "以半文言简答，去客套、犹疑与复述，保留完整语法、事实与必要依据。",
+        "wenyan-full": "以文言简答，省赘语，明因果与行动；勿因省字损准确。",
+        "wenyan-ultra": "以极简文言答，事实仅述一次，存条件、否定与行动；难解术语用现代汉语。",
     }
     if level not in styles:
         raise ValueError("Unknown response style")
     if level == "off":
         return ""
-    return styles[level] + " Preserve correctness, uncertainty, warnings, negations, identifiers, numbers and code. Follow requests for detailed explanations."
+    return styles[level] + (
+        " Preserve correctness, uncertainty, risks, conditions, warnings, negations, identifiers, "
+        "paths, numbers, units, technical terms, code blocks, API and CLI names, and exact error "
+        "strings. Keep the user's language. Use complete unambiguous sentences for security warnings "
+        "and irreversible actions. Follow explicit requests for detailed explanations. Compression "
+        "must never make the answer longer."
+    )
 
 
 def apply_response_style(payload: dict, level: str, protocol: str = "openai") -> dict:

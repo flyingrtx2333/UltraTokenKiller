@@ -66,6 +66,14 @@ python scripts/generate-rtk-reference.py --checkout path/to/rtk --binary path/to
 
 当前 8 个捕获输出样例均保留关键事实，UTK 压缩率达到对应固定 RTK 的 95.5% 至 157.1%。这只是已验证命令族证据，不代表已覆盖全部 RTK 清单，详见 [固定 RTK 捕获输出对照](docs/upstream-rtk-reference-2026-09-20.md)。
 
+Caveman 固定策略契约可离线复现，不调用模型：
+
+```sh
+python scripts/generate-caveman-reference.py --checkout path/to/caveman --output caveman-policy-reference.json
+```
+
+当前 6 个启用档位、`off` 无操作行为和 7 组共同安全规则均通过固定源文件核对。该结果只证明指令策略覆盖，不冒充回答质量或输出节省比例，详见 [固定 Caveman 策略契约](docs/upstream-caveman-policy-reference-2026-09-20.md)。
+
 隔离验证时设置 `UTK_HOME`，执行 `utk install --no-clients --no-autostart`。看板优先使用 127.0.0.1:18787，端口占用时选择空闲端口。无需另外下载压缩器；`--skip-downloads` 仅作为旧命令兼容参数。
 
 已有本地 Headroom 等代理不会自动串联。客户端上游仍指向本地代理时，安装器保留配置并提示先恢复原始上游。旧版本配置中的 headroom/rtk/caveman 字段名暂保留为迁移兼容别名，不表示运行这些外部程序。

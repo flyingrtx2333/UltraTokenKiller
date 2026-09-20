@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "baseline": "542442bab314973709f95b85b1ac0b3f6f5b5dc6",
+  "kind": "utk-fixed-caveman-policy-reference",
+  "source": "plugins/caveman/skills/caveman/SKILL.md",
+  "source_sha256": "0bf09a0a9a017d004a81d4b693e5a2d830e1a28230a5885df773e1ed9c0571cc",
+  "active_modes": [
+    {
+      "mode": "lite",
+      "upstream_declared": true,
+      "utk_instruction_present": true,
+      "instruction_sha256": "99c97f4103eae8fd8c8d39739fa0a83119713453e41cf89f27c01483b0612ba4"
+    },
+    {
+      "mode": "full",
+      "upstream_declared": true,
+      "utk_instruction_present": true,
+      "instruction_sha256": "9697807dd25f53097570d8f6c81a094a79699fda015a6ff676ca71ed8eafc3bf"
+    },
+    {
+      "mode": "ultra",
+      "upstream_declared": true,
+      "utk_instruction_present": true,
+      "instruction_sha256": "4f24c60be66bb423f33f1c267215e152d2c7e8f877c260963b34f6340b4a10bd"
+    },
+    {
+      "mode": "wenyan-lite",
+      "upstream_declared": true,
+      "utk_instruction_present": true,
+      "instruction_sha256": "402664916f50931932df126ade68d1ddae9daaa5f16bdd834c8096f8348ed581"
+    },
+    {
+      "mode": "wenyan-full",
+      "upstream_declared": true,
+      "utk_instruction_present": true,
+      "instruction_sha256": "e4b9ab7257ab5273a9d246276b0cf2d2b3327bc2d8c0e75fcd27d82118fce2c8"
+    },
+    {
+      "mode": "wenyan-ultra",
+      "upstream_declared": true,
+      "utk_instruction_present": true,
+      "instruction_sha256": "17d8f3f6da3087f37fce8f5bdfeaeb4728caad1e7c121f064bb16566690374cf"
+    }
+  ],
+  "off_is_noop": true,
+  "rules": [
+    {
+      "id": "facts-and-errors",
+      "upstream_present": true,
+      "utk_present": true
+    },
+    {
+      "id": "negations-and-numbers",
+      "upstream_present": true,
+      "utk_present": true
+    },
+    {
+      "id": "language-preservation",
+      "upstream_present": true,
+      "utk_present": true
+    },
+    {
+      "id": "safety-clarity",
+      "upstream_present": true,
+      "utk_present": true
+    },
+    {
+      "id": "detail-override",
+      "upstream_present": true,
+      "utk_present": true
+    },
+    {
+      "id": "no-invented-abbreviations",
+      "upstream_present": true,
+      "utk_present": true
+    },
+    {
+      "id": "never-grow",
+      "upstream_present": true,
+      "utk_present": true
+    }
+  ],
+  "policy_contract_passed": true,
+  "paired_output_quality_passed": false,
+  "live_model_calls": 0
+}
