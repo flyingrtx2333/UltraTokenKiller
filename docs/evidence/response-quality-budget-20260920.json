@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "corpus_sha256": "8016b282a752ae8c7c5c37de4a37112d1f08cc3f57588ca886e2ef321659d060",
+  "model": "gpt-5.6-luna",
+  "scenario_count": 5,
+  "active_modes": [
+    "lite",
+    "full",
+    "ultra",
+    "wenyan-lite",
+    "wenyan-full",
+    "wenyan-ultra"
+  ],
+  "repetitions": 3,
+  "responses_per_pair": 2,
+  "required_model_requests": 180,
+  "structured_bypass_cases": 2,
+  "live_model_calls": 0,
+  "status": "authorization_required"
+}

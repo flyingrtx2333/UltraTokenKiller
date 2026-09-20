@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "model": "gpt-5.6-luna",
+  "modes": ["off", "lite", "full", "ultra", "wenyan-lite", "wenyan-full", "wenyan-ultra"],
+  "repetitions": 3,
+  "responses_per_pair": 2,
+  "scenarios": [
+    {"id": "technical-qa", "kind": "technical_qa", "prompt": "Explain why retrying an HTTP 429 write request can duplicate work. The limit is 73 requests per minute and the retry delay is 20 seconds.", "required_facts": ["HTTP 429", "73", "20 seconds", "duplicate", "do not retry uncertain writes"]},
+    {"id": "code-explanation", "kind": "code_explanation", "prompt": "Explain what `src/cache.py:41` does when `ttl_ms <= 0`, including the `CacheEntry.expires_at` identifier and the negative condition.", "required_facts": ["src/cache.py:41", "ttl_ms <= 0", "CacheEntry.expires_at", "does not cache"]},
+    {"id": "code-review", "kind": "code_review", "prompt": "Review a change that runs `git push --force` after a timeout. State the irreversible risk, uncertainty about remote state, and a safe check.", "required_facts": ["git push --force", "irreversible", "remote state is uncertain", "verify before retry"]},
+    {"id": "commit-message", "kind": "commit_message", "prompt": "Write a concise commit description for preserving exit code 137, stderr, and `/tmp/build.log` when cancellation kills a process group.", "required_facts": ["137", "stderr", "/tmp/build.log", "process group", "cancellation"]},
+    {"id": "task-summary", "kind": "task_summary", "prompt": "Summarize a validation: 211 tests passed, 1 was skipped, cost is unknown, Linux arm64 was not tested, and release remains blocked.", "required_facts": ["211", "1", "unknown", "Linux arm64", "not tested", "blocked"]}
+  ],
+  "structured_bypass": [
+    {"id": "json-schema", "kind": "json_schema"},
+    {"id": "tool-call", "kind": "tool_call"}
+  ]
+}

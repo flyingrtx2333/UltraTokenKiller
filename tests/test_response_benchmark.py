@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from ultratokenkiller.response_benchmark import evaluate_pairs
+from ultratokenkiller.response_benchmark import evaluate_pairs, plan_response_budget
 
 
 def test_paired_response_report_checks_facts_and_omits_bodies(tmp_path):
@@ -27,3 +27,17 @@ def test_response_pairs_reject_unknown_mode(tmp_path):
     path.write_text('{"cases":[{"mode":"invented","baseline":"a","candidate":"b"}]}')
     with pytest.raises(ValueError, match="known mode"):
         evaluate_pairs(path)
+
+
+def test_frozen_response_corpus_has_complete_coverage_and_explicit_budget():
+    report = plan_response_budget(
+        "src/ultratokenkiller/data/response-quality-corpus.json"
+    )
+
+    assert report["scenario_count"] == 5
+    assert len(report["active_modes"]) == 6
+    assert report["repetitions"] == 3
+    assert report["required_model_requests"] == 180
+    assert report["structured_bypass_cases"] == 2
+    assert report["live_model_calls"] == 0
+    assert report["status"] == "authorization_required"

@@ -11,6 +11,44 @@ from .token_count import count_text
 MODES = {"off", "lite", "full", "ultra", "wenyan-lite", "wenyan-full", "wenyan-ultra"}
 
 
+def plan_response_budget(path: Path | str) -> dict:
+    """Validate the frozen corpus and calculate its explicit live-call budget."""
+    source = Path(path)
+    data = json.loads(source.read_text(encoding="utf-8"))
+    modes = data.get("modes", [])
+    scenarios = data.get("scenarios", [])
+    repetitions = data.get("repetitions")
+    responses_per_pair = data.get("responses_per_pair")
+    if set(modes) != MODES or len(modes) != len(MODES):
+        raise ValueError("Response corpus must contain every declared mode exactly once")
+    if not isinstance(repetitions, int) or repetitions < 1:
+        raise ValueError("Response corpus repetitions must be a positive integer")
+    if responses_per_pair != 2:
+        raise ValueError("Paired evaluation requires baseline and candidate responses")
+    required_kinds = {
+        "technical_qa", "code_explanation", "code_review", "commit_message", "task_summary"
+    }
+    if {item.get("kind") for item in scenarios} != required_kinds:
+        raise ValueError("Response corpus scenario coverage is incomplete")
+    if any(not item.get("required_facts") for item in scenarios):
+        raise ValueError("Every response scenario requires protected facts")
+    active_modes = [mode for mode in modes if mode != "off"]
+    requests = len(scenarios) * len(active_modes) * repetitions * responses_per_pair
+    return {
+        "schema_version": 1,
+        "corpus_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+        "model": data.get("model"),
+        "scenario_count": len(scenarios),
+        "active_modes": active_modes,
+        "repetitions": repetitions,
+        "responses_per_pair": responses_per_pair,
+        "required_model_requests": requests,
+        "structured_bypass_cases": len(data.get("structured_bypass", [])),
+        "live_model_calls": 0,
+        "status": "authorization_required",
+    }
+
+
 def evaluate_pairs(path: Path, model: str | None = None) -> dict:
     data = json.loads(path.read_text(encoding="utf-8"))
     cases = data.get("cases") if isinstance(data, dict) else None
