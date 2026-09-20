@@ -120,7 +120,28 @@ def compress_tool(text: str, kind: str) -> str:
         return rendered if len(rendered) <= len(text) else text
     if kind in {"pytest", "cargo-test", "go-test", "js-test", "generic-test"}:
         from .compression import CRITICAL
-        if CRITICAL.search(re.sub(r"\b0 (?:failed|failures|errors|warnings)\b", "", text)):
+        has_failure = bool(CRITICAL.search(re.sub(r"\b0 (?:failed|failures|errors|warnings)\b", "", text)))
+        if has_failure and kind == "pytest":
+            kept = [
+                line for line in lines
+                if re.match(r"^_+\s+.+\s+_+$", line)
+                or re.match(r"^(?:E\s+|>\s+|FAILED\s+)", line)
+                or re.search(r"\.py:\d+:\s+(?:AssertionError|[A-Za-z]+Error)", line)
+                or re.search(r"\b\d+ failed(?:, \d+ passed)?\b", line)
+            ]
+            rendered = "\n".join(dict.fromkeys(kept))
+            return rendered + "\n" if rendered else text
+        if has_failure and kind == "generic-test" and "BUILD FAILURE" in text:
+            kept = [
+                line for line in lines
+                if "<<< FAILURE" in line
+                or re.search(r"(?:AssertionFailedError|AssertionError|Exception|Error):", line)
+                or re.match(r"^\[ERROR\]\s+(?:Failures:|Tests run:|\S+\.(?:\S+):\d+|Failed to execute goal)", line)
+                or "BUILD FAILURE" in line
+            ]
+            rendered = "\n".join(dict.fromkeys(kept))
+            return rendered + "\n" if rendered else text
+        if has_failure:
             return text
         if kind == "pytest":
             summary = [line for line in lines if re.search(r"\b\d+ passed\b", line)]
@@ -142,10 +163,18 @@ def compress_tool(text: str, kind: str) -> str:
         return "\n".join(summary)+"\n" if valid else text
     if kind == "diagnostics":
         # Group exact duplicated diagnostic lines; never discard distinct failures.
-        if not any(re.search(r"(?:error TS\d+|\b[A-Z]\d{3}\b|\berror:)", line) for line in lines):
+        diagnostic_lines = [re.sub(r"\x1b\[[0-9;]*[A-Za-z]", "", line) for line in lines]
+        if not any(re.search(r"(?:error TS\d+|\b[A-Z]\d{3}\b|\berror:)", line) for line in diagnostic_lines):
             return text
+        typescript = [
+            line for line in diagnostic_lines
+            if re.search(r"(?:^|\s)error TS\d+:", line)
+            or re.search(r"^Found \d+ errors?", line)
+        ]
+        if typescript:
+            return "\n".join(dict.fromkeys(typescript)) + "\n"
         seen = {}
-        for line in lines:
+        for line in diagnostic_lines:
             seen[line] = seen.get(line, 0)+1
         return "\n".join(line+(f" [repeated {count} times]" if count > 1 else "") for line, count in seen.items())+"\n"
     if kind == "table":

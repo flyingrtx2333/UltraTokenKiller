@@ -58,6 +58,14 @@ python scripts/generate-reference.py --headroom path/to/headroom --rtk path/to/r
 
 结果包会分别记录三层覆盖数；当前固定样例是输入压缩套件，因此 RTK 与 Caveman 覆盖明确为 0，不会把“提交已校验”冒充三层对标通过。Headroom 缺少固定提交编译扩展时生成会失败并说明原因。首份实测结果与剩余差距见 [固定上游输入层对照](docs/upstream-input-reference-2026-09-20.md)。
 
+维护者也可以让固定 RTK 二进制读取捕获的公开失败输出，以验证命令专属过滤器，而不重新执行测试或写操作：
+
+```sh
+python scripts/generate-rtk-reference.py --checkout path/to/rtk --binary path/to/rtk-binary --output rtk-reference.json --comparison rtk-comparison.json
+```
+
+首批 3 个失败输出样例均保留关键事实，UTK 压缩率达到对应固定 RTK 的 95.5% 至 132.8%。这只是首批命令族证据，不代表已覆盖全部 RTK 清单，详见 [固定 RTK 捕获输出对照](docs/upstream-rtk-reference-2026-09-20.md)。
+
 隔离验证时设置 `UTK_HOME`，执行 `utk install --no-clients --no-autostart`。看板优先使用 127.0.0.1:18787，端口占用时选择空闲端口。无需另外下载压缩器；`--skip-downloads` 仅作为旧命令兼容参数。
 
 已有本地 Headroom 等代理不会自动串联。客户端上游仍指向本地代理时，安装器保留配置并提示先恢复原始上游。旧版本配置中的 headroom/rtk/caveman 字段名暂保留为迁移兼容别名，不表示运行这些外部程序。

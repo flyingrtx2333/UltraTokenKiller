@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "baseline": "0924356b4caba4989607227b7c8824d3d8098719",
+  "model": "gpt-5.6-luna",
+  "case_count": 3,
+  "live_model_calls": 0,
+  "cases": [
+    {
+      "case": "pytest-failure",
+      "kind": "pytest",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.7194244604316546,
+      "utk_reduction": 0.6870503597122302,
+      "ratio": 0.955,
+      "exit_code": 1
+    },
+    {
+      "case": "typescript-pretty-errors",
+      "kind": "diagnostics",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.8394160583941606,
+      "utk_reduction": 0.8248175182481752,
+      "ratio": 0.9826086956521739,
+      "exit_code": 2
+    },
+    {
+      "case": "maven-test-failure",
+      "kind": "generic-test",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.527086383601757,
+      "utk_reduction": 0.6998535871156661,
+      "ratio": 1.3277777777777777,
+      "exit_code": 1
+    }
+  ]
+}
