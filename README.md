@@ -83,6 +83,8 @@ utk capabilities --json
 utk benchmark
 # 只有显式提供经过校验的固定上游结果时，才会生成上游对照结论
 utk benchmark --reference path/to/reference-results.json --model gpt-5.6-luna
+# 一次生成透传、旧版、固定上游和当前 UTK 四路对齐报告
+utk benchmark --mode matrix --reference path/to/reference-results.json --model gpt-5.6-luna
 utk web
 ```
 

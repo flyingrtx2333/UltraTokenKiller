@@ -75,7 +75,7 @@ def assets(action: str = typer.Argument("status")):
 
 
 @app.command()
-def benchmark(mode: str = typer.Option("native", help="passthrough、prototype、native、upstream"),
+def benchmark(mode: str = typer.Option("native", help="passthrough、prototype、native、upstream、matrix"),
               output: Path | None = typer.Option(None), live: bool = typer.Option(False),
               max_requests: int | None = typer.Option(None),
               reference: Path | None = typer.Option(None, help="固定上游隔离运行结果"),
@@ -83,7 +83,7 @@ def benchmark(mode: str = typer.Option("native", help="passthrough、prototype�
               response_pairs: Path | None = typer.Option(None, help="回答精简成对评测 JSON")):
     """离线对照评测；从不隐式调用模型。"""
     import json
-    from .benchmark import run_benchmark, save_report
+    from .benchmark import run_benchmark, run_benchmark_matrix, save_report
     if live:
         if max_requests is None or max_requests <= 0:
             raise typer.BadParameter("真实评测必须设置正数 --max-requests")
@@ -93,7 +93,11 @@ def benchmark(mode: str = typer.Option("native", help="passthrough、prototype�
             from .response_benchmark import evaluate_pairs
             report = evaluate_pairs(response_pairs, model)
         else:
-            report = run_benchmark(mode, reference=reference, model=model)
+            report = (
+                run_benchmark_matrix(reference=reference, model=model)
+                if mode == "matrix"
+                else run_benchmark(mode, reference=reference, model=model)
+            )
     except ValueError as error:
         raise typer.BadParameter(str(error)) from error
     rendered = json.dumps(report, ensure_ascii=False, indent=2)

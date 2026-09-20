@@ -19,4 +19,7 @@
 ```sh
 python scripts/generate-reference.py --headroom output/reference-headroom --rtk output/reference-rtk --caveman output/reference-caveman --output reference-results.json --python output/reference-headroom/.venv/Scripts/python.exe
 utk benchmark --mode upstream --reference reference-results.json --model gpt-5.6-luna
+utk benchmark --mode matrix --reference reference-results.json --model gpt-5.6-luna
 ```
+
+`matrix` 将透传、冻结基础版、固定上游和当前 UTK 按样例哈希对齐，并分别记录事实保持、恢复、token 估算方法、耗时和峰值内存。缺少或不匹配的固定上游结果会令报告保持 `incomplete`，不会以当前 UTK 输出替代上游结果。

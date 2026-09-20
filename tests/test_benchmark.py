@@ -1,7 +1,13 @@
 import hashlib
 import json
 
-from ultratokenkiller.benchmark import capability_report, fixtures, run_benchmark, save_report
+from ultratokenkiller.benchmark import (
+    capability_report,
+    fixtures,
+    run_benchmark,
+    run_benchmark_matrix,
+    save_report,
+)
 
 
 def test_offline_report_is_metadata_only_and_honest():
@@ -73,3 +79,37 @@ def test_latest_report_write_is_atomic_and_metadata_only(tmp_path):
     assert not list(path.parent.glob("*.tmp"))
     assert all("content" not in case for case in stored["cases"])
     assert report["parity_certified"] is False
+
+
+def test_four_route_matrix_keeps_missing_upstream_explicit():
+    report = run_benchmark_matrix()
+
+    assert report["status"] == "incomplete"
+    assert report["route_order"] == ["passthrough", "prototype", "upstream", "native"]
+    assert report["routes"]["upstream"]["status"] == "unavailable"
+    assert report["live_model_calls"] == 0
+    assert all(case["routes"]["upstream"]["status"] == "unavailable" for case in report["cases"])
+
+
+def test_four_route_matrix_aligns_validated_reference(tmp_path):
+    passthrough = run_benchmark("passthrough")
+    fixture_rows = fixtures()
+    reference = tmp_path / "reference.json"
+    reference.write_text(json.dumps({
+        "baselines": passthrough["baselines"],
+        "fixture_sha256": {
+            name: hashlib.sha256(content.encode("utf-8")).hexdigest()
+            for name, content, _required in fixture_rows
+        },
+        "outputs": {name: content for name, content, _required in fixture_rows},
+        "suite_scope": "input-compression",
+        "coverage": {"headroom": len(fixture_rows), "rtk": 0, "caveman": 0},
+        "generator": "test-fixed-upstream",
+    }), encoding="utf-8")
+
+    report = run_benchmark_matrix(reference=reference)
+
+    assert report["status"] == "completed"
+    assert report["live_model_calls"] == 0
+    assert all(set(case["routes"]) == set(report["route_order"]) for case in report["cases"])
+    assert all(case["routes"]["upstream"]["required_facts_preserved"] for case in report["cases"])

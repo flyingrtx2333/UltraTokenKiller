@@ -136,6 +136,66 @@ def run_benchmark(mode="native", *, reference=None, model=None):
             "implementation_fingerprint": _implementation_fingerprint()}
 
 
+def run_benchmark_matrix(*, reference=None, model=None):
+    """Run all four deterministic routes and align metadata by fixture.
+
+    The report never embeds fixture bodies or compressed outputs. A missing
+    fixed-upstream result remains explicit instead of using native output.
+    """
+    route_names = ("passthrough", "prototype", "upstream", "native")
+    routes = {
+        name: run_benchmark(name, reference=reference, model=model)
+        for name in route_names
+    }
+    comparisons = []
+    for case_name, original, _required in fixtures():
+        route_cases = {}
+        for route_name, route_report in routes.items():
+            case = next(
+                (item for item in route_report.get("cases", []) if item["case"] == case_name),
+                None,
+            )
+            if case is None:
+                route_cases[route_name] = {
+                    "status": route_report["status"],
+                    "reason": route_report.get("reason"),
+                }
+                continue
+            route_cases[route_name] = {
+                "status": "completed",
+                "before_tokens": case["before_tokens"],
+                "after_tokens": case["after_tokens"],
+                "reduction": case["reduction"],
+                "required_facts_preserved": case["required_facts_preserved"],
+                "recoverable": case["recoverable"],
+                "duration_ms": case["duration_ms"],
+                "peak_memory_bytes": case["peak_memory_bytes"],
+                "execution_result": case["execution_result"],
+                "engine": case["engine"],
+                "estimator": case["estimator"],
+                "exact_for_model": case["exact_for_model"],
+            }
+        comparisons.append({
+            "case": case_name,
+            "fixture_sha256": hashlib.sha256(original.encode("utf-8")).hexdigest(),
+            "routes": route_cases,
+        })
+    completed = all(route["status"] == "completed" for route in routes.values())
+    return {
+        "schema_version": 1,
+        "mode": "matrix",
+        "status": "completed" if completed else "incomplete",
+        "route_order": list(route_names),
+        "routes": routes,
+        "cases": comparisons,
+        "baselines": routes["native"]["baselines"],
+        "model": model,
+        "live_model_calls": sum(route["live_model_calls"] for route in routes.values()),
+        "parity_certified": False,
+        "implementation_fingerprint": _implementation_fingerprint(),
+    }
+
+
 def save_report(report: dict, kind="compression", home=None) -> Path:
     if kind not in {"compression", "response"}:
         raise ValueError("Unknown benchmark report kind")
