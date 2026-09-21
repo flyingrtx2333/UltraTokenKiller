@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 import time
 import asyncio
@@ -9,6 +10,7 @@ import copy
 import uuid
 import hashlib
 from contextlib import asynccontextmanager, suppress
+from urllib.parse import urlparse
 
 import httpx
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
@@ -19,6 +21,13 @@ from .identity import ensure_session_token, instance_id
 from .engines import apply_response_style, estimate_tokens
 from .broker import BrokerClient
 from .store import Store
+
+logger = logging.getLogger(__name__)
+
+
+def websocket_proxy_policy(url: str):
+    """Let websockets discover proxies except for local upstream routes."""
+    return None if urlparse(url).hostname in {"127.0.0.1", "localhost", "::1"} else True
 
 HOP_HEADERS = {"host", "content-length", "connection", "transfer-encoding", "keep-alive", "upgrade", "proxy-authorization", "proxy-authenticate", "te", "trailer"}
 
@@ -322,13 +331,16 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
             url += "?" + socket.url.query
         headers = {k: v for k, v in socket.headers.items() if k.lower() not in HOP_HEADERS | {"sec-websocket-key", "sec-websocket-version", "sec-websocket-extensions", "sec-websocket-protocol", "x-utk-session-id", "x-utk-token"}}
         protocols = [x.strip() for x in socket.headers.get("sec-websocket-protocol", "").split(",") if x.strip()]
+        websocket_proxy = websocket_proxy_policy(url)
         try:
             remote = await connect(url, additional_headers=headers, subprotocols=protocols or None,
-                                   compression=None, max_size=16*1024*1024, max_queue=16, open_timeout=20)
+                                   compression=None, max_size=16*1024*1024, max_queue=16,
+                                   open_timeout=20, proxy=websocket_proxy)
         except InvalidStatus as error:
             await socket.send_denial_response(JSONResponse({"error": "Upstream WebSocket handshake rejected"}, status_code=error.response.status_code))
             return
-        except Exception:
+        except Exception as error:
+            logger.warning("WebSocket upstream connection failed: %s: %s", type(error).__name__, error)
             await socket.close(code=1013)
             return
         await socket.accept(subprotocol=remote.subprotocol)

@@ -9,7 +9,14 @@ from websockets.sync.server import serve
 from ultratokenkiller.broker import broker_router
 from ultratokenkiller.config import Settings
 from ultratokenkiller.mcp import dispatch
-from ultratokenkiller.proxy import create_proxy
+from ultratokenkiller.proxy import create_proxy, websocket_proxy_policy
+
+
+def test_websocket_proxy_policy_bypasses_loopback_only():
+    assert websocket_proxy_policy("ws://127.0.0.1:9000/v1/responses") is None
+    assert websocket_proxy_policy("ws://localhost:9000/v1/responses") is None
+    assert websocket_proxy_policy("ws://[::1]:9000/v1/responses") is None
+    assert websocket_proxy_policy("wss://api.openai.com/v1/responses") is True
 from ultratokenkiller.recovery import RecoveryVault
 from ultratokenkiller.store import Store
 
