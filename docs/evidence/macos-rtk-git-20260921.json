@@ -2,13 +2,13 @@
   "schema_version": 1,
   "date": "2026-09-21",
   "platform": "macos-arm64",
-  "revision": "ba10bf5",
-  "workspace": "/tmp/utk-git-ba10bf5",
-  "utk_home": "/tmp/utk-git-home-ba10bf5",
+  "revision": "e4bd2ad",
+  "workspace": "/tmp/utk-git-e4bd2ad",
+  "utk_home": "/tmp/utk-git-home-e4bd2ad",
   "python": "3.14",
-  "command": "PYTHONPATH=src UTK_HOME=/tmp/utk-git-home-ba10bf5 /tmp/utk-instance-a103ac2/.venv/bin/python -m pytest -q",
+  "command": "PYTHONPATH=src UTK_HOME=/tmp/utk-git-home-e4bd2ad /tmp/utk-instance-a103ac2/.venv/bin/python -m pytest -q",
   "result": {
-    "passed": 279,
+    "passed": 280,
     "skipped": 1,
     "warnings": 2,
     "exit_code": 0
