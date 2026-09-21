@@ -5,6 +5,113 @@ from collections import Counter
 from pathlib import Path
 
 
+_LS_DATE = re.compile(
+    r"\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2}\s+(?:\d{4}|\d{2}:\d{2})\s+"
+)
+
+
+def _human_size(size: int) -> str:
+    if size >= 1_048_576:
+        return f"{size / 1_048_576:.1f}M"
+    if size >= 1024:
+        return f"{size / 1024:.1f}K"
+    return f"{size}B"
+
+
+def _octal_permissions(value: str) -> str | None:
+    if len(value) < 10 or not value.isascii():
+        return None
+    bits = value.encode("ascii")
+    triplets = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
+    result = []
+    for read, write, execute in triplets:
+        result.append(str((4 if bits[read] == 114 else 0) + (2 if bits[write] == 119 else 0)
+                          + (1 if bits[execute] in b"xst" else 0)))
+    special = (4 if bits[3] in b"sS" else 0) + (2 if bits[6] in b"sS" else 0) + (1 if bits[9] in b"tT" else 0)
+    return (str(special) if special else "") + "".join(result)
+
+
+def _compress_ls(text: str, show_long: bool) -> str:
+    entries: list[tuple[bool, str, int, str | None]] = []
+    meaningful = 0
+    for line in text.splitlines():
+        if not line or line.startswith("total "):
+            continue
+        meaningful += 1
+        match = _LS_DATE.search(line)
+        if not match:
+            # A locale, error, or output format we cannot prove equivalent.
+            if line.rstrip().endswith((" .", " ..")):
+                continue
+            return text
+        before = line[:match.start()].split()
+        if len(before) < 4 or len(before[0]) < 10:
+            return text
+        name = line[match.end():]
+        if name in {".", ".."}:
+            continue
+        size = next((int(value) for value in reversed(before) if value.isdigit()), None)
+        if size is None:
+            # Character and block devices can use major/minor values; preserve unknown shape.
+            return text
+        permissions = _octal_permissions(before[0]) if show_long else None
+        if show_long and permissions is None:
+            return text
+        entries.append((before[0].startswith("d"), name, size, permissions))
+    if not meaningful:
+        return text
+    if not entries:
+        rendered = "(empty)\n"
+    else:
+        rendered_lines = []
+        for is_dir, name, size, permissions in sorted(entries, key=lambda item: not item[0]):
+            label = name + "/" if is_dir else name
+            fields = ([permissions] if permissions else []) + [label]
+            if not is_dir:
+                fields.append(_human_size(size))
+            rendered_lines.append("  ".join(fields))
+        rendered = "\n".join(rendered_lines) + "\n"
+    return rendered if len(rendered) < len(text) else text
+
+
+def _compress_tree(text: str) -> str:
+    lines = text.splitlines()
+    if not lines or "\x00" in text:
+        return text
+    summary = re.compile(r"^\s*\d+ director(?:y|ies),\s*\d+ files?\s*$")
+    if not any(summary.match(line) for line in lines):
+        return text
+    rendered_lines = [line.rstrip() for line in lines if line.strip() and not summary.match(line)]
+    if not rendered_lines:
+        return text
+    rendered = "\n".join(rendered_lines) + "\n"
+    return rendered if len(rendered) < len(text) else text
+
+
+def _compress_find(text: str) -> str:
+    paths = [line for line in text.splitlines() if line]
+    if len(paths) < 3 or "\x00" in text:
+        return text
+    if any(line.startswith(("find:", "fd:")) or "\n" in line for line in paths):
+        return text
+    grouped: dict[str, list[str]] = {}
+    for path in paths:
+        normalized = path.replace("\\", "/")
+        if normalized.endswith("/") or normalized in {".", ".."}:
+            return text
+        parent, separator, name = normalized.rpartition("/")
+        if not name or any(character in name for character in "\r\n\x00"):
+            return text
+        grouped.setdefault(parent or ".", []).append(name)
+    output = [f"{len(paths)} files in {len(grouped)} dirs:", ""]
+    for parent in sorted(grouped):
+        files = grouped[parent]
+        output.append(f"{parent}/ ({len(files)})")
+        output.extend(f"  {name}" for name in files)
+    rendered = "\n".join(output) + "\n"
+    return rendered if len(rendered) < len(text) else text
+
+
 def command_filter(argv: list[str]) -> str | None:
     if not argv or any(x in {"|", "||", "&&", ";", ">", ">>", "<"} for x in argv):
         return None
@@ -47,10 +154,29 @@ def command_filter(argv: list[str]) -> str | None:
         } for x in args):
             return "search"
         return None
-    if name in {"ls", "tree", "find", "fd"}:
-        if any(x in {"-print0", "--print0", "-0", "--json"} for x in args):
+    if name == "ls":
+        if any(x in {"-0", "--zero", "--dired", "--hyperlink", "--json"}
+               or x.startswith(("--format=", "--quoting-style=")) for x in args):
             return None
-        return "file-list"
+        long_listing = any(
+            x in {"--full-time", "--format=long", "--format=verbose"}
+            or x.startswith("-") and not x.startswith("--") and any(flag in x[1:] for flag in "lgno")
+            for x in args
+        )
+        return "file-list-ls-long" if long_listing else "file-list-ls"
+    if name == "tree":
+        if any(x in {"-J", "-X", "--xml", "--json", "-H", "--fromfile"} for x in args):
+            return None
+        return "file-list-tree"
+    if name in {"find", "fd"}:
+        unsafe_actions = {
+            "-print0", "--print0", "-0", "--json", "-printf", "-fprintf", "-fprint",
+            "-fprint0", "-exec", "-execdir", "-ok", "-okdir", "-delete", "-ls", "--exec",
+            "--exec-batch", "-x", "-X",
+        }
+        if any(x in unsafe_actions for x in args):
+            return None
+        return "file-list-find"
     if name == "gh" and args and args[0] in {"pr", "issue", "run", "repo"}:
         if any(x in {"--json", "--jq", "--template", "--web"} for x in args):
             return None
@@ -323,11 +449,12 @@ def compress_tool(text: str, kind: str) -> str:
             return text
         # Retain every field and row, only compact column padding.
         return "\n".join(re.sub(r" {2,}", " | ", line.rstrip()) for line in lines)+"\n"
-    if kind == "file-list":
-        if not lines or any("\x00" in line for line in lines):
-            return text
-        rendered = "\n".join(re.sub(r"[ \t]{2,}", " | ", line.rstrip()) for line in lines)
-        return rendered + ("\n" if text.endswith("\n") else "")
+    if kind in {"file-list-ls", "file-list-ls-long"}:
+        return _compress_ls(text, show_long=kind.endswith("-long"))
+    if kind == "file-list-tree":
+        return _compress_tree(text)
+    if kind == "file-list-find":
+        return _compress_find(text)
     if kind == "gh-human":
         if not lines or any(line.lstrip().startswith(("{", "[")) for line in lines):
             return text

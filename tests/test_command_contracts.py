@@ -41,8 +41,8 @@ def test_json_preserves_minority_status_boolean_and_unit():
 
 
 @pytest.mark.parametrize("argv,kind", [
-    (["ls", "-la"], "file-list"),
-    (["find", ".", "-name", "*.py"], "file-list"),
+    (["ls", "-la"], "file-list-ls-long"),
+    (["find", ".", "-name", "*.py"], "file-list-find"),
     (["find", ".", "-print0"], None),
     (["gh", "pr", "list"], "gh-human"),
     (["gh", "pr", "list", "--json", "number"], None),
@@ -65,8 +65,8 @@ def test_additional_filters_keep_failures_and_machine_shapes():
     assert compress_tool(failure, "generic-test") == failure
     assert compress_tool('{"number":1}\n', "gh-human") == '{"number":1}\n'
     listing = "alpha.py          10\nbeta.py           20\n"
-    compact = compress_tool(listing, "file-list")
-    assert "alpha.py | 10" in compact and "beta.py | 20" in compact
+    compact = compress_tool(listing, "file-list-ls-long")
+    assert compact == listing
     commit = "[main a1b2c3d] change\n 2 files changed, 10 insertions(+), 2 deletions(-)\n"
     assert "2 files changed | 10" in compress_tool(commit, "git-action")
     unknown = "remote helper emitted opaque result\n"
