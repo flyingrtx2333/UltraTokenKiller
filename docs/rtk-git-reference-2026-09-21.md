@@ -23,7 +23,7 @@
 
 `status`、`log`、`diff`、`show` 当前只有 Windows 固定上游成功形态；`commit`、`pull`、`checkout`、`push`、`fetch`、`branch`、`stash`、`worktree` 已增加成功与失败捕获输出，失败内容中的路径和阻断原因均保留。所有项目仍缺未知格式及 macOS/Linux 固定二进制变体，因此不会提升为完整上游对标通过。`add` 仍缺一次执行后 staged stat 的对照执行器。
 
-包含 Git transport 成功/失败对照的提交 `e4bd2ad` 在 Mac arm64 的独立 `/tmp` 工作区完成全量离线回归：`280 passed, 1 skipped, 2 warnings`。该运行未执行固定 RTK 二进制，因而只证明 UTK 跨平台回归，不补充上游变体证据。
+包含剩余 Git 子命令对照的提交 `40f5da2` 在 Mac arm64 的独立 `/tmp` 工作区完成全量离线回归：`289 passed, 1 skipped, 2 warnings`。该运行未执行固定 RTK 二进制，因而只证明 UTK 跨平台回归，不补充上游变体证据。
 
 证据文件：
 
