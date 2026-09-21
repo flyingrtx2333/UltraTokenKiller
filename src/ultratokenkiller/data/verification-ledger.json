@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-21T01:59:11.185360+00:00",
+  "generated_at": "2026-09-21T02:34:07.541603+00:00",
   "suite_passed": true,
   "test_command": [
     "C:\\Users\\17489\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
@@ -18,7 +18,7 @@
       "upstream_source_fingerprint": null
     },
     "input.json": {
-      "source_fingerprint": "18fff0d1d01e27be6a4d79e463453a492ab3a58aca1d3dea36f068f5e7cc4588",
+      "source_fingerprint": "184cea9166288d9ea02efbc56388edb3028d7194a72862d927e20c767a30ca96",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
@@ -96,73 +96,73 @@
       "upstream_source_fingerprint": null
     },
     "protocol.responses_http_sse": {
-      "source_fingerprint": "40535cd84957864ac59d746b4de509d25a658d31f607c9f2a17f4c6f0af7e006",
+      "source_fingerprint": "45c462825d1924335c76da9800622ca40462d1ee0197edf3c37d650c8926e71c",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "protocol.chat_completions": {
-      "source_fingerprint": "7970a036cdd039c8bc66d5bc584b4a1421a9f9103224623275c16a65c55af3d8",
+      "source_fingerprint": "cad888cc0a8b09200febdcc6ba844cc32be44537cf6d86705c95d6849cbb2f41",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "protocol.anthropic_messages": {
-      "source_fingerprint": "f3b64f7018227d2f7c54b16d0da4a7e6657ccf929f67f5676333212c0063b262",
+      "source_fingerprint": "4cc562d14987c318a2f2e8052602fe752c4101121aef6ed0680ea7a3f05755e6",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "protocol.responses_websocket": {
-      "source_fingerprint": "a406e6760e04f14c6014299fd9b854f1ec6195cbfe827e09296645712ae8caeb",
+      "source_fingerprint": "787d396284cca0d5fa1dc2132c95adf278c407950dc40a79d1546cb104e03fc2",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.files_search": {
-      "source_fingerprint": "1df85035d0f4fa2218cb91ac53ea7a6c3190854bbb8a0cda31e66ebc66a1573a",
+      "source_fingerprint": "0c701f2d8aee2d050eabfff8680f96f26cf6647d9a4a5c4e62d03f53e4197657",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.git": {
-      "source_fingerprint": "83010977359d10703e2674fd3c81c51442ea15b645736c7505b2c3f19899fd2c",
+      "source_fingerprint": "2daa59b4b5d14d0a8a33638e40033283cef535ede4ac34bc3e119994cf1a174c",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.github": {
-      "source_fingerprint": "9ab5cdd1f41cd37f44b8b87bd9de4d5bb4f8ec7ac11cbc61198c28dbcc33829c",
+      "source_fingerprint": "0b6ea5bf5c4ac0bfbe7f69546791284e37bd2c35c1531bd71bdef92e8bef3e05",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.test_runners": {
-      "source_fingerprint": "24eb305532b267caf81e0dc8485b5eeecad559fd2ee2f323299380f2189a7a45",
+      "source_fingerprint": "6b106c95a130c79abfcc5cb32d54608ac9c5e5af37f3f01fcd89bd70dc7aa86d",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.diagnostics": {
-      "source_fingerprint": "977090641f6da2b1e846887e3e0aef0934273acf4189e48c40021a30ac7c2b10",
+      "source_fingerprint": "ad71dceb057f1d5fae58850312689687d170f6e24b305083fbfa17e8775367a1",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.packages": {
-      "source_fingerprint": "828908ec3c154eeb9977cde1350cda395b7a6657e1797e13f3273d4e2dd51422",
+      "source_fingerprint": "f938ae94aaec7acfe87336eaea9f58d28c9056db6e412e5e652044f3a76169d9",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.infrastructure": {
-      "source_fingerprint": "c59cab33583d6d28503ccabfcb927b6c8c89515e85dafb767c177326668f852d",
+      "source_fingerprint": "7ebee8aba045b209ec2a626de236f2ea1d76175d09516188a9460aa5da1226b6",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.execution_semantics": {
-      "source_fingerprint": "9e08ed7e026376c842442eeba5f2f5e4ef7bcf669a54f4bf75faf8e8397f076f",
+      "source_fingerprint": "22e526bfa28bee0bd49b5663a06f188822147c7ef0c47072019e5e905cb826a0",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
@@ -180,7 +180,7 @@
       "upstream_source_fingerprint": null
     },
     "client.codex_subscription": {
-      "source_fingerprint": "4b681294e366dfedf3bcc9d3df517e6979028c59a6119f52471f86d0682057f1",
+      "source_fingerprint": "8be90bb071ca5a1f72d03fd1853e98f547751eac960a02122020127aaf7dcac9",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
@@ -192,7 +192,7 @@
       "upstream_source_fingerprint": null
     },
     "dashboard.metrics": {
-      "source_fingerprint": "e5b8177fe1d1145cbd497f7bf186a170a53aa40b93476b1f335732177527a4be",
+      "source_fingerprint": "055f036da4f9b891519b2841c8613c2339c9629788ee9fb6f3b77ccc6ba20ec2",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
@@ -212,103 +212,103 @@
   },
   "command_contracts": {
     "git.status.human": {
-      "source_fingerprint": "e163e58866a40692c4767ad2cbc1abf1f8255f1e9c64cde2353dd3af07ce93e3",
+      "source_fingerprint": "eecb6b90a2547551d9aaace2e583281ed9254a76453c3a1029f2846b3e79b109",
       "offline_passed": true
     },
     "git.log.default": {
-      "source_fingerprint": "249488052c99459e7fd3c20a9b0346094f63c7f78b54ee4c60da8606d9ab4366",
+      "source_fingerprint": "12e80878a4ddfc8bcee3b08e889129758eae01fb6fa2305396bddf554f8bc759",
       "offline_passed": true
     },
     "git.diff.unified": {
-      "source_fingerprint": "f483a23df981d0b95abe939d4f804de23b6d8a805142c2e5b3d9b1bdd261c9ff",
+      "source_fingerprint": "8e9fcc9b39bf769372fe21ea033c2888d919306fa88fcb1ac6bb5c8b385ab14b",
       "offline_passed": true
     },
     "git.actions": {
-      "source_fingerprint": "ab673df0a863dd52ab9ae65637cf13f1293e96981b51b12b6c5c75dcac3a2e53",
+      "source_fingerprint": "29dcba7547dc08ddfb96b3f4b364db35665014de1c2adc7a9536e3d02d522ed7",
       "offline_passed": true
     },
     "search.human": {
-      "source_fingerprint": "bf443d93708307c6c5e90d744b5a33de3142e9e8fdbceff2351e27be5b14c9de",
+      "source_fingerprint": "9951460af2c7d396eee1266a8057eae53df878f58afe67a72e7432a8e8f32173",
       "offline_passed": true
     },
     "files.read": {
-      "source_fingerprint": "22be189dc9553f935bf43b03e57592b98bca7bd4003b23efc4f31b2886736b34",
+      "source_fingerprint": "b094f114f4259af098e1b9b859bcab5828985ea40c6a8c8f801ee1d1c10ccc89",
       "offline_passed": true
     },
     "files.json": {
-      "source_fingerprint": "0cacafad406da666d1316c07c04b39bbc39980afc56a50ff1ef790848d1fa12e",
+      "source_fingerprint": "37caa6cee75b77778724668be9d4addc8b73f724b7eacea3066e15eccfa4bd5b",
       "offline_passed": true
     },
     "files.smart": {
-      "source_fingerprint": "6b9e657027ce8f0b1b9c2943e0c1617e79bac5418fc207e4188c2fd3aa7b3609",
+      "source_fingerprint": "97c079bc35a6a218bbf133dbd5c254e7f635d9e437df325eadd729575f7c20fe",
       "offline_passed": true
     },
     "test.pytest": {
-      "source_fingerprint": "3c817bdc5ed1043e1457054bab45a3d3ab28d73dc0106ecf8e182298485f9395",
+      "source_fingerprint": "1c47c7e80f48875dd6696597ac1255b6d45afbc131e05dd71e77898465ea0876",
       "offline_passed": true
     },
     "test.cargo": {
-      "source_fingerprint": "0c66a3387b610f5f424529c4efadb2898d73dd4e3ceb1c8b895b203374235cb9",
+      "source_fingerprint": "3be71fa1df4e0ed8057d243530bad59d015dfb1ee3d2e84c7accc0556ca45f0f",
       "offline_passed": true
     },
     "test.go": {
-      "source_fingerprint": "ee23425df874cb58d97fa56a17c4a6fe72491f23c95c9cf3d7cede2bd3f04827",
+      "source_fingerprint": "fe49d739ed40a849e41cbac2bda4a739b0a2fe905603d62b4a70b9f1a0d2376d",
       "offline_passed": true
     },
     "test.javascript": {
-      "source_fingerprint": "33bb6074ac2f3dde9ac11dc17d0f32ce55431090a14c8f8b365fe1f54a3d4065",
+      "source_fingerprint": "f2db30f9fc42df1f79ce80c4c7ae3bc8fddbd2c268cbcb3d2d7870897bc782c0",
       "offline_passed": true
     },
     "diagnostics.compilers": {
-      "source_fingerprint": "065993c4a18511f244f38f4d441db299b3631395c3a3586caeef6990b8919163",
+      "source_fingerprint": "f2bbd18448b5f930e1ca3b235681ce6cd4f1f7ac13d4790a7684a4aab8266611",
       "offline_passed": true
     },
     "infra.tables": {
-      "source_fingerprint": "6264721025aa64e467a572d2734eb2cce2cf3082b0a2e4c0dd8d42922c645a0f",
+      "source_fingerprint": "190afd61bb798b8cdcb93fb841abe1b207b657190a5b09f5b9a72feb39e6ed34",
       "offline_passed": true
     },
     "files.list": {
-      "source_fingerprint": "7826827ee6cc49a215d85b6a6e78be9b277dedc902001023668c71783071e0be",
+      "source_fingerprint": "bffe24842c3f940cc248ddf52c686f044ec6f6d78249dbea0117c4d8a610ab63",
       "offline_passed": true
     },
     "github.human": {
-      "source_fingerprint": "fbeff44fe47c7ef2d91565f1a7ec76b76821bc4b65396b0e4f60319873b7e164",
+      "source_fingerprint": "f57e3fc3f6dc16a9b17f66204eee7375d9a895dd0bd8a21b41dbbdd0bef8a2be",
       "offline_passed": true
     },
     "test.ruby_php": {
-      "source_fingerprint": "3a4801d8e01643d93691e72fa69d4ee441825defea1724381f68d3753fa6a989",
+      "source_fingerprint": "67c90255f0643fe498468593d297078468d044d29cb10fa1104a42542f2483ff",
       "offline_passed": true
     },
     "test.build_systems": {
-      "source_fingerprint": "4e23f08dc447c85e715582804a0c010f616d213be291938996b42457b3a37a90",
+      "source_fingerprint": "63df7045423370a6c5748c1b30bf8aa126fc8f0a40be3852843549978c34d412",
       "offline_passed": true
     },
     "test.bun": {
-      "source_fingerprint": "5a8bc6d54aa61d5a16029354be8706e8f68c933b2f41c882548a7a881b4f6372",
+      "source_fingerprint": "2fd3192fa0441095853dd144cf3253d3e00375c2d1035db5e5ad0645930f8fe9",
       "offline_passed": true
     },
     "test.deno": {
-      "source_fingerprint": "6f02b03d82993fbdf10ff8d2a7f13d8eb1db4b982d034747053e44d581624c1a",
+      "source_fingerprint": "1f4f76cb504044974fa30640d256075d9364c0c0260b991b7fa2d3f0bd7cca37",
       "offline_passed": true
     },
     "test.gradle": {
-      "source_fingerprint": "0d942689114f546f76a5a879ae45609c03c6f69521d3869e606e8b12032be605",
+      "source_fingerprint": "f719cb5ddce85a7bc7b4fa08ff077ac79da70d48f02e0b4bf96c3162eb6cf8a0",
       "offline_passed": true
     },
     "diagnostics.golangci_v2": {
-      "source_fingerprint": "8e4144e14a20db5ac648b1bb5861d7469f933f0a561ca3bedd7daba04ad7fc27",
+      "source_fingerprint": "fc883cf7729f52691721951f83c49355bb85fc32f37d66d4809f699056ba64b6",
       "offline_passed": true
     },
     "diagnostics.extended": {
-      "source_fingerprint": "437786517e46c00a768916b2f24a2a8c54ddf06ff1d5c4164d42dd008b7628be",
+      "source_fingerprint": "2edea6483fa12c1bf9a73de074d585dc2cc5a83dab6e6f09d62efe037286e065",
       "offline_passed": true
     },
     "packages.human": {
-      "source_fingerprint": "ecb26663bd39514ecd976026786c3b02ed3f1bdc3040bb29dedb7f1f4923e9b5",
+      "source_fingerprint": "d3c76a58ba108742a5910849358b13c79abb89e0de103de7e6fd8ea1967c2687",
       "offline_passed": true
     },
     "cloud.aws_human": {
-      "source_fingerprint": "2c890000ce16be6439f345dbbd927f8ec852ddf41f84e08e3fdd625245882f6e",
+      "source_fingerprint": "390fd9c04f0429efbc91128d6f26aa93704e363a57d85ad997261fd3652dddaa",
       "offline_passed": true
     }
   },
