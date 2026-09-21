@@ -7,7 +7,7 @@ Generated from machine-readable upstream evidence. Implementation status and fix
 | Upstream | Core items | Implementation states | Parity states |
 |---|---:|---|---|
 | Headroom | 24 | {'offline_passed': 21, 'real_client_passed': 3} | {'fixed_upstream_sample_passed': 9, 'fixed_upstream_suite_passed': 1, 'not_individually_compared': 14} |
-| Rtk | 211 | {'contract_mapped': 60, 'unverified': 151} | {'fixed_upstream_success_only': 5, 'pending_fixed_upstream_variant_evidence': 206} |
+| Rtk | 211 | {'contract_mapped': 60, 'unverified': 151} | {'fixed_upstream_behavior_suite_windows': 2, 'fixed_upstream_success_failure_windows': 1, 'fixed_upstream_success_only': 5, 'pending_fixed_upstream_variant_evidence': 203} |
 | Caveman | 21 | {'implemented_unverified': 5, 'real_client_passed': 16} | {'authorization_required': 5, 'fixed_upstream_policy_passed': 14, 'offline_passed': 2} |
 
 Total core denominator: **256**
@@ -82,7 +82,7 @@ Total core denominator: **256**
 | `rtk.tools.Commands.Ecs` | general | `ecs` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Env` | general | `env` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Err` | general | `err` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.Commands.Find` | file_search | `find` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
+| `rtk.tools.Commands.Find` | file_search | `find` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.Commands.Format` | general | `format` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Gain` | general | `gain` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Gh` | git | `gh` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
@@ -102,7 +102,7 @@ Total core denominator: **256**
 | `rtk.tools.Commands.Learn` | general | `learn` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Lint` | general | `lint` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Log` | general | `log` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.Commands.Ls` | file_search | `ls` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
+| `rtk.tools.Commands.Ls` | file_search | `ls` | contract_mapped | fixed_upstream_behavior_suite_windows | Fixed-upstream success, failure and unknown-format samples passed on Windows; macOS and Linux evidence remain |
 | `rtk.tools.Commands.Mvn` | jvm | `mvn` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Mvnd` | general | `mvnd` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Mypy` | python | `mypy` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
@@ -142,7 +142,7 @@ Total core denominator: **256**
 | `rtk.tools.Commands.Summary` | general | `summary` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Telemetry` | general | `telemetry` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Test` | general | `test` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.Commands.Tree` | file_search | `tree` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
+| `rtk.tools.Commands.Tree` | file_search | `tree` | contract_mapped | fixed_upstream_behavior_suite_windows | Fixed-upstream success, failure and unknown-format samples passed on Windows; macOS and Linux evidence remain |
 | `rtk.tools.Commands.Trust` | general | `trust` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Tsc` | javascript | `tsc` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
 | `rtk.tools.Commands.Untrust` | general | `untrust` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |

@@ -75,9 +75,13 @@ def rtk_items(inventory: list[dict], lock: dict) -> list[dict]:
         "tools.Commands.Grep",
         "tools.Commands.Rg",
     }
+    behavior_windows = {"tools.Commands.Ls", "tools.Commands.Tree"}
+    success_failure_windows = {"tools.Commands.Find"}
     for row in inventory:
         mapped = row.get("status") == "contract_mapped"
         success_sampled = row["id"] in success_samples
+        behavior_sampled = row["id"] in behavior_windows
+        success_failure_sampled = row["id"] in success_failure_windows
         result.append({
             "id": f"rtk.{row['id']}",
             "upstream": "rtk",
@@ -98,16 +102,22 @@ def rtk_items(inventory: list[dict], lock: dict) -> list[dict]:
             "utk_contracts": row["contract_ids"],
             "implementation_status": "contract_mapped" if mapped else "unverified",
             "parity_status": (
-                "fixed_upstream_success_only"
-                if success_sampled else "pending_fixed_upstream_variant_evidence"
+                "fixed_upstream_success_only" if success_sampled
+                else "fixed_upstream_behavior_suite_windows" if behavior_sampled
+                else "fixed_upstream_success_failure_windows" if success_failure_sampled
+                else "pending_fixed_upstream_variant_evidence"
             ),
             "parity_evidence": (
                 ["docs/evidence/upstream-rtk-comparison-20260920.json"]
-                if success_sampled else []
+                if success_sampled or behavior_sampled or success_failure_sampled else []
             ),
             "gap": (
                 "Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain"
                 if success_sampled
+                else "Fixed-upstream success, failure and unknown-format samples passed on Windows; macOS and Linux evidence remain"
+                if behavior_sampled
+                else "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
+                if success_failure_sampled
                 else "Mapped contract still needs success, failure and unknown-format fixed-upstream evidence"
                 if mapped
                 else "Needs a dedicated contract plus success, failure and unknown-format evidence"

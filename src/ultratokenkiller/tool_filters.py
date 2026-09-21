@@ -61,7 +61,7 @@ def _compress_ls(text: str, show_long: bool) -> str:
     if not meaningful:
         return text
     if not entries:
-        rendered = "(empty)\n"
+        rendered = "(empty)"
     else:
         rendered_lines = []
         for is_dir, name, size, permissions in sorted(entries, key=lambda item: not item[0]):
@@ -70,7 +70,7 @@ def _compress_ls(text: str, show_long: bool) -> str:
             if not is_dir:
                 fields.append(_human_size(size))
             rendered_lines.append("  ".join(fields))
-        rendered = "\n".join(rendered_lines) + "\n"
+        rendered = "\n".join(rendered_lines)
     return rendered if len(rendered) < len(text) else text
 
 
@@ -84,7 +84,7 @@ def _compress_tree(text: str) -> str:
     rendered_lines = [line.rstrip() for line in lines if line.strip() and not summary.match(line)]
     if not rendered_lines:
         return text
-    rendered = "\n".join(rendered_lines) + "\n"
+    rendered = "\n".join(rendered_lines)
     return rendered if len(rendered) < len(text) else text
 
 
@@ -106,9 +106,8 @@ def _compress_find(text: str) -> str:
     output = [f"{len(paths)} files in {len(grouped)} dirs:", ""]
     for parent in sorted(grouped):
         files = grouped[parent]
-        output.append(f"{parent}/ ({len(files)})")
-        output.extend(f"  {name}" for name in files)
-    rendered = "\n".join(output) + "\n"
+        output.append(f"{parent}/ {' '.join(files)}")
+    rendered = "\n".join(output)
     return rendered if len(rendered) < len(text) else text
 
 

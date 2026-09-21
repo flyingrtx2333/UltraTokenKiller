@@ -2,9 +2,89 @@
   "schema_version": 1,
   "baseline": "0924356b4caba4989607227b7c8824d3d8098719",
   "model": "gpt-5.6-luna",
-  "case_count": 13,
+  "case_count": 21,
   "live_model_calls": 0,
   "cases": [
+    {
+      "case": "ls-human-long",
+      "kind": "file-list-ls-long",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.7073170731707317,
+      "utk_reduction": 0.7073170731707317,
+      "ratio": 1.0,
+      "exit_code": 0
+    },
+    {
+      "case": "ls-unknown-locale",
+      "kind": "file-list-ls",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.03571428571428571,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
+      "exit_code": 0
+    },
+    {
+      "case": "ls-failure",
+      "kind": "file-list-ls",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.07692307692307693,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
+      "exit_code": 2
+    },
+    {
+      "case": "tree-human",
+      "kind": "file-list-tree",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.3076923076923077,
+      "utk_reduction": 0.3076923076923077,
+      "ratio": 1.0,
+      "exit_code": 0
+    },
+    {
+      "case": "tree-unknown-format",
+      "kind": "file-list-tree",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.125,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
+      "exit_code": 0
+    },
+    {
+      "case": "tree-failure",
+      "kind": "file-list-tree",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.1,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
+      "exit_code": 2
+    },
+    {
+      "case": "find-human-paths",
+      "kind": "file-list-find",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.4888888888888889,
+      "utk_reduction": 0.4888888888888889,
+      "ratio": 1.0,
+      "exit_code": 0
+    },
+    {
+      "case": "find-failure",
+      "kind": "file-list-find",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.09090909090909091,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
+      "exit_code": 1
+    },
     {
       "case": "read-numbered-source",
       "kind": "native-read",
@@ -120,9 +200,9 @@
       "kind": "golangci",
       "required_facts_upstream": true,
       "required_facts_utk": true,
-      "upstream_reduction": 0.9406554472984943,
+      "upstream_reduction": 0.941541186891054,
       "utk_reduction": 0.9406554472984943,
-      "ratio": 1.0,
+      "ratio": 0.9990592662276576,
       "exit_code": 0
     },
     {
@@ -136,4 +216,4 @@
       "exit_code": 0
     }
   ]
-}
+}\n

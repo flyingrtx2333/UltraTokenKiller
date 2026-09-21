@@ -1,0 +1,4 @@
+total 16
+drwxr-xr-x  2 user  staff    64 Jan  1 12:00 src
+-rw-r--r--  1 user  staff  1234 Jan  1 12:00 README file.md
+-rwxr-xr-x  1 user  staff   500 Dec 25  2024 build.sh

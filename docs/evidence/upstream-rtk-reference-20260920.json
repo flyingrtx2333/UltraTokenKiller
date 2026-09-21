@@ -6,6 +6,54 @@
   "live_model_calls": 0,
   "external_write_commands": 0,
   "cases": {
+    "ls-human-long": {
+      "raw": "total 16\ndrwxr-xr-x  2 user  staff    64 Jan  1 12:00 src\n-rw-r--r--  1 user  staff  1234 Jan  1 12:00 README file.md\n-rwxr-xr-x  1 user  staff   500 Dec 25  2024 build.sh\n",
+      "output": "755  src/\n644  README file.md  1.2K\n755  build.sh  500B",
+      "exit_code": 0,
+      "raw_sha256": "23884b54dc3080bfdc4b0c22ecb699305c1739b2fc65a5a482c5dace9f6ef802"
+    },
+    "ls-unknown-locale": {
+      "raw": "-rw-r--r--  1 user  staff  1234 9月 21 12:00 README.md\n",
+      "output": "-rw-r--r--  1 user  staff  1234 9月 21 12:00 README.md",
+      "exit_code": 0,
+      "raw_sha256": "8ced9f2fab3ddce63b249cfa15838583c9cb244d91a6ee348c7802c7327260fd"
+    },
+    "ls-failure": {
+      "raw": "ls: cannot access 'missing': No such file or directory\n",
+      "output": "ls: cannot access 'missing': No such file or directory",
+      "exit_code": 2,
+      "raw_sha256": "8d5d50334f9f581e79fc9cb28bd621a4fe8d882e38ac0cc2c2cc4e84e4b8461d"
+    },
+    "tree-human": {
+      "raw": ".\n├── src\n│   └── main.py\n└── README.md\n\n1 directory, 2 files\n",
+      "output": ".\n├── src\n│   └── main.py\n└── README.md",
+      "exit_code": 0,
+      "raw_sha256": "7b472bf31ac5838c405a9f3ae52f919894efb9768743341217a33cafc9b4ad0e"
+    },
+    "tree-unknown-format": {
+      "raw": ".\n+-- src\nsummary unavailable\n",
+      "output": ".\n+-- src\nsummary unavailable",
+      "exit_code": 0,
+      "raw_sha256": "6e0bc3786d0bdb0fbae9004898b5df89258e07e8ad06931672721888e1d5f898"
+    },
+    "tree-failure": {
+      "raw": "tree: missing: No such file or directory\n",
+      "output": "tree: missing: No such file or directory",
+      "exit_code": 2,
+      "raw_sha256": "a6e96933ed4a2987e9a7e15381ed1fa1929aca5ac209e9c3ff245e7d996ebbfe"
+    },
+    "find-human-paths": {
+      "raw": "src/components/feature/file_00.py\nsrc/components/feature/file_01.py\nsrc/components/feature/file_02.py\nsrc/components/feature/file_03.py\nsrc/components/feature/file_04.py\nsrc/components/feature/file_05.py\nsrc/components/feature/file_06.py\nsrc/components/feature/file_07.py\nsrc/components/feature/file_08.py\nsrc/components/feature/file_09.py\nsrc/components/feature/file_10.py\nsrc/components/feature/file_11.py\nsrc/components/feature/file_12.py\nsrc/components/feature/file_13.py\nsrc/components/feature/file_14.py\nsrc/components/feature/file_15.py\nsrc/components/feature/file_16.py\nsrc/components/feature/file_17.py\nsrc/components/feature/file_18.py\nsrc/components/feature/file_19.py\n",
+      "output": "20F 1D:\n\nsrc\\components\\feature/ file_00.py file_01.py file_02.py file_03.py file_04.py file_05.py file_06.py file_07.py file_08.py file_09.py file_10.py file_11.py file_12.py file_13.py file_14.py file_15.py file_16.py file_17.py file_18.py file_19.py",
+      "exit_code": 0,
+      "raw_sha256": "2563004786fa0329e4865bb42d231fb66885d0b606101e8babe0c13a70546555"
+    },
+    "find-failure": {
+      "raw": "find: './missing': No such file or directory\n",
+      "output": "find: './missing': No such file or directory",
+      "exit_code": 1,
+      "raw_sha256": "58ce4cad9212d0f90bdbb593667fc84d2c59f745df440263d4d2fa5646409624"
+    },
     "read-numbered-source": {
       "raw": "from pathlib import Path\n\nclass Config:\n    def __init__(self, name):\n        self.name = name\n\ndef load_config(path):\n    return Config(Path(path).name)\n",
       "output": "1 │ from pathlib import Path\n2 │ \n3 │ class Config:\n4 │     def __init__(self, name):\n5 │         self.name = name\n6 │ \n7 │ def load_config(path):\n8 │     return Config(Path(path).name)",
@@ -74,7 +122,7 @@
     },
     "golangci-v2-issues": {
       "raw": "{\"Issues\":[{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":101,\"Line\":10,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":200,\"Line\":18,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":299,\"Line\":26,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":105,\"Line\":11,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":204,\"Line\":19,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":303,\"Line\":27,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"}],\"Report\":{\"Linters\":[{\"Name\":\"arangolint\"},{\"Name\":\"asasalint\"},{\"Name\":\"asciicheck\"},{\"Name\":\"bidichk\"},{\"Name\":\"bodyclose\"},{\"Name\":\"canonicalheader\"},{\"Name\":\"clickhouselint\"},{\"Name\":\"containedctx\"},{\"Name\":\"contextcheck\"},{\"Name\":\"copyloopvar\"},{\"Name\":\"cyclop\"},{\"Name\":\"decorder\"},{\"Name\":\"depguard\"},{\"Name\":\"dogsled\"},{\"Name\":\"dupl\"},{\"Name\":\"dupword\"},{\"Name\":\"durationcheck\"},{\"Name\":\"embeddedstructfieldcheck\"},{\"Name\":\"errcheck\",\"Enabled\":true},{\"Name\":\"errchkjson\"},{\"Name\":\"errname\"},{\"Name\":\"errorlint\"},{\"Name\":\"exhaustive\"},{\"Name\":\"exhaustruct\"},{\"Name\":\"exhaustruct_v5\"},{\"Name\":\"exptostd\"},{\"Name\":\"forbidigo\"},{\"Name\":\"forcetypeassert\"},{\"Name\":\"funcorder\"},{\"Name\":\"fatcontext\"},{\"Name\":\"funlen\"},{\"Name\":\"gci\"},{\"Name\":\"ginkgolinter\"},{\"Name\":\"gocheckcompilerdirectives\"},{\"Name\":\"gochecknoglobals\"},{\"Name\":\"gochecknoinits\"},{\"Name\":\"gochecksumtype\"},{\"Name\":\"gocognit\"},{\"Name\":\"goconst\"},{\"Name\":\"gocritic\"},{\"Name\":\"gocyclo\"},{\"Name\":\"godoclint\"},{\"Name\":\"godot\"},{\"Name\":\"godox\"},{\"Name\":\"err113\"},{\"Name\":\"gofmt\"},{\"Name\":\"gofumpt\"},{\"Name\":\"golines\"},{\"Name\":\"goheader\"},{\"Name\":\"goimports\"},{\"Name\":\"mnd\"},{\"Name\":\"modernize\"},{\"Name\":\"gomoddirectives\"},{\"Name\":\"gomodguard\"},{\"Name\":\"gomodguard_v2\"},{\"Name\":\"goprintffuncname\"},{\"Name\":\"gosec\"},{\"Name\":\"gosmopolitan\"},{\"Name\":\"govet\",\"Enabled\":true},{\"Name\":\"grouper\"},{\"Name\":\"iface\"},{\"Name\":\"importas\"},{\"Name\":\"inamedparam\"},{\"Name\":\"ineffassign\",\"Enabled\":true},{\"Name\":\"interfacebloat\"},{\"Name\":\"intrange\"},{\"Name\":\"iotamixing\"},{\"Name\":\"ireturn\"},{\"Name\":\"lll\"},{\"Name\":\"loggercheck\"},{\"Name\":\"maintidx\"},{\"Name\":\"makezero\"},{\"Name\":\"mirror\"},{\"Name\":\"misspell\"},{\"Name\":\"musttag\"},{\"Name\":\"nakedret\"},{\"Name\":\"nestif\"},{\"Name\":\"nilerr\"},{\"Name\":\"nilnesserr\"},{\"Name\":\"nilnil\"},{\"Name\":\"nlreturn\"},{\"Name\":\"noctx\"},{\"Name\":\"noinlineerr\"},{\"Name\":\"nonamedreturns\"},{\"Name\":\"nosprintfhostport\"},{\"Name\":\"paralleltest\"},{\"Name\":\"perfsprint\"},{\"Name\":\"prealloc\"},{\"Name\":\"predeclared\"},{\"Name\":\"promlinter\"},{\"Name\":\"protogetter\"},{\"Name\":\"reassign\"},{\"Name\":\"recvcheck\"},{\"Name\":\"revive\"},{\"Name\":\"rowserrcheck\"},{\"Name\":\"sloglint\"},{\"Name\":\"sqlclosecheck\"},{\"Name\":\"spancheck\"},{\"Name\":\"staticcheck\",\"Enabled\":true},{\"Name\":\"swaggo\"},{\"Name\":\"tagalign\"},{\"Name\":\"tagliatelle\"},{\"Name\":\"testableexamples\"},{\"Name\":\"testifylint\"},{\"Name\":\"testpackage\"},{\"Name\":\"thelper\"},{\"Name\":\"tparallel\"},{\"Name\":\"typecheck\",\"Enabled\":true},{\"Name\":\"unconvert\"},{\"Name\":\"unparam\"},{\"Name\":\"unqueryvet\"},{\"Name\":\"unused\",\"Enabled\":true},{\"Name\":\"usestdlibvars\"},{\"Name\":\"usetesting\"},{\"Name\":\"varnamelen\"},{\"Name\":\"wastedassign\"},{\"Name\":\"whitespace\"},{\"Name\":\"wrapcheck\"},{\"Name\":\"wsl\"},{\"Name\":\"wsl_v5\"},{\"Name\":\"zerologlint\"},{\"Name\":\"nolintlint\"}]}}\n",
-      "output": "golangci-lint: 6 issues in 1 files\nTop linters:\n  ineffassign (3x)\n  errcheck (3x)\n\nTop files:\n  main.go (6 issues)\n    ineffassign (3)\n      → v := 1\n    errcheck (3)\n      → defer f.Close()",
+      "output": "golangci-lint: 6 issues in 1 files\nTop linters:\n  ineffassign (3x)\n  errcheck (3x)\n\nTop files:\n  main.go (6 issues)\n    errcheck (3)\n      → defer f.Close()\n    ineffassign (3)\n      → v := 1",
       "exit_code": 0,
       "raw_sha256": "0d979b09897297a5c5fac3b29b41e11521010254cac5498d2c46f02c0f54756f"
     },

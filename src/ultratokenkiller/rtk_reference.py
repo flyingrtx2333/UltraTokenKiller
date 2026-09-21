@@ -17,6 +17,79 @@ from .tool_filters import compress_tool
 
 CASES = (
     {
+        "id": "ls-human-long",
+        "fixture": "ls_long_raw.txt",
+        "program": "ls",
+        "argv": ["ls", "-la", "."],
+        "kind": "file-list-ls-long",
+        "exit_code": 0,
+        "required": ["src", "README file.md", "build.sh"],
+    },
+    {
+        "id": "ls-unknown-locale",
+        "fixture": "ls_unknown_locale_raw.txt",
+        "program": "ls",
+        "argv": ["ls", "."],
+        "kind": "file-list-ls",
+        "exit_code": 0,
+        "required": ["README.md", "9月"],
+    },
+    {
+        "id": "ls-failure",
+        "fixture": "ls_failure_raw.txt",
+        "program": "ls",
+        "argv": ["ls", "missing"],
+        "kind": "file-list-ls",
+        "exit_code": 2,
+        "required": ["missing", "No such file or directory"],
+    },
+    {
+        "id": "tree-human",
+        "fixture": "tree_human_raw.txt",
+        "program": "tree",
+        "argv": ["tree", "."],
+        "kind": "file-list-tree",
+        "exit_code": 0,
+        "required": ["src", "main.py", "README.md"],
+    },
+    {
+        "id": "tree-unknown-format",
+        "fixture": "tree_unknown_raw.txt",
+        "program": "tree",
+        "argv": ["tree", "."],
+        "kind": "file-list-tree",
+        "exit_code": 0,
+        "required": ["summary unavailable"],
+    },
+    {
+        "id": "tree-failure",
+        "fixture": "tree_failure_raw.txt",
+        "program": "tree",
+        "argv": ["tree", "missing"],
+        "kind": "file-list-tree",
+        "exit_code": 2,
+        "required": ["missing", "No such file or directory"],
+    },
+    {
+        "id": "find-human-paths",
+        "fixture": "find_paths_raw.txt",
+        "program": None,
+        "argv": ["find", "*.py", "."],
+        "kind": "file-list-find",
+        "exit_code": 0,
+        "setup_paths": True,
+        "required": ["file_00.py", "file_19.py"],
+    },
+    {
+        "id": "find-failure",
+        "fixture": "find_failure_raw.txt",
+        "program": None,
+        "argv": ["find", "*.py", "./missing"],
+        "kind": "file-list-find",
+        "exit_code": 1,
+        "required": ["missing", "No such file or directory"],
+    },
+    {
         "id": "read-numbered-source",
         "fixture": "native_sample.py",
         "program": None,
@@ -207,6 +280,11 @@ def _run_case(binary: Path, checkout: Path, case: dict[str, Any]) -> dict[str, A
     raw = fixture.read_text(encoding="utf-8", errors="replace")
     with tempfile.TemporaryDirectory(prefix="utk-rtk-reference-") as temporary:
         root = Path(temporary)
+        if case.get("setup_paths"):
+            for relative in raw.splitlines():
+                target = root / Path(relative)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text("fixture\n", encoding="utf-8")
         if case["program"]:
             _write_emitter(
                 root,

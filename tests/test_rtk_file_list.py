@@ -9,7 +9,7 @@ def test_ls_long_matches_fixed_human_shape_and_preserves_facts():
         "-rwxr-xr-x  1 user  staff   500 Dec 25  2024 build.sh\n"
     )
     compact = compress_tool(raw, "file-list-ls-long")
-    assert compact == "755  src/\n644  README file.md  1.2K\n755  build.sh  500B\n"
+    assert compact == "755  src/\n644  README file.md  1.2K\n755  build.sh  500B"
 
 
 def test_ls_unknown_locale_and_failure_are_unchanged():
@@ -21,7 +21,7 @@ def test_ls_unknown_locale_and_failure_are_unchanged():
 
 def test_tree_only_removes_recognized_summary():
     raw = ".\n├── src\n│   └── main.py\n└── README.md\n\n1 directory, 2 files\n"
-    assert compress_tool(raw, "file-list-tree") == ".\n├── src\n│   └── main.py\n└── README.md\n"
+    assert compress_tool(raw, "file-list-tree") == ".\n├── src\n│   └── main.py\n└── README.md"
     unknown = ".\n+-- src\nsummary unavailable\n"
     assert compress_tool(unknown, "file-list-tree") == unknown
 
