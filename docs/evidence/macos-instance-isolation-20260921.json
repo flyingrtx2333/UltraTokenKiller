@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-21",
+  "source_commits": [
+    "a103ac2",
+    "ea3af6d"
+  ],
+  "environment": {
+    "host": "xiangjunshengdeMac-mini.local",
+    "platform": "macOS 26.6.2 arm64",
+    "python": "CPython 3.14.7",
+    "workspace": "/tmp/utk-instance-a103ac2",
+    "utk_home": "/tmp/utk-instance-a103ac2-smoke"
+  },
+  "offline_tests": {
+    "passed": 237,
+    "skipped": 1,
+    "warnings": 2,
+    "model_requests": 0
+  },
+  "installation": {
+    "command": "utk install --no-clients --no-autostart",
+    "preexisting_dashboard_port": 18787,
+    "selected_dashboard_port": 18790,
+    "selected_input_proxy_port": 18789,
+    "separate_instance_identity": true
+  },
+  "native_json_smoke": {
+    "session_bound": true,
+    "compressed_bytes": 162,
+    "recovery_marker_present": true,
+    "recovered_sha256_matches_input": true
+  },
+  "stop_isolation": {
+    "test_dashboard_unreachable_after_stop": true,
+    "preexisting_dashboard_unchanged_and_reachable": true
+  },
+  "websocket": {
+    "macos_system_socks_failure_reproduced": true,
+    "loopback_proxy_bypass_passed": true,
+    "remote_proxy_discovery_preserved": true
+  },
+  "daily_client_configuration_modified": false,
+  "autostart_modified": false
+}
