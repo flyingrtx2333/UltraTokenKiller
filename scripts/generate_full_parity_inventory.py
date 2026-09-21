@@ -68,6 +68,18 @@ def headroom_items(manifest: list[dict], lock: dict) -> list[dict]:
 
 def rtk_items(inventory: list[dict], lock: dict) -> list[dict]:
     result = []
+    hosting_windows = {
+        "tools.Commands.Gh",
+        "tools.Commands.Glab",
+        "tools.Commands.Gt",
+        "tools.GtCommands.Branch",
+        "tools.GtCommands.Create",
+        "tools.GtCommands.Log",
+        "tools.GtCommands.Other",
+        "tools.GtCommands.Restack",
+        "tools.GtCommands.Submit",
+        "tools.GtCommands.Sync",
+    }
     success_samples = {
         "tools.Commands.Read",
         "tools.Commands.Json",
@@ -102,17 +114,7 @@ def rtk_items(inventory: list[dict], lock: dict) -> list[dict]:
         "tools.GitCommands.Push",
         "tools.GitCommands.Stash",
         "tools.GitCommands.Worktree",
-        "tools.Commands.Gh",
-        "tools.Commands.Glab",
-        "tools.Commands.Gt",
-        "tools.GtCommands.Branch",
-        "tools.GtCommands.Create",
-        "tools.GtCommands.Log",
-        "tools.GtCommands.Other",
-        "tools.GtCommands.Restack",
-        "tools.GtCommands.Submit",
-        "tools.GtCommands.Sync",
-    }
+    } | hosting_windows
     for row in inventory:
         mapped = row.get("status") == "contract_mapped"
         success_sampled = row["id"] in success_samples
@@ -144,7 +146,10 @@ def rtk_items(inventory: list[dict], lock: dict) -> list[dict]:
                 else "pending_fixed_upstream_variant_evidence"
             ),
             "parity_evidence": (
-                ["docs/evidence/upstream-rtk-comparison-20260920.json"]
+                [
+                    "docs/evidence/upstream-rtk-comparison-20260920.json",
+                    *(["docs/evidence/hosting-command-parity-20260921.json"] if row["id"] in hosting_windows else []),
+                ]
                 if success_sampled or behavior_sampled or success_failure_sampled else []
             ),
             "gap": (

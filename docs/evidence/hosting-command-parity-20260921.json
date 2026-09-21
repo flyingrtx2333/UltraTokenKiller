@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-21",
+  "source_commit": "5dc82bb",
+  "scope": "gh, glab and gt command contracts with fixed-upstream success, failure and explicit passthrough evidence",
+  "upstream_commit": "0924356b4caba4989607227b7c8824d3d8098719",
+  "fixed_rtk": {
+    "version": "0.48.0",
+    "platform": "windows-x64",
+    "binary_sha256": "f033de4697944f83e287b1cbe0b938639b241a4c2d659461a688b6478f53d61d"
+  },
+  "reference": {
+    "case_count": 66,
+    "hosting_case_count": 21,
+    "upstream_required_fact_failures": 0,
+    "utk_required_fact_failures": 0,
+    "passthrough_failures": 0,
+    "reference_sha256": "6c8db7a1f928e2cb2678efc0ad53e7611a19dc8678a4ea2629f2ebd31c6f8b47",
+    "comparison_sha256": "10acba46bba56ab7b1fac82a0da8f99b7a688d55adab640ab713c6285b8aba39"
+  },
+  "success_compression": {
+    "gh_pr_list_upstream_reduction": 0.7647058823529411,
+    "gh_pr_list_utk_reduction": 0.7563025210084033,
+    "gh_pr_list_ratio": 0.989010989010989,
+    "glab_mr_list_upstream_reduction": 0.7478991596638656,
+    "glab_mr_list_utk_reduction": 0.7394957983193278,
+    "glab_mr_list_ratio": 0.9887640449438203,
+    "gt_log_upstream_reduction": 0.13043478260869565,
+    "gt_log_utk_reduction": 0.13043478260869565,
+    "gt_log_ratio": 1.0
+  },
+  "windows_x64": {
+    "python": "3.10.3",
+    "pytest": "334 passed, 3 skipped, 1 warning"
+  },
+  "macos_arm64": {
+    "pytest": "336 passed, 1 skipped, 2 warnings",
+    "workspace": "/tmp/utk-git-5dc82bb",
+    "utk_home": "/tmp/utk-git-home-5dc82bb"
+  },
+  "model_calls": 0
+}

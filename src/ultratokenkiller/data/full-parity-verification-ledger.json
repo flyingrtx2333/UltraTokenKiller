@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-21T07:40:12.443909+00:00",
+  "generated_at": "2026-09-21T07:55:48.163728+00:00",
   "items": {
     "headroom.input.routing": {
       "source_fingerprint": "4814f5a4ac5c3d388f0e810c332337796c08dc46089b2d06a329733fc2c2ceaa",
@@ -301,9 +301,10 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Gh": {
-      "source_fingerprint": "5a68844e84b64446850d48a0efee05ff931b44a129a8346bc6a42aea1acec30f",
+      "source_fingerprint": "4cd46fc4155667fbe68b54ea9bbc16666b60d54753d92ace5cda214fe422b03f",
       "evidence_hashes": {
-        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689"
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689",
+        "docs/evidence/hosting-command-parity-20260921.json": "d1af13e369288453fb262ec7339fa4d08f5a2583af4da8aed9c748aeea7ad67c"
       }
     },
     "rtk.tools.Commands.Git": {
@@ -311,9 +312,10 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Glab": {
-      "source_fingerprint": "38865ab32f7c19347f51172460701a6d7c5bc1dd2d544944e4aa6e9303a1ae54",
+      "source_fingerprint": "c51ecf7d01ebc25b4bae85f349eec587b3842bcef7969fec1ff514eee940ce96",
       "evidence_hashes": {
-        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689"
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689",
+        "docs/evidence/hosting-command-parity-20260921.json": "d1af13e369288453fb262ec7339fa4d08f5a2583af4da8aed9c748aeea7ad67c"
       }
     },
     "rtk.tools.Commands.Go": {
@@ -335,9 +337,10 @@
       }
     },
     "rtk.tools.Commands.Gt": {
-      "source_fingerprint": "322504273b4e2d530248a1437cbcabb87c99e02dddfbaa7c1448b80c1f1ddbc6",
+      "source_fingerprint": "f041dbcde55c464c345c988a7edef7fd811eeae8a0c1beb5c58ec06280a0e5be",
       "evidence_hashes": {
-        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689"
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689",
+        "docs/evidence/hosting-command-parity-20260921.json": "d1af13e369288453fb262ec7339fa4d08f5a2583af4da8aed9c748aeea7ad67c"
       }
     },
     "rtk.tools.Commands.Hook": {
@@ -845,45 +848,52 @@
       "evidence_hashes": {}
     },
     "rtk.tools.GtCommands.Branch": {
-      "source_fingerprint": "309817dddcea42b66487911438116a183c170d4017acee50921d8fc9ab5f67a6",
+      "source_fingerprint": "d89645f5b93a31e0e5a0bbd42120711450d12158f1b7863c5a251d3bebda3074",
       "evidence_hashes": {
-        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689"
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689",
+        "docs/evidence/hosting-command-parity-20260921.json": "d1af13e369288453fb262ec7339fa4d08f5a2583af4da8aed9c748aeea7ad67c"
       }
     },
     "rtk.tools.GtCommands.Create": {
-      "source_fingerprint": "7155fbb2a4b4d16e42ddb557b1b7a0eb3c538843e852d4893fb7e60e27aacb2b",
+      "source_fingerprint": "953e6f61129de8e0241fc0da48f9f9a78fbbd0d71c47dea83ba5669dab94f810",
       "evidence_hashes": {
-        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689"
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689",
+        "docs/evidence/hosting-command-parity-20260921.json": "d1af13e369288453fb262ec7339fa4d08f5a2583af4da8aed9c748aeea7ad67c"
       }
     },
     "rtk.tools.GtCommands.Log": {
-      "source_fingerprint": "73fa4c0a636c2a27d3947f7dbb4311a9d714a4ef1b0c3e7a65e5e237fc87aaed",
+      "source_fingerprint": "bc3446f2cece87a7e3de12063e40499abc1cf7c93c5e056b16e122942cfe62a8",
       "evidence_hashes": {
-        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689"
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689",
+        "docs/evidence/hosting-command-parity-20260921.json": "d1af13e369288453fb262ec7339fa4d08f5a2583af4da8aed9c748aeea7ad67c"
       }
     },
     "rtk.tools.GtCommands.Other": {
-      "source_fingerprint": "4feb08acab8c86633b7f6a01f24b4cc48cd572d888f24b5d4c0da3c70997c326",
+      "source_fingerprint": "0e7af88723f558a152b091bf98d5f194c12266a995fb09375396c8c262a956bf",
       "evidence_hashes": {
-        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689"
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689",
+        "docs/evidence/hosting-command-parity-20260921.json": "d1af13e369288453fb262ec7339fa4d08f5a2583af4da8aed9c748aeea7ad67c"
       }
     },
     "rtk.tools.GtCommands.Restack": {
-      "source_fingerprint": "eac13767313a272ac3a338e33dd19df58cc728249e866369bcb4e9b58f7c839e",
+      "source_fingerprint": "c2bde3182370d3392bb71a6f13e4e59436a7f4b54168951da5bb9be17dc3b5b0",
       "evidence_hashes": {
-        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689"
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689",
+        "docs/evidence/hosting-command-parity-20260921.json": "d1af13e369288453fb262ec7339fa4d08f5a2583af4da8aed9c748aeea7ad67c"
       }
     },
     "rtk.tools.GtCommands.Submit": {
-      "source_fingerprint": "e89d4b09bdedfcb920f102be124965b14dc82eb547a44f3dea03e20e3a0b4357",
+      "source_fingerprint": "272225d9aef5b7beaf27a8a5aa2939b667d6d25b36d04d51c805c11b776a84ff",
       "evidence_hashes": {
-        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689"
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689",
+        "docs/evidence/hosting-command-parity-20260921.json": "d1af13e369288453fb262ec7339fa4d08f5a2583af4da8aed9c748aeea7ad67c"
       }
     },
     "rtk.tools.GtCommands.Sync": {
-      "source_fingerprint": "e9fbf9cbb089b48ace027bf97e5fd055f829e0bdca5f6127ded2125bcc7971b7",
+      "source_fingerprint": "8e96463b21de58f4db0f233e655d64c504de6f0c6abea2e49fc61368486e2042",
       "evidence_hashes": {
-        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689"
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "ad9f073b16e920e509ee6a5947ae00ed50bcf7ed0456096e49c097320e6ab689",
+        "docs/evidence/hosting-command-parity-20260921.json": "d1af13e369288453fb262ec7339fa4d08f5a2583af4da8aed9c748aeea7ad67c"
       }
     },
     "rtk.tools.HookCommands.Check": {

@@ -2638,7 +2638,8 @@
       "implementation_status": "contract_mapped",
       "parity_status": "fixed_upstream_success_failure_windows",
       "parity_evidence": [
-        "docs/evidence/upstream-rtk-comparison-20260920.json"
+        "docs/evidence/upstream-rtk-comparison-20260920.json",
+        "docs/evidence/hosting-command-parity-20260921.json"
       ],
       "gap": "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
     },
@@ -2784,7 +2785,8 @@
       "implementation_status": "contract_mapped",
       "parity_status": "fixed_upstream_success_failure_windows",
       "parity_evidence": [
-        "docs/evidence/upstream-rtk-comparison-20260920.json"
+        "docs/evidence/upstream-rtk-comparison-20260920.json",
+        "docs/evidence/hosting-command-parity-20260921.json"
       ],
       "gap": "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
     },
@@ -3000,7 +3002,8 @@
       "implementation_status": "contract_mapped",
       "parity_status": "fixed_upstream_success_failure_windows",
       "parity_evidence": [
-        "docs/evidence/upstream-rtk-comparison-20260920.json"
+        "docs/evidence/upstream-rtk-comparison-20260920.json",
+        "docs/evidence/hosting-command-parity-20260921.json"
       ],
       "gap": "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
     },
@@ -7545,7 +7548,8 @@
       "implementation_status": "contract_mapped",
       "parity_status": "fixed_upstream_success_failure_windows",
       "parity_evidence": [
-        "docs/evidence/upstream-rtk-comparison-20260920.json"
+        "docs/evidence/upstream-rtk-comparison-20260920.json",
+        "docs/evidence/hosting-command-parity-20260921.json"
       ],
       "gap": "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
     },
@@ -7587,7 +7591,8 @@
       "implementation_status": "contract_mapped",
       "parity_status": "fixed_upstream_success_failure_windows",
       "parity_evidence": [
-        "docs/evidence/upstream-rtk-comparison-20260920.json"
+        "docs/evidence/upstream-rtk-comparison-20260920.json",
+        "docs/evidence/hosting-command-parity-20260921.json"
       ],
       "gap": "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
     },
@@ -7629,7 +7634,8 @@
       "implementation_status": "contract_mapped",
       "parity_status": "fixed_upstream_success_failure_windows",
       "parity_evidence": [
-        "docs/evidence/upstream-rtk-comparison-20260920.json"
+        "docs/evidence/upstream-rtk-comparison-20260920.json",
+        "docs/evidence/hosting-command-parity-20260921.json"
       ],
       "gap": "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
     },
@@ -7664,7 +7670,8 @@
       "implementation_status": "contract_mapped",
       "parity_status": "fixed_upstream_success_failure_windows",
       "parity_evidence": [
-        "docs/evidence/upstream-rtk-comparison-20260920.json"
+        "docs/evidence/upstream-rtk-comparison-20260920.json",
+        "docs/evidence/hosting-command-parity-20260921.json"
       ],
       "gap": "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
     },
@@ -7706,7 +7713,8 @@
       "implementation_status": "contract_mapped",
       "parity_status": "fixed_upstream_success_failure_windows",
       "parity_evidence": [
-        "docs/evidence/upstream-rtk-comparison-20260920.json"
+        "docs/evidence/upstream-rtk-comparison-20260920.json",
+        "docs/evidence/hosting-command-parity-20260921.json"
       ],
       "gap": "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
     },
@@ -7748,7 +7756,8 @@
       "implementation_status": "contract_mapped",
       "parity_status": "fixed_upstream_success_failure_windows",
       "parity_evidence": [
-        "docs/evidence/upstream-rtk-comparison-20260920.json"
+        "docs/evidence/upstream-rtk-comparison-20260920.json",
+        "docs/evidence/hosting-command-parity-20260921.json"
       ],
       "gap": "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
     },
@@ -7790,7 +7799,8 @@
       "implementation_status": "contract_mapped",
       "parity_status": "fixed_upstream_success_failure_windows",
       "parity_evidence": [
-        "docs/evidence/upstream-rtk-comparison-20260920.json"
+        "docs/evidence/upstream-rtk-comparison-20260920.json",
+        "docs/evidence/hosting-command-parity-20260921.json"
       ],
       "gap": "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
     },
