@@ -17,7 +17,7 @@
 
 `status`、`log`、`diff` 当前只有 Windows 固定上游成功形态；`commit`、`pull`、`checkout` 已增加成功与失败捕获输出，失败内容中的路径和阻断原因均保留。所有项目仍缺未知格式及 macOS/Linux 固定二进制变体，因此不会提升为完整上游对标通过。其余写操作已具备逐命令路由和离线测试，仍待固定上游逐项对照。
 
-同一实现提交 `6edc97c` 在 Mac arm64 的独立 `/tmp` 工作区完成全量离线回归：`279 passed, 1 skipped, 2 warnings`。该运行未执行固定 RTK 二进制，因而只证明 UTK 跨平台回归，不补充上游变体证据。
+包含 Git 成功/失败对照的提交 `ba10bf5` 在 Mac arm64 的独立 `/tmp` 工作区完成全量离线回归：`279 passed, 1 skipped, 2 warnings`。该运行未执行固定 RTK 二进制，因而只证明 UTK 跨平台回归，不补充上游变体证据。
 
 证据文件：
 
