@@ -1,0 +1,12 @@
+src/a.py:1:target one with enough explanatory content
+src/a.py:8:target two with enough explanatory content
+src/a.py:13:target five with enough explanatory content
+src/a.py:21:target six with enough explanatory content
+src/a.py:34:target seven with enough explanatory content
+src/a.py:55:target eight with enough explanatory content
+src/b.py:3:target three with enough explanatory content
+src/b.py:21:target four with enough explanatory content
+src/b.py:29:target nine with enough explanatory content
+src/b.py:44:target ten with enough explanatory content
+src/b.py:61:target eleven with enough explanatory content
+src/b.py:89:target twelve with enough explanatory content

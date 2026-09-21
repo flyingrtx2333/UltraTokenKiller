@@ -2281,9 +2281,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "search.human"
+    ],
     "scope": "coverage_denominator"
   },
   {
@@ -4077,9 +4079,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "search.human"
+    ],
     "scope": "coverage_denominator"
   },
   {

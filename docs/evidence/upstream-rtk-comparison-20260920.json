@@ -2,9 +2,29 @@
   "schema_version": 1,
   "baseline": "0924356b4caba4989607227b7c8824d3d8098719",
   "model": "gpt-5.6-luna",
-  "case_count": 8,
+  "case_count": 10,
   "live_model_calls": 0,
   "cases": [
+    {
+      "case": "rg-human-search",
+      "kind": "search",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.00641025641025641,
+      "utk_reduction": 0.10256410256410256,
+      "ratio": 16.0,
+      "exit_code": 0
+    },
+    {
+      "case": "grep-human-search",
+      "kind": "search",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.00641025641025641,
+      "utk_reduction": 0.10256410256410256,
+      "ratio": 16.0,
+      "exit_code": 0
+    },
     {
       "case": "pytest-failure",
       "kind": "pytest",

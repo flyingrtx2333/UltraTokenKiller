@@ -38,7 +38,11 @@ def command_filter(argv: list[str]) -> str | None:
             return "git-action"
         return None
     if name in {"rg", "grep"}:
-        if any(x in {"-n", "--line-number"} for x in args) and not any(x in {"-l", "--files-with-matches", "--files", "--count", "-c", "-v", "--invert-match"} for x in args):
+        if not any(x in {
+            "-l", "--files-with-matches", "--files", "--count", "-c",
+            "-v", "--invert-match", "--only-matching", "-o", "--vimgrep",
+            "--heading", "--count-matches", "--files-without-match",
+        } for x in args):
             return "search"
         return None
     if name in {"ls", "tree", "find", "fd"}:

@@ -21,7 +21,7 @@
 
 固定上游的原始结果与环境指纹见 [upstream-rtk-reference-20260920.json](evidence/upstream-rtk-reference-20260920.json)，逐样例比较见 [upstream-rtk-comparison-20260920.json](evidence/upstream-rtk-comparison-20260920.json)。两份文件使用锁定 tokenizer 的离线估算，不是提供商账单 usage。
 
-这 8 个样例只是 RTK 命令族对标的早期证据。它们不能代表已完成现有 211 个发现项，也不能证明 Git 的其他输出形态、GitHub CLI、其他测试框架、云基础设施工具或平台取消语义已经完成固定上游对标。后续仍需按机器可读清单逐项增加成功、失败、未知格式和适用平台证据。
+这 10 个样例只是 RTK 命令族对标的早期证据，其中新增 `rg`、`grep` 默认人类可读搜索输出。它们不能代表已完成现有 211 个发现项，也不能证明 Git 的其他输出形态、GitHub CLI、其他测试框架、云基础设施工具或平台取消语义已经完成固定上游对标。后续仍需按机器可读清单逐项增加成功、失败、未知格式和适用平台证据。
 
 复现命令：
 

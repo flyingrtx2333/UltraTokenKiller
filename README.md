@@ -102,14 +102,14 @@ python scripts/generate-reference.py --headroom path/to/headroom --rtk path/to/r
 python scripts/generate-rtk-reference.py --checkout path/to/rtk --binary path/to/rtk-binary --output rtk-reference.json --comparison rtk-comparison.json
 ```
 
-当前 8 个捕获输出样例均保留关键事实，UTK 压缩率达到对应固定 RTK 的 95.5% 至 157.1%。这只是已验证命令族证据，不代表已覆盖全部 RTK 清单，详见 [固定 RTK 捕获输出对照](docs/upstream-rtk-reference-2026-09-20.md)。
+当前 10 个捕获输出样例均保留关键事实，其中新增 `rg`、`grep` 默认人类可读输出；原有 8 个测试、诊断和 Git 样例中，UTK 压缩率达到对应固定 RTK 的 95.5% 至 157.1%。这只是已验证输出形态证据，不代表 211 个 RTK 变体已完成逐项对标，详见 [固定 RTK 捕获输出对照](docs/upstream-rtk-reference-2026-09-20.md)。
 
 能力状态的源码绑定和自动降级规则见 [能力证据绑定](docs/capability-evidence-2026-09-20.md)。高层产品能力当前为 33/36 离线通过；它不等于固定上游逐项对标完成。
 
 完整三层核心分母为 **256 项**：Headroom 24 项、RTK 211 项、Caveman 21 项。逐项输入、行为、上游证据、UTK 实现、测试、平台、实现状态、对标状态与缺口见 [完整三层能力对标清单](docs/full-capability-parity-2026-09-21.md)。另有 6 项云服务、发布基础设施和云端分析生态功能明确排除，不纳入核心分母。
 
 - Headroom：9 项固定样例对照通过、1 项固定套件通过；14 项尚未逐项比较。样例通过不能代替全部协议、恢复和客户端能力对标。
-- RTK：211 项全部仍待固定上游变体证据；55 项仅完成现有契约映射，156 项未验证。契约映射和未知格式透传均不计为对标通过。命令族统计见 [RTK 命令覆盖分母](docs/rtk-command-denominator-2026-09-20.md)。
+- RTK：211 项全部仍待固定上游变体证据；57 项仅完成现有契约映射，154 项未验证。契约映射和未知格式透传均不计为对标通过。命令族统计见 [RTK 命令覆盖分母](docs/rtk-command-denominator-2026-09-20.md)。
 - Caveman：14 项固定策略对照通过，2 项结构化绕过离线通过；5 类成对回答质量仍需 180 次授权模型请求，当前调用 0 次。
 
 剩余高层 3 项是 Caveman 成对质量及 Hermes CLI/gateway 真实验收，不能以透传或测试文件存在冒充通过。

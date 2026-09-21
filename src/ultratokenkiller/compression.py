@@ -192,12 +192,19 @@ def _diff_compact(text: str) -> str:
 
 def _search_compact(text: str) -> str:
     lines = text.splitlines()
-    groups = {}
+    groups: dict[str, list[tuple[str | None, str]]] = {}
     for line in lines:
-        match = re.match(r"^(.*?):(\d+(?::\d+)?):(.*)$", line)
-        if not match:
+        numbered = re.match(r"^(.*?):(\d+(?::\d+)?):(.*)$", line)
+        if numbered:
+            groups.setdefault(numbered[1], []).append((numbered[2], numbered[3]))
+            continue
+        # Frozen RTK also accepts grep/rg's captured human shape `path:text`.
+        # Preserve the whole match text and group only an unambiguous path
+        # prefix; drive letters are consumed before looking for the separator.
+        plain = re.match(r"^((?:[A-Za-z]:[\\/])?[^:]+):(.*)$", line)
+        if not plain or not plain[1].strip() or not plain[2]:
             return text
-        groups.setdefault(match[1], []).append((match[2], match[3]))
+        groups.setdefault(plain[1], []).append((None, plain[2]))
     output = []
     for path, hits in groups.items():
         output.append(path)
@@ -209,8 +216,9 @@ def _search_compact(text: str) -> str:
         for index, (location, content) in enumerate(visible):
             if omitted and index == 8:
                 output.append(f"  [UTK: {omitted} middle hits omitted]")
-            output.append(f"  {location}: {content}")
-    return "\n".join(output) + ("\n" if text.endswith("\n") else "")
+            output.append(f"  {location + ': ' if location else ''}{content}")
+    rendered = "\n".join(output) + ("\n" if text.endswith("\n") else "")
+    return rendered if len(rendered) < len(text) else text
 
 
 def compress_content(text: str, *, session: str, vault: RecoveryVault, profile="safe", hint=None, query="", home=None) -> CompressionResult:

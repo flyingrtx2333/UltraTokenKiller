@@ -7,7 +7,7 @@ Generated from machine-readable upstream evidence. Implementation status and fix
 | Upstream | Core items | Implementation states | Parity states |
 |---|---:|---|---|
 | Headroom | 24 | {'offline_passed': 21, 'real_client_passed': 3} | {'fixed_upstream_sample_passed': 9, 'fixed_upstream_suite_passed': 1, 'not_individually_compared': 14} |
-| Rtk | 211 | {'contract_mapped': 55, 'unverified': 156} | {'pending_fixed_upstream_variant_evidence': 211} |
+| Rtk | 211 | {'contract_mapped': 57, 'unverified': 154} | {'pending_fixed_upstream_variant_evidence': 211} |
 | Caveman | 21 | {'implemented_unverified': 5, 'real_client_passed': 16} | {'authorization_required': 5, 'fixed_upstream_policy_passed': 14, 'offline_passed': 2} |
 
 Total core denominator: **256**
@@ -91,7 +91,7 @@ Total core denominator: **256**
 | `rtk.tools.Commands.Go` | go | `go` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.GolangciLint` | general | `golangci-lint` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Gradlew` | general | `gradlew` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.Commands.Grep` | file_search | `grep` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
+| `rtk.tools.Commands.Grep` | file_search | `grep` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
 | `rtk.tools.Commands.Gt` | git | `gt` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Hook` | general | `hook` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.HookAudit` | general | `hook-audit` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
@@ -130,7 +130,7 @@ Total core denominator: **256**
 | `rtk.tools.Commands.Read` | file_search | `read` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Recall` | general | `recall` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Rewrite` | general | `rewrite` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.Commands.Rg` | file_search | `rg` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
+| `rtk.tools.Commands.Rg` | file_search | `rg` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
 | `rtk.tools.Commands.Rspec` | general | `rspec` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
 | `rtk.tools.Commands.Rubocop` | general | `rubocop` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
 | `rtk.tools.Commands.Ruff` | python | `ruff` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |

@@ -17,6 +17,24 @@ from .tool_filters import compress_tool
 
 CASES = (
     {
+        "id": "rg-human-search",
+        "fixture": "rg_human_search_raw.txt",
+        "program": "rg",
+        "argv": ["rg", "target", "."],
+        "kind": "search",
+        "exit_code": 0,
+        "required": ["src/a.py", "target one", "src/b.py", "target four"],
+    },
+    {
+        "id": "grep-human-search",
+        "fixture": "grep_human_search_raw.txt",
+        "program": "grep",
+        "argv": ["grep", "target", "src/a.py", "src/b.py"],
+        "kind": "search",
+        "exit_code": 0,
+        "required": ["src/a.py", "target one", "src/b.py", "target four"],
+    },
+    {
         "id": "pytest-failure",
         "fixture": "uv_run_pytest_failure.txt",
         "program": "pytest",
@@ -155,7 +173,8 @@ def _write_emitter(
 
 
 def _run_case(binary: Path, checkout: Path, case: dict[str, Any]) -> dict[str, Any]:
-    fixture = checkout / "tests" / "fixtures" / case["fixture"]
+    repository_fixture = Path(__file__).resolve().parents[2] / "tests" / "fixtures" / "rtk_reference" / case["fixture"]
+    fixture = repository_fixture if repository_fixture.is_file() else checkout / "tests" / "fixtures" / case["fixture"]
     if not fixture.is_file():
         raise ValueError(f"Missing frozen RTK fixture: {case['fixture']}")
     raw = fixture.read_text(encoding="utf-8", errors="replace")

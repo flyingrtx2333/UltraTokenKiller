@@ -30,8 +30,8 @@ def test_rtk_mapping_does_not_claim_variant_parity():
     rtk = [item for item in report["items"] if item["upstream"] == "rtk"]
 
     assert Counter(item["implementation_status"] for item in rtk) == {
-        "contract_mapped": 55,
-        "unverified": 156,
+        "contract_mapped": 57,
+        "unverified": 154,
     }
     assert {item["parity_status"] for item in rtk} == {"pending_fixed_upstream_variant_evidence"}
 
@@ -75,8 +75,8 @@ def test_capability_report_exposes_full_parity_without_inflating_completion():
     assert len(report["full_parity_inventory"]) == 256
     assert len(report["ecosystem_exclusions"]) == 6
     assert report["full_parity_implementation_counts"]["rtk"] == {
-        "contract_mapped": 55,
-        "unverified": 156,
+        "contract_mapped": 57,
+        "unverified": 154,
     }
     assert report["full_parity_status_counts"]["rtk"] == {
         "pending_fixed_upstream_variant_evidence": 211,

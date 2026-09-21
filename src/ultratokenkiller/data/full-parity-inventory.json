@@ -2942,11 +2942,13 @@
           "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L334"
         }
       ],
-      "utk_contracts": [],
-      "implementation_status": "unverified",
+      "utk_contracts": [
+        "search.human"
+      ],
+      "implementation_status": "contract_mapped",
       "parity_status": "pending_fixed_upstream_variant_evidence",
       "parity_evidence": [],
-      "gap": "Needs a dedicated contract plus success, failure and unknown-format evidence"
+      "gap": "Mapped contract still needs success, failure and unknown-format fixed-upstream evidence"
     },
     {
       "id": "rtk.tools.Commands.Gt",
@@ -4660,11 +4662,13 @@
           "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L367"
         }
       ],
-      "utk_contracts": [],
-      "implementation_status": "unverified",
+      "utk_contracts": [
+        "search.human"
+      ],
+      "implementation_status": "contract_mapped",
       "parity_status": "pending_fixed_upstream_variant_evidence",
       "parity_evidence": [],
-      "gap": "Needs a dedicated contract plus success, failure and unknown-format evidence"
+      "gap": "Mapped contract still needs success, failure and unknown-format fixed-upstream evidence"
     },
     {
       "id": "rtk.tools.Commands.Rspec",

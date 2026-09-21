@@ -9,8 +9,8 @@ The frozen RTK command inventory contains **211 command variants**. Every varian
 
 | Evidence state | Count | Meaning |
 |---|---:|---|
-| `contract_mapped` | 55 | The variant maps to one or more of UTK's existing reviewed contracts. This is traceability only; it does not prove fixed-upstream parity. |
-| `unverified` | 156 | The variant still needs a command-specific contract and success, failure, and unknown-format evidence on each applicable platform. |
+| `contract_mapped` | 57 | The variant maps to one or more of UTK's existing reviewed contracts. This is traceability only; it does not prove fixed-upstream parity. |
+| `unverified` | 154 | The variant still needs a command-specific contract and success, failure, and unknown-format evidence on each applicable platform. |
 | **Total denominator** | **211** | Frozen core variants discovered from the pinned RTK source. |
 
 Unknown output that UTK passes through remains unverified. Passthrough does not count as compression support.
