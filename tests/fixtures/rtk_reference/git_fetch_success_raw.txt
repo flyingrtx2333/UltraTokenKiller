@@ -1,0 +1,2 @@
+From https://example.test/repo
+ * [new branch]      feature/migration -> origin/feature/migration

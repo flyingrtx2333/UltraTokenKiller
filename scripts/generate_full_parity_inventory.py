@@ -86,10 +86,14 @@ def rtk_items(inventory: list[dict], lock: dict) -> list[dict]:
         "tools.Commands.Find",
         "tools.GitCommand.Checkout",
         "tools.GitCommand.Commit",
+        "tools.GitCommand.Fetch",
         "tools.GitCommand.Pull",
+        "tools.GitCommand.Push",
         "tools.GitCommands.Checkout",
         "tools.GitCommands.Commit",
+        "tools.GitCommands.Fetch",
         "tools.GitCommands.Pull",
+        "tools.GitCommands.Push",
     }
     for row in inventory:
         mapped = row.get("status") == "contract_mapped"

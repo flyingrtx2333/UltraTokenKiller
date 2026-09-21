@@ -1,0 +1,3 @@
+To https://example.test/repo.git
+ ! [rejected]        main -> main (non-fast-forward)
+error: failed to push some refs to 'https://example.test/repo.git'

@@ -54,6 +54,30 @@
       "exit_code": 1,
       "raw_sha256": "690401e2b133f8b2acc338da82e1cdcfb7dbab26daf92bfc44104e4c719eeba7"
     },
+    "git-push-success": {
+      "raw": "Enumerating objects: 5, done.\nCounting objects: 100% (5/5), done.\nDelta compression using up to 8 threads\nCompressing objects: 100% (3/3), done.\nWriting objects: 100% (3/3), 312 bytes | 312.00 KiB/s, done.\nTotal 3 (delta 2), reused 0 (delta 0)\nTo https://example.test/repo.git\n   abc1234..def5678  main -> main\n",
+      "output": "To https://example.test/repo.git\n   abc1234..def5678  main -> main\nok main",
+      "exit_code": 0,
+      "raw_sha256": "a6ecef0cda90b408cdcf7acab785fb22164661b5815a184a8d7abbc85a12e9fa"
+    },
+    "git-push-failure": {
+      "raw": "To https://example.test/repo.git\n ! [rejected]        main -> main (non-fast-forward)\nerror: failed to push some refs to 'https://example.test/repo.git'\n",
+      "output": "To https://example.test/repo.git\n ! [rejected]        main -> main (non-fast-forward)\nerror: failed to push some refs to 'https://example.test/repo.git'",
+      "exit_code": 1,
+      "raw_sha256": "9ee412a2c93e42f5065598f808c890dfc4c89ef134c5386edf8ad84d49e3384c"
+    },
+    "git-fetch-success": {
+      "raw": "From https://example.test/repo\n * [new branch]      feature/migration -> origin/feature/migration\n",
+      "output": "ok fetched (1 new refs)",
+      "exit_code": 0,
+      "raw_sha256": "27028b2aa22c9c08d357c1d50811ccb3214e9d022679546e8c42b5cf4dd85dc5"
+    },
+    "git-fetch-failure": {
+      "raw": "fatal: unable to access 'https://example.test/repo.git/': Could not resolve host: example.test\n",
+      "output": "FAILED: git fetch\nfatal: unable to access 'https://example.test/repo.git/': Could not resolve host: example.test",
+      "exit_code": 1,
+      "raw_sha256": "97ab0fcc36c74039a845273240a941d527f662be60ac9ce510145fce7ba4ea10"
+    },
     "ls-human-long": {
       "raw": "total 16\ndrwxr-xr-x  2 user  staff    64 Jan  1 12:00 src\n-rw-r--r--  1 user  staff  1234 Jan  1 12:00 README file.md\n-rwxr-xr-x  1 user  staff   500 Dec 25  2024 build.sh\n",
       "output": "755  src/\n644  README file.md  1.2K\n755  build.sh  500B",

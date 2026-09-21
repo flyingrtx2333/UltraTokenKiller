@@ -2,7 +2,7 @@
   "schema_version": 1,
   "baseline": "0924356b4caba4989607227b7c8824d3d8098719",
   "model": "gpt-5.6-luna",
-  "case_count": 29,
+  "case_count": 33,
   "live_model_calls": 0,
   "cases": [
     {
@@ -83,6 +83,46 @@
       "upstream_reduction": 0.05,
       "utk_reduction": 0.0,
       "ratio": 0.0,
+      "exit_code": 1
+    },
+    {
+      "case": "git-push-success",
+      "kind": "git-push",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.7777777777777778,
+      "utk_reduction": 0.7777777777777778,
+      "ratio": 1.0,
+      "exit_code": 0
+    },
+    {
+      "case": "git-push-failure",
+      "kind": "git-push",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.0,
+      "utk_reduction": 0.0,
+      "ratio": null,
+      "exit_code": 1
+    },
+    {
+      "case": "git-fetch-success",
+      "kind": "git-fetch",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.7083333333333334,
+      "utk_reduction": 0.7083333333333334,
+      "ratio": 1.0,
+      "exit_code": 0
+    },
+    {
+      "case": "git-fetch-failure",
+      "kind": "git-fetch",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": -0.17391304347826086,
+      "utk_reduction": 0.0,
+      "ratio": null,
       "exit_code": 1
     },
     {

@@ -82,6 +82,21 @@ def test_git_success_filters(kind, raw, expected):
     assert compress_tool(raw, kind) == expected
 
 
+def test_git_push_removes_progress_but_keeps_remote_result():
+    raw = (
+        "Enumerating objects: 5, done.\n"
+        "Counting objects: 100% (5/5), done.\n"
+        "Writing objects: 100% (3/3), done.\n"
+        "To https://example.test/repo.git\n"
+        "   abc1234..def5678  main -> main\n"
+    )
+    compact = compress_tool(raw, "git-push")
+    assert "Enumerating objects" not in compact
+    assert "https://example.test/repo.git" in compact
+    assert "main -> main" in compact
+    assert compact.endswith("ok main\n")
+
+
 @pytest.mark.parametrize(
     "kind, raw",
     [

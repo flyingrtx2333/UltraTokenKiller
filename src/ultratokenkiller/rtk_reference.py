@@ -93,6 +93,46 @@ CASES = (
         "required": ["missing-branch", "pathspec"],
     },
     {
+        "id": "git-push-success",
+        "fixture": "git_push_success_raw.txt",
+        "program": "git",
+        "argv": ["git", "push", "origin", "main"],
+        "kind": "git-push",
+        "exit_code": 0,
+        "fixture_stderr": True,
+        "required": ["example.test/repo.git", "main", "ok"],
+    },
+    {
+        "id": "git-push-failure",
+        "fixture": "git_push_failure_raw.txt",
+        "program": "git",
+        "argv": ["git", "push", "origin", "main"],
+        "kind": "git-push",
+        "exit_code": 1,
+        "fixture_stderr": True,
+        "required": ["rejected", "non-fast-forward", "failed to push"],
+    },
+    {
+        "id": "git-fetch-success",
+        "fixture": "git_fetch_success_raw.txt",
+        "program": "git",
+        "argv": ["git", "fetch", "origin"],
+        "kind": "git-fetch",
+        "exit_code": 0,
+        "fixture_stderr": True,
+        "required": ["fetched", "1", "new refs"],
+    },
+    {
+        "id": "git-fetch-failure",
+        "fixture": "git_fetch_failure_raw.txt",
+        "program": "git",
+        "argv": ["git", "fetch", "origin"],
+        "kind": "git-fetch",
+        "exit_code": 1,
+        "fixture_stderr": True,
+        "required": ["Could not resolve host", "example.test"],
+    },
+    {
         "id": "ls-human-long",
         "fixture": "ls_long_raw.txt",
         "program": "ls",
@@ -296,6 +336,7 @@ def _write_emitter(
     version_stdout: str | None = None,
     empty_first_args: tuple[str, ...] = (),
     empty_any_args: tuple[str, ...] = (),
+    stderr: bool = False,
 ) -> None:
     if os.name == "nt":
         target = directory / f"{program}.cmd"
@@ -317,7 +358,7 @@ def _write_emitter(
         )
         target.write_text(
             version_branch + empty_branches + empty_any_branches
-            + f'@type "{fixture}"\r\n@exit /b {exit_code}\r\n',
+            + f'@type "{fixture}"{" 1>&2" if stderr else ""}\r\n@exit /b {exit_code}\r\n',
             encoding="utf-8",
         )
         return
@@ -342,7 +383,7 @@ def _write_emitter(
     escaped_fixture = str(fixture).replace("'", "'\\''")
     target.write_text(
         f"#!/bin/sh\n{version_branch}{empty_branches}{empty_any_branches}"
-        f"cat '{escaped_fixture}'\nexit {exit_code}\n",
+        f"cat '{escaped_fixture}'{' >&2' if stderr else ''}\nexit {exit_code}\n",
         encoding="utf-8",
     )
     target.chmod(target.stat().st_mode | stat.S_IXUSR)
@@ -410,6 +451,7 @@ def _run_case(binary: Path, checkout: Path, case: dict[str, Any]) -> dict[str, A
                 case.get("version_stdout"),
                 tuple(case.get("empty_first_args", ())),
                 tuple(case.get("empty_any_args", ())),
+                bool(case.get("fixture_stderr")),
             )
         env = {
             **os.environ,

@@ -6511,9 +6511,11 @@
         "git.actions"
       ],
       "implementation_status": "contract_mapped",
-      "parity_status": "pending_fixed_upstream_variant_evidence",
-      "parity_evidence": [],
-      "gap": "Mapped contract still needs success, failure and unknown-format fixed-upstream evidence"
+      "parity_status": "fixed_upstream_success_failure_windows",
+      "parity_evidence": [
+        "docs/evidence/upstream-rtk-comparison-20260920.json"
+      ],
+      "gap": "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
     },
     {
       "id": "rtk.tools.GitCommand.Log",
@@ -6614,9 +6616,11 @@
         "git.actions"
       ],
       "implementation_status": "contract_mapped",
-      "parity_status": "pending_fixed_upstream_variant_evidence",
-      "parity_evidence": [],
-      "gap": "Mapped contract still needs success, failure and unknown-format fixed-upstream evidence"
+      "parity_status": "fixed_upstream_success_failure_windows",
+      "parity_evidence": [
+        "docs/evidence/upstream-rtk-comparison-20260920.json"
+      ],
+      "gap": "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
     },
     {
       "id": "rtk.tools.GitCommand.Show",
@@ -6999,9 +7003,11 @@
         "git.actions"
       ],
       "implementation_status": "contract_mapped",
-      "parity_status": "pending_fixed_upstream_variant_evidence",
-      "parity_evidence": [],
-      "gap": "Mapped contract still needs success, failure and unknown-format fixed-upstream evidence"
+      "parity_status": "fixed_upstream_success_failure_windows",
+      "parity_evidence": [
+        "docs/evidence/upstream-rtk-comparison-20260920.json"
+      ],
+      "gap": "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
     },
     {
       "id": "rtk.tools.GitCommands.Log",
@@ -7154,9 +7160,11 @@
         "git.actions"
       ],
       "implementation_status": "contract_mapped",
-      "parity_status": "pending_fixed_upstream_variant_evidence",
-      "parity_evidence": [],
-      "gap": "Mapped contract still needs success, failure and unknown-format fixed-upstream evidence"
+      "parity_status": "fixed_upstream_success_failure_windows",
+      "parity_evidence": [
+        "docs/evidence/upstream-rtk-comparison-20260920.json"
+      ],
+      "gap": "Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain"
     },
     {
       "id": "rtk.tools.GitCommands.Show",

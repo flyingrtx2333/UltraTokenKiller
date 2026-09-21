@@ -423,7 +423,29 @@ def compress_tool(text: str, kind: str) -> str:
         if re.search(r"Saved working directory|Saved index state", text):
             return "ok stashed\n" if text.endswith("\n") else "ok stashed"
         return text
-    if kind in {"git-push", "git-branch", "git-worktree"}:
+    if kind == "git-push":
+        if not text or re.search(r"(?im)^(?:error:|fatal:|.*\[rejected\])", text):
+            return text
+        noise = (
+            "Enumerating objects:", "Counting objects:", "Compressing objects:",
+            "Writing objects:", "Delta compression using", "Total ",
+        )
+        kept = [line.strip() for line in text.splitlines() if line.strip() and not line.lstrip().startswith(noise)]
+        destination = None
+        for line in kept:
+            match = re.search(r" -> (\S+)", line)
+            if match:
+                destination = match.group(1)
+                break
+        if "Everything up-to-date" in text:
+            kept.append("ok (up-to-date)")
+        elif destination:
+            kept.append(f"ok {destination}")
+        else:
+            return text
+        rendered = "\n".join(kept) + ("\n" if text.endswith("\n") else "")
+        return rendered if len(rendered) < len(text) else text
+    if kind in {"git-branch", "git-worktree"}:
         from .compression import CRITICAL
         if not text or CRITICAL.search(text):
             return text
