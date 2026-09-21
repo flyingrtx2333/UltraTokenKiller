@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-21",
+  "source_parent": "0768284",
+  "upstream_commit": "0924356b4caba4989607227b7c8824d3d8098719",
+  "scope": "all fixed RTK Git command families: unknown output and machine-format passthrough",
+  "upstream_command_families": [
+    "diff",
+    "log",
+    "status",
+    "show",
+    "add",
+    "commit",
+    "checkout",
+    "push",
+    "pull",
+    "branch",
+    "fetch",
+    "stash",
+    "worktree"
+  ],
+  "utk_kinds": [
+    "git-status",
+    "git-log",
+    "git-diff",
+    "git-show",
+    "git-add",
+    "git-commit",
+    "git-push",
+    "git-pull",
+    "git-fetch",
+    "git-checkout",
+    "git-switch",
+    "git-branch",
+    "git-stash",
+    "git-stash-list",
+    "git-stash-show",
+    "git-worktree",
+    "git-worktree-list"
+  ],
+  "unknown_format_cases": 17,
+  "machine_format_cases": 7,
+  "facts": {
+    "unknown_outputs_unchanged": true,
+    "machine_formats_not_rewritten": true,
+    "passthrough_counted_as_safety_fallback_not_compression": true
+  },
+  "windows_x64": "319 passed, 3 skipped, 1 warning",
+  "model_calls": 0,
+  "source_sha256": "d7e121d6eeab0bdd144143d3c0d2e0a0f609b8bb93063d9c2a8d279e35fc1a6c"
+}

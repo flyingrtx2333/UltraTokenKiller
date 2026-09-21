@@ -41,3 +41,9 @@
 - 修改性命令只执行一次：`rtk git add tracked.txt`；退出码为 0，暂存文件为 `tracked.txt`，固定 RTK 输出保留 `1 file changed, 1 insertion(+)`。
 - 四路对照使用同一份暂存统计输入，未为了统计再次执行 `git add`。
 - 机器证据：`docs/evidence/macos-rtk-git-add-20260921.json`。
+
+## 未知格式与机器格式
+
+- 固定 RTK 的 13 个 Git 命令族及 UTK 的 17 个细分过滤器均验证未知输出原样透传。
+- `--porcelain`、`--format`、`--numstat` 等 7 组机器格式在命令识别阶段直接绕过，不进入文本压缩。
+- 这些结果只计为安全回退证据，不计为压缩支持；机器证据见 `docs/evidence/rtk-git-shape-matrix-20260921.json`。

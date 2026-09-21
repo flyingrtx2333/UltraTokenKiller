@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-21T04:37:18.700341+00:00",
+  "generated_at": "2026-09-21T04:41:53.398785+00:00",
   "items": {
     "headroom.input.routing": {
       "source_fingerprint": "4814f5a4ac5c3d388f0e810c332337796c08dc46089b2d06a329733fc2c2ceaa",
@@ -147,7 +147,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.BunCommands.Test": {
-      "source_fingerprint": "6eb5546133982004c9f697354ff590408c00bd0d0d9e5391b5213f067cfb7fea",
+      "source_fingerprint": "da65efb9099db15633c7f9390471ac099f01a10108e6330d09c1c924a7bea066",
       "evidence_hashes": {}
     },
     "rtk.tools.BunCommands.X": {
@@ -183,7 +183,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.CargoCommand.Test": {
-      "source_fingerprint": "1eeaee0de0ee6ed98d7885f6f49724e3b9e65dd0fd236e9712f99afffc70cefd",
+      "source_fingerprint": "df7953638072526bbaf9d93d11b3048b083a98922e88c04ee901381cd2e4f5b3",
       "evidence_hashes": {}
     },
     "rtk.tools.CargoCommands.Build": {
@@ -211,7 +211,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.CargoCommands.Test": {
-      "source_fingerprint": "05405ac9b856803fea627998599902c643a4d66fc5d3e46312d94589a5dd3a0a",
+      "source_fingerprint": "207a2d232e03c7be916072bb209f4738102d6eda9a1ca8a59fafcdf6ed8e105f",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.AstGrep": {
@@ -219,7 +219,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Aws": {
-      "source_fingerprint": "5f69cbaa336e0a72cbbb662b588cfde6c6ca55b0ea61e7fc4aa39941e0b7a006",
+      "source_fingerprint": "13f39ace4367989809df439b4cbcc5eab3e55e34be0f8b3329ffb1dca332d9d4",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Bun": {
@@ -287,7 +287,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Find": {
-      "source_fingerprint": "61b41109e484d36af44b8418465408c71e0414abc35fedddcac208f985f99397",
+      "source_fingerprint": "eb1df66feb1cf7ea695213e5cce3f0b1b08aefb999ac5c1e8e8ac8b3f77220a1",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
@@ -325,7 +325,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Grep": {
-      "source_fingerprint": "8a94ac63315ea358ac304bcfa7cc5c632f58e81562026c869fe8d7615ace26f5",
+      "source_fingerprint": "924708beefb226f77dab6a4b935c3b2a5a026156d33b0c47f9dc001faa6ee9d4",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
@@ -347,11 +347,11 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Jest": {
-      "source_fingerprint": "dfa252ae5587fa5dc71c46cfa43710cb2d4175ac8ddb0fe0f17362ab7d7596a1",
+      "source_fingerprint": "41c225a6a3fcc5ed655a2b70a7e7b7f96964abb4f23f87f57b1cb5bdcfafbbb4",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Json": {
-      "source_fingerprint": "c54265d4cce30b79c3c8a77f02aa99c62202627f068cd15f3a9cd6ff42d7b608",
+      "source_fingerprint": "4f6bf1ef61423fa71f9d903c53f546e58b8dbc8852a0dab08e52904a70088616",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
@@ -373,7 +373,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Ls": {
-      "source_fingerprint": "8a501c0491bb6b4bc87aa673c0b2bd08dd8eb2fee2c5d98427b2a05984b7a28d",
+      "source_fingerprint": "0de7eff59f57e8b53a314935ac6676222204753fef8389bb457d923009543bfc",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
@@ -387,7 +387,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Mypy": {
-      "source_fingerprint": "af49f24b7182aef3c77d5e313cbd671f01f90d79d400210e67b06f1a7cdf5ff9",
+      "source_fingerprint": "631bb4a54b086f664a1b990bee063640b52833a6840d9b99da96d3eb3a715256",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Next": {
@@ -395,7 +395,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Npm": {
-      "source_fingerprint": "4dc6d36f07ea94348caef59e045ddc807292b97b05fbb7c8b1f05e32d0f19aed",
+      "source_fingerprint": "3461b1991ec5528d5daab601d39a9086add88d8644c374e8a7cae190d3eec56d",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Npx": {
@@ -407,11 +407,11 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Paratest": {
-      "source_fingerprint": "dc438773adbf91c4700e38a8582b73520bc1696c6408acb30067f57c3abb3f8b",
+      "source_fingerprint": "7bd30ba4ed243e31617e283f3f5db9f5790d421d744605ed2c146566a4031c54",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Pest": {
-      "source_fingerprint": "731a0ca3c79a2b373d7c479aac99c3efdcc9fe8c1429bc9e88fe7ae2d50f52a8",
+      "source_fingerprint": "8bbd94f39501dfa373c57d238180768ff73430fce133c4909635e1d6644bc3c8",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Php": {
@@ -419,7 +419,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Phpstan": {
-      "source_fingerprint": "a29b4bbddfeb081e0465f4cec7841a08c0154a6c7ac6b106f0e31054e799d4ac",
+      "source_fingerprint": "ae43b028aaab7de70a23fb73390c2b73331e8d0abff5248c1b600ffbfb40174c",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Phpt": {
@@ -427,7 +427,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Phpunit": {
-      "source_fingerprint": "6017cb0561912277e01e6d5126bddef9f4613452ad7cc8125a3ed323f4b1a631",
+      "source_fingerprint": "0184615f77378a2fb268283b21f346ead966413e89a060d58ff70dfad824731e",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Pint": {
@@ -435,7 +435,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Pip": {
-      "source_fingerprint": "c5f26fabc303cc97901b4cd2c399599ead7cf9113885e6f3a7e49df91f4b5594",
+      "source_fingerprint": "5746fb252e6db40a95c20e8834920bb9f2fb5262e026ce07923ff8409fa27565",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Pipe": {
@@ -467,7 +467,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Pytest": {
-      "source_fingerprint": "57a0dc6109a503611fdd1a1401cdb220f288775b1aeeef180afc187f2afd1b55",
+      "source_fingerprint": "ea7a6ac318f8e1dc487c20ce250673e8b9ec5c83f0c50cf45fbf3a90cb4617a4",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Rake": {
@@ -475,7 +475,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Read": {
-      "source_fingerprint": "ce648698e02f9d4ce8be10a0a6e109859d75e89b38f6df26c5bba0cbf850805a",
+      "source_fingerprint": "087bd95b03733f39c5b2dea4527b1d71c671e8fef0d147b3c3305de9f558852b",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
@@ -489,21 +489,21 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Rg": {
-      "source_fingerprint": "d73c4edeb710a117b1ddff049ea86d6ec190e2b7b48140640e353c11732148eb",
+      "source_fingerprint": "453138d59ee6b986eb88a09d02cb6efb3965c7d2c6218dc3377c3312cb8e1a0d",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.Commands.Rspec": {
-      "source_fingerprint": "ad0c8a8072264cf7426e51e31a722f4daf8c8618aaafcd44b5c5422c2670dcd0",
+      "source_fingerprint": "aa7ad732921ad3ec361cf1ac1ef164810c02f33034ef47bebb3dc92fde802f9e",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Rubocop": {
-      "source_fingerprint": "00de8f55c2f1934b1e4979edf40337dbb9f2986a8fcc46d42c550afa0e6a0db8",
+      "source_fingerprint": "97296837cc22912cca85337a33b57bd2acddd6a1a2d26b95ba5f4699652df45e",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Ruff": {
-      "source_fingerprint": "fa849bec39b79cdc0e7b409391c9e1bd0f3ddbe9bc013c9217468886236d4865",
+      "source_fingerprint": "8f640027050c7b136490dfcbaa76caaae41aa0dec68bf7cc81338ac856329ebd",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Run": {
@@ -519,13 +519,13 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Smart": {
-      "source_fingerprint": "37e4b1b2ccc7fa18fcc269b7e517c0644c0bb1d041d5a7d085a9a12a7b0ac499",
+      "source_fingerprint": "233d9961331fba4f9be99e3e50e8a20155cba5fb22657fef68de4c0751d807f5",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.Commands.Sqlfluff": {
-      "source_fingerprint": "67e0680291f87f0ed1ce064c6a1a6f4aa7075386168e313008c24006484e4c83",
+      "source_fingerprint": "e2de26dd770cf4f222455f36ff2a43078f7bb75a761040dc38cd4983508c6488",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Summary": {
@@ -541,7 +541,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Tree": {
-      "source_fingerprint": "9ac1c25556643b2bfa129f939e99612022fea256c893f55d9c0fcd6252bddd1a",
+      "source_fingerprint": "294a4c91efd427bb1f5d75ad1035fcf275515af5340671f480442d918537bb78",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
@@ -551,7 +551,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Tsc": {
-      "source_fingerprint": "428ba4d1e2ed28499d76448e9815f6f6469948f4d70f2d69fe6aabb2eb8cba36",
+      "source_fingerprint": "14e284c3cefcb3eb85446ff3a4cd5dd8d10eb473fe4d9862a95334ef57f5fe81",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Untrust": {
@@ -559,7 +559,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Uv": {
-      "source_fingerprint": "e7e30a70fd2fc6cbdee6ab2242ca5a5f9f54f92008454aa1cdef67f8a3b57389",
+      "source_fingerprint": "1023b2dcb3270069ebf66ffb739e27876a8bb2d943d65a64f6e79a18ad3f3637",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Verify": {
@@ -567,7 +567,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Vitest": {
-      "source_fingerprint": "eb8116afc927c6b3bd34b0f775033e65635f10ebc44bf7379a9834881f84a47a",
+      "source_fingerprint": "1e295d2b8346c18e866c396655c35a88e33f817ab16b1d0a3309a71cdedd7157",
       "evidence_hashes": {}
     },
     "rtk.tools.Commands.Wc": {
@@ -623,7 +623,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.DenoCommands.Test": {
-      "source_fingerprint": "ca6aa50d111a087c4c42c76c680df89520c1f47f3384018fc5a761f3ff4e14d1",
+      "source_fingerprint": "563cd98a2d23c80238b5825619b494f595f55c6422d86bf6fb0e5a77d8f3cde9",
       "evidence_hashes": {}
     },
     "rtk.tools.DockerCommands.Compose": {
@@ -631,7 +631,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.DockerCommands.Images": {
-      "source_fingerprint": "dafb7a3c99905b973239623c7b855e1402f22690f43054f5336e43dc4fb42bf2",
+      "source_fingerprint": "7850e014cf15ce10aa6dd566877a0defe627328618ade3afeea71dea8d863ab0",
       "evidence_hashes": {}
     },
     "rtk.tools.DockerCommands.Logs": {
@@ -643,7 +643,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.DockerCommands.Ps": {
-      "source_fingerprint": "eabee170881538220764e70bbc56af4bfd9e9fb6f0b846878d260199b141d80b",
+      "source_fingerprint": "e45a17471db121034a673de1b945dca081f7ced0758349f3cde11be1649488e7",
       "evidence_hashes": {}
     },
     "rtk.tools.DotnetCommands.Build": {
@@ -663,57 +663,57 @@
       "evidence_hashes": {}
     },
     "rtk.tools.DotnetCommands.Test": {
-      "source_fingerprint": "12c64726927b09f4b036dbf607d9a2176b3a0b4f5750378624be9c1e2d2af23d",
+      "source_fingerprint": "24b6afa257605689460a9101c10f70ee948dfc184297b8633cd30ccd05245804",
       "evidence_hashes": {}
     },
     "rtk.tools.GitCommand.Add": {
-      "source_fingerprint": "6a2483119170908f8a00f0b3782cb63000cc8b479a4bf7dc7baccb76cb9c8d6c",
+      "source_fingerprint": "3c8cf42debd7e44402bfef9cd5ee4a5f323b18cc044d385da6eaab2c9b2c09f1",
       "evidence_hashes": {}
     },
     "rtk.tools.GitCommand.Branch": {
-      "source_fingerprint": "02e450d6551d0fb19aa7e0e77aa783b0dabbd06622dd3f43d176bfbedb148099",
+      "source_fingerprint": "9825b452eb605670b49957130d0e4045465003eab5968e2befb024e3c1f02191",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommand.Checkout": {
-      "source_fingerprint": "5931a78319446f3fcd443aa99f93ea00b70094922e7324192ecc4d492ec0ee71",
+      "source_fingerprint": "ce52a4f292b26c044d82be56870fbe781c5c30845ab77a90d294f016eab8eeda",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommand.Commit": {
-      "source_fingerprint": "b5e3f4c22ca2042610957f7c56b4a5e971e2b1a778867d2d21e25e164f227582",
+      "source_fingerprint": "b4a6e742d44d99c76aca2e5931078948834320817d2806d162a4e2417c76adf9",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommand.Diff": {
-      "source_fingerprint": "fc50e4c6d3721f5106fe61a1126f012693b9522efb6119f3d1b12e94a034200c",
+      "source_fingerprint": "08aef410c772a50889ec3facb1ae2ef60cae0d8dcc7f8a03b5d26f57dd8dc867",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommand.Fetch": {
-      "source_fingerprint": "a975cc4bfe805486b9702a27f6f05946a999c86ef1f57dd8af68db8ed13ba3f3",
+      "source_fingerprint": "a77127a4968af0460e13f952b3a26bc3bbcd717fc5631f9aef6fda28911ff3eb",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommand.Log": {
-      "source_fingerprint": "9b9863916bc44f390286e5947c5d2561a772bb09600eb90bcb35cd9ac39099bd",
+      "source_fingerprint": "85e021701426d18199657b17dc82b6a7e2852cce936f4ff8e7abf6419132459a",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommand.Pull": {
-      "source_fingerprint": "6dca2396c251b62f3c17011393fcc4d9acbfaf97c870bc27dc817ee70c04b3c9",
+      "source_fingerprint": "67325d6e80d6e656767209bb5845f0be13a1b9f81ec4393af812fb4e6f7097b1",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommand.Push": {
-      "source_fingerprint": "7145f7c76069dbfca6649945dc25e1edcae6beb3b792d295d640e37e3450c88a",
+      "source_fingerprint": "b89ed674f0a7c9a3c747fda2733c947a7ce0466a0e0a4468afa29333a1f6ac98",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
@@ -725,59 +725,59 @@
       }
     },
     "rtk.tools.GitCommand.Stash": {
-      "source_fingerprint": "928b55a92c9de6bc6e1902efb3e08c45263712b78407d7357d0515dce51eb00f",
+      "source_fingerprint": "bfaad1e0915a4907ec2f6565d209700dd808d7bf350767852d1dfae58d0c141e",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommand.Status": {
-      "source_fingerprint": "84ca32fb7f2563b92acdfb36bee8fc3474b14b346e547535d5b4c73bbbca0cd1",
+      "source_fingerprint": "d074b2859e7417df7c9d11ca4b39b621a969e889823dab9055a0b84eb0aaeff9",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommand.Worktree": {
-      "source_fingerprint": "8aebbad6c296d76c6a15dccf850ed41b27863b95750f4f99cf1dabccc4858980",
+      "source_fingerprint": "7a24654ab93ccab96114e92953ae2ad477f41a9cad0f993a3c0da08fd59d5ebd",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommands.Add": {
-      "source_fingerprint": "76ad451dc46e19f4e0f65d9b61bf1cd95b9d15ffe8241595738cc0f6168b499c",
+      "source_fingerprint": "abd48467b93c65bfd83280dda3ebc7538be7639b8fcf01c84d866402c76a4f9c",
       "evidence_hashes": {}
     },
     "rtk.tools.GitCommands.Branch": {
-      "source_fingerprint": "f3c2977fed0ab7fee3106d181b4a3b3b012157d42b3ac672cffbeb1279866e28",
+      "source_fingerprint": "0f847a7450b7f300f7743439e1c678a428da4b4ca8a92e3023b08f3492863db0",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommands.Checkout": {
-      "source_fingerprint": "721cba49131a256fa555795b3e63313418cbc195cbc8c0a1b8b2bea91ef7bc78",
+      "source_fingerprint": "431941779262a33ee57ba69523cf7d2d045dd9f20c41c8b9762eaefa635d468c",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommands.Commit": {
-      "source_fingerprint": "18f9a5b7c0de42df24d4be818acf9d217443a092518a30f935564243a19abcf8",
+      "source_fingerprint": "56f2098840142ffa6ab81951bc1a53f2db0952a2b9dcfd45f0ff8c3f96601e5a",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommands.Diff": {
-      "source_fingerprint": "a91878a81bee7d7fb77402f262c5407a80ce9fead9318183bfd85beb69575a00",
+      "source_fingerprint": "1f76206674a8e1a2480553863a29a7e566a431500531c71efe1f34a6993ed9c7",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommands.Fetch": {
-      "source_fingerprint": "7025db17fa2527df86739435901a3c8552f309573c1ad29eec23e21ca6cd6bd8",
+      "source_fingerprint": "a7f1790fb16ecaf1dd95b28b9f3647627423fd9e24dd89e7af13067ab68f8838",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommands.Log": {
-      "source_fingerprint": "59e39f061cb0126fb724f5fd3cee7757dec80740da618d616550416c819721cc",
+      "source_fingerprint": "e376dd35dc5729f03fca536d581806505d24694c06310ea4601f5aced538a97e",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
@@ -787,13 +787,13 @@
       "evidence_hashes": {}
     },
     "rtk.tools.GitCommands.Pull": {
-      "source_fingerprint": "7649d7d9dcd9d5d85a9bb6c7206fb7ca3796b9118b3ad0c1c291f03322b5f3cd",
+      "source_fingerprint": "4d077516da5014a2755f5083a5de973a7524c8f19150c6b29911862e97633236",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommands.Push": {
-      "source_fingerprint": "808c28e6be10c1e6c4d9fb9b2094fb8ab6a5d4fea2641b9eae5fd2c14315ac04",
+      "source_fingerprint": "55795517b8fb0781c8acafd8beae245f8a1a114d096d4d187db2bb7e98f18a21",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
@@ -805,19 +805,19 @@
       }
     },
     "rtk.tools.GitCommands.Stash": {
-      "source_fingerprint": "a377da3386b1fc63c0e71a7e1d37ec8c2a54e4680623e88deabaff2f2044774f",
+      "source_fingerprint": "2ede341ace4871d12f64a545c50ca9fdca3f5ed58bd295a0b1badf11aa75eed2",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommands.Status": {
-      "source_fingerprint": "9a015fb90c99af29c78de7455a35ba51ef4a8368c16f8d2d9f6384610e3be27c",
+      "source_fingerprint": "447813e782d7647f18643bb927d2f29c4987e88689c81203287b2f79e3e1ba8c",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
     },
     "rtk.tools.GitCommands.Worktree": {
-      "source_fingerprint": "36d7620d1f180fd2f6a92a239f7e46a1bb9b5b618ce795f75c3c730f393a54dc",
+      "source_fingerprint": "d94d83d4ca621e6683bffff6e5b49dc648574d7decf1e43c289b5c5fbba20529",
       "evidence_hashes": {
         "docs/evidence/upstream-rtk-comparison-20260920.json": "cf80789386866a843e12d2db426e1df0b19c6ea866da6c337bc973e3669e4d5f"
       }
@@ -831,7 +831,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.GoCommands.Test": {
-      "source_fingerprint": "6ed2ba5e753615a96ef3de98781e9ed77c4510d64f4cbd8b4d184f8f6cc78ebb",
+      "source_fingerprint": "862d218a8f3dd20aef5ad9eceb95d65ba09979ac61eb9dfe984cf72382d1155a",
       "evidence_hashes": {}
     },
     "rtk.tools.GoCommands.Vet": {
@@ -903,7 +903,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.KubectlCommands.Get": {
-      "source_fingerprint": "3aade74033c77991b8dab41945f8a197cbfce1d0e10cc1de01b032090c11f8df",
+      "source_fingerprint": "055d90bf93477a63706fb89f21a978a764c78d07b74ee55c691f0605df7ddbab",
       "evidence_hashes": {}
     },
     "rtk.tools.KubectlCommands.Logs": {
@@ -923,7 +923,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.OcCommands.Get": {
-      "source_fingerprint": "5687bf0eaec86de5d8785051f7625d089b619fe144c6f012f66894f15e53ff14",
+      "source_fingerprint": "8e2cffa78e180961102283d4f93c8349cb0a71485c9dfa489787f9055349b9b8",
       "evidence_hashes": {}
     },
     "rtk.tools.OcCommands.Logs": {
@@ -1023,7 +1023,7 @@
       "evidence_hashes": {}
     },
     "rtk.tools.SbtCommands.Test": {
-      "source_fingerprint": "052c6f8d7c7eb64fdb70fbee516b42de6cdb8d112124e8f32917135fb9dcbf01",
+      "source_fingerprint": "dfcf805bb460adcb5ad82ad64e5dd1df3b1ee8883c95ba632aaf633b0fa60da9",
       "evidence_hashes": {}
     },
     "caveman.mode.off": {

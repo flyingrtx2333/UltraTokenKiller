@@ -167,3 +167,47 @@ def test_git_add_compacts_staged_stat_probe_without_losing_counts():
     assert "tracked.txt" in compact
     assert "1 file changed" in compact
     assert "1 insertion" in compact
+
+
+@pytest.mark.parametrize(
+    "kind",
+    [
+        "git-status",
+        "git-log",
+        "git-diff",
+        "git-show",
+        "git-add",
+        "git-commit",
+        "git-push",
+        "git-pull",
+        "git-fetch",
+        "git-checkout",
+        "git-switch",
+        "git-branch",
+        "git-stash",
+        "git-stash-list",
+        "git-stash-show",
+        "git-worktree",
+        "git-worktree-list",
+    ],
+)
+def test_every_git_filter_passes_unknown_output_through(kind):
+    raw = f"::UTK_UNKNOWN_GIT_FORMAT::{kind}\nfield\x1fvalue\n"
+
+    assert compress_tool(raw, kind) == raw
+
+
+@pytest.mark.parametrize(
+    "argv",
+    [
+        ["git", "status", "--porcelain=v2"],
+        ["git", "log", "--format=%H%x00%s"],
+        ["git", "diff", "--numstat"],
+        ["git", "show", "--format=%H"],
+        ["git", "branch", "--format=%(refname)"],
+        ["git", "stash", "list", "--format=%gd"],
+        ["git", "worktree", "list", "--porcelain"],
+    ],
+)
+def test_all_git_machine_formats_bypass_rewriting(argv):
+    assert command_filter(argv) is None
