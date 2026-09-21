@@ -92,3 +92,13 @@
 - `utk capabilities --no-json` 显示完整三层核心分母 256：Headroom 24、RTK 211、Caveman 21，生态排除 6 项。
 - RTK 固定上游逐项对标保持 `0/211`；55 项契约映射未被误计为对标通过。
 - 本轮实际模型调用为 0，未修改日常 Codex/Hermes 配置，未安装或启用 LaunchAgent。
+
+## RTK 文件搜索第一批复验
+
+- 被测提交：`53ec4291f93f5174fed323da5add096cfad287a4`，通过本地 `git bundle` 传递，未推送远端。
+- 隔离目录：`/tmp/utk-search-53ec429`；隔离配置：`UTK_HOME=/tmp/utk-search-53ec429-home`。
+- Mac arm64 全量离线测试：`225 passed, 1 skipped, 2 warnings`。
+- `rg`、`grep` 默认人类可读输出已映射到搜索契约；机器格式、计数、反选和未知格式继续透传。
+- RTK 契约映射由 55 项增至 57 项，未验证项由 156 项降至 154 项；固定上游逐项对标仍保持 `0/211`。
+- 首轮曾触发随机恢复标识造成的短表格测试边界；改为确定性测试标识后，Mac 全量重复通过。产品仍遵守“恢复标识使输出不再更短时透传原文”。
+- 本轮实际模型调用为 0，未修改日常 Codex/Hermes 配置，未安装或启用 LaunchAgent。
