@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-21",
+  "source_commit": "0d9bb61",
+  "scope": "unified 256-item capability status, source fingerprints, evidence hashes and asset readiness",
+  "fixed_upstream_commits": {
+    "headroom": "bc21c9370793f7e4aa94ac4c5d9a67a8d2dd0df9",
+    "rtk": "0924356b4caba4989607227b7c8824d3d8098719",
+    "caveman": "542442bab314973709f95b85b1ac0b3f6f5b5dc6"
+  },
+  "denominator": 256,
+  "verification_counts": {
+    "not_implemented": 151,
+    "contract_mapped": 30,
+    "offline_passed": 28,
+    "fixed_upstream_partial_passed": 30,
+    "fixed_upstream_full_passed": 15,
+    "real_client_passed": 0,
+    "asset_not_ready": 2
+  },
+  "runtime_verification": {
+    "full_parity_ledger_present": true,
+    "full_parity_source_current": 105,
+    "full_parity_evidence_present": 54,
+    "full_parity_evidence_current": 54,
+    "full_parity_asset_not_ready": 2
+  },
+  "report_sha256": "6e024cfe2f0eaf0190ba2beeef3082d2c12ad820dee924c6264ec1bfd579c981",
+  "ledger_sha256": "55b2e6d1335e417ce6552d347adabcdf698ad363956024882341964e540d1be8",
+  "model_calls": 0,
+  "windows_x64": {
+    "python": "3.10.3",
+    "pytest": "293 passed, 3 skipped, 1 warning",
+    "web_build": "vite 8.3.0 passed"
+  },
+  "macos_arm64": {
+    "macos": "26.6.2",
+    "architecture": "arm64",
+    "python": "3.14.7",
+    "pytest": "295 passed, 1 skipped, 2 warnings",
+    "workspace": "/tmp/utk-git-0d9bb61",
+    "utk_home": "/tmp/utk-git-home-0d9bb61"
+  }
+}
