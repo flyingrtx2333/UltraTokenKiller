@@ -1,0 +1,2 @@
+error: unknown switch `q'
+usage: git stash [push [-p | --patch] [-S | --staged] ...]

@@ -102,7 +102,7 @@ python scripts/generate-reference.py --headroom path/to/headroom --rtk path/to/r
 python scripts/generate-rtk-reference.py --checkout path/to/rtk --binary path/to/rtk-binary --output rtk-reference.json --comparison rtk-comparison.json
 ```
 
-当前 33 个捕获输出样例均保留关键事实，其中包含 `rg`、`grep`、文件列表、原生 `read`／`json`／`smart`，以及 Git 的 `status`、`log`、`diff`、`commit`、`pull`、`checkout`、`push`、`fetch`。Git 成功形态的 UTK 压缩效果均达到对应固定 RTK 的至少 96.9%；失败形态保持关键错误，固定 RTK 自身增加失败前缀时不制造压缩百分比。这只是已验证输出形态证据，不代表 211 个 RTK 变体已完成逐项对标，详见 [固定 RTK 捕获输出对照](docs/upstream-rtk-reference-2026-09-20.md) 与 [Git 命令对照](docs/rtk-git-reference-2026-09-21.md)。
+当前 44 个捕获输出样例均保留关键事实，其中包含 `rg`、`grep`、文件列表、原生 `read`／`json`／`smart`，以及 Git 的 `status`、`log`、`diff`、`show`、`commit`、`pull`、`checkout`、`push`、`fetch`、`branch`、`stash`、`worktree`。新增 Git 成功形态的 UTK 压缩效果达到对应固定 RTK 的至少 90%；失败形态保持关键错误，固定 RTK 自身增加失败前缀时不制造压缩百分比。这只是已验证输出形态证据，不代表 211 个 RTK 变体已完成逐项对标，详见 [固定 RTK 捕获输出对照](docs/upstream-rtk-reference-2026-09-20.md) 与 [Git 命令对照](docs/rtk-git-reference-2026-09-21.md)。
 
 能力状态的源码绑定和自动降级规则见 [能力证据绑定](docs/capability-evidence-2026-09-20.md)。高层产品能力当前为 33/36 离线通过；它不等于固定上游逐项对标完成。
 

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "baseline": "0924356b4caba4989607227b7c8824d3d8098719",
   "model": "gpt-5.6-luna",
-  "case_count": 33,
+  "case_count": 44,
   "live_model_calls": 0,
   "cases": [
     {
@@ -124,6 +124,116 @@
       "utk_reduction": 0.0,
       "ratio": null,
       "exit_code": 1
+    },
+    {
+      "case": "git-show-commit-diff",
+      "kind": "git-show",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.6440677966101694,
+      "utk_reduction": 0.652542372881356,
+      "ratio": 1.0131578947368423,
+      "exit_code": 0
+    },
+    {
+      "case": "git-branch-list",
+      "kind": "git-branch",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.5142857142857142,
+      "utk_reduction": 0.4857142857142857,
+      "ratio": 0.9444444444444445,
+      "exit_code": 0
+    },
+    {
+      "case": "git-branch-write",
+      "kind": "git-branch",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.9230769230769231,
+      "utk_reduction": 0.8461538461538461,
+      "ratio": 0.9166666666666666,
+      "exit_code": 0
+    },
+    {
+      "case": "git-branch-failure",
+      "kind": "git-branch",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": -0.8888888888888888,
+      "utk_reduction": 0.0,
+      "ratio": null,
+      "exit_code": 1
+    },
+    {
+      "case": "git-stash-list",
+      "kind": "git-stash-list",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.23684210526315788,
+      "utk_reduction": 0.23684210526315788,
+      "ratio": 1.0,
+      "exit_code": 0
+    },
+    {
+      "case": "git-stash-show",
+      "kind": "git-stash-show",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.3888888888888889,
+      "utk_reduction": 0.3888888888888889,
+      "ratio": 1.0,
+      "exit_code": 0
+    },
+    {
+      "case": "git-stash-push",
+      "kind": "git-stash",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.8571428571428571,
+      "utk_reduction": 0.8095238095238095,
+      "ratio": 0.9444444444444445,
+      "exit_code": 0
+    },
+    {
+      "case": "git-stash-failure",
+      "kind": "git-stash",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": -0.21428571428571427,
+      "utk_reduction": 0.0,
+      "ratio": null,
+      "exit_code": 129
+    },
+    {
+      "case": "git-worktree-list",
+      "kind": "git-worktree-list",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.06060606060606061,
+      "utk_reduction": 0.06060606060606061,
+      "ratio": 1.0,
+      "exit_code": 0
+    },
+    {
+      "case": "git-worktree-write",
+      "kind": "git-worktree",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.96,
+      "utk_reduction": 0.92,
+      "ratio": 0.9583333333333334,
+      "exit_code": 0
+    },
+    {
+      "case": "git-worktree-failure",
+      "kind": "git-worktree",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": -0.5789473684210527,
+      "utk_reduction": 0.0,
+      "ratio": null,
+      "exit_code": 128
     },
     {
       "case": "ls-human-long",
@@ -320,9 +430,9 @@
       "kind": "golangci",
       "required_facts_upstream": true,
       "required_facts_utk": true,
-      "upstream_reduction": 0.941541186891054,
+      "upstream_reduction": 0.9406554472984943,
       "utk_reduction": 0.9406554472984943,
-      "ratio": 0.9990592662276576,
+      "ratio": 1.0,
       "exit_code": 0
     },
     {

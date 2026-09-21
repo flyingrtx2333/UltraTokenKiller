@@ -1,0 +1,2 @@
+stash@{0}: WIP on main: a1b2c3d preserve guard
+stash@{1}: On feature: f6e5d4c keep risk

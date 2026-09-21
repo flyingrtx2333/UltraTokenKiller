@@ -1,0 +1,2 @@
+Preparing worktree (new branch 'feature/migration')
+HEAD is now at a1b2c3d preserve guard

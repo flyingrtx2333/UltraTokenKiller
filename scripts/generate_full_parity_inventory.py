@@ -80,20 +80,28 @@ def rtk_items(inventory: list[dict], lock: dict) -> list[dict]:
         "tools.GitCommands.Diff",
         "tools.GitCommands.Log",
         "tools.GitCommands.Status",
+        "tools.GitCommand.Show",
+        "tools.GitCommands.Show",
     }
     behavior_windows = {"tools.Commands.Ls", "tools.Commands.Tree"}
     success_failure_windows = {
         "tools.Commands.Find",
         "tools.GitCommand.Checkout",
+        "tools.GitCommand.Branch",
         "tools.GitCommand.Commit",
         "tools.GitCommand.Fetch",
         "tools.GitCommand.Pull",
         "tools.GitCommand.Push",
+        "tools.GitCommand.Stash",
+        "tools.GitCommand.Worktree",
         "tools.GitCommands.Checkout",
+        "tools.GitCommands.Branch",
         "tools.GitCommands.Commit",
         "tools.GitCommands.Fetch",
         "tools.GitCommands.Pull",
         "tools.GitCommands.Push",
+        "tools.GitCommands.Stash",
+        "tools.GitCommands.Worktree",
     }
     for row in inventory:
         mapped = row.get("status") == "contract_mapped"

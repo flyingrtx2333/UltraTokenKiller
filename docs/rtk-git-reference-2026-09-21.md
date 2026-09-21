@@ -16,8 +16,12 @@
 | `git checkout` 成功 | 36.4% | 36.4% | 100.0% | 通过 |
 | `git push` 成功 | 77.8% | 77.8% | 100.0% | 通过 |
 | `git fetch` 成功 | 70.8% | 70.8% | 100.0% | 通过 |
+| `git show` 提交补丁 | 64.4% | 65.3% | 101.3% | 通过 |
+| `git branch` 列表 | 51.4% | 48.6% | 94.4% | 通过 |
+| `git stash show` | 38.9% | 38.9% | 100.0% | 通过 |
+| `git worktree list` | 6.1% | 6.1% | 100.0% | 通过 |
 
-`status`、`log`、`diff` 当前只有 Windows 固定上游成功形态；`commit`、`pull`、`checkout`、`push`、`fetch` 已增加成功与失败捕获输出，失败内容中的路径和阻断原因均保留。所有项目仍缺未知格式及 macOS/Linux 固定二进制变体，因此不会提升为完整上游对标通过。其余写操作已具备逐命令路由和离线测试，仍待固定上游逐项对照。
+`status`、`log`、`diff`、`show` 当前只有 Windows 固定上游成功形态；`commit`、`pull`、`checkout`、`push`、`fetch`、`branch`、`stash`、`worktree` 已增加成功与失败捕获输出，失败内容中的路径和阻断原因均保留。所有项目仍缺未知格式及 macOS/Linux 固定二进制变体，因此不会提升为完整上游对标通过。`add` 仍缺一次执行后 staged stat 的对照执行器。
 
 包含 Git transport 成功/失败对照的提交 `e4bd2ad` 在 Mac arm64 的独立 `/tmp` 工作区完成全量离线回归：`280 passed, 1 skipped, 2 warnings`。该运行未执行固定 RTK 二进制，因而只证明 UTK 跨平台回归，不补充上游变体证据。
 

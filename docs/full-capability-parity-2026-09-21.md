@@ -7,7 +7,7 @@ Generated from machine-readable upstream evidence. Implementation status and fix
 | Upstream | Core items | Implementation states | Parity states |
 |---|---:|---|---|
 | Headroom | 24 | {'offline_passed': 21, 'real_client_passed': 3} | {'fixed_upstream_sample_passed': 9, 'fixed_upstream_suite_passed': 1, 'not_individually_compared': 14} |
-| Rtk | 211 | {'contract_mapped': 60, 'unverified': 151} | {'fixed_upstream_behavior_suite_windows': 2, 'fixed_upstream_success_failure_windows': 11, 'fixed_upstream_success_only': 11, 'pending_fixed_upstream_variant_evidence': 187} |
+| Rtk | 211 | {'contract_mapped': 60, 'unverified': 151} | {'fixed_upstream_behavior_suite_windows': 2, 'fixed_upstream_success_failure_windows': 17, 'fixed_upstream_success_only': 13, 'pending_fixed_upstream_variant_evidence': 179} |
 | Caveman | 21 | {'implemented_unverified': 5, 'real_client_passed': 16} | {'authorization_required': 5, 'fixed_upstream_policy_passed': 14, 'offline_passed': 2} |
 
 Total core denominator: **256**
@@ -174,7 +174,7 @@ Total core denominator: **256**
 | `rtk.tools.DotnetCommands.Restore` | dotnet | `dotnet restore` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.DotnetCommands.Test` | dotnet | `dotnet test` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
 | `rtk.tools.GitCommand.Add` | git | `git add` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
-| `rtk.tools.GitCommand.Branch` | git | `git branch` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
+| `rtk.tools.GitCommand.Branch` | git | `git branch` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.GitCommand.Checkout` | git | `git checkout` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.GitCommand.Commit` | git | `git commit` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.GitCommand.Diff` | git | `git diff` | contract_mapped | fixed_upstream_success_only | Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain |
@@ -182,12 +182,12 @@ Total core denominator: **256**
 | `rtk.tools.GitCommand.Log` | git | `git log` | contract_mapped | fixed_upstream_success_only | Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain |
 | `rtk.tools.GitCommand.Pull` | git | `git pull` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.GitCommand.Push` | git | `git push` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
-| `rtk.tools.GitCommand.Show` | git | `git show` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.GitCommand.Stash` | git | `git stash` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
+| `rtk.tools.GitCommand.Show` | git | `git show` | unverified | fixed_upstream_success_only | Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain |
+| `rtk.tools.GitCommand.Stash` | git | `git stash` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.GitCommand.Status` | git | `git status` | contract_mapped | fixed_upstream_success_only | Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain |
-| `rtk.tools.GitCommand.Worktree` | git | `git worktree` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
+| `rtk.tools.GitCommand.Worktree` | git | `git worktree` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.GitCommands.Add` | git | `git add` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
-| `rtk.tools.GitCommands.Branch` | git | `git branch` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
+| `rtk.tools.GitCommands.Branch` | git | `git branch` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.GitCommands.Checkout` | git | `git checkout` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.GitCommands.Commit` | git | `git commit` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.GitCommands.Diff` | git | `git diff` | contract_mapped | fixed_upstream_success_only | Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain |
@@ -196,10 +196,10 @@ Total core denominator: **256**
 | `rtk.tools.GitCommands.Other` | git | `git other` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.GitCommands.Pull` | git | `git pull` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.GitCommands.Push` | git | `git push` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
-| `rtk.tools.GitCommands.Show` | git | `git show` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.GitCommands.Stash` | git | `git stash` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
+| `rtk.tools.GitCommands.Show` | git | `git show` | unverified | fixed_upstream_success_only | Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain |
+| `rtk.tools.GitCommands.Stash` | git | `git stash` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.GitCommands.Status` | git | `git status` | contract_mapped | fixed_upstream_success_only | Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain |
-| `rtk.tools.GitCommands.Worktree` | git | `git worktree` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
+| `rtk.tools.GitCommands.Worktree` | git | `git worktree` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.GoCommands.Build` | go | `go build` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.GoCommands.Other` | go | `go other` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.GoCommands.Test` | go | `go test` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |

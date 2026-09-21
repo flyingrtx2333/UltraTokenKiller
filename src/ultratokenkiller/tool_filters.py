@@ -157,7 +157,30 @@ def command_filter(argv: list[str]) -> str | None:
                 for value in args[1:]
             ):
                 return "diff"
-        if args and args[0] in {"add", "commit", "push", "pull", "fetch", "checkout", "switch", "branch", "stash", "worktree"}:
+        if args and args[0] == "show":
+            show_args = args[1:]
+            raw_show = {
+                "--stat", "--shortstat", "--numstat", "--name-only", "--name-status",
+                "--summary", "--check", "--quiet", "--format", "--pretty",
+            }
+            if not any(
+                value in raw_show
+                or value.startswith(("--format=", "--pretty=", "--stat=", "--numstat="))
+                or (":" in value and not value.startswith("--"))
+                for value in show_args
+            ):
+                return "git-show"
+        if args and args[0] == "stash":
+            if args[1:2] == ["list"]:
+                return "git-stash-list"
+            if args[1:2] == ["show"]:
+                if any(value in {"-p", "--patch", "--word-diff"} or value.startswith("--word-diff=") for value in args[2:]):
+                    return "diff" if not any(value.startswith("--word-diff") for value in args[2:]) else None
+                return "git-stash-show"
+            return "git-stash"
+        if args and args[0] == "worktree":
+            return "git-worktree-list" if len(args) == 1 or args[1] == "list" else "git-worktree"
+        if args and args[0] in {"add", "commit", "push", "pull", "fetch", "checkout", "switch", "branch"}:
             return "git-" + args[0]
         return None
     if name in {"rg", "grep"}:
@@ -355,6 +378,27 @@ def compress_tool(text: str, kind: str) -> str:
             output.append(entry)
         rendered = "\n\n".join(output) + ("\n" if text.endswith("\n") else "")
         return rendered if len(rendered) < len(text) else text
+    if kind == "git-show":
+        commits = re.split(r"(?m)(?=^commit [0-9a-f]{40}(?:\s|$))", text)
+        if len(commits) != 2 or commits[0].strip():
+            return text
+        header_and_body, marker, patch = commits[1].partition("\ndiff --git ")
+        if not marker:
+            return text
+        header, separator, body = header_and_body.partition("\n\n")
+        if not separator or "\nAuthor:" not in header:
+            return text
+        commit_hash = header.splitlines()[0].split()[1]
+        author = next(line.removeprefix("Author:").strip() for line in header.splitlines() if line.startswith("Author:"))
+        messages = [line[4:] if line.startswith("    ") else line for line in body.splitlines()]
+        messages = [line for line in messages if line]
+        if not messages:
+            return text
+        compact_patch = compress_tool("diff --git " + patch, "diff")
+        if compact_patch == "diff --git " + patch:
+            return text
+        rendered = f"{commit_hash[:10]} {messages[0]} | {author}\n\n{compact_patch}"
+        return rendered if len(rendered) < len(text) else text
     if kind == "git-add":
         # Successful git add is normally silent.  Any text is actionable diagnostic output.
         return text
@@ -423,6 +467,43 @@ def compress_tool(text: str, kind: str) -> str:
         if re.search(r"Saved working directory|Saved index state", text):
             return "ok stashed\n" if text.endswith("\n") else "ok stashed"
         return text
+    if kind == "git-stash-list":
+        if not lines or not all(re.match(r"^stash@\{\d+\}:\s+", line) for line in lines):
+            return text
+        rendered_lines = []
+        for line in lines:
+            index, rest = line.split(": ", 1)
+            message = rest.split(": ", 1)[-1]
+            rendered_lines.append(f"{index}: {message}")
+        rendered = "\n".join(rendered_lines)
+        return rendered if len(rendered) < len(text) else text
+    if kind == "git-stash-show":
+        file_rows = []
+        summary = ""
+        for line in lines:
+            stripped = line.strip()
+            match = re.match(r"^(.+?)\s+\|\s+(Bin|\d+)(.*)$", stripped)
+            if match:
+                suffix = " (binary)" if match.group(2) == "Bin" else f" {match.group(2)}"
+                if "+" in match.group(3):
+                    suffix += " +"
+                if "-" in match.group(3):
+                    suffix += "-"
+                file_rows.append(match.group(1).strip() + suffix)
+            elif re.search(r"\bfiles? changed\b", stripped):
+                summary = stripped.replace("files changed", "changed").replace("file changed", "changed").replace("insertions(+)", "+").replace("insertion(+)", "+").replace("deletions(-)", "-").replace("deletion(-)", "-").replace(",", "")
+            elif stripped:
+                return text
+        if not file_rows:
+            return text
+        rendered = "\n".join(file_rows + ([summary] if summary else [])) + ("\n" if text.endswith("\n") else "")
+        return rendered if len(rendered) < len(text) else text
+    if kind == "git-worktree-list":
+        if not lines or not all(len(line.split()) >= 3 for line in lines if line.strip()):
+            return text
+        rendered = "\n".join(" ".join(line.split()) for line in lines if line.strip())
+        rendered += "\n" if text.endswith("\n") else ""
+        return rendered if len(rendered) < len(text) else text
     if kind == "git-push":
         if not text or re.search(r"(?im)^(?:error:|fatal:|.*\[rejected\])", text):
             return text
@@ -445,10 +526,42 @@ def compress_tool(text: str, kind: str) -> str:
             return text
         rendered = "\n".join(kept) + ("\n" if text.endswith("\n") else "")
         return rendered if len(rendered) < len(text) else text
-    if kind in {"git-branch", "git-worktree"}:
+    if kind == "git-branch":
         from .compression import CRITICAL
         if not text or CRITICAL.search(text):
             return text
+        if re.search(r"(?m)^(?:Deleted branch|branch '.+' set up to track)", text):
+            return "ok\n" if text.endswith("\n") else "ok"
+        if not all(line.startswith(("* ", "  ", "+ ", "remotes/")) for line in lines if line.strip()):
+            return text
+        current = ""
+        local = []
+        remote = []
+        for line in lines:
+            stripped = line.strip()
+            if line.startswith("* "):
+                current = line[2:].strip()
+            elif stripped.startswith("remotes/"):
+                value = stripped.split("/", 2)[-1]
+                if not value.startswith("HEAD ") and value not in remote:
+                    remote.append(value)
+            elif stripped:
+                local.append(stripped.removeprefix("+ "))
+        if not current:
+            return text
+        rendered_lines = [f"* {current}", *(f"  {name}" for name in local)]
+        remote_only = [name for name in remote if name != current and name not in local]
+        if remote_only:
+            rendered_lines.append(f"  remote-only ({len(remote_only)}):")
+            rendered_lines.extend(f"    {name}" for name in remote_only[:20])
+        rendered = "\n".join(rendered_lines) + ("\n" if text.endswith("\n") else "")
+        return rendered if len(rendered) < len(text) else text
+    if kind == "git-worktree":
+        from .compression import CRITICAL
+        if not text or CRITICAL.search(text):
+            return text
+        if re.search(r"(?m)^(?:Preparing worktree|HEAD is now at|Removing worktree)", text):
+            return "ok\n" if text.endswith("\n") else "ok"
         known = re.search(r"(?m)^(?:\[[^\]]+ [0-9a-f]+\]|To |From |Updating |Fast-forward|Already up.to.date|Everything up.to.date|Saved working directory|Switched to|Your branch is)", text)
         if not known:
             return text

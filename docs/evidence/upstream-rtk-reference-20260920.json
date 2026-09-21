@@ -78,6 +78,72 @@
       "exit_code": 1,
       "raw_sha256": "97ab0fcc36c74039a845273240a941d527f662be60ac9ce510145fce7ba4ea10"
     },
+    "git-show-commit-diff": {
+      "raw": "commit ac1480510f1535763274f11745659b95dccd15c8\nAuthor: UTK Fixture <utk@example.test>\nDate:   Wed Jan 3 03:04:05 2024 +0000\n\n    preserve migration guard\n    \n    Do not remove config.v2.\n\ndiff --git a/tracked.txt b/tracked.txt\nindex 4a58007..fbbee86 100644\n--- a/tracked.txt\n+++ b/tracked.txt\n@@ -1 +1,2 @@\n alpha\n+beta\n",
+      "output": "ac14805 preserve migration guard (2 years, 9 months ago) <UTK Fixture>\n\ntracked.txt\n@@ -1 +1,2 @@\n alpha\n+beta\n  +1 -0",
+      "exit_code": 0,
+      "raw_sha256": "2424939b6a144204791c2e2001846326d44fe1f3fd638294334da6ad1d03697a"
+    },
+    "git-branch-list": {
+      "raw": "* main\n  feature/local\n  remotes/origin/HEAD -> origin/main\n  remotes/origin/main\n  remotes/origin/feature/remote\n",
+      "output": "* main\n  feature/local\n  remote-only (1):\n    feature/remote",
+      "exit_code": 0,
+      "raw_sha256": "0daeeecb3ba1fdb4dbf48399ed0baf4eb2ce09d75916b7dbe683e8854376a49a"
+    },
+    "git-branch-write": {
+      "raw": "Deleted branch obsolete (was a1b2c3d).\n",
+      "output": "ok",
+      "exit_code": 0,
+      "raw_sha256": "6ed403ca1cd1ba971d0a9aa1d401dfd3db619b1d94d978374ac0a70bc5c21846"
+    },
+    "git-branch-failure": {
+      "raw": "error: branch 'missing' not found.\n",
+      "output": "FAILED: git branch -d missing\nerror: branch 'missing' not found.",
+      "exit_code": 1,
+      "raw_sha256": "c50cb3a3c63f4b5799059debcafb63d8a5f828f500d7d3148263776a7e9f6536"
+    },
+    "git-stash-list": {
+      "raw": "stash@{0}: WIP on main: a1b2c3d preserve guard\nstash@{1}: On feature: f6e5d4c keep risk\n",
+      "output": "stash@{0}: a1b2c3d preserve guard\nstash@{1}: f6e5d4c keep risk",
+      "exit_code": 0,
+      "raw_sha256": "8c54b29ad36121155e6941238bcdccfa43a7e1bb95111ba92f5a907a76c6b768"
+    },
+    "git-stash-show": {
+      "raw": " src/main.py | 10 ++++++++--\n docs/risk.md | 2 ++\n 2 files changed, 10 insertions(+), 2 deletions(-)\n",
+      "output": "src/main.py 10 +-\ndocs/risk.md 2 +\n2 changed 10 + 2 -",
+      "exit_code": 0,
+      "raw_sha256": "69c4dcef91862751458e16d16c8dc6b72fef7b4c8ab4d0ea35f31245bd20f74d"
+    },
+    "git-stash-push": {
+      "raw": "Saved working directory and index state WIP on main: a1b2c3d preserve guard\n",
+      "output": "ok stashed",
+      "exit_code": 0,
+      "raw_sha256": "9f6e8555ca663b67d8c6e97f4bf01247b7b0d90ad01b8e907549b4bde5b86775"
+    },
+    "git-stash-failure": {
+      "raw": "error: unknown switch `q'\nusage: git stash [push [-p | --patch] [-S | --staged] ...]\n",
+      "output": "FAILED: git stash push\nerror: unknown switch `q'\nusage: git stash [push [-p | --patch] [-S | --staged] ...]",
+      "exit_code": 129,
+      "raw_sha256": "149255127469c87b32a19f70a804e79beabbab873831634b92ec320e38e50718"
+    },
+    "git-worktree-list": {
+      "raw": "C:/repo/main                  a1b2c3d [main]\nC:/repo/feature               d4e5f6a [feature/migration]\n",
+      "output": "C:/repo/main a1b2c3d [main]\nC:/repo/feature d4e5f6a [feature/migration]",
+      "exit_code": 0,
+      "raw_sha256": "145c3b97444198e97bcbead4b9b6cfcb949d29316811266e38dad5a276e1be06"
+    },
+    "git-worktree-write": {
+      "raw": "Preparing worktree (new branch 'feature/migration')\nHEAD is now at a1b2c3d preserve guard\n",
+      "output": "ok",
+      "exit_code": 0,
+      "raw_sha256": "1986fd29a40edda2f4b61aff63b9ec72706f68e18383876adfdd2a9e5d8e52e0"
+    },
+    "git-worktree-failure": {
+      "raw": "fatal: 'C:/repo/main' is already checked out at 'C:/repo/main'\n",
+      "output": "FAILED: git worktree add C:/repo/main\nfatal: 'C:/repo/main' is already checked out at 'C:/repo/main'",
+      "exit_code": 128,
+      "raw_sha256": "46199010cc3bd192752b880d4aec0d5da53fc7b71a40521b7bb0651a5b6ac102"
+    },
     "ls-human-long": {
       "raw": "total 16\ndrwxr-xr-x  2 user  staff    64 Jan  1 12:00 src\n-rw-r--r--  1 user  staff  1234 Jan  1 12:00 README file.md\n-rwxr-xr-x  1 user  staff   500 Dec 25  2024 build.sh\n",
       "output": "755  src/\n644  README file.md  1.2K\n755  build.sh  500B",
@@ -194,7 +260,7 @@
     },
     "golangci-v2-issues": {
       "raw": "{\"Issues\":[{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":101,\"Line\":10,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":200,\"Line\":18,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":299,\"Line\":26,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":105,\"Line\":11,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":204,\"Line\":19,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":303,\"Line\":27,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"}],\"Report\":{\"Linters\":[{\"Name\":\"arangolint\"},{\"Name\":\"asasalint\"},{\"Name\":\"asciicheck\"},{\"Name\":\"bidichk\"},{\"Name\":\"bodyclose\"},{\"Name\":\"canonicalheader\"},{\"Name\":\"clickhouselint\"},{\"Name\":\"containedctx\"},{\"Name\":\"contextcheck\"},{\"Name\":\"copyloopvar\"},{\"Name\":\"cyclop\"},{\"Name\":\"decorder\"},{\"Name\":\"depguard\"},{\"Name\":\"dogsled\"},{\"Name\":\"dupl\"},{\"Name\":\"dupword\"},{\"Name\":\"durationcheck\"},{\"Name\":\"embeddedstructfieldcheck\"},{\"Name\":\"errcheck\",\"Enabled\":true},{\"Name\":\"errchkjson\"},{\"Name\":\"errname\"},{\"Name\":\"errorlint\"},{\"Name\":\"exhaustive\"},{\"Name\":\"exhaustruct\"},{\"Name\":\"exhaustruct_v5\"},{\"Name\":\"exptostd\"},{\"Name\":\"forbidigo\"},{\"Name\":\"forcetypeassert\"},{\"Name\":\"funcorder\"},{\"Name\":\"fatcontext\"},{\"Name\":\"funlen\"},{\"Name\":\"gci\"},{\"Name\":\"ginkgolinter\"},{\"Name\":\"gocheckcompilerdirectives\"},{\"Name\":\"gochecknoglobals\"},{\"Name\":\"gochecknoinits\"},{\"Name\":\"gochecksumtype\"},{\"Name\":\"gocognit\"},{\"Name\":\"goconst\"},{\"Name\":\"gocritic\"},{\"Name\":\"gocyclo\"},{\"Name\":\"godoclint\"},{\"Name\":\"godot\"},{\"Name\":\"godox\"},{\"Name\":\"err113\"},{\"Name\":\"gofmt\"},{\"Name\":\"gofumpt\"},{\"Name\":\"golines\"},{\"Name\":\"goheader\"},{\"Name\":\"goimports\"},{\"Name\":\"mnd\"},{\"Name\":\"modernize\"},{\"Name\":\"gomoddirectives\"},{\"Name\":\"gomodguard\"},{\"Name\":\"gomodguard_v2\"},{\"Name\":\"goprintffuncname\"},{\"Name\":\"gosec\"},{\"Name\":\"gosmopolitan\"},{\"Name\":\"govet\",\"Enabled\":true},{\"Name\":\"grouper\"},{\"Name\":\"iface\"},{\"Name\":\"importas\"},{\"Name\":\"inamedparam\"},{\"Name\":\"ineffassign\",\"Enabled\":true},{\"Name\":\"interfacebloat\"},{\"Name\":\"intrange\"},{\"Name\":\"iotamixing\"},{\"Name\":\"ireturn\"},{\"Name\":\"lll\"},{\"Name\":\"loggercheck\"},{\"Name\":\"maintidx\"},{\"Name\":\"makezero\"},{\"Name\":\"mirror\"},{\"Name\":\"misspell\"},{\"Name\":\"musttag\"},{\"Name\":\"nakedret\"},{\"Name\":\"nestif\"},{\"Name\":\"nilerr\"},{\"Name\":\"nilnesserr\"},{\"Name\":\"nilnil\"},{\"Name\":\"nlreturn\"},{\"Name\":\"noctx\"},{\"Name\":\"noinlineerr\"},{\"Name\":\"nonamedreturns\"},{\"Name\":\"nosprintfhostport\"},{\"Name\":\"paralleltest\"},{\"Name\":\"perfsprint\"},{\"Name\":\"prealloc\"},{\"Name\":\"predeclared\"},{\"Name\":\"promlinter\"},{\"Name\":\"protogetter\"},{\"Name\":\"reassign\"},{\"Name\":\"recvcheck\"},{\"Name\":\"revive\"},{\"Name\":\"rowserrcheck\"},{\"Name\":\"sloglint\"},{\"Name\":\"sqlclosecheck\"},{\"Name\":\"spancheck\"},{\"Name\":\"staticcheck\",\"Enabled\":true},{\"Name\":\"swaggo\"},{\"Name\":\"tagalign\"},{\"Name\":\"tagliatelle\"},{\"Name\":\"testableexamples\"},{\"Name\":\"testifylint\"},{\"Name\":\"testpackage\"},{\"Name\":\"thelper\"},{\"Name\":\"tparallel\"},{\"Name\":\"typecheck\",\"Enabled\":true},{\"Name\":\"unconvert\"},{\"Name\":\"unparam\"},{\"Name\":\"unqueryvet\"},{\"Name\":\"unused\",\"Enabled\":true},{\"Name\":\"usestdlibvars\"},{\"Name\":\"usetesting\"},{\"Name\":\"varnamelen\"},{\"Name\":\"wastedassign\"},{\"Name\":\"whitespace\"},{\"Name\":\"wrapcheck\"},{\"Name\":\"wsl\"},{\"Name\":\"wsl_v5\"},{\"Name\":\"zerologlint\"},{\"Name\":\"nolintlint\"}]}}\n",
-      "output": "golangci-lint: 6 issues in 1 files\nTop linters:\n  errcheck (3x)\n  ineffassign (3x)\n\nTop files:\n  main.go (6 issues)\n    errcheck (3)\n      → defer f.Close()\n    ineffassign (3)\n      → v := 1",
+      "output": "golangci-lint: 6 issues in 1 files\nTop linters:\n  ineffassign (3x)\n  errcheck (3x)\n\nTop files:\n  main.go (6 issues)\n    ineffassign (3)\n      → v := 1\n    errcheck (3)\n      → defer f.Close()",
       "exit_code": 0,
       "raw_sha256": "0d979b09897297a5c5fac3b29b41e11521010254cac5498d2c46f02c0f54756f"
     },

@@ -18,7 +18,11 @@ from ultratokenkiller.tool_filters import command_filter, compress_tool
         (["git", "switch", "feature/x"], "git-switch"),
         (["git", "branch", "--list"], "git-branch"),
         (["git", "stash", "push"], "git-stash"),
-        (["git", "worktree", "list"], "git-worktree"),
+        (["git", "show", "HEAD"], "git-show"),
+        (["git", "stash", "list"], "git-stash-list"),
+        (["git", "stash", "show"], "git-stash-show"),
+        (["git", "stash", "show", "-p"], "diff"),
+        (["git", "worktree", "list"], "git-worktree-list"),
     ],
 )
 def test_git_subcommands_have_specific_contracts(argv, kind):
@@ -34,6 +38,8 @@ def test_git_subcommands_have_specific_contracts(argv, kind):
         ["git", "diff", "--stat"],
         ["git", "diff", "--word-diff"],
         ["git", "diff", "--ext-diff"],
+        ["git", "show", "--stat"],
+        ["git", "show", "HEAD:README.md"],
     ],
 )
 def test_git_machine_or_user_selected_shapes_pass_through(argv):
@@ -95,6 +101,42 @@ def test_git_push_removes_progress_but_keeps_remote_result():
     assert "https://example.test/repo.git" in compact
     assert "main -> main" in compact
     assert compact.endswith("ok main\n")
+
+
+def test_git_branch_list_groups_remote_only_branches():
+    raw = "* main\n  feature/local\n  remotes/origin/HEAD -> origin/main\n  remotes/origin/main\n  remotes/origin/feature/remote\n"
+    compact = compress_tool(raw, "git-branch")
+    assert "* main" in compact
+    assert "feature/local" in compact
+    assert "remote-only (1)" in compact
+    assert "feature/remote" in compact
+    assert "origin/HEAD" not in compact
+
+
+def test_git_stash_list_and_stat_have_dedicated_filters():
+    listing = "stash@{0}: WIP on main: a1b2c3d preserve guard\nstash@{1}: On feature: f6e5d4c keep risk\n"
+    assert compress_tool(listing, "git-stash-list") == "stash@{0}: a1b2c3d preserve guard\nstash@{1}: f6e5d4c keep risk"
+    stat = " src/main.py | 10 ++++++++--\n docs/risk.md | 2 ++\n 2 files changed, 10 insertions(+), 2 deletions(-)\n"
+    compact = compress_tool(stat, "git-stash-show")
+    assert "src/main.py 10 +-" in compact
+    assert "docs/risk.md 2 +" in compact
+    assert "2 changed 10 + 2 -" in compact
+
+
+def test_git_show_compacts_header_and_patch():
+    raw = (
+        "commit " + "a" * 40 + "\nAuthor: A <a@example.test>\nDate: today\n\n"
+        "    preserve migration guard\n\n"
+        "diff --git a/src/main.py b/src/main.py\n"
+        "index 1111111..2222222 100644\n--- a/src/main.py\n+++ b/src/main.py\n"
+        "@@ -1,2 +1,2 @@\n-old\n+new\n context\n"
+    )
+    compact = compress_tool(raw, "git-show")
+    assert "aaaaaaaaaa preserve migration guard" in compact
+    assert "A <a@example.test>" in compact
+    assert "src/main.py" in compact
+    assert "-old" in compact and "+new" in compact
+    assert " context" not in compact
 
 
 @pytest.mark.parametrize(

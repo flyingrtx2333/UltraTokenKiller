@@ -34,10 +34,10 @@ def test_rtk_mapping_does_not_claim_variant_parity():
         "unverified": 151,
     }
     assert Counter(item["parity_status"] for item in rtk) == {
-        "pending_fixed_upstream_variant_evidence": 187,
-        "fixed_upstream_success_only": 11,
+        "pending_fixed_upstream_variant_evidence": 179,
+        "fixed_upstream_success_only": 13,
         "fixed_upstream_behavior_suite_windows": 2,
-        "fixed_upstream_success_failure_windows": 11,
+        "fixed_upstream_success_failure_windows": 17,
     }
 
 
@@ -84,10 +84,10 @@ def test_capability_report_exposes_full_parity_without_inflating_completion():
         "unverified": 151,
     }
     assert report["full_parity_status_counts"]["rtk"] == {
-        "fixed_upstream_success_only": 11,
+        "fixed_upstream_success_only": 13,
         "fixed_upstream_behavior_suite_windows": 2,
-        "fixed_upstream_success_failure_windows": 11,
-        "pending_fixed_upstream_variant_evidence": 187,
+        "fixed_upstream_success_failure_windows": 17,
+        "pending_fixed_upstream_variant_evidence": 179,
     }
     assert report["full_parity_status_counts"]["caveman"]["authorization_required"] == 5
     assert report["full_parity_status_counts"]["headroom"] == {
