@@ -74,6 +74,12 @@ def rtk_items(inventory: list[dict], lock: dict) -> list[dict]:
         "tools.Commands.Smart",
         "tools.Commands.Grep",
         "tools.Commands.Rg",
+        "tools.GitCommand.Diff",
+        "tools.GitCommand.Log",
+        "tools.GitCommand.Status",
+        "tools.GitCommands.Diff",
+        "tools.GitCommands.Log",
+        "tools.GitCommands.Status",
     }
     behavior_windows = {"tools.Commands.Ls", "tools.Commands.Tree"}
     success_failure_windows = {"tools.Commands.Find"}

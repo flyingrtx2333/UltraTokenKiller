@@ -17,6 +17,28 @@ from .tool_filters import compress_tool
 
 CASES = (
     {
+        "id": "git-status-worktree",
+        "fixture": None,
+        "program": None,
+        "argv": ["git", "status"],
+        "raw_argv": ["git", "status"],
+        "kind": "git-status",
+        "exit_code": 0,
+        "setup_git_repo": True,
+        "required": ["main", "tracked.txt", "untracked.txt"],
+    },
+    {
+        "id": "git-log-default",
+        "fixture": None,
+        "program": None,
+        "argv": ["git", "log"],
+        "raw_argv": ["git", "log"],
+        "kind": "git-log",
+        "exit_code": 0,
+        "setup_git_repo": True,
+        "required": ["preserve migration guard", "initial fixture"],
+    },
+    {
         "id": "ls-human-long",
         "fixture": "ls_long_raw.txt",
         "program": "ls",
@@ -272,14 +294,54 @@ def _write_emitter(
     target.chmod(target.stat().st_mode | stat.S_IXUSR)
 
 
+def _setup_git_repo(root: Path) -> None:
+    env = {
+        **os.environ,
+        "GIT_AUTHOR_NAME": "UTK Fixture",
+        "GIT_AUTHOR_EMAIL": "utk@example.test",
+        "GIT_COMMITTER_NAME": "UTK Fixture",
+        "GIT_COMMITTER_EMAIL": "utk@example.test",
+        "GIT_AUTHOR_DATE": "2024-01-02T03:04:05+00:00",
+        "GIT_COMMITTER_DATE": "2024-01-02T03:04:05+00:00",
+    }
+    subprocess.run(["git", "init", "-b", "main"], cwd=root, env=env, check=True, capture_output=True)
+    tracked = root / "tracked.txt"
+    tracked.write_text("alpha\n", encoding="utf-8")
+    subprocess.run(["git", "add", "tracked.txt"], cwd=root, env=env, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "initial fixture"], cwd=root, env=env, check=True, capture_output=True)
+    env["GIT_AUTHOR_DATE"] = "2024-01-03T03:04:05+00:00"
+    env["GIT_COMMITTER_DATE"] = "2024-01-03T03:04:05+00:00"
+    tracked.write_text("alpha\nbeta\n", encoding="utf-8")
+    subprocess.run(["git", "add", "tracked.txt"], cwd=root, env=env, check=True, capture_output=True)
+    subprocess.run(
+        ["git", "commit", "-m", "preserve migration guard", "-m", "Do not remove config.v2."],
+        cwd=root,
+        env=env,
+        check=True,
+        capture_output=True,
+    )
+    tracked.write_text("alpha\nbeta\ngamma\n", encoding="utf-8")
+    (root / "untracked.txt").write_text("risk must not be lost\n", encoding="utf-8")
+
+
 def _run_case(binary: Path, checkout: Path, case: dict[str, Any]) -> dict[str, Any]:
-    repository_fixture = Path(__file__).resolve().parents[2] / "tests" / "fixtures" / "rtk_reference" / case["fixture"]
-    fixture = repository_fixture if repository_fixture.is_file() else checkout / "tests" / "fixtures" / case["fixture"]
-    if not fixture.is_file():
-        raise ValueError(f"Missing frozen RTK fixture: {case['fixture']}")
-    raw = fixture.read_text(encoding="utf-8", errors="replace")
+    fixture = None
+    raw = ""
+    if case.get("fixture"):
+        repository_fixture = Path(__file__).resolve().parents[2] / "tests" / "fixtures" / "rtk_reference" / case["fixture"]
+        fixture = repository_fixture if repository_fixture.is_file() else checkout / "tests" / "fixtures" / case["fixture"]
+        if not fixture.is_file():
+            raise ValueError(f"Missing frozen RTK fixture: {case['fixture']}")
+        raw = fixture.read_text(encoding="utf-8", errors="replace")
     with tempfile.TemporaryDirectory(prefix="utk-rtk-reference-") as temporary:
         root = Path(temporary)
+        if case.get("setup_git_repo"):
+            _setup_git_repo(root)
+            direct = subprocess.run(
+                case["raw_argv"], cwd=root, text=True, encoding="utf-8", errors="replace",
+                capture_output=True, check=False,
+            )
+            raw = direct.stdout or direct.stderr
         if case.get("setup_paths"):
             for relative in raw.splitlines():
                 target = root / Path(relative)
@@ -304,7 +366,7 @@ def _run_case(binary: Path, checkout: Path, case: dict[str, Any]) -> dict[str, A
             "RTK_TEE": "0",
             "NO_COLOR": "1",
         }
-        argv = [str(fixture.resolve()) if value == "{fixture}" else value for value in case["argv"]]
+        argv = [str(fixture.resolve()) if value == "{fixture}" and fixture else value for value in case["argv"]]
         process = subprocess.run(
             [str(binary), *argv],
             cwd=root,

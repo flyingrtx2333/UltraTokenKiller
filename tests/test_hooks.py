@@ -11,9 +11,16 @@ def test_non_shell_tool_with_command_field_is_not_rewritten():
     assert codex_event(event, SESSION) == {}
 
 
-@pytest.mark.parametrize("command", ["git status | cat", "git diff > patch", 'rg -n "foo bar" .', "git status; exit", "git push", "git commit -m change", "utk exec -- git status", "git status && echo hi", "git diff $(whoami)"])
-def test_unsafe_and_write_commands_not_rewritten(command):
+@pytest.mark.parametrize("command", ["git status | cat", "git diff > patch", 'rg -n "foo bar" .', "git status; exit", "utk exec -- git status", "git status && echo hi", "git diff $(whoami)"])
+def test_unsafe_commands_not_rewritten(command):
     assert rewrite_literal(command, SESSION) is None
+
+
+@pytest.mark.parametrize("command", ["git push", "git commit -m change", "git pull --ff-only", "git fetch origin"])
+def test_literal_git_write_commands_use_managed_wrapper(command):
+    rewritten = rewrite_literal(command, SESSION)
+    assert rewritten is not None
+    assert rewritten.endswith("-- " + command)
 
 
 def test_codex_preserves_workdir_and_timeout():

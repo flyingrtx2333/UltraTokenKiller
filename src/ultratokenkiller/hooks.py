@@ -26,7 +26,7 @@ def rewrite_literal(command: str, session: str):
     if not args:
         return None
     kind = command_filter(args)
-    if kind not in {"git-status", "git-log", "diff", "search"}:
+    if kind not in {"diff", "search"} and not kind.startswith("git-"):
         return None
     if kind == "search":
         allowed = {"-n", "--line-number", "--with-filename", "-H", "-i", "--ignore-case", "-F", "--fixed-strings", "--"}

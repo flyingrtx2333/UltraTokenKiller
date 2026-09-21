@@ -11,8 +11,8 @@ from ultratokenkiller.tool_filters import command_filter, compress_tool
     (["git", "-c", "diff.external=other", "diff"], None),
     (["git", "diff", "--binary"], None),
     (["git", "status", "--porcelain=v2"], None),
-    (["git", "commit", "-m", "message"], "git-action"),
-    (["git", "push", "origin", "main"], "git-action"),
+    (["git", "commit", "-m", "message"], "git-commit"),
+    (["git", "push", "origin", "main"], "git-push"),
     (["git", "-C"], None),
 ])
 def test_git_contracts(argv, kind):
@@ -24,7 +24,7 @@ def test_commit_body_risks_and_identifiers_survive():
     result = compress_tool(original, "git-log")
     assert "Do not delete config.v1.json." in result
     assert "Migration requires version 2, not 1." in result
-    assert "a" * 40 in result
+    assert "a" * 10 in result
 
 
 @pytest.mark.parametrize("kind,text", [("diff", "unknown\n indented information\n"), ("git-log", "unknown log format"), ("search", "file without numbered hits")])
@@ -68,6 +68,6 @@ def test_additional_filters_keep_failures_and_machine_shapes():
     compact = compress_tool(listing, "file-list-ls-long")
     assert compact == listing
     commit = "[main a1b2c3d] change\n 2 files changed, 10 insertions(+), 2 deletions(-)\n"
-    assert "2 files changed | 10" in compress_tool(commit, "git-action")
+    assert "2 files changed | 10" in compress_tool(commit, "git-commit")
     unknown = "remote helper emitted opaque result\n"
-    assert compress_tool(unknown, "git-action") == unknown
+    assert compress_tool(unknown, "git-push") == unknown

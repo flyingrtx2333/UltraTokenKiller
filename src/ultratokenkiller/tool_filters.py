@@ -133,17 +133,32 @@ def command_filter(argv: list[str]) -> str | None:
                 args = args[2:]
             else:
                 break
-        if args == ["status"]:
+        if args and args[0] == "status":
+            # Machine-readable status is rejected by the global shape guard above.  Human
+            # status variants keep the same semantic sections and can be filtered safely.
             return "git-status"
-        if args == ["log"] or len(args) == 3 and args[:2] == ["log", "-n"] and args[2].isdigit():
-            return "git-log"
-        if args and args[0] == "diff" and all(
-            x in {"--cached", "--staged"} or re.fullmatch(r"(?:--unified=|-U)\d{1,6}", x)
-            for x in args[1:]
+        if args and args[0] == "log" and not any(
+            value in {"--oneline", "--graph", "--stat", "--shortstat", "--numstat", "--name-only", "--name-status"}
+            or value.startswith(("--date=", "--decorate="))
+            for value in args[1:]
         ):
-            return "diff"
+            # Custom formats are rejected by the global guard.  The remaining default and
+            # oneline forms are handled independently by the log filter.
+            return "git-log"
+        if args and args[0] == "diff":
+            raw_shapes = {
+                "--stat", "--shortstat", "--numstat", "--name-only", "--name-status",
+                "--summary", "--check", "--quiet", "--exit-code", "--word-diff",
+                "--color-words", "--dirstat", "--ext-diff",
+            }
+            if not any(
+                value in raw_shapes
+                or value.startswith(("--stat=", "--numstat=", "--word-diff=", "--dirstat="))
+                for value in args[1:]
+            ):
+                return "diff"
         if args and args[0] in {"add", "commit", "push", "pull", "fetch", "checkout", "switch", "branch", "stash", "worktree"}:
-            return "git-action"
+            return "git-" + args[0]
         return None
     if name in {"rg", "grep"}:
         if not any(x in {
@@ -279,8 +294,43 @@ def compress_tool(text: str, kind: str) -> str:
     if kind == "git-status":
         if not lines or not lines[0].startswith(("On branch ", "HEAD detached ")):
             return text
-        kept = [line for line in lines if line.strip() and not line.startswith('  (use "git ')]
-        return "\n".join(kept)+"\n"
+        # In-progress operations carry instructions whose omission can change the next safe
+        # action.  Keep those states in their human form and only remove generic hints.
+        state_words = ("rebase in progress", "currently rebasing", "unmerged paths", "cherry-picking", "currently reverting", "currently bisecting")
+        if any(word in text.lower() for word in state_words):
+            kept = [line for line in lines if line.strip() and not line.lstrip().startswith('(use "git ')]
+            return "\n".join(kept) + ("\n" if text.endswith("\n") else "")
+        branch = lines[0].removeprefix("On branch ") if lines[0].startswith("On branch ") else lines[0]
+        output = [f"* {branch}"]
+        section = ""
+        status_map = {
+            "modified": "M", "new file": "A", "deleted": "D", "renamed": "R",
+            "copied": "C", "both modified": "U", "added by us": "U",
+            "deleted by us": "U", "deleted by them": "U", "both added": "U",
+        }
+        for line in lines[1:]:
+            stripped = line.strip()
+            if stripped.startswith("Changes to be committed:"):
+                section = "staged"
+            elif stripped.startswith("Changes not staged for commit:"):
+                section = "unstaged"
+            elif stripped.startswith("Untracked files:"):
+                section = "untracked"
+            elif stripped.startswith("Unmerged paths:"):
+                section = "unmerged"
+            elif not stripped or stripped.startswith(("(use \"git ", "no changes added", "nothing added")):
+                continue
+            elif section == "untracked" and not stripped.startswith("("):
+                output.append(f"?? {stripped}")
+            elif ":" in stripped and section in {"staged", "unstaged", "unmerged"}:
+                label, path = (part.strip() for part in stripped.split(":", 1))
+                code = status_map.get(label)
+                if code and path:
+                    output.append((f"{code}  " if section == "staged" else f" {code} ") + path)
+        if len(output) == 1 and "working tree clean" in text:
+            output.append("clean - nothing to commit")
+        rendered = "\n".join(output) + ("\n" if text.endswith("\n") else "")
+        return rendered if len(rendered) < len(text) else text
     if kind == "git-log":
         commits = re.split(r"(?m)(?=^commit [0-9a-f]{40}(?:\s|$))", text)
         if len(commits) < 2 or commits[0].strip():
@@ -291,10 +341,88 @@ def compress_tool(text: str, kind: str) -> str:
             if not separator or "\nAuthor:" not in header or "\nDate:" not in header:
                 return text
             # Bodies can carry migration instructions, negation and risk.
-            message = "\n".join(line[4:] if line.startswith("    ") else line for line in body.splitlines())
-            output.append(header+"\n"+message+"\n")
-        return "\n".join(output)
-    if kind == "git-action":
+            message_lines = [line[4:] if line.startswith("    ") else line for line in body.splitlines()]
+            while message_lines and not message_lines[-1]:
+                message_lines.pop()
+            if not message_lines:
+                return text
+            author = next(line.removeprefix("Author:").strip() for line in header.splitlines() if line.startswith("Author:"))
+            commit_hash = header.splitlines()[0].split()[1]
+            subject, *rest = message_lines
+            entry = f"{commit_hash[:10]} {subject} | {author}"
+            if rest:
+                entry += "\n" + "\n".join(rest)
+            output.append(entry)
+        rendered = "\n\n".join(output) + ("\n" if text.endswith("\n") else "")
+        return rendered if len(rendered) < len(text) else text
+    if kind == "git-add":
+        # Successful git add is normally silent.  Any text is actionable diagnostic output.
+        return text
+    if kind == "git-commit":
+        from .compression import CRITICAL
+        if not text or CRITICAL.search(text):
+            return text
+        match = re.search(r"(?m)^\[[^\]]*\b([0-9a-f]{7,64})\]\s+(.+)$", text)
+        if not match:
+            return text
+        summary = next(
+            (line.strip() for line in text.splitlines() if re.search(r"\bfiles? changed\b", line)),
+            "",
+        )
+        rendered = f"ok {match.group(1)[:7]} {match.group(2)}"
+        if summary:
+            rendered += "\n" + re.sub(r",\s+", " | ", summary)
+        rendered += "\n" if text.endswith("\n") else ""
+        return rendered if len(rendered) < len(text) else text
+    if kind == "git-pull":
+        from .compression import CRITICAL
+        if not text or CRITICAL.search(text):
+            return text
+        if re.search(r"Already up[ -]to[ -]date", text, re.I):
+            return "ok (up-to-date)\n" if text.endswith("\n") else "ok (up-to-date)"
+        summary = next(
+            (line.strip() for line in text.splitlines() if re.search(r"\bfiles? changed\b", line)),
+            None,
+        )
+        if summary:
+            rendered = "ok " + re.sub(r",\s+", " | ", summary)
+            return rendered + ("\n" if text.endswith("\n") else "")
+        return text
+    if kind == "git-fetch":
+        from .compression import CRITICAL
+        if not text or CRITICAL.search(text):
+            return text
+        refs = sum(1 for line in text.splitlines() if "->" in line or "[new " in line)
+        if not refs:
+            return text
+        rendered = f"ok fetched ({refs} new refs)"
+        return rendered + ("\n" if text.endswith("\n") else "")
+    if kind in {"git-checkout", "git-switch"}:
+        from .compression import CRITICAL
+        if not text or CRITICAL.search(text):
+            return text
+        patterns = (
+            (r"Switched to a new branch ['\"]?([^'\"\r\n]+)", "ok {0} (new)"),
+            (r"Switched to branch ['\"]?([^'\"\r\n]+)", "ok {0}"),
+            (r"Already on ['\"]?([^'\"\r\n]+)", "ok {0}"),
+            (r"HEAD is now at\s+([0-9a-f]+)", "ok HEAD {0}"),
+        )
+        for pattern, template in patterns:
+            match = re.search(pattern, text)
+            if match:
+                rendered = template.format(match.group(1))
+                return rendered + ("\n" if text.endswith("\n") else "")
+        return text
+    if kind == "git-stash":
+        from .compression import CRITICAL
+        if not text or CRITICAL.search(text):
+            return text
+        if "No local changes" in text:
+            return text
+        if re.search(r"Saved working directory|Saved index state", text):
+            return "ok stashed\n" if text.endswith("\n") else "ok stashed"
+        return text
+    if kind in {"git-push", "git-branch", "git-worktree"}:
         from .compression import CRITICAL
         if not text or CRITICAL.search(text):
             return text

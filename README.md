@@ -102,7 +102,7 @@ python scripts/generate-reference.py --headroom path/to/headroom --rtk path/to/r
 python scripts/generate-rtk-reference.py --checkout path/to/rtk --binary path/to/rtk-binary --output rtk-reference.json --comparison rtk-comparison.json
 ```
 
-当前 13 个捕获输出样例均保留关键事实，其中包含 `rg`、`grep` 默认人类可读输出以及原生 `read`、`json`、`smart`；原有 8 个测试、诊断和 Git 样例中，UTK 压缩率达到对应固定 RTK 的 95.5% 至 157.1%。这只是已验证输出形态证据，不代表 211 个 RTK 变体已完成逐项对标，详见 [固定 RTK 捕获输出对照](docs/upstream-rtk-reference-2026-09-20.md)。
+当前 23 个捕获输出样例均保留关键事实，其中包含 `rg`、`grep`、文件列表、原生 `read`／`json`／`smart`，以及临时仓库中的 `git status`、`git log` 和 `git diff`。Git 三个成功形态的 UTK／固定 RTK 压缩比例为 98.8%、106.4% 和 156.3%。这只是已验证输出形态证据，不代表 211 个 RTK 变体已完成逐项对标，详见 [固定 RTK 捕获输出对照](docs/upstream-rtk-reference-2026-09-20.md) 与 [Git 命令对照](docs/rtk-git-reference-2026-09-21.md)。
 
 能力状态的源码绑定和自动降级规则见 [能力证据绑定](docs/capability-evidence-2026-09-20.md)。高层产品能力当前为 33/36 离线通过；它不等于固定上游逐项对标完成。
 
