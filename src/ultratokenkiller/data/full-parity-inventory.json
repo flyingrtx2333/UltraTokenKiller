@@ -2946,9 +2946,11 @@
         "search.human"
       ],
       "implementation_status": "contract_mapped",
-      "parity_status": "pending_fixed_upstream_variant_evidence",
-      "parity_evidence": [],
-      "gap": "Mapped contract still needs success, failure and unknown-format fixed-upstream evidence"
+      "parity_status": "fixed_upstream_success_only",
+      "parity_evidence": [
+        "docs/evidence/upstream-rtk-comparison-20260920.json"
+      ],
+      "gap": "Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain"
     },
     {
       "id": "rtk.tools.Commands.Gt",
@@ -3270,11 +3272,15 @@
           "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L256"
         }
       ],
-      "utk_contracts": [],
-      "implementation_status": "unverified",
-      "parity_status": "pending_fixed_upstream_variant_evidence",
-      "parity_evidence": [],
-      "gap": "Needs a dedicated contract plus success, failure and unknown-format evidence"
+      "utk_contracts": [
+        "files.json"
+      ],
+      "implementation_status": "contract_mapped",
+      "parity_status": "fixed_upstream_success_only",
+      "parity_evidence": [
+        "docs/evidence/upstream-rtk-comparison-20260920.json"
+      ],
+      "gap": "Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain"
     },
     {
       "id": "rtk.tools.Commands.Kubectl",
@@ -4518,11 +4524,15 @@
           "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L109"
         }
       ],
-      "utk_contracts": [],
-      "implementation_status": "unverified",
-      "parity_status": "pending_fixed_upstream_variant_evidence",
-      "parity_evidence": [],
-      "gap": "Needs a dedicated contract plus success, failure and unknown-format evidence"
+      "utk_contracts": [
+        "files.read"
+      ],
+      "implementation_status": "contract_mapped",
+      "parity_status": "fixed_upstream_success_only",
+      "parity_evidence": [
+        "docs/evidence/upstream-rtk-comparison-20260920.json"
+      ],
+      "gap": "Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain"
     },
     {
       "id": "rtk.tools.Commands.Recall",
@@ -4666,9 +4676,11 @@
         "search.human"
       ],
       "implementation_status": "contract_mapped",
-      "parity_status": "pending_fixed_upstream_variant_evidence",
-      "parity_evidence": [],
-      "gap": "Mapped contract still needs success, failure and unknown-format fixed-upstream evidence"
+      "parity_status": "fixed_upstream_success_only",
+      "parity_evidence": [
+        "docs/evidence/upstream-rtk-comparison-20260920.json"
+      ],
+      "gap": "Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain"
     },
     {
       "id": "rtk.tools.Commands.Rspec",
@@ -4947,11 +4959,15 @@
           "url": "https://github.com/rtk-ai/rtk/blob/0924356b4caba4989607227b7c8824d3d8098719/src/main.rs#L133"
         }
       ],
-      "utk_contracts": [],
-      "implementation_status": "unverified",
-      "parity_status": "pending_fixed_upstream_variant_evidence",
-      "parity_evidence": [],
-      "gap": "Needs a dedicated contract plus success, failure and unknown-format evidence"
+      "utk_contracts": [
+        "files.smart"
+      ],
+      "implementation_status": "contract_mapped",
+      "parity_status": "fixed_upstream_success_only",
+      "parity_evidence": [
+        "docs/evidence/upstream-rtk-comparison-20260920.json"
+      ],
+      "gap": "Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain"
     },
     {
       "id": "rtk.tools.Commands.Sqlfluff",

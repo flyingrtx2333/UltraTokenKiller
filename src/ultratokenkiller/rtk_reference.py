@@ -17,6 +17,33 @@ from .tool_filters import compress_tool
 
 CASES = (
     {
+        "id": "read-numbered-source",
+        "fixture": "native_sample.py",
+        "program": None,
+        "argv": ["read", "--line-numbers", "{fixture}"],
+        "kind": "native-read",
+        "exit_code": 0,
+        "required": ["from pathlib import Path", "class Config", "load_config"],
+    },
+    {
+        "id": "json-compact-values",
+        "fixture": "native_data.json",
+        "program": None,
+        "argv": ["json", "{fixture}"],
+        "kind": "native-json",
+        "exit_code": 0,
+        "required": ["enabled", "users", "alpha"],
+    },
+    {
+        "id": "smart-python-summary",
+        "fixture": "native_sample.py",
+        "program": None,
+        "argv": ["smart", "{fixture}"],
+        "kind": "native-smart",
+        "exit_code": 0,
+        "required": ["Python", "pathlib"],
+    },
+    {
         "id": "rg-human-search",
         "fixture": "rg_human_search_raw.txt",
         "program": "rg",
@@ -180,15 +207,16 @@ def _run_case(binary: Path, checkout: Path, case: dict[str, Any]) -> dict[str, A
     raw = fixture.read_text(encoding="utf-8", errors="replace")
     with tempfile.TemporaryDirectory(prefix="utk-rtk-reference-") as temporary:
         root = Path(temporary)
-        _write_emitter(
-            root,
-            case["program"],
-            fixture.resolve(),
-            case["exit_code"],
-            case.get("version_stdout"),
-            tuple(case.get("empty_first_args", ())),
-            tuple(case.get("empty_any_args", ())),
-        )
+        if case["program"]:
+            _write_emitter(
+                root,
+                case["program"],
+                fixture.resolve(),
+                case["exit_code"],
+                case.get("version_stdout"),
+                tuple(case.get("empty_first_args", ())),
+                tuple(case.get("empty_any_args", ())),
+            )
         env = {
             **os.environ,
             "PATH": str(root) + os.pathsep + os.environ.get("PATH", ""),
@@ -198,8 +226,9 @@ def _run_case(binary: Path, checkout: Path, case: dict[str, Any]) -> dict[str, A
             "RTK_TEE": "0",
             "NO_COLOR": "1",
         }
+        argv = [str(fixture.resolve()) if value == "{fixture}" else value for value in case["argv"]]
         process = subprocess.run(
-            [str(binary), *case["argv"]],
+            [str(binary), *argv],
             cwd=root,
             env=env,
             text=True,
@@ -254,7 +283,18 @@ def compare_rtk_reference(reference: Path, model: str = "gpt-5.6-luna") -> dict[
         case = cases_by_id[case_id]
         raw = record["raw"]
         upstream = record["output"]
-        native = compress_tool(raw, case["kind"])
+        if case["kind"].startswith("native-"):
+            from .native_tools import execute_native_tool
+            with tempfile.TemporaryDirectory(prefix="utk-native-reference-") as temporary:
+                fixture = Path(temporary) / Path(case["fixture"]).name
+                fixture.write_text(raw, encoding="utf-8")
+                argv = [str(fixture) if value == "{fixture}" else value for value in case["argv"]]
+                native_result = execute_native_tool(argv)
+                if native_result is None or native_result.code:
+                    raise RuntimeError(f"UTK native reference failed for {case_id}")
+                native = native_result.rendered
+        else:
+            native = compress_tool(raw, case["kind"])
         before = count_text(raw, model).value
         upstream_after = count_text(upstream, model).value
         native_after = count_text(native, model).value

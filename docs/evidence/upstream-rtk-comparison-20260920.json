@@ -2,9 +2,39 @@
   "schema_version": 1,
   "baseline": "0924356b4caba4989607227b7c8824d3d8098719",
   "model": "gpt-5.6-luna",
-  "case_count": 10,
+  "case_count": 13,
   "live_model_calls": 0,
   "cases": [
+    {
+      "case": "read-numbered-source",
+      "kind": "native-read",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": -0.5,
+      "utk_reduction": -0.5,
+      "ratio": null,
+      "exit_code": 0
+    },
+    {
+      "case": "json-compact-values",
+      "kind": "native-json",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.46551724137931033,
+      "utk_reduction": 0.46551724137931033,
+      "ratio": 1.0,
+      "exit_code": 0
+    },
+    {
+      "case": "smart-python-summary",
+      "kind": "native-smart",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.3611111111111111,
+      "utk_reduction": 0.3333333333333333,
+      "ratio": 0.923076923076923,
+      "exit_code": 0
+    },
     {
       "case": "rg-human-search",
       "kind": "search",
@@ -90,9 +120,9 @@
       "kind": "golangci",
       "required_facts_upstream": true,
       "required_facts_utk": true,
-      "upstream_reduction": 0.941541186891054,
+      "upstream_reduction": 0.9406554472984943,
       "utk_reduction": 0.9406554472984943,
-      "ratio": 0.9990592662276576,
+      "ratio": 1.0,
       "exit_code": 0
     },
     {

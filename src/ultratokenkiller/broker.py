@@ -7,7 +7,7 @@ import asyncio
 import httpx
 from fastapi import APIRouter, HTTPException, Request
 
-from .compression import compress_content
+from .compression import compress_content, pin_transformation
 from .config import Settings, default_home
 from .recovery import RecoveryUnavailable, RecoveryVault
 
@@ -64,6 +64,25 @@ def broker_router(vault: RecoveryVault, token: str, home=None):
                                         profile=data.get("profile", "safe"), hint=data.get("hint"), query=data.get("query", "")[:16000], home=home)
         return {"content": result.content, **result.metadata()}
 
+    @router.post("/api/v1/internal/pin-transform")
+    async def pin_transform(request: Request):
+        authenticate(request)
+        data = await read_body(request)
+        if not isinstance(data.get("original"), str) or not isinstance(data.get("rendered"), str):
+            raise HTTPException(422, "Original and rendered text are required")
+        kind = data.get("kind")
+        if not isinstance(kind, str) or not 1 <= len(kind) <= 64:
+            raise HTTPException(422, "Invalid transform kind")
+        result = await asyncio.to_thread(
+            pin_transformation,
+            data["original"],
+            data["rendered"],
+            session=data["session"],
+            vault=vault,
+            kind=kind,
+        )
+        return {"content": result.content, **result.metadata()}
+
     @router.post("/api/v1/internal/retrieve")
     async def retrieve(request: Request):
         authenticate(request)
@@ -111,6 +130,21 @@ class BrokerClient:
                 return response.json()
         except (OSError, httpx.HTTPError, ValueError):
             return {"content": text, "fallback": "broker_unavailable", "saved_tokens": 0}
+
+    def pin_transform(self, original: str, rendered: str, session: str, kind: str):
+        if not session:
+            return {"content": rendered, "fallback": "missing_session", "saved_tokens": 0}
+        try:
+            with self.client() as client:
+                response = client.post(
+                    self.url + "/api/v1/internal/pin-transform",
+                    headers=self.headers(),
+                    json={"original": original, "rendered": rendered, "session": session, "kind": kind},
+                )
+                response.raise_for_status()
+                return response.json()
+        except (OSError, httpx.HTTPError, ValueError):
+            return {"content": original, "fallback": "broker_unavailable", "saved_tokens": 0}
 
     def retrieve(self, session: str, handle: str, offset=0, limit=32000):
         with self.client() as client:

@@ -38,6 +38,7 @@ def _source_fingerprint(root: Path, item: dict, upstream_commit: str) -> str | N
 
 def _contract_fingerprint(root: Path, contract: dict) -> str | None:
     paths = ["src/ultratokenkiller/tool_filters.py", "src/ultratokenkiller/processes.py",
+             *contract.get("implementation", []),
              *contract.get("tests", [])]
     if not contract.get("reviewed") or not all((root / value).is_file() for value in paths):
         return None

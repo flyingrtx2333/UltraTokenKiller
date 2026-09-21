@@ -30,10 +30,13 @@ def test_rtk_mapping_does_not_claim_variant_parity():
     rtk = [item for item in report["items"] if item["upstream"] == "rtk"]
 
     assert Counter(item["implementation_status"] for item in rtk) == {
-        "contract_mapped": 57,
-        "unverified": 154,
+        "contract_mapped": 60,
+        "unverified": 151,
     }
-    assert {item["parity_status"] for item in rtk} == {"pending_fixed_upstream_variant_evidence"}
+    assert Counter(item["parity_status"] for item in rtk) == {
+        "pending_fixed_upstream_variant_evidence": 206,
+        "fixed_upstream_success_only": 5,
+    }
 
 
 def test_caveman_inventory_separates_policy_and_live_quality():
@@ -75,11 +78,12 @@ def test_capability_report_exposes_full_parity_without_inflating_completion():
     assert len(report["full_parity_inventory"]) == 256
     assert len(report["ecosystem_exclusions"]) == 6
     assert report["full_parity_implementation_counts"]["rtk"] == {
-        "contract_mapped": 57,
-        "unverified": 154,
+        "contract_mapped": 60,
+        "unverified": 151,
     }
     assert report["full_parity_status_counts"]["rtk"] == {
-        "pending_fixed_upstream_variant_evidence": 211,
+        "fixed_upstream_success_only": 5,
+        "pending_fixed_upstream_variant_evidence": 206,
     }
     assert report["full_parity_status_counts"]["caveman"]["authorization_required"] == 5
     assert report["full_parity_status_counts"]["headroom"] == {

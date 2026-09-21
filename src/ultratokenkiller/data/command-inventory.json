@@ -2621,9 +2621,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "files.json"
+    ],
     "scope": "coverage_denominator"
   },
   {
@@ -3929,9 +3931,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "files.read"
+    ],
     "scope": "coverage_denominator"
   },
   {
@@ -4378,9 +4382,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "files.smart"
+    ],
     "scope": "coverage_denominator"
   },
   {

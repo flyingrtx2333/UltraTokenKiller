@@ -272,3 +272,36 @@ def compress_content(text: str, *, session: str, vault: RecoveryVault, profile="
         return result or unchanged("not_smaller_or_memory_full")
     except Exception:
         return unchanged("compression_error")
+
+
+def pin_transformation(
+    original: str,
+    rendered: str,
+    *,
+    session: str,
+    vault: RecoveryVault,
+    kind: str,
+) -> CompressionResult:
+    """Attach a recovery handle to a deterministic native-tool transform."""
+    before = estimate_tokens(original)
+    plain = CompressionResult(original, kind, before, before)
+    if not session:
+        return replace(plain, fallback="missing_session")
+    if rendered == original or not rendered:
+        return vault.pin_passthrough(session, replace(plain, fallback="unchanged"))
+
+    def make(handle: str) -> CompressionResult:
+        content = rendered.rstrip() + f"\nUTK retrieve: {handle}\n"
+        return CompressionResult(
+            content,
+            kind,
+            before,
+            estimate_tokens(content),
+            recovery_id=handle,
+            preserved=("original_available", "content_boundaries"),
+        )
+
+    result = vault.put(session, original, make)
+    return result or vault.pin_passthrough(
+        session, replace(plain, fallback="not_smaller_or_memory_full")
+    )

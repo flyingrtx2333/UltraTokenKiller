@@ -68,8 +68,16 @@ def headroom_items(manifest: list[dict], lock: dict) -> list[dict]:
 
 def rtk_items(inventory: list[dict], lock: dict) -> list[dict]:
     result = []
+    success_samples = {
+        "tools.Commands.Read",
+        "tools.Commands.Json",
+        "tools.Commands.Smart",
+        "tools.Commands.Grep",
+        "tools.Commands.Rg",
+    }
     for row in inventory:
         mapped = row.get("status") == "contract_mapped"
+        success_sampled = row["id"] in success_samples
         result.append({
             "id": f"rtk.{row['id']}",
             "upstream": "rtk",
@@ -89,11 +97,20 @@ def rtk_items(inventory: list[dict], lock: dict) -> list[dict]:
             }],
             "utk_contracts": row["contract_ids"],
             "implementation_status": "contract_mapped" if mapped else "unverified",
-            "parity_status": "pending_fixed_upstream_variant_evidence",
-            "parity_evidence": [],
+            "parity_status": (
+                "fixed_upstream_success_only"
+                if success_sampled else "pending_fixed_upstream_variant_evidence"
+            ),
+            "parity_evidence": (
+                ["docs/evidence/upstream-rtk-comparison-20260920.json"]
+                if success_sampled else []
+            ),
             "gap": (
-                "Mapped contract still needs success, failure and unknown-format fixed-upstream evidence"
-                if mapped else "Needs a dedicated contract plus success, failure and unknown-format evidence"
+                "Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain"
+                if success_sampled
+                else "Mapped contract still needs success, failure and unknown-format fixed-upstream evidence"
+                if mapped
+                else "Needs a dedicated contract plus success, failure and unknown-format evidence"
             ),
         })
     return result

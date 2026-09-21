@@ -7,7 +7,12 @@ from ultratokenkiller.rtk_reference import CASES, compare_rtk_reference
 def test_comparison_uses_captured_output_without_executing_commands(tmp_path: Path):
     records = {}
     for case in CASES:
-        raw = "\n".join(case["required"]) + "\n" + ("noise\n" * 100)
+        if case["kind"].startswith("native-"):
+            raw = (
+                Path("tests/fixtures/rtk_reference") / case["fixture"]
+            ).read_text(encoding="utf-8")
+        else:
+            raw = "\n".join(case["required"]) + "\n" + ("noise\n" * 100)
         records[case["id"]] = {
             "raw": raw,
             "output": "\n".join(case["required"]),

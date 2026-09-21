@@ -134,6 +134,45 @@ def run_command(command: list[str], store: Store) -> int:
         metadata["session_id"] = hashlib.sha256(os.environ["UTK_SESSION_ID"].encode()).hexdigest()
     if os.environ.get("UTK_HOOK_CALL_ID"):
         metadata["tool_call_id"] = os.environ["UTK_HOOK_CALL_ID"]
+    from .native_tools import execute_native_tool
+    native = execute_native_tool(command)
+    if native is not None:
+        code = native.code
+        fallback = None
+        rendered = native.rendered
+        if native.error:
+            _write_stderr(native.error.encode("utf-8"))
+        elif native.original:
+            session = os.environ.get("UTK_SESSION_ID", "")
+            if not settings.tools_enabled:
+                rendered = native.original
+                fallback = "disabled"
+            elif native.rendered != native.original and session:
+                result = BrokerClient().pin_transform(
+                    native.original, native.rendered, session, native.kind
+                )
+                rendered = result["content"]
+                saved = result.get("saved_tokens", 0)
+                fallback = result.get("fallback")
+                metadata["recovery_id"] = result.get("recovery_id")
+            elif native.rendered != native.original:
+                rendered = native.original
+                fallback = "missing_session"
+            metadata["optimized"] = rendered != native.original
+            _write_stdout(rendered.encode("utf-8"))
+        metadata["fallback"] = fallback
+        client_name = os.environ.get("UTK_CLIENT", "cli")
+        if client_name not in {"codex", "hermes", "cli"}:
+            client_name = "cli"
+        store.add(
+            kind="tool",
+            client=client_name,
+            success=code == 0,
+            duration_ms=int((time.perf_counter() - started) * 1000),
+            saved_tokens=saved,
+            metadata=metadata,
+        )
+        return code
     code, raw, fallback = execute(command, capture=bool(kind), write=_write_stdout)
     if raw is not None:
         rendered = raw
@@ -176,3 +215,13 @@ def _write_stdout(data: bytes):
     else:
         sys.stdout.write(data.decode("utf-8", errors="replace"))
         sys.stdout.flush()
+
+
+def _write_stderr(data: bytes):
+    target = getattr(sys.stderr, "buffer", None)
+    if target is not None:
+        target.write(data)
+        target.flush()
+    else:
+        sys.stderr.write(data.decode("utf-8", errors="replace"))
+        sys.stderr.flush()

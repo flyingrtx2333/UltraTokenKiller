@@ -15,6 +15,8 @@ def command_filter(argv: list[str]) -> str | None:
     machine = {"--json", "--porcelain", "--porcelain=v1", "--porcelain=v2", "--binary", "-z", "--null", "--raw", "--patch", "--no-textconv"}
     if any(x in machine or x.startswith(("--format=", "--pretty=", "--output=", "--junitxml=")) for x in args):
         return None
+    if name in {"read", "json", "smart"}:
+        return f"native-{name}"
     if name == "git":
         # These global flags preserve the selected command's output schema.
         # Arbitrary -c configuration and external diff programs stay unsupported.
