@@ -72,6 +72,9 @@ def capability_report(root: Path | None = None) -> dict:
     manifest = json.loads(data.joinpath("capability-manifest.json").read_text(encoding="utf-8"))
     discovered = json.loads(data.joinpath("command-inventory.json").read_text(encoding="utf-8"))
     contracts = json.loads(data.joinpath("tool-contracts.json").read_text(encoding="utf-8"))
+    full_inventory = json.loads(
+        data.joinpath("full-parity-inventory.json").read_text(encoding="utf-8")
+    )
     ledger = _load_ledger(project, data)
     ledger_items = ledger.get("capabilities", {}) if isinstance(ledger, dict) else {}
     ledger_contracts = ledger.get("command_contracts", {}) if isinstance(ledger, dict) else {}
@@ -139,6 +142,22 @@ def capability_report(root: Path | None = None) -> dict:
     parity = bool(rendered) and all(item["status"] == "upstream_parity_passed" for item in rendered)
     inventory_core = [item for item in discovered if item.get("disposition") == "core"]
     inventory_status_counts = Counter(item.get("status", "unverified") for item in inventory_core)
+    full_items = full_inventory["items"]
+    full_upstream_counts = Counter(item["upstream"] for item in full_items)
+    full_implementation_counts = {
+        upstream: dict(sorted(Counter(
+            item["implementation_status"] for item in full_items
+            if item["upstream"] == upstream
+        ).items()))
+        for upstream in sorted(full_upstream_counts)
+    }
+    full_parity_status_counts = {
+        upstream: dict(sorted(Counter(
+            item["parity_status"] for item in full_items
+            if item["upstream"] == upstream
+        ).items()))
+        for upstream in sorted(full_upstream_counts)
+    }
     return {
         "schema_version": 3,
         "baselines": {key: value["commit"] for key, value in lock.items()},
@@ -152,6 +171,16 @@ def capability_report(root: Path | None = None) -> dict:
         "verified_command_contracts": sum(item["verification_current"] for item in rendered_contracts),
         "command_contract_coverage_denominator": None,
         "command_inventory_note": "All frozen RTK variants are in the coverage denominator; only evidence-bound reviewed contracts count as verified",
+        "full_parity_denominator": full_inventory["core_denominator"],
+        "full_parity_upstream_counts": dict(sorted(full_upstream_counts.items())),
+        "full_parity_implementation_counts": full_implementation_counts,
+        "full_parity_status_counts": full_parity_status_counts,
+        "full_parity_inventory": full_items,
+        "ecosystem_exclusions": full_inventory["ecosystem_exclusions"],
+        "full_parity_note": (
+            "Implementation status and fixed-upstream parity status are independent; "
+            "contract_mapped and passthrough do not count as parity passed"
+        ),
         "upstream_comparisons_missing": sum(item["status"] != "upstream_parity_passed" for item in rendered),
         "command_inventory": discovered,
         "command_contracts": rendered_contracts,

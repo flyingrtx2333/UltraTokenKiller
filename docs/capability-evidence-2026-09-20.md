@@ -7,6 +7,8 @@
 - 核心能力 36 项：30 项绑定当前源码并离线通过，6 项已实现待验证。
 - 命令契约 22 项：22 项已审阅且绑定当前 `tool_filters.py`、执行层和契约测试。
 - 固定 RTK 的 211 个命令变体已冻结为覆盖分母；55 项映射现有审阅契约，156 项仍待逐项验证。映射不等于实现或上游对标通过。
+- 三层逐项核心分母为 256：Headroom 24、RTK 211、Caveman 21。机器清单和可读报告见 `src/ultratokenkiller/data/full-parity-inventory.json` 与 `docs/full-capability-parity-2026-09-21.md`。33/36 是高层产品能力状态，不代表这 256 项全部完成固定上游对标。
+- RTK 固定上游逐项对标当前为 0/211；Caveman 5 类成对质量仍需 180 次授权模型请求；Headroom 的固定样例证据与未逐项比较能力分开计数。
 - 旧 Codex 实机证据没有记录当前源码指纹，因此 `recovery.mcp`、Responses HTTP/SSE、Git 工具、回答档位和 Codex 订阅接入从“真实客户端通过”降为离线或待验证。旧报告仍保留作历史证据。
 - 上游对标和真实客户端源码绑定数均为 0；`parity_certified` 保持 `false`。
 

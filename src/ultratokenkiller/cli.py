@@ -46,6 +46,25 @@ def capabilities(
         f"已映射 {report['command_inventory_status_counts'].get('contract_mapped', 0)}，"
         f"待验证 {report['command_inventory_status_counts'].get('unverified', 0)}"
     )
+    full_counts = report["full_parity_upstream_counts"]
+    rtk_parity = report["full_parity_status_counts"]["rtk"]
+    rtk_parity_passed = sum(
+        count for status, count in rtk_parity.items()
+        if status in {
+            "fixed_upstream_sample_passed",
+            "fixed_upstream_suite_passed",
+            "fixed_upstream_policy_passed",
+        }
+    )
+    typer.echo(
+        f"完整三层核心分母 {report['full_parity_denominator']}："
+        f"Headroom {full_counts['headroom']}，RTK {full_counts['rtk']}，"
+        f"Caveman {full_counts['caveman']}；生态排除 {len(report['ecosystem_exclusions'])} 项"
+    )
+    typer.echo(
+        f"RTK 固定上游逐项对标 {rtk_parity_passed} / {full_counts['rtk']}；"
+        "命令契约映射不计为对标通过"
+    )
     verification = report["verification"]
     typer.echo(
         f"当前源码绑定 {verification['source_bound_capabilities']} 项；"
