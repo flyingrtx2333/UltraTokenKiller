@@ -41,5 +41,11 @@
     "tests/test_rtk_reference.py": "4c05e18417476a59ed3be50906ab50f0ca72b9914e83f370251e56e45a27443d",
     "tests/test_rtk_git.py": "4b0eb2262e635e18f76054a039dfdd4707df0103fb7797a5cb6ec78b307b1fd8",
     "tests/fixtures/rtk_reference/git_add_success_raw.txt": "ac365272bbe450cb2b17f5bbaa10afc66619c63170253d37b61892f0a334047b"
+  },
+  "validation_commit": "069fe8d",
+  "regression": {
+    "windows_x64": "295 passed, 3 skipped, 1 warning",
+    "macos_arm64": "297 passed, 1 skipped, 2 warnings",
+    "model_calls": 0
   }
 }
