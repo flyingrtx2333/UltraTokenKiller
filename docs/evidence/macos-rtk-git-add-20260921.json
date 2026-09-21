@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-21",
+  "scope": "fixed RTK git add execution and UTK staged-stat comparison",
+  "upstream_commit": "0924356b4caba4989607227b7c8824d3d8098719",
+  "platform": "macos-arm64",
+  "rtk_version": "0.48.0",
+  "binary_sha256": "82de051972beb180a5ac5dec0f6a235284b1ba62fb271c9e83b8bcf76520692f",
+  "command": [
+    "git",
+    "add",
+    "tracked.txt"
+  ],
+  "write_command_executions": 1,
+  "exit_code": 0,
+  "upstream_output": "ok 1 file changed, 1 insertion(+)\n",
+  "staged_stat": " tracked.txt | 1 +\n 1 file changed, 1 insertion(+)\n 1 file changed, 1 insertion(+)\n",
+  "staged_names": "tracked.txt\n",
+  "windows_fixed_reference": {
+    "raw": " tracked.txt | 1 +\n 1 file changed, 1 insertion(+)\n 1 file changed, 1 insertion(+)\n",
+    "output": "ok 1 file changed, 1 insertion(+)",
+    "exit_code": 0,
+    "raw_sha256": "ac365272bbe450cb2b17f5bbaa10afc66619c63170253d37b61892f0a334047b"
+  },
+  "utk_output": " tracked.txt | 1 +\n 1 file changed, 1 insertion(+)\n 1 file changed, 1 insertion(+)\n",
+  "comparison": {
+    "case": "git-add-success",
+    "kind": "git-add",
+    "required_facts_upstream": true,
+    "required_facts_utk": true,
+    "upstream_reduction": 0.5769230769230769,
+    "utk_reduction": 0.0,
+    "ratio": 0.0,
+    "exit_code": 0
+  },
+  "required_facts_preserved": true,
+  "model_calls": 0,
+  "source_parent": "b298fb6",
+  "source_hashes": {
+    "src/ultratokenkiller/rtk_reference.py": "d1514f084eb3a5637e791dc9d77c00f8609fbd15d32a7697928c7034bd924496",
+    "tests/test_rtk_reference.py": "4c05e18417476a59ed3be50906ab50f0ca72b9914e83f370251e56e45a27443d",
+    "tests/test_rtk_git.py": "4b0eb2262e635e18f76054a039dfdd4707df0103fb7797a5cb6ec78b307b1fd8",
+    "tests/fixtures/rtk_reference/git_add_success_raw.txt": "ac365272bbe450cb2b17f5bbaa10afc66619c63170253d37b61892f0a334047b"
+  }
+}

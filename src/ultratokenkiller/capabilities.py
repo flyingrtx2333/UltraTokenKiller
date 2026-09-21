@@ -82,7 +82,10 @@ def _full_item_fingerprint(root: Path | None, item: dict, upstream_commit: str) 
         paths.extend([
             "src/ultratokenkiller/tool_filters.py",
             "src/ultratokenkiller/processes.py",
+            "src/ultratokenkiller/rtk_reference.py",
             "src/ultratokenkiller/data/tool-contracts.json",
+            "tests/test_rtk_reference.py",
+            "tests/test_rtk_git.py",
         ])
     if root is None or not paths:
         return None

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "baseline": "0924356b4caba4989607227b7c8824d3d8098719",
   "model": "gpt-5.6-luna",
-  "case_count": 44,
+  "case_count": 45,
   "live_model_calls": 0,
   "cases": [
     {
@@ -33,6 +33,16 @@
       "upstream_reduction": 0.8048780487804879,
       "utk_reduction": 0.7804878048780488,
       "ratio": 0.9696969696969697,
+      "exit_code": 0
+    },
+    {
+      "case": "git-add-success",
+      "kind": "git-add",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.5769230769230769,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
       "exit_code": 0
     },
     {
@@ -430,9 +440,9 @@
       "kind": "golangci",
       "required_facts_upstream": true,
       "required_facts_utk": true,
-      "upstream_reduction": 0.9406554472984943,
+      "upstream_reduction": 0.941541186891054,
       "utk_reduction": 0.9406554472984943,
-      "ratio": 1.0,
+      "ratio": 0.9990592662276576,
       "exit_code": 0
     },
     {

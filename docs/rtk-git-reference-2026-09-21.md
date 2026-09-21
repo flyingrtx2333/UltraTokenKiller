@@ -33,3 +33,11 @@
 - `docs/evidence/upstream-rtk-comparison-20260920.json`
 - `docs/evidence/macos-rtk-git-20260921.json`
 - `tests/test_rtk_git.py`
+
+## `git add` 固定 RTK 执行证据
+
+- 固定提交：`0924356b4caba4989607227b7c8824d3d8098719`，RTK `0.48.0`。
+- macOS arm64 二进制在隔离 `/tmp` 工具链编译，SHA-256：`82de051972beb180a5ac5dec0f6a235284b1ba62fb271c9e83b8bcf76520692f`。
+- 修改性命令只执行一次：`rtk git add tracked.txt`；退出码为 0，暂存文件为 `tracked.txt`，固定 RTK 输出保留 `1 file changed, 1 insertion(+)`。
+- 四路对照使用同一份暂存统计输入，未为了统计再次执行 `git add`。
+- 机器证据：`docs/evidence/macos-rtk-git-add-20260921.json`。

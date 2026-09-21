@@ -153,3 +153,17 @@ def test_git_show_compacts_header_and_patch():
 )
 def test_git_failures_and_unknown_formats_are_unchanged(kind, raw):
     assert compress_tool(raw, kind) == raw
+
+
+def test_git_add_compacts_staged_stat_probe_without_losing_counts():
+    raw = (
+        " tracked.txt | 1 +\n"
+        " 1 file changed, 1 insertion(+)\n"
+        " 1 file changed, 1 insertion(+)\n"
+    )
+
+    compact = compress_tool(raw, "git-add")
+
+    assert "tracked.txt" in compact
+    assert "1 file changed" in compact
+    assert "1 insertion" in compact

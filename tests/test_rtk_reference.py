@@ -33,3 +33,13 @@ def test_comparison_uses_captured_output_without_executing_commands(tmp_path: Pa
     assert {item["case"]: item["exit_code"] for item in report["cases"]} == {
         case["id"]: case["exit_code"] for case in CASES
     }
+
+
+def test_git_add_reference_uses_captured_probe_and_one_fixed_execution():
+    case = next(case for case in CASES if case["id"] == "git-add-success")
+
+    assert case["fixture"] == "git_add_success_raw.txt"
+    assert case["setup_git_repo"] is True
+    assert case["setup_git_add"] is True
+    assert case["captured_raw_only"] is True
+    assert case["argv"] == ["git", "add", "tracked.txt"]

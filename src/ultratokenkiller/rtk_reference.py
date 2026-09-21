@@ -48,6 +48,18 @@ CASES = (
         "required": ["a1b2c3d"],
     },
     {
+        "id": "git-add-success",
+        "fixture": "git_add_success_raw.txt",
+        "program": "git",
+        "argv": ["git", "add", "tracked.txt"],
+        "kind": "git-add",
+        "exit_code": 0,
+        "setup_git_repo": True,
+        "setup_git_add": True,
+        "captured_raw_only": True,
+        "required": ["1 file changed", "1 insertion"],
+    },
+    {
         "id": "git-commit-failure",
         "fixture": "git_commit_failure_raw.txt",
         "program": "git",
@@ -537,6 +549,11 @@ def _run_case(binary: Path, checkout: Path, case: dict[str, Any]) -> dict[str, A
         root = Path(temporary)
         if case.get("setup_git_repo"):
             _setup_git_repo(root)
+        if case.get("setup_git_add"):
+            (root / "tracked.txt").write_text(
+                "alpha\nbeta\ngamma\ndelta\n", encoding="utf-8"
+            )
+        if case.get("raw_argv") and not case.get("captured_raw_only"):
             direct = subprocess.run(
                 case["raw_argv"], cwd=root, text=True, encoding="utf-8", errors="replace",
                 capture_output=True, check=False,
