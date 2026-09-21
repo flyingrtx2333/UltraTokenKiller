@@ -14,8 +14,11 @@
 
 上述三项只是 Windows 固定上游成功形态证据，不含失败、未知格式及 macOS/Linux 固定二进制变体，因此不会提升为完整上游对标通过。写操作现已具备逐命令路由、成功/失败/未知格式离线测试，但仍待固定上游捕获输出逐项对照。
 
+同一实现提交 `6edc97c` 在 Mac arm64 的独立 `/tmp` 工作区完成全量离线回归：`279 passed, 1 skipped, 2 warnings`。该运行未执行固定 RTK 二进制，因而只证明 UTK 跨平台回归，不补充上游变体证据。
+
 证据文件：
 
 - `docs/evidence/upstream-rtk-reference-20260920.json`
 - `docs/evidence/upstream-rtk-comparison-20260920.json`
+- `docs/evidence/macos-rtk-git-20260921.json`
 - `tests/test_rtk_git.py`

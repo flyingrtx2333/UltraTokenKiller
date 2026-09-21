@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-21",
+  "platform": "macos-arm64",
+  "revision": "6edc97c",
+  "workspace": "/tmp/utk-git-6edc97c",
+  "utk_home": "/tmp/utk-git-home-6edc97c",
+  "python": "3.14",
+  "command": "PYTHONPATH=src UTK_HOME=/tmp/utk-git-home-6edc97c /tmp/utk-instance-a103ac2/.venv/bin/python -m pytest -q",
+  "result": {
+    "passed": 279,
+    "skipped": 1,
+    "warnings": 2,
+    "exit_code": 0
+  },
+  "live_model_calls": 0,
+  "fixed_upstream_binary_executed": false,
+  "daily_client_configuration_modified": false,
+  "scope": "UTK cross-platform offline regression for command-specific Git routing and filters"
+}
