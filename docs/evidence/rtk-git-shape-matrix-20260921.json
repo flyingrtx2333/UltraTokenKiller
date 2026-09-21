@@ -47,5 +47,7 @@
   },
   "windows_x64": "319 passed, 3 skipped, 1 warning",
   "model_calls": 0,
-  "source_sha256": "d7e121d6eeab0bdd144143d3c0d2e0a0f609b8bb93063d9c2a8d279e35fc1a6c"
+  "source_sha256": "d7e121d6eeab0bdd144143d3c0d2e0a0f609b8bb93063d9c2a8d279e35fc1a6c",
+  "validation_commit": "c82d70b",
+  "macos_arm64": "321 passed, 1 skipped, 2 warnings"
 }
