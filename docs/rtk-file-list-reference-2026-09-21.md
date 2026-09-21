@@ -22,3 +22,5 @@
 
 - `docs/evidence/upstream-rtk-reference-20260920.json`
 - `docs/evidence/upstream-rtk-comparison-20260920.json`
+
+Mac arm64 对提交 `5b1504f` 的全量离线回归为 `243 passed, 1 skipped, 2 warnings`，模型请求为 0；该机器未执行固定 RTK 二进制，因此只作为 UTK 跨平台实现证据，不补足固定上游 Mac 证据。记录见 `docs/evidence/macos-rtk-file-list-20260921.json`。
