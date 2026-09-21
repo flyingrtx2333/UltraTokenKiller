@@ -14,6 +14,7 @@ import httpx
 
 from .config import Settings, default_home
 from .engines import compress_tool_output, estimate_tokens, supported_command
+from .identity import ensure_session_token, home_instance_id
 from .store import Store
 
 
@@ -24,11 +25,20 @@ def health(url: str, timeout: float = 1.0) -> bool:
         return False
 
 
-def headroom_health(settings: Settings, port: int | None = None) -> bool:
+def headroom_health(settings: Settings, port: int | None = None, home: Path | None = None) -> bool:
+    expected = home_instance_id(home or default_home())
+    if not expected:
+        return False
     try:
-        response = httpx.get(f"http://{settings.host}:{port or settings.headroom_port}/health", timeout=1)
-        return response.is_success and response.json().get("engine") == "utk-native"
-    except (httpx.HTTPError, ValueError):
+        response = httpx.get(
+            f"http://{settings.host}:{port or settings.headroom_port}/health",
+            timeout=1,
+            trust_env=False,
+        )
+        payload = response.json()
+        return (response.is_success and payload.get("engine") == "utk-native"
+                and payload.get("instance_id") == expected)
+    except (httpx.HTTPError, ValueError, AttributeError):
         return False
 
 
@@ -37,13 +47,27 @@ def headroom_ports(settings: Settings) -> list[int]:
     return list(dict.fromkeys(configured or [settings.headroom_port]))
 
 
-def service_health(settings: Settings) -> bool:
-    return health(f"http://{settings.host}:{settings.dashboard_port}/api/v1/health")
+def service_health(settings: Settings, home: Path | None = None) -> bool:
+    """Return true only when the listener belongs to the requested UTK home."""
+    root = home or default_home()
+    expected = home_instance_id(root)
+    if not expected:
+        return False
+    try:
+        response = httpx.get(
+            f"http://{settings.host}:{settings.dashboard_port}/api/v1/health",
+            timeout=1,
+            trust_env=False,
+        )
+        return response.is_success and response.json().get("instance_id") == expected
+    except (httpx.HTTPError, ValueError, AttributeError):
+        return False
 
 
 def start_processes(settings: Settings, home: Path | None = None) -> dict[str, int | str]:
     root = home or default_home()
     root.mkdir(parents=True, exist_ok=True)
+    ensure_session_token(root)
     log = open(root / "service.log", "a", encoding="utf-8")
     env = os.environ.copy()
     env["UTK_HOME"] = str(root)
@@ -54,7 +78,7 @@ def start_processes(settings: Settings, home: Path | None = None) -> dict[str, i
         instances = [{"proxy_port": settings.headroom_port, "managed": settings.headroom_managed, "upstream_url": None}]
     for instance in {int(item["proxy_port"]): item for item in instances}.values():
         port = int(instance["proxy_port"])
-        if not instance.get("managed", True) or headroom_health(settings, port):
+        if not instance.get("managed", True) or headroom_health(settings, port, root):
             continue
         instance_env = env.copy()
         instance_env["UTK_UPSTREAM_URL"] = str(instance.get("upstream_url") or "https://api.openai.com/v1")
@@ -63,7 +87,7 @@ def start_processes(settings: Settings, home: Path | None = None) -> dict[str, i
         proc = _spawn(command, instance_env, log)
         (root / f"headroom-{port}.pid").write_text(str(proc.pid), encoding="ascii")
         result[f"native:{port}"] = proc.pid
-    if not service_health(settings):
+    if not service_health(settings, root):
         command = [sys.executable, "-m", "ultratokenkiller.local_transport"]
         proc = _spawn(command, env, log)
         (root / "service.pid").write_text(str(proc.pid), encoding="ascii")

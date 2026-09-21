@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import asyncio
 import json
-import secrets
 import shutil
 import subprocess
 from urllib.parse import urlparse
@@ -15,17 +14,16 @@ from fastapi.staticfiles import StaticFiles
 
 from .config import Settings, default_home
 from .integrations import CodexAdapter, HermesAdapter
+from .identity import ensure_session_token, instance_id
 from .runtime import headroom_health, headroom_ports, restart_managed_headrooms
 from .store import Store
 
 home = default_home()
 settings = Settings.load(home)
 store = Store(home / "metrics.sqlite3")
-token_path = home / "session-token"
 home.mkdir(parents=True, exist_ok=True)
-if not token_path.exists():
-    token_path.write_text(secrets.token_urlsafe(32), encoding="ascii")
-session_token = token_path.read_text(encoding="ascii").strip()
+session_token = ensure_session_token(home)
+service_instance_id = instance_id(session_token)
 
 app = FastAPI(title="UltraTokenKiller", version="0.2.0", docs_url=None, redoc_url=None)
 from .broker import broker_router
@@ -76,7 +74,7 @@ def require_write(request: Request, x_utk_token: str | None) -> None:
 
 @app.get("/api/v1/health")
 def api_health() -> dict:
-    return {"status": "ok", "version": app.version}
+    return {"status": "ok", "version": app.version, "instance_id": service_instance_id}
 
 
 @app.get("/api/v1/status")

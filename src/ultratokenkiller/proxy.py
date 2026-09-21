@@ -15,6 +15,7 @@ from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import JSONResponse, StreamingResponse
 
 from .config import Settings, default_home
+from .identity import ensure_session_token, instance_id
 from .engines import apply_response_style, estimate_tokens
 from .broker import BrokerClient
 from .store import Store
@@ -199,6 +200,7 @@ class UsageObserver:
 
 def create_proxy(upstream: str | None = None, home=None, transport=None) -> FastAPI:
     root = home or default_home()
+    proxy_instance_id = instance_id(ensure_session_token(root))
     upstream = upstream or os.environ.get("UTK_UPSTREAM_URL", "https://api.openai.com/v1")
     client_name = os.environ.get("UTK_CLIENT", "unknown")
     store = Store(root / "metrics.sqlite3")
@@ -222,7 +224,9 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
 
     @app.get("/health")
     def health():
-        return {"status": "ok", "engine": "utk-native", "route_id": hashlib.sha256(upstream.encode()).hexdigest()}
+        return {"status": "ok", "engine": "utk-native",
+                "route_id": hashlib.sha256(upstream.encode()).hexdigest(),
+                "instance_id": proxy_instance_id}
 
     @app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
     async def forward(path: str, request: Request):

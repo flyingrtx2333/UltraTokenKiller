@@ -9,7 +9,10 @@ def test_management_writes_require_session_token(tmp_path, monkeypatch):
     service = importlib.reload(service)
     monkeypatch.setattr(service, "restart_managed_headrooms", lambda *_: None)
     client = TestClient(service.app)
-    assert client.get("/api/v1/health").status_code == 200
+    health = client.get("/api/v1/health")
+    assert health.status_code == 200
+    assert len(health.json()["instance_id"]) == 24
+    assert service.session_token not in health.text
     assert client.patch("/api/v1/config", json={"profile": "off"}).status_code == 403
     config = client.get("/api/v1/config").json()
     response = client.patch("/api/v1/config", json={"profile": "off"}, headers={"X-UTK-Token": config["session_token"]})

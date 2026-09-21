@@ -15,6 +15,7 @@ import typer
 from . import __version__
 from . import autostart
 from .config import Settings, choose_port, default_home
+from .identity import ensure_session_token
 from .integrations import CodexAdapter, HermesAdapter
 from .runtime import headroom_health, restart_managed_headrooms, run_command, service_health, start_processes, stop_processes
 from .store import Store
@@ -140,7 +141,8 @@ def install(no_clients: bool = typer.Option(False, help="不接入已检测到�
     """安装服务、选择端口并接入 Codex 和 Hermes。"""
     root = default_home()
     settings = Settings.load(root)
-    existing_dashboard = settings.dashboard_port if service_health(settings) else None
+    ensure_session_token(root)
+    existing_dashboard = settings.dashboard_port if service_health(settings, root) else None
     proxy_keys = ("HEADROOM_HTTP_PROXY", "HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "NO_PROXY")
     settings.proxy_environment = {key: os.environ[key] for key in proxy_keys if os.environ.get(key)}
     if "HEADROOM_HTTP_PROXY" not in settings.proxy_environment and settings.proxy_environment.get("HTTP_PROXY"):
@@ -171,7 +173,7 @@ def install(no_clients: bool = typer.Option(False, help="不接入已检测到�
             shared = next((item for item in instances.values() if item["upstream_url"] == upstream), None)
             if shared:
                 port, managed = shared["proxy_port"], shared["managed"]
-            elif previous.get("proxy_port") and headroom_health(settings, int(previous["proxy_port"])):
+            elif previous.get("proxy_port") and headroom_health(settings, int(previous["proxy_port"]), root):
                 port, managed = int(previous["proxy_port"]), True
             else:
                 port = choose_port(18788, excluded={int(value) for value in reserved if value})
@@ -189,14 +191,14 @@ def install(no_clients: bool = typer.Option(False, help="不接入已检测到�
         settings.headroom_managed = False
     else:
         settings.clients = {}
-        settings.headroom_port = settings.headroom_port if headroom_health(settings) else choose_port(18788)
+        settings.headroom_port = settings.headroom_port if headroom_health(settings, home=root) else choose_port(18788)
         settings.headroom_managed = True
         reserved.add(settings.headroom_port)
     settings.dashboard_port = existing_dashboard or choose_port(18787, excluded={int(value) for value in reserved if value})
     settings.save(root)
     start_processes(settings, root)
     deadline = time.time() + 15
-    while time.time() < deadline and not service_health(settings):
+    while time.time() < deadline and not service_health(settings, root):
         time.sleep(.25)
     if not no_clients:
         for name, adapter in adapters.items():
@@ -231,8 +233,8 @@ def doctor():
     root, settings = _settings()
     checks = [
         ("配置", (root / "config.json").exists(), str(root / "config.json")),
-        ("管理服务", service_health(settings), f"{settings.host}:{settings.dashboard_port}"),
-        ("UTK 输入代理", headroom_health(settings), "utk-native"),
+        ("管理服务", service_health(settings, root), f"{settings.host}:{settings.dashboard_port}"),
+        ("UTK 输入代理", headroom_health(settings, home=root), "utk-native"),
         ("UTK 工具压缩", True, "内置"),
     ]
     for name, ok, detail in checks:
@@ -248,8 +250,8 @@ def doctor():
 def status():
     root, settings = _settings()
     typer.echo(f"UltraTokenKiller {__version__}")
-    typer.echo(f"管理服务: {'在线' if service_health(settings) else '离线'}  http://{settings.host}:{settings.dashboard_port}")
-    typer.echo(f"UTK 输入代理: {'在线' if headroom_health(settings) else '离线'}  :{settings.headroom_port}")
+    typer.echo(f"管理服务: {'在线' if service_health(settings, root) else '离线'}  http://{settings.host}:{settings.dashboard_port}")
+    typer.echo(f"UTK 输入代理: {'在线' if headroom_health(settings, home=root) else '离线'}  :{settings.headroom_port}")
     typer.echo(f"档位: {settings.profile} / 回答精简 {settings.caveman}")
 
 

@@ -15,6 +15,7 @@ import time
 import httpx
 
 from .config import Settings, choose_port, default_home
+from .identity import home_instance_id
 from .codex_hook_trust import CODEX_SHELL_MATCHER, utk_hook_command
 from .integrations import CodexAdapter
 
@@ -222,7 +223,9 @@ def ensure_route(home):
                 proxy = client.get(f"http://{settings.host}:{port}/health").json()
                 broker = client.get(f"http://{settings.host}:{settings.dashboard_port}/api/v1/health")
                 expected = hashlib.sha256(SUBSCRIPTION_UPSTREAM.encode()).hexdigest()
-                if proxy.get("engine") == "utk-native" and proxy.get("route_id") == expected and broker.is_success:
+                if (proxy.get("engine") == "utk-native" and proxy.get("route_id") == expected
+                    and proxy.get("instance_id") == home_instance_id(home)
+                    and broker.is_success and broker.json().get("instance_id") == home_instance_id(home)):
                     return settings
             except (httpx.HTTPError, ValueError):
                 pass
