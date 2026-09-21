@@ -80,3 +80,15 @@
 提交 `c22bf65` 在 Mac arm64 隔离环境完成复验：`215 passed, 1 skipped, 2 warnings`。短输入恢复标识的 token 回归用例通过，能力状态保持 33/36，模型请求为 0。
 
 提交 `a647912` 在 Mac arm64 隔离环境完成复验：`216 passed, 1 skipped, 2 warnings`。Caveman 冻结语料与 180 次发布级请求预算计算通过，实际模型请求为 0，`response.paired_quality` 继续保持待验证。
+
+## 三层全量能力清单复验
+
+- 被测提交：`df5e3857310f228ead793297c21e837a98209c24`
+- 传递方式：本地 `git bundle`，未推送远端。
+- 隔离目录：`/tmp/utk-full-parity-df5e385`
+- 隔离配置：`UTK_HOME=/tmp/utk-full-parity-df5e385-home`
+- Mac arm64 全量离线测试：`221 passed, 1 skipped, 2 warnings`。
+- 清单生成器重复运行后 `git diff --exit-code` 通过，生成结果幂等。
+- `utk capabilities --no-json` 显示完整三层核心分母 256：Headroom 24、RTK 211、Caveman 21，生态排除 6 项。
+- RTK 固定上游逐项对标保持 `0/211`；55 项契约映射未被误计为对标通过。
+- 本轮实际模型调用为 0，未修改日常 Codex/Hermes 配置，未安装或启用 LaunchAgent。
