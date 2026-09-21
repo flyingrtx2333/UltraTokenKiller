@@ -5,7 +5,7 @@ from ultratokenkiller.recovery import RecoveryVault
 def test_repeated_pipe_table_is_compressed_and_recoverable():
     text = "opaque record | preserve=all | code=73\n" * 4
     assert classify(text) == "table"
-    vault = RecoveryVault()
+    vault = RecoveryVault(handle_factory=lambda: "stable-table-handle")
     result = compress_content(text, session="table", vault=vault)
     assert result.content.count("opaque record") == 1
     assert "3 repeated table rows omitted" in result.content
