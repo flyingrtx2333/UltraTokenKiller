@@ -1,6 +1,8 @@
 import sys
+import subprocess
 
 from ultratokenkiller.processes import execute, execute_channels
+from ultratokenkiller.runtime import _git_add_summary
 from ultratokenkiller.tool_filters import command_filter, compress_tool
 
 
@@ -47,6 +49,16 @@ def test_channel_memory_overflow_streams_each_channel_without_loss():
     assert fallback == "memory_limit_passthrough"
     assert b"".join(stdout_parts) == b"o" * 2000
     assert b"".join(stderr_parts) == b"e" * 2000
+
+
+def test_git_add_summary_reads_staged_state_without_repeating_add(tmp_path):
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True)
+    source = tmp_path / "guard.txt"
+    source.write_text("do not remove\n", encoding="utf-8")
+    subprocess.run(["git", "-C", str(tmp_path), "add", "guard.txt"], check=True)
+    summary = _git_add_summary(["git", "-C", str(tmp_path), "add", "guard.txt"])
+    assert summary.startswith(b"ok 1 file changed")
+    assert b"1 insertion(+)" in summary
 
 
 def test_machine_flags_and_unknown_formats_passthrough():

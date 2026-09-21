@@ -32,7 +32,7 @@
 
 固定上游的原始结果与环境指纹见 [upstream-rtk-reference-20260920.json](evidence/upstream-rtk-reference-20260920.json)，逐样例比较见 [upstream-rtk-comparison-20260920.json](evidence/upstream-rtk-comparison-20260920.json)。两份文件使用锁定 tokenizer 的离线估算，不是提供商账单 usage。
 
-这 44 个样例只是 RTK 命令族对标的阶段证据。Git 已覆盖十二个子命令的部分形态；`commit`、`pull`、`checkout`、`push`、`fetch`、`branch`、`stash`、`worktree` 已增加成功和失败捕获输出，但仍缺未知格式与其他平台固定二进制证据。`add` 需要在一次真实暂存操作后读取 staged stat，尚未纳入相同输出对照。它们不能代表已完成现有 211 个发现项，也不能证明 GitHub CLI、其他测试框架、云基础设施工具或平台取消语义已经完成固定上游对标。
+这 44 个样例只是 RTK 命令族对标的阶段证据。Git 已覆盖十二个子命令的部分形态；`commit`、`pull`、`checkout`、`push`、`fetch`、`branch`、`stash`、`worktree` 已增加成功和失败捕获输出，但仍缺未知格式与其他平台固定二进制证据。`add` 的一次执行加只读 staged stat 已在 UTK 离线测试通过，尚未纳入固定上游执行级对照。它们不能代表已完成现有 211 个发现项，也不能证明 GitHub CLI、其他测试框架、云基础设施工具或平台取消语义已经完成固定上游对标。
 
 复现命令：
 

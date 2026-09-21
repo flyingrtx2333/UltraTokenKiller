@@ -21,7 +21,7 @@
 | `git stash show` | 38.9% | 38.9% | 100.0% | 通过 |
 | `git worktree list` | 6.1% | 6.1% | 100.0% | 通过 |
 
-`status`、`log`、`diff`、`show` 当前只有 Windows 固定上游成功形态；`commit`、`pull`、`checkout`、`push`、`fetch`、`branch`、`stash`、`worktree` 已增加成功与失败捕获输出，失败内容中的路径和阻断原因均保留。所有项目仍缺未知格式及 macOS/Linux 固定二进制变体，因此不会提升为完整上游对标通过。`add` 仍缺一次执行后 staged stat 的对照执行器。
+`status`、`log`、`diff`、`show` 当前只有 Windows 固定上游成功形态；`commit`、`pull`、`checkout`、`push`、`fetch`、`branch`、`stash`、`worktree` 已增加成功与失败捕获输出，失败内容中的路径和阻断原因均保留。所有项目仍缺未知格式及 macOS/Linux 固定二进制变体，因此不会提升为完整上游对标通过。`add` 已在一次成功执行后使用只读 `git diff --cached --stat --shortstat` 生成暂存统计，不会重复执行写操作；固定上游执行级对照仍待补充。
 
 `utk exec` 现使用总内存上限约束的双通道捕获器，stdout 与 stderr 分开保存、压缩并写回原通道。容量超限时两个通道一起切换为流式透传，避免只压缩 stdout 而漏掉 Git `push`、`fetch`、`worktree` 的 stderr 输出。该能力已有通道、退出码、二进制与容量回退测试；真实客户端采用证据仍需后续重新绑定。
 

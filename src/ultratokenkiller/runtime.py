@@ -18,6 +18,37 @@ from .identity import ensure_session_token, home_instance_id
 from .store import Store
 
 
+def _git_add_summary(command: list[str]) -> bytes:
+    """Read staged shortstat after one successful git add; never repeats the write."""
+    if not command:
+        return b""
+    args = list(command[1:])
+    global_args: list[str] = []
+    while args:
+        if args[0] == "--no-pager":
+            global_args.append(args.pop(0))
+        elif args[0] == "-C" and len(args) >= 2:
+            global_args.extend(args[:2])
+            del args[:2]
+        else:
+            break
+    if not args or args[0] != "add":
+        return b""
+    try:
+        probe = subprocess.run(
+            [command[0], *global_args, "diff", "--cached", "--stat", "--shortstat"],
+            capture_output=True,
+            check=False,
+            timeout=10,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return b""
+    if probe.returncode or probe.stderr:
+        return b""
+    summary = probe.stdout.splitlines()[-1].strip() if probe.stdout.strip() else b""
+    return b"ok " + summary + b"\n" if summary else b""
+
+
 def health(url: str, timeout: float = 1.0) -> bool:
     try:
         return httpx.get(url, timeout=timeout).is_success
@@ -203,6 +234,11 @@ def run_command(command: list[str], store: Store) -> int:
         write_stdout=_write_stdout,
         write_stderr=_write_stderr,
     )
+    if code == 0 and kind == "git-add" and raw_stdout == b"" and raw_stderr == b"":
+        summary = _git_add_summary(command)
+        if summary:
+            raw_stdout = summary
+            metadata["post_execution_probe"] = "git-diff-cached-shortstat"
     recovery_ids = {}
     optimized_channels = []
     channel_fallbacks = []
