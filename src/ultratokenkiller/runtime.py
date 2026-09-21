@@ -144,7 +144,7 @@ def run_command(command: list[str], store: Store) -> int:
     import hashlib
     import uuid
     from .broker import BrokerClient
-    from .processes import execute
+    from .processes import execute_channels
     from .tool_filters import command_filter
     if not command:
         raise ValueError("A command is required after --")
@@ -197,31 +197,60 @@ def run_command(command: list[str], store: Store) -> int:
             metadata=metadata,
         )
         return code
-    code, raw, fallback = execute(command, capture=bool(kind), write=_write_stdout)
-    if raw is not None:
+    code, raw_stdout, raw_stderr, fallback = execute_channels(
+        command,
+        capture=bool(kind),
+        write_stdout=_write_stdout,
+        write_stderr=_write_stderr,
+    )
+    recovery_ids = {}
+    optimized_channels = []
+    channel_fallbacks = []
+
+    def render_channel(raw: bytes | None, channel: str) -> bytes | None:
+        nonlocal saved
+        if raw is None or not raw:
+            return raw
         rendered = raw
         try:
             original = raw.decode("utf-8")
             session = os.environ.get("UTK_SESSION_ID", "")
             if session:
-                hint = kind if kind in {"diff", "search", "log"} else "tool:"+kind
+                hint = kind if kind in {"diff", "search", "log"} else "tool:" + kind
                 result = BrokerClient().compress(original, session, hint=hint)
                 rendered = result["content"].encode("utf-8")
-                saved = result.get("saved_tokens", 0)
-                metadata["optimized"] = rendered != raw
-                metadata["recovery_id"] = result.get("recovery_id")
-                fallback = result.get("fallback")
-            elif kind == "git-status":
+                saved += result.get("saved_tokens", 0)
+                if result.get("recovery_id"):
+                    recovery_ids[channel] = result["recovery_id"]
+                if result.get("fallback"):
+                    channel_fallbacks.append(f"{channel}:{result['fallback']}")
+            elif kind == "git-status" and channel == "stdout":
                 # Removing Git's fixed instructional boilerplate remains available without recovery.
                 rendered = compress_tool_output(command, original).encode("utf-8")
-                saved = max(0, estimate_tokens(original)-estimate_tokens(rendered.decode("utf-8")))
-                metadata["optimized"] = rendered != raw
+                saved += max(0, estimate_tokens(original) - estimate_tokens(rendered.decode("utf-8")))
             else:
-                fallback = "missing_session"
+                channel_fallbacks.append(f"{channel}:missing_session")
         except (UnicodeDecodeError, ValueError, OSError):
             rendered = raw
-            fallback = "encoding_or_compression_error"
-        _write_stdout(rendered)
+            channel_fallbacks.append(f"{channel}:encoding_or_compression_error")
+        if rendered != raw:
+            optimized_channels.append(channel)
+        return rendered
+
+    rendered_stdout = render_channel(raw_stdout, "stdout")
+    rendered_stderr = render_channel(raw_stderr, "stderr")
+    if rendered_stdout:
+        _write_stdout(rendered_stdout)
+    if rendered_stderr:
+        _write_stderr(rendered_stderr)
+    metadata["optimized"] = bool(optimized_channels)
+    if optimized_channels:
+        metadata["optimized_channels"] = optimized_channels
+    if recovery_ids:
+        metadata["recovery_ids"] = recovery_ids
+        metadata["recovery_id"] = recovery_ids.get("stdout") or recovery_ids.get("stderr")
+    if channel_fallbacks:
+        fallback = ";".join(channel_fallbacks)
     metadata["fallback"] = fallback
     client_name = os.environ.get("UTK_CLIENT", "cli")
     if client_name not in {"codex", "hermes", "cli"}:

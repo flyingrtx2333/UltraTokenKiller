@@ -183,3 +183,119 @@ def execute(command, *, capture: bool, write, memory_limit=8*1024*1024):
             process.stdout.close()
         if job:
             job.close()
+
+
+def execute_channels(
+    command,
+    *,
+    capture: bool,
+    write_stdout,
+    write_stderr,
+    memory_limit=8 * 1024 * 1024,
+):
+    """Capture stdout/stderr independently while preserving exit and cancellation semantics.
+
+    The memory limit applies to both channels together.  Once exceeded, buffered bytes are
+    written back to their original channels and the remainder streams without compression.
+    """
+    if not capture:
+        return subprocess.call(command), None, None, "passthrough"
+    job = WindowsJob() if sys.platform == "win32" else None
+    process = None
+    readers = []
+    stop = threading.Event()
+    try:
+        process = subprocess.Popen(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            creationflags=0x00000004 if job else 0,
+            start_new_session=job is None,
+        )
+        if job:
+            job.attach_and_resume(process)
+        messages = queue.Queue(maxsize=8)
+
+        def enqueue(item):
+            while not stop.is_set():
+                try:
+                    messages.put(item, timeout=0.1)
+                    return
+                except queue.Full:
+                    continue
+
+        def read(channel, stream):
+            try:
+                while chunk := stream.read1(65536):
+                    enqueue((channel, chunk))
+            finally:
+                enqueue((channel, None))
+
+        for channel, stream in (("stdout", process.stdout), ("stderr", process.stderr)):
+            reader = threading.Thread(target=read, args=(channel, stream), daemon=True)
+            readers.append(reader)
+            reader.start()
+
+        content = {"stdout": bytearray(), "stderr": bytearray()}
+        writers = {"stdout": write_stdout, "stderr": write_stderr}
+        finished = set()
+        streamed = False
+        while len(finished) < 2:
+            try:
+                channel, part = messages.get(timeout=0.1)
+            except queue.Empty:
+                continue
+            if part is None:
+                finished.add(channel)
+                continue
+            if streamed:
+                writers[channel](part)
+                continue
+            total = len(content["stdout"]) + len(content["stderr"]) + len(part)
+            if total > memory_limit:
+                if content["stdout"]:
+                    write_stdout(bytes(content["stdout"]))
+                if content["stderr"]:
+                    write_stderr(bytes(content["stderr"]))
+                content["stdout"].clear()
+                content["stderr"].clear()
+                writers[channel](part)
+                streamed = True
+            else:
+                content[channel].extend(part)
+        code = process.wait()
+        if streamed:
+            return code, None, None, "memory_limit_passthrough"
+        return code, bytes(content["stdout"]), bytes(content["stderr"]), None
+    except BaseException:
+        if process is not None:
+            if job:
+                job.terminate()
+                if process.poll() is None:
+                    process.kill()
+            else:
+                try:
+                    os.killpg(process.pid, signal.SIGTERM)
+                except ProcessLookupError:
+                    pass
+            try:
+                process.wait(timeout=3)
+            except subprocess.TimeoutExpired:
+                if not job:
+                    try:
+                        os.killpg(process.pid, signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
+                process.wait()
+        raise
+    finally:
+        stop.set()
+        for reader in readers:
+            reader.join(timeout=1)
+        if process:
+            if process.stdout:
+                process.stdout.close()
+            if process.stderr:
+                process.stderr.close()
+        if job:
+            job.close()

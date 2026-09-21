@@ -1,6 +1,6 @@
 import sys
 
-from ultratokenkiller.processes import execute
+from ultratokenkiller.processes import execute, execute_channels
 from ultratokenkiller.tool_filters import command_filter, compress_tool
 
 
@@ -17,6 +17,36 @@ def test_binary_and_exit_code_preserved():
     code, captured, fallback = execute([sys.executable, "-c", "import sys; sys.stdout.buffer.write(b'\\xff\\x00'); sys.exit(17)"], capture=True, write=lambda _: None)
     assert code == 17
     assert captured == b"\xff\x00"
+
+
+def test_channel_capture_preserves_stdout_stderr_and_exit_code():
+    code, stdout, stderr, fallback = execute_channels(
+        [sys.executable, "-c", "import sys; print('result'); print('diagnostic', file=sys.stderr); sys.exit(9)"],
+        capture=True,
+        write_stdout=lambda _: None,
+        write_stderr=lambda _: None,
+    )
+    assert code == 9
+    assert stdout.strip() == b"result"
+    assert stderr.strip() == b"diagnostic"
+    assert fallback is None
+
+
+def test_channel_memory_overflow_streams_each_channel_without_loss():
+    stdout_parts = []
+    stderr_parts = []
+    code, stdout, stderr, fallback = execute_channels(
+        [sys.executable, "-c", "import sys; sys.stdout.write('o'*2000); sys.stdout.flush(); sys.stderr.write('e'*2000)"],
+        capture=True,
+        write_stdout=stdout_parts.append,
+        write_stderr=stderr_parts.append,
+        memory_limit=1000,
+    )
+    assert code == 0
+    assert stdout is None and stderr is None
+    assert fallback == "memory_limit_passthrough"
+    assert b"".join(stdout_parts) == b"o" * 2000
+    assert b"".join(stderr_parts) == b"e" * 2000
 
 
 def test_machine_flags_and_unknown_formats_passthrough():

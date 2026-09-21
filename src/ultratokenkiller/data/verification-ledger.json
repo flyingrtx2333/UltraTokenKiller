@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-21T03:06:22.820592+00:00",
+  "generated_at": "2026-09-21T03:10:31.302709+00:00",
   "suite_passed": true,
   "test_command": [
     "C:\\Users\\17489\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
@@ -138,7 +138,7 @@
       "upstream_source_fingerprint": null
     },
     "tools.test_runners": {
-      "source_fingerprint": "9e36f9cfe1e85abeec3ad8a409ed4830924d82b53ec234e3b8d4c91a368ab0ce",
+      "source_fingerprint": "0ffd38d10152727234a4b6ac4a08040c292544a964cb941e1e1e09eb84b6b1f3",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
@@ -162,7 +162,7 @@
       "upstream_source_fingerprint": null
     },
     "tools.execution_semantics": {
-      "source_fingerprint": "22e526bfa28bee0bd49b5663a06f188822147c7ef0c47072019e5e905cb826a0",
+      "source_fingerprint": "b4279935287c797818c267fc8704ba9f21290a02272f56f5dfead1d334bf34dd",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
@@ -212,103 +212,103 @@
   },
   "command_contracts": {
     "git.status.human": {
-      "source_fingerprint": "74c1d2e7c912e22243e58f9eeaba81f81eae568fb78172f0fa9b7facd52b403c",
+      "source_fingerprint": "049be88f0cc3936590575da62244388b38ef563e3110b628282aaef253b26cf2",
       "offline_passed": true
     },
     "git.log.default": {
-      "source_fingerprint": "89090c95b46a8ad533c47a7c02dd2e82f9b26d3d081944fe4159f454c77fbb5f",
+      "source_fingerprint": "9eba6b82e45fd6123566bf8294d7fc37ddad6ef42549de5ba60dc0280fa2a1cb",
       "offline_passed": true
     },
     "git.diff.unified": {
-      "source_fingerprint": "a2b15ad9e355dc7e5cb1ff60b8bcbb035321a8e26817c918b20ba95035dac668",
+      "source_fingerprint": "57fccef19e89d3ced24f7a559d9062e7dd79033f9b7093c2525858a0436bee5d",
       "offline_passed": true
     },
     "git.actions": {
-      "source_fingerprint": "4db52b492c372b3f90466e249bb03e1e95236cbee35d09f6488cf33e329af502",
+      "source_fingerprint": "6e77f730b3fd2db954f4ba4e1c6ba88f1f455aa84fd516e3cc8e20134f6f8ecf",
       "offline_passed": true
     },
     "search.human": {
-      "source_fingerprint": "59e2cb9dedce1ff7a8ed44dc6329a9da8c006d6dd19dd4d27b1227883605950b",
+      "source_fingerprint": "3849a72217e7a1041d992e4b2332b055f01fb0f651b71f92848dee100994f0f0",
       "offline_passed": true
     },
     "files.read": {
-      "source_fingerprint": "2d0b20d5893ea7867e1b2e8acc3eacb26e72491fc5948f5ca9d7522fd6fed755",
+      "source_fingerprint": "1cffa9a9d5b69c719fc23398b124b1909c1bbd832cda5aec4aaf37fe133525ca",
       "offline_passed": true
     },
     "files.json": {
-      "source_fingerprint": "d9c02266d7da0d4cde3c3d5857a1ffd680be7f339f8b9be8754e065a7b5c25a5",
+      "source_fingerprint": "329ce5e0cda25b81861a833c7829b932811a1892eb1cc98e8039bda57d374950",
       "offline_passed": true
     },
     "files.smart": {
-      "source_fingerprint": "a67d4672821f3e672288f68c76f9609608cb7bf2a944625d276c9e32362ffd79",
+      "source_fingerprint": "3effb3fc17bac686f5cf29df8ea0ea24d6756b4ddf3cc3b89fa034a8e728ed3b",
       "offline_passed": true
     },
     "test.pytest": {
-      "source_fingerprint": "ca2cb69c150b1148476feebdb39561c65d2ee360d29e7deeda1c5882cc3fa97d",
+      "source_fingerprint": "d6fe60aa14513cf2954690172986de0ae13e4d669ee13606f3b93ab698150288",
       "offline_passed": true
     },
     "test.cargo": {
-      "source_fingerprint": "624b13e8dd42c8dfa494c456827414337456d442742c3c4e1cf8d1b55bfaa0d9",
+      "source_fingerprint": "687405aab90ed79abc7940cd1c16543eb626f930e301ac2ed43b3a798770d89e",
       "offline_passed": true
     },
     "test.go": {
-      "source_fingerprint": "d487934913479c8b1370f36ba862a5ad45cae852131db33054d58999e4c5b365",
+      "source_fingerprint": "b5a49c683a9b8f68705ba7a010ec116fc71cdad057a6779ca01694c6cf4979dc",
       "offline_passed": true
     },
     "test.javascript": {
-      "source_fingerprint": "e8d997699d6f1435257c4e9cea38092728d7238a6483d61df2545084075b61f7",
+      "source_fingerprint": "d767d8f36336056e5c81ebf39a40295fc76a08c794762535be591a075b8e038d",
       "offline_passed": true
     },
     "diagnostics.compilers": {
-      "source_fingerprint": "86f28de251058717bdfe31a09b11881f5c6216706e3d0d48492c1a5e062b0c14",
+      "source_fingerprint": "3c954f1f56a9fd7c441a6cdd13257770028be1a626fe368fba6ab686b3d3fb78",
       "offline_passed": true
     },
     "infra.tables": {
-      "source_fingerprint": "ff7bc951f3384c59d07f2339f67e2f6dd8a9a64b300a54453c5a54144b9b5296",
+      "source_fingerprint": "55b9c9d8b156a6b19dc9f1b270d123468181d26f3ed8cd9773b7927824ebb21d",
       "offline_passed": true
     },
     "files.list": {
-      "source_fingerprint": "903412b0f24ef2f8310f43cf9ac39f612a617cb757f6674610cfa7f98b228d86",
+      "source_fingerprint": "0156f1616d4ba5fecd8b53f9c006f341017931c44e880d701c418038500d9c76",
       "offline_passed": true
     },
     "github.human": {
-      "source_fingerprint": "e4b1dd9639eb35e8daacc8868ad00b48f3ff2b7a87a35bd50010174f64de1496",
+      "source_fingerprint": "78551f858b880c76c1ce3a9199d7b3523f72e1245237dc3744c21c07db76abf6",
       "offline_passed": true
     },
     "test.ruby_php": {
-      "source_fingerprint": "2faae696da81928c10d7b8825f98a324018fff4329d688ee8e94c08548d64720",
+      "source_fingerprint": "c9b2bbe4faf453e1ca803bf115796bdee9d78e7eb532431055c9f7751ad5a9e4",
       "offline_passed": true
     },
     "test.build_systems": {
-      "source_fingerprint": "c9949258f78674774460deb3b79401c00502c343fb6637b19b09c817467d0fdd",
+      "source_fingerprint": "f5b1d4d8a709a95f7f8f1e4e093b262a918cd2abd57afccdf8acc3dd5e7fbbe5",
       "offline_passed": true
     },
     "test.bun": {
-      "source_fingerprint": "c3f8a1be9aae44575fc705095f9c149aadf40576e78abad2529028c230b2f783",
+      "source_fingerprint": "7399b09e6f986013532d0faa61b45399f3a3a7b080b65177ce63a8cba51ae495",
       "offline_passed": true
     },
     "test.deno": {
-      "source_fingerprint": "bf559b9aa6fd753affa31d1c42cabc36b9492d7154f6f6209a699cb94f58059d",
+      "source_fingerprint": "6250919af4cb5b715d98b939094337791ace865a8140e3933c55af7c00d67647",
       "offline_passed": true
     },
     "test.gradle": {
-      "source_fingerprint": "2f6044972ca5702fe8e77f0af44f36f4fae97165648f3177f7541998399af8ae",
+      "source_fingerprint": "ed5e2e00c229afe8e0279dcb09b26f6d78c6c7a9817116a9915633dc867a8d3a",
       "offline_passed": true
     },
     "diagnostics.golangci_v2": {
-      "source_fingerprint": "14183636930d5344cccf48bee5a5fa2f6cad93816b611eb0858bfe9adfd7dc2b",
+      "source_fingerprint": "ee4bc50f9fe5be3e4c0314caec69fa80c4441b50360b73907b4b2b4c24a9a272",
       "offline_passed": true
     },
     "diagnostics.extended": {
-      "source_fingerprint": "7c7245a7dbc389ce7a66cd85d2c995f22a0669580e254d949d507d9a3ef4fbeb",
+      "source_fingerprint": "60536e78a90a84982c17a7382505594edee3c1708f6b462472285b62f85f4b8d",
       "offline_passed": true
     },
     "packages.human": {
-      "source_fingerprint": "50078462d8654c10a0d542d258ec64681c5c3fa72f72333b5d08b299ca7d6702",
+      "source_fingerprint": "97efbd37055d6ba7e6442050a53d74a410bf3406cfe73b9167d8b8c393e1a74c",
       "offline_passed": true
     },
     "cloud.aws_human": {
-      "source_fingerprint": "62778848d3d529821df2ecd0df30e79c913151f3546fb24d6dc5a9eee450214d",
+      "source_fingerprint": "de53150dbd99b6bda8a470607bd82d3fee01b643dfe5777e9b68651250de2b15",
       "offline_passed": true
     }
   },
