@@ -111,6 +111,208 @@ def _compress_find(text: str) -> str:
     return rendered if len(rendered) < len(text) else text
 
 
+_HOST_OUTPUT_FLAGS = {
+    "--json", "--jq", "--template", "--web", "--output", "-F", "--paginate",
+}
+
+
+def _host_output_requested(args: list[str]) -> bool:
+    return any(
+        value in _HOST_OUTPUT_FLAGS
+        or value.startswith(("--json=", "--jq=", "--template=", "--output="))
+        for value in args
+    )
+
+
+def _hosting_kind(name: str, args: list[str]) -> str | None:
+    if _host_output_requested(args):
+        return None
+    routed_args = list(args)
+    if name == "glab":
+        while len(routed_args) >= 2 and routed_args[0] in {"-R", "--repo", "-g", "--group"}:
+            routed_args = routed_args[2:]
+    if len(routed_args) < 2:
+        return None
+    route = tuple(routed_args[:2])
+    if name == "gh":
+        return {
+            ("pr", "list"): "hosting-list",
+            ("pr", "view"): "hosting-view",
+            ("pr", "checks"): "hosting-checks",
+            ("pr", "status"): "hosting-checks",
+            ("issue", "list"): "hosting-list",
+            ("issue", "view"): "hosting-view",
+            ("run", "list"): "hosting-list",
+            ("run", "view"): "hosting-view",
+            ("repo", "view"): "hosting-view",
+        }.get(route)
+    if name == "glab":
+        return {
+            ("mr", "list"): "hosting-list",
+            ("mr", "view"): "hosting-view",
+            ("issue", "list"): "hosting-list",
+            ("issue", "view"): "hosting-view",
+            ("ci", "list"): "hosting-list",
+            ("ci", "status"): "hosting-checks",
+            ("pipeline", "list"): "hosting-list",
+            ("pipeline", "status"): "hosting-checks",
+            ("release", "list"): "hosting-list",
+            ("release", "view"): "hosting-view",
+        }.get(route)
+    return None
+
+
+def _compact_host_list(text: str) -> str:
+    try:
+        payload = json.loads(text)
+    except (json.JSONDecodeError, TypeError):
+        payload = None
+    if isinstance(payload, list):
+        rows = []
+        for item in payload:
+            if not isinstance(item, dict):
+                return text
+            if item.get("number") is not None:
+                identifier = f"#{item['number']}"
+            elif item.get("iid") is not None:
+                identifier = f"!{item['iid']}"
+            else:
+                identifier = item.get("id")
+            title = item.get("title", item.get("name", item.get("displayTitle")))
+            state = item.get("state", item.get("status", item.get("conclusion")))
+            author = item.get("author", item.get("user"))
+            if isinstance(author, dict):
+                author = author.get("login", author.get("username", author.get("name")))
+            if identifier is None and title is None:
+                return text
+            if state not in (None, ""):
+                normalized_state = str(state).lower()
+                normalized_state = "open" if normalized_state == "opened" else normalized_state
+                state = f"[{normalized_state}]"
+            fields = [str(value) for value in (state, identifier, title, f"({author})" if author else None) if value not in (None, "")]
+            rows.append(" | ".join(fields))
+        rendered = "\n".join(rows) + ("\n" if text.endswith("\n") else "")
+        return rendered if len(rendered) < len(text) else text
+
+    lines = text.splitlines()
+    known_header = bool(lines) and re.search(r"\b(?:STATE|STATUS|TITLE|NAME|ID|NUMBER|BRANCH)\b", lines[0], re.I)
+    tabular_rows = len(lines) >= 2 and all("\t" in line for line in lines)
+    if not known_header and not tabular_rows:
+        return text
+    rendered = "\n".join(re.sub(r"(?:\t+| {2,})", " | ", line.rstrip()) for line in lines)
+    rendered += "\n" if text.endswith("\n") else ""
+    return rendered if len(rendered) < len(text) else text
+
+
+def _compact_host_view(text: str) -> str:
+    try:
+        item = json.loads(text)
+    except (json.JSONDecodeError, TypeError):
+        item = None
+    if not isinstance(item, dict):
+        return text
+    identifier = item.get("number", item.get("iid", item.get("id")))
+    title = item.get("title", item.get("name", item.get("displayTitle")))
+    if identifier is None and title is None:
+        return text
+    author = item.get("author", item.get("user"))
+    if isinstance(author, dict):
+        author = author.get("login", author.get("username", author.get("name")))
+    lines = []
+    for value in (
+        identifier,
+        title,
+        item.get("state", item.get("status")),
+        author,
+        item.get("mergeable", item.get("merge_status")),
+        item.get("source_branch", item.get("headRefName")),
+        item.get("target_branch", item.get("baseRefName")),
+        item.get("url", item.get("web_url")),
+    ):
+        if value not in (None, ""):
+            lines.append(str(value))
+    labels = item.get("labels")
+    if isinstance(labels, list):
+        label_names = [value.get("name") if isinstance(value, dict) else value for value in labels]
+        label_names = [str(value) for value in label_names if value]
+        if label_names:
+            lines.append("labels: " + ", ".join(label_names))
+    body = item.get("body", item.get("description"))
+    if isinstance(body, str) and body.strip():
+        lines.extend(("", body.strip()))
+    rendered = "\n".join(lines) + ("\n" if text.endswith("\n") else "")
+    return rendered if len(rendered) < len(text) else text
+
+
+def _compact_host_checks(text: str) -> str:
+    lines = [line.rstrip() for line in text.splitlines() if line.strip()]
+    if not lines or not any(re.search(r"\b(?:pass|fail|pending|success|queued|running|cancel)\w*\b", line, re.I) for line in lines):
+        return text
+    rendered = "\n".join(re.sub(r"(?:\t+| {2,})", " | ", line) for line in lines)
+    rendered += "\n" if text.endswith("\n") else ""
+    return rendered if len(rendered) < len(text) else text
+
+
+def _compact_gt_log(text: str) -> str:
+    def is_node(line: str) -> bool:
+        stripped = line.lstrip("│| ")
+        return bool(stripped) and stripped[0] in "◉○◯◆●@*"
+
+    if not any(is_node(line) for line in text.splitlines()):
+        return text
+    rendered = []
+    entries = 0
+    for line in text.strip().splitlines():
+        if is_node(line):
+            entries += 1
+        if entries > 5:
+            break
+        line = re.sub(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b", "", line)
+        rendered.append(line.rstrip()[:120])
+    if entries > 5:
+        rendered.append("... more entries")
+    result = "\n".join(rendered)
+    return result if len(result) < len(text) else text
+
+
+def _compact_gt_action(text: str, kind: str) -> str:
+    stripped = text.strip()
+    if not stripped:
+        return text
+    if kind == "gt-submit":
+        facts = [line.strip() for line in stripped.splitlines() if re.search(r"\b(?:Pushed branch|pull request #\d+)\b", line, re.I)]
+        if not facts:
+            return text
+        result = "\n".join(facts)
+    elif kind == "gt-sync":
+        synced = [line for line in stripped.splitlines() if re.search(r"\bSynced(?: branch| with remote)\b", line, re.I)]
+        deleted = []
+        for line in stripped.splitlines():
+            match = re.search(r"\bDeleted branch [`\"']?([A-Za-z0-9/_.+@-]+)", line, re.I)
+            if match:
+                deleted.append(match.group(1))
+        if not synced and not deleted:
+            return text
+        parts = []
+        if synced:
+            parts.append(f"{len(synced)} synced")
+        if deleted:
+            parts.append(f"{len(deleted)} deleted ({', '.join(deleted)})")
+        result = "ok sync: " + ", ".join(parts)
+    elif kind == "gt-restack":
+        branches = [line for line in stripped.splitlines() if re.search(r"\b(?:Restacked|Rebased) branch\b", line, re.I)]
+        if not branches:
+            return text
+        result = f"ok restacked {len(branches)} branches"
+    else:
+        created = next((re.search(r"\bCreated branch [`\"']?([A-Za-z0-9/_.+@-]+)", line, re.I) for line in stripped.splitlines() if re.search(r"\bCreated branch\b", line, re.I)), None)
+        if created is None:
+            return text
+        result = f"ok created {created.group(1)}"
+    result += "\n" if text.endswith("\n") else ""
+    return result if len(result) < len(text) else text
+
+
 def command_filter(argv: list[str]) -> str | None:
     if not argv or any(x in {"|", "||", "&&", ";", ">", ">>", "<"} for x in argv):
         return None
@@ -214,10 +416,16 @@ def command_filter(argv: list[str]) -> str | None:
         if any(x in unsafe_actions for x in args):
             return None
         return "file-list-find"
-    if name == "gh" and args and args[0] in {"pr", "issue", "run", "repo"}:
-        if any(x in {"--json", "--jq", "--template", "--web"} for x in args):
-            return None
-        return "gh-human"
+    if name in {"gh", "glab"}:
+        return _hosting_kind(name, args)
+    if name == "gt" and args:
+        if args[0] in {"status", "diff", "show", "add", "commit", "push", "pull", "fetch", "checkout", "switch", "stash", "worktree"}:
+            return command_filter(["git", *args])
+        if args[0] == "log" and args[1:2] != ["short"]:
+            return "gt-log"
+        if args[0] in {"submit", "sync", "restack", "create"}:
+            return "gt-" + args[0]
+        return None
     if name == "pytest" and not any(x.startswith("--junit") for x in args):
         return "pytest"
     if name == "cargo" and args and args[0] == "test":
@@ -718,11 +926,16 @@ def compress_tool(text: str, kind: str) -> str:
         return _compress_tree(text)
     if kind == "file-list-find":
         return _compress_find(text)
-    if kind == "gh-human":
-        if not lines or any(line.lstrip().startswith(("{", "[")) for line in lines):
-            return text
-        rendered = "\n".join(re.sub(r"[ \t]{2,}", " | ", line.rstrip()) for line in lines)
-        return rendered + ("\n" if text.endswith("\n") else "")
+    if kind == "hosting-list":
+        return _compact_host_list(text)
+    if kind == "hosting-view":
+        return _compact_host_view(text)
+    if kind == "hosting-checks":
+        return _compact_host_checks(text)
+    if kind == "gt-log":
+        return _compact_gt_log(text)
+    if kind in {"gt-submit", "gt-sync", "gt-restack", "gt-create"}:
+        return _compact_gt_action(text, kind)
     if kind == "package":
         from .compression import CRITICAL
         if CRITICAL.search(re.sub(r"\b0 (?:errors?|warnings?|vulnerabilities)\b", "", text)):

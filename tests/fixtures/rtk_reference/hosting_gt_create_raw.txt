@@ -1,0 +1,3 @@
+Creating new branch...
+Created branch feat/new-feature from feat/auth
+Branch feat/new-feature is ready for development

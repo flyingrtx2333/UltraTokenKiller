@@ -1,0 +1,16 @@
+[
+  {
+    "iid": 7,
+    "title": "Keep tenant check",
+    "state": "opened",
+    "author": {"username": "reviewer"},
+    "updated_at": "2026-09-21T04:00:00Z"
+  },
+  {
+    "iid": 6,
+    "title": "Do not bypass authorization",
+    "state": "merged",
+    "author": {"username": "maintainer"},
+    "updated_at": "2026-09-20T04:00:00Z"
+  }
+]

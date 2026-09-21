@@ -1957,9 +1957,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "github.human"
+    ],
     "scope": "coverage_denominator"
   },
   {
@@ -2103,9 +2105,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "gitlab.human"
+    ],
     "scope": "coverage_denominator"
   },
   {
@@ -2323,9 +2327,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "graphite.human"
+    ],
     "scope": "coverage_denominator"
   },
   {
@@ -7086,9 +7092,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "graphite.human"
+    ],
     "scope": "coverage_denominator"
   },
   {
@@ -7127,9 +7135,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "graphite.human"
+    ],
     "scope": "coverage_denominator"
   },
   {
@@ -7168,9 +7178,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "graphite.human"
+    ],
     "scope": "coverage_denominator"
   },
   {
@@ -7202,9 +7214,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "graphite.human"
+    ],
     "scope": "coverage_denominator"
   },
   {
@@ -7243,9 +7257,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "graphite.human"
+    ],
     "scope": "coverage_denominator"
   },
   {
@@ -7284,9 +7300,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "graphite.human"
+    ],
     "scope": "coverage_denominator"
   },
   {
@@ -7325,9 +7343,11 @@
       "binary/machine output",
       "interactive execution"
     ],
-    "status": "unverified",
+    "status": "contract_mapped",
     "tests": [],
-    "contract_ids": [],
+    "contract_ids": [
+      "graphite.human"
+    ],
     "scope": "coverage_denominator"
   },
   {

@@ -266,7 +266,7 @@
     },
     "golangci-v2-issues": {
       "raw": "{\"Issues\":[{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":101,\"Line\":10,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":200,\"Line\":18,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":299,\"Line\":26,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":105,\"Line\":11,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":204,\"Line\":19,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":303,\"Line\":27,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"}],\"Report\":{\"Linters\":[{\"Name\":\"arangolint\"},{\"Name\":\"asasalint\"},{\"Name\":\"asciicheck\"},{\"Name\":\"bidichk\"},{\"Name\":\"bodyclose\"},{\"Name\":\"canonicalheader\"},{\"Name\":\"clickhouselint\"},{\"Name\":\"containedctx\"},{\"Name\":\"contextcheck\"},{\"Name\":\"copyloopvar\"},{\"Name\":\"cyclop\"},{\"Name\":\"decorder\"},{\"Name\":\"depguard\"},{\"Name\":\"dogsled\"},{\"Name\":\"dupl\"},{\"Name\":\"dupword\"},{\"Name\":\"durationcheck\"},{\"Name\":\"embeddedstructfieldcheck\"},{\"Name\":\"errcheck\",\"Enabled\":true},{\"Name\":\"errchkjson\"},{\"Name\":\"errname\"},{\"Name\":\"errorlint\"},{\"Name\":\"exhaustive\"},{\"Name\":\"exhaustruct\"},{\"Name\":\"exhaustruct_v5\"},{\"Name\":\"exptostd\"},{\"Name\":\"forbidigo\"},{\"Name\":\"forcetypeassert\"},{\"Name\":\"funcorder\"},{\"Name\":\"fatcontext\"},{\"Name\":\"funlen\"},{\"Name\":\"gci\"},{\"Name\":\"ginkgolinter\"},{\"Name\":\"gocheckcompilerdirectives\"},{\"Name\":\"gochecknoglobals\"},{\"Name\":\"gochecknoinits\"},{\"Name\":\"gochecksumtype\"},{\"Name\":\"gocognit\"},{\"Name\":\"goconst\"},{\"Name\":\"gocritic\"},{\"Name\":\"gocyclo\"},{\"Name\":\"godoclint\"},{\"Name\":\"godot\"},{\"Name\":\"godox\"},{\"Name\":\"err113\"},{\"Name\":\"gofmt\"},{\"Name\":\"gofumpt\"},{\"Name\":\"golines\"},{\"Name\":\"goheader\"},{\"Name\":\"goimports\"},{\"Name\":\"mnd\"},{\"Name\":\"modernize\"},{\"Name\":\"gomoddirectives\"},{\"Name\":\"gomodguard\"},{\"Name\":\"gomodguard_v2\"},{\"Name\":\"goprintffuncname\"},{\"Name\":\"gosec\"},{\"Name\":\"gosmopolitan\"},{\"Name\":\"govet\",\"Enabled\":true},{\"Name\":\"grouper\"},{\"Name\":\"iface\"},{\"Name\":\"importas\"},{\"Name\":\"inamedparam\"},{\"Name\":\"ineffassign\",\"Enabled\":true},{\"Name\":\"interfacebloat\"},{\"Name\":\"intrange\"},{\"Name\":\"iotamixing\"},{\"Name\":\"ireturn\"},{\"Name\":\"lll\"},{\"Name\":\"loggercheck\"},{\"Name\":\"maintidx\"},{\"Name\":\"makezero\"},{\"Name\":\"mirror\"},{\"Name\":\"misspell\"},{\"Name\":\"musttag\"},{\"Name\":\"nakedret\"},{\"Name\":\"nestif\"},{\"Name\":\"nilerr\"},{\"Name\":\"nilnesserr\"},{\"Name\":\"nilnil\"},{\"Name\":\"nlreturn\"},{\"Name\":\"noctx\"},{\"Name\":\"noinlineerr\"},{\"Name\":\"nonamedreturns\"},{\"Name\":\"nosprintfhostport\"},{\"Name\":\"paralleltest\"},{\"Name\":\"perfsprint\"},{\"Name\":\"prealloc\"},{\"Name\":\"predeclared\"},{\"Name\":\"promlinter\"},{\"Name\":\"protogetter\"},{\"Name\":\"reassign\"},{\"Name\":\"recvcheck\"},{\"Name\":\"revive\"},{\"Name\":\"rowserrcheck\"},{\"Name\":\"sloglint\"},{\"Name\":\"sqlclosecheck\"},{\"Name\":\"spancheck\"},{\"Name\":\"staticcheck\",\"Enabled\":true},{\"Name\":\"swaggo\"},{\"Name\":\"tagalign\"},{\"Name\":\"tagliatelle\"},{\"Name\":\"testableexamples\"},{\"Name\":\"testifylint\"},{\"Name\":\"testpackage\"},{\"Name\":\"thelper\"},{\"Name\":\"tparallel\"},{\"Name\":\"typecheck\",\"Enabled\":true},{\"Name\":\"unconvert\"},{\"Name\":\"unparam\"},{\"Name\":\"unqueryvet\"},{\"Name\":\"unused\",\"Enabled\":true},{\"Name\":\"usestdlibvars\"},{\"Name\":\"usetesting\"},{\"Name\":\"varnamelen\"},{\"Name\":\"wastedassign\"},{\"Name\":\"whitespace\"},{\"Name\":\"wrapcheck\"},{\"Name\":\"wsl\"},{\"Name\":\"wsl_v5\"},{\"Name\":\"zerologlint\"},{\"Name\":\"nolintlint\"}]}}\n",
-      "output": "golangci-lint: 6 issues in 1 files\nTop linters:\n  errcheck (3x)\n  ineffassign (3x)\n\nTop files:\n  main.go (6 issues)\n    errcheck (3)\n      → defer f.Close()\n    ineffassign (3)\n      → v := 1",
+      "output": "golangci-lint: 6 issues in 1 files\nTop linters:\n  ineffassign (3x)\n  errcheck (3x)\n\nTop files:\n  main.go (6 issues)\n    errcheck (3)\n      → defer f.Close()\n    ineffassign (3)\n      → v := 1",
       "exit_code": 0,
       "raw_sha256": "0d979b09897297a5c5fac3b29b41e11521010254cac5498d2c46f02c0f54756f"
     },
@@ -275,6 +275,132 @@
       "output": "Changes:\n\nmain.rs\n@@ -1,6 +1,7 @@\n fn main() {\n     println!(\"one\");\n-    println!(\"two\");\n+    println!(\"2\");\n     println!(\"three\");\n     println!(\"four\");\n+    println!(\"five\");\n }\n  +2 -1\n\nnotes.md\n@@ -3,3 +3,4 @@ Some intro text.\n ---\n A horizontal rule above.\n increment operator: x\n+++ can also start a line\n  +1 -0\n\nschema.sql\n@@ -1,7 +1,4 @@\n--- users table\n--- created 2024\n CREATE TABLE users (\n   id INTEGER PRIMARY KEY,\n-  -- legacy column\n   name TEXT\n );\n  +0 -3",
       "exit_code": 0,
       "raw_sha256": "1532fc3b1849738a1822a0ef09d21cd5034aedf13586f8d290c6a0d21755016f"
+    },
+    "gh-pr-list-success": {
+      "raw": "[\n  {\n    \"number\": 42,\n    \"title\": \"Preserve migration guard\",\n    \"state\": \"OPEN\",\n    \"author\": {\"login\": \"dev\"},\n    \"updatedAt\": \"2026-09-21T04:00:00Z\"\n  },\n  {\n    \"number\": 41,\n    \"title\": \"Do not delete config\",\n    \"state\": \"MERGED\",\n    \"author\": {\"login\": \"ops\"},\n    \"updatedAt\": \"2026-09-20T04:00:00Z\"\n  }\n]\n",
+      "output": "Pull Requests\n  [open] #42 Preserve migration guard (dev)\n  [merged] #41 Do not delete config (ops)",
+      "exit_code": 0,
+      "raw_sha256": "a4bceeec5e5c07fa5ad83bdda7162c9b03df87b9865f83dc67c533711cd946c4"
+    },
+    "gh-pr-list-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "HTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "gh-pr-list-user-json": {
+      "raw": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}\n",
+      "output": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}",
+      "exit_code": 0,
+      "raw_sha256": "8b58a94dc56087308d16384cedecbcd7a998fb196022ef5212d517561613ba87"
+    },
+    "glab-mr-list-success": {
+      "raw": "[\n  {\n    \"iid\": 7,\n    \"title\": \"Keep tenant check\",\n    \"state\": \"opened\",\n    \"author\": {\"username\": \"reviewer\"},\n    \"updated_at\": \"2026-09-21T04:00:00Z\"\n  },\n  {\n    \"iid\": 6,\n    \"title\": \"Do not bypass authorization\",\n    \"state\": \"merged\",\n    \"author\": {\"username\": \"maintainer\"},\n    \"updated_at\": \"2026-09-20T04:00:00Z\"\n  }\n]\n",
+      "output": "Merge Requests\n  [open] !7 Keep tenant check (reviewer)\n  [merged] !6 Do not bypass authorization (maintainer)",
+      "exit_code": 0,
+      "raw_sha256": "085da5691bdd7f24e8349352186cc322864c333128f9b4ee4b113e17bedf0320"
+    },
+    "glab-mr-list-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "HTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "glab-mr-list-user-json": {
+      "raw": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}\n",
+      "output": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}",
+      "exit_code": 0,
+      "raw_sha256": "8b58a94dc56087308d16384cedecbcd7a998fb196022ef5212d517561613ba87"
+    },
+    "gt-log-success": {
+      "raw": "◉  abc1234 feat/auth 2d ago dev@example.com\n│  preserve auth guard\n│\n◉  def5678 main 3d ago ops@example.com\n│  keep tenant validation\n~\n",
+      "output": "◉  abc1234 feat/auth 2d ago\n│  preserve auth guard\n│\n◉  def5678 main 3d ago\n│  keep tenant validation\n~",
+      "exit_code": 0,
+      "raw_sha256": "8fad3125fc65068d3f1fd3fe683e9e90013697bdc898056ed91c8e14b4f2a33c"
+    },
+    "gt-sync-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "HTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "gt-branch-passthrough": {
+      "raw": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}\n",
+      "output": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}",
+      "exit_code": 0,
+      "raw_sha256": "8b58a94dc56087308d16384cedecbcd7a998fb196022ef5212d517561613ba87"
+    },
+    "gt-log-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "HTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "gt-log-short-passthrough": {
+      "raw": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}\n",
+      "output": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}",
+      "exit_code": 0,
+      "raw_sha256": "8b58a94dc56087308d16384cedecbcd7a998fb196022ef5212d517561613ba87"
+    },
+    "gt-submit-success": {
+      "raw": "Pushing objects...\nPushed branch feat/auth\nCreated pull request #42 for feat/auth: https://example.test/pull/42\n",
+      "output": "pushed feat/auth\ncreated PR #42 feat/auth https://example.test/pull/42",
+      "exit_code": 0,
+      "raw_sha256": "8cd7e0090fc4aad9b5e7e7c11874daf13273ef04b95c7de30b4c26df82320677"
+    },
+    "gt-submit-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "HTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "gt-sync-success": {
+      "raw": "Syncing with remote...\nSynced branch feat/auth with remote\nDeleted branch feat/merged\nDeleted branch fix/old\n",
+      "output": "ok sync: 1 synced, 2 deleted (feat/merged, fix/old)",
+      "exit_code": 0,
+      "raw_sha256": "f110e606b906f8ae42862c630558b03c8c6038dbc0034888a535380f990643b3"
+    },
+    "gt-restack-success": {
+      "raw": "Restacked branch feat/auth on top of main\nRestacked branch feat/db on top of feat/auth\nRestacked branch fix/parser on top of feat/db\n",
+      "output": "ok restacked 3 branches",
+      "exit_code": 0,
+      "raw_sha256": "ca019cddd7682cbb6dff276a61f134a76450579ecdfb0b08dd59ac596584646e"
+    },
+    "gt-restack-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "HTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "gt-create-success": {
+      "raw": "Creating new branch...\nCreated branch feat/new-feature from feat/auth\nBranch feat/new-feature is ready for development\n",
+      "output": "ok created feat/new-feature",
+      "exit_code": 0,
+      "raw_sha256": "77627351ca2bfda0e3904941ae396a10366f06f5dc7dc7c93cf793d36b2500d3"
+    },
+    "gt-create-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "HTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "gt-branch-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "HTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "gt-other-passthrough": {
+      "raw": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}\n",
+      "output": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}",
+      "exit_code": 0,
+      "raw_sha256": "8b58a94dc56087308d16384cedecbcd7a998fb196022ef5212d517561613ba87"
+    },
+    "gt-other-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "HTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
     }
   }
 }

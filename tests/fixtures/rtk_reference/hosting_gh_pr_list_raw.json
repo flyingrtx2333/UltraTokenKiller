@@ -1,0 +1,16 @@
+[
+  {
+    "number": 42,
+    "title": "Preserve migration guard",
+    "state": "OPEN",
+    "author": {"login": "dev"},
+    "updatedAt": "2026-09-21T04:00:00Z"
+  },
+  {
+    "number": 41,
+    "title": "Do not delete config",
+    "state": "MERGED",
+    "author": {"login": "ops"},
+    "updatedAt": "2026-09-20T04:00:00Z"
+  }
+]

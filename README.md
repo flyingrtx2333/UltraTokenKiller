@@ -102,14 +102,14 @@ python scripts/generate-reference.py --headroom path/to/headroom --rtk path/to/r
 python scripts/generate-rtk-reference.py --checkout path/to/rtk --binary path/to/rtk-binary --output rtk-reference.json --comparison rtk-comparison.json
 ```
 
-当前 45 个捕获输出样例均保留关键事实，其中包含 `rg`、`grep`、文件列表、原生 `read`／`json`／`smart`，以及 Git 的 `status`、`log`、`diff`、`show`、`commit`、`pull`、`checkout`、`push`、`fetch`、`branch`、`stash`、`worktree`。新增 Git 成功形态的 UTK 压缩效果达到对应固定 RTK 的至少 90%；失败形态保持关键错误，固定 RTK 自身增加失败前缀时不制造压缩百分比。这只是已验证输出形态证据，不代表 211 个 RTK 变体已完成逐项对标，详见 [固定 RTK 捕获输出对照](docs/upstream-rtk-reference-2026-09-20.md) 与 [Git 命令对照](docs/rtk-git-reference-2026-09-21.md)。
+当前 66 个捕获输出样例均保留关键事实，其中包含 `rg`、`grep`、文件列表、原生 `read`／`json`／`smart`，Git，以及 `gh`／`glab`／`gt` 的成功、失败和显式机器格式透传。新增成功形态的 UTK 压缩效果达到对应固定 RTK 的至少 90%；失败形态保持关键错误，固定 RTK 自身增加失败前缀时不制造压缩百分比。这只是已验证输出形态证据，不代表 211 个 RTK 变体已完成逐项对标，详见 [固定 RTK 捕获输出对照](docs/upstream-rtk-reference-2026-09-20.md) 与 [Git 命令对照](docs/rtk-git-reference-2026-09-21.md)。
 
 能力状态的源码绑定和自动降级规则见 [能力证据绑定](docs/capability-evidence-2026-09-20.md)。高层产品能力当前为 33/36 离线通过；它不等于固定上游逐项对标完成。
 
 完整三层核心分母为 **256 项**：Headroom 24 项、RTK 211 项、Caveman 21 项。逐项输入、行为、上游证据、UTK 实现、测试、平台、实现状态、对标状态与缺口见 [完整三层能力对标清单](docs/full-capability-parity-2026-09-21.md)。另有 6 项云服务、发布基础设施和云端分析生态功能明确排除，不纳入核心分母。
 
 - Headroom：24 项；固定上游完整 1 项、部分样例 9 项、14 项待逐项对照。
-- RTK：211 项；32 项已有固定上游不同级别证据、60 项已映射契约、151 项未验证；契约映射和安全透传不算完整对标。
+- RTK：211 项；42 项已有固定上游不同级别证据、70 项已映射契约、141 项未验证；契约映射和安全透传不算完整对标。
 - Caveman：21 项；14 项固定策略对照、2 项结构化绕过离线通过、5 个真实回答质量场景等待独立 180 次授权。
 
 剩余高层 3 项是 Caveman 成对质量及 Hermes CLI/gateway 真实验收，不能以透传或测试文件存在冒充通过。

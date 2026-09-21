@@ -43,3 +43,14 @@ def test_git_add_reference_uses_captured_probe_and_one_fixed_execution():
     assert case["setup_git_add"] is True
     assert case["captured_raw_only"] is True
     assert case["argv"] == ["git", "add", "tracked.txt"]
+
+
+def test_hosting_reference_covers_success_failure_and_passthrough():
+    hosting = {case["id"]: case for case in CASES if case["id"].startswith(("gh-", "glab-", "gt-"))}
+
+    assert hosting["gh-pr-list-success"]["kind"] == "hosting-list"
+    assert hosting["glab-mr-list-failure"]["exit_code"] == 1
+    assert hosting["gt-log-success"]["kind"] == "gt-log"
+    assert hosting["gh-pr-list-user-json"]["expect_passthrough"] is True
+    assert hosting["glab-mr-list-user-json"]["expect_passthrough"] is True
+    assert hosting["gt-branch-passthrough"]["expect_passthrough"] is True

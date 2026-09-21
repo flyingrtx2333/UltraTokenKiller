@@ -7,7 +7,7 @@ Generated from machine-readable upstream evidence. Implementation status and fix
 | Upstream | Core items | Implementation states | Parity states |
 |---|---:|---|---|
 | Headroom | 24 | {'offline_passed': 21, 'real_client_passed': 3} | {'fixed_upstream_sample_passed': 9, 'fixed_upstream_suite_passed': 1, 'not_individually_compared': 14} |
-| Rtk | 211 | {'contract_mapped': 60, 'unverified': 151} | {'fixed_upstream_behavior_suite_windows': 2, 'fixed_upstream_success_failure_windows': 17, 'fixed_upstream_success_only': 13, 'pending_fixed_upstream_variant_evidence': 179} |
+| Rtk | 211 | {'contract_mapped': 70, 'unverified': 141} | {'fixed_upstream_behavior_suite_windows': 2, 'fixed_upstream_success_failure_windows': 27, 'fixed_upstream_success_only': 13, 'pending_fixed_upstream_variant_evidence': 169} |
 | Caveman | 21 | {'implemented_unverified': 5, 'real_client_passed': 16} | {'authorization_required': 5, 'fixed_upstream_policy_passed': 14, 'offline_passed': 2} |
 
 Total core denominator: **256**
@@ -85,14 +85,14 @@ Total core denominator: **256**
 | `rtk.tools.Commands.Find` | file_search | `find` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.Commands.Format` | general | `format` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Gain` | general | `gain` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.Commands.Gh` | git | `gh` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
+| `rtk.tools.Commands.Gh` | git | `gh` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.Commands.Git` | git | `git` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.Commands.Glab` | git | `glab` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
+| `rtk.tools.Commands.Glab` | git | `glab` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.Commands.Go` | go | `go` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.GolangciLint` | general | `golangci-lint` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Gradlew` | general | `gradlew` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Grep` | file_search | `grep` | contract_mapped | fixed_upstream_success_only | Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain |
-| `rtk.tools.Commands.Gt` | git | `gt` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
+| `rtk.tools.Commands.Gt` | git | `gt` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.Commands.Hook` | general | `hook` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.HookAudit` | general | `hook-audit` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Init` | general | `init` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
@@ -204,13 +204,13 @@ Total core denominator: **256**
 | `rtk.tools.GoCommands.Other` | go | `go other` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.GoCommands.Test` | go | `go test` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
 | `rtk.tools.GoCommands.Vet` | go | `go vet` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.GtCommands.Branch` | git | `gt branch` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.GtCommands.Create` | git | `gt create` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.GtCommands.Log` | git | `gt log` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.GtCommands.Other` | git | `gt other` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.GtCommands.Restack` | git | `gt restack` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.GtCommands.Submit` | git | `gt submit` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.GtCommands.Sync` | git | `gt sync` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
+| `rtk.tools.GtCommands.Branch` | git | `gt branch` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
+| `rtk.tools.GtCommands.Create` | git | `gt create` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
+| `rtk.tools.GtCommands.Log` | git | `gt log` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
+| `rtk.tools.GtCommands.Other` | git | `gt other` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
+| `rtk.tools.GtCommands.Restack` | git | `gt restack` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
+| `rtk.tools.GtCommands.Submit` | git | `gt submit` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
+| `rtk.tools.GtCommands.Sync` | git | `gt sync` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.HookCommands.Check` | general | `hook check` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.HookCommands.Claude` | general | `hook claude` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.HookCommands.Codex` | general | `hook codex` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "baseline": "0924356b4caba4989607227b7c8824d3d8098719",
   "model": "gpt-5.6-luna",
-  "case_count": 45,
+  "case_count": 66,
   "live_model_calls": 0,
   "cases": [
     {
@@ -13,7 +13,10 @@
       "upstream_reduction": 0.8854166666666666,
       "utk_reduction": 0.875,
       "ratio": 0.9882352941176471,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-log-default",
@@ -23,7 +26,10 @@
       "upstream_reduction": 0.6141732283464567,
       "utk_reduction": 0.6535433070866141,
       "ratio": 1.064102564102564,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-commit-success",
@@ -33,7 +39,10 @@
       "upstream_reduction": 0.8048780487804879,
       "utk_reduction": 0.7804878048780488,
       "ratio": 0.9696969696969697,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-add-success",
@@ -43,7 +52,10 @@
       "upstream_reduction": 0.5769230769230769,
       "utk_reduction": 0.0,
       "ratio": 0.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": true
     },
     {
       "case": "git-commit-failure",
@@ -53,7 +65,10 @@
       "upstream_reduction": 0.08333333333333333,
       "utk_reduction": 0.0,
       "ratio": 0.0,
-      "exit_code": 1
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
     },
     {
       "case": "git-pull-success",
@@ -63,7 +78,10 @@
       "upstream_reduction": 0.8,
       "utk_reduction": 0.775,
       "ratio": 0.96875,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-pull-failure",
@@ -73,7 +91,10 @@
       "upstream_reduction": -0.11764705882352941,
       "utk_reduction": 0.0,
       "ratio": null,
-      "exit_code": 1
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": true
     },
     {
       "case": "git-checkout-success",
@@ -83,7 +104,10 @@
       "upstream_reduction": 0.36363636363636365,
       "utk_reduction": 0.36363636363636365,
       "ratio": 1.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-checkout-failure",
@@ -93,7 +117,10 @@
       "upstream_reduction": 0.05,
       "utk_reduction": 0.0,
       "ratio": 0.0,
-      "exit_code": 1
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
     },
     {
       "case": "git-push-success",
@@ -103,7 +130,10 @@
       "upstream_reduction": 0.7777777777777778,
       "utk_reduction": 0.7777777777777778,
       "ratio": 1.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-push-failure",
@@ -113,7 +143,10 @@
       "upstream_reduction": 0.0,
       "utk_reduction": 0.0,
       "ratio": null,
-      "exit_code": 1
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
     },
     {
       "case": "git-fetch-success",
@@ -123,7 +156,10 @@
       "upstream_reduction": 0.7083333333333334,
       "utk_reduction": 0.7083333333333334,
       "ratio": 1.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-fetch-failure",
@@ -133,7 +169,10 @@
       "upstream_reduction": -0.17391304347826086,
       "utk_reduction": 0.0,
       "ratio": null,
-      "exit_code": 1
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": true
     },
     {
       "case": "git-show-commit-diff",
@@ -143,7 +182,10 @@
       "upstream_reduction": 0.6440677966101694,
       "utk_reduction": 0.652542372881356,
       "ratio": 1.0131578947368423,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-branch-list",
@@ -153,7 +195,10 @@
       "upstream_reduction": 0.5142857142857142,
       "utk_reduction": 0.4857142857142857,
       "ratio": 0.9444444444444445,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-branch-write",
@@ -163,7 +208,10 @@
       "upstream_reduction": 0.9230769230769231,
       "utk_reduction": 0.8461538461538461,
       "ratio": 0.9166666666666666,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-branch-failure",
@@ -173,7 +221,10 @@
       "upstream_reduction": -0.8888888888888888,
       "utk_reduction": 0.0,
       "ratio": null,
-      "exit_code": 1
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": true
     },
     {
       "case": "git-stash-list",
@@ -183,7 +234,10 @@
       "upstream_reduction": 0.23684210526315788,
       "utk_reduction": 0.23684210526315788,
       "ratio": 1.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-stash-show",
@@ -193,7 +247,10 @@
       "upstream_reduction": 0.3888888888888889,
       "utk_reduction": 0.3888888888888889,
       "ratio": 1.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-stash-push",
@@ -203,7 +260,10 @@
       "upstream_reduction": 0.8571428571428571,
       "utk_reduction": 0.8095238095238095,
       "ratio": 0.9444444444444445,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-stash-failure",
@@ -213,7 +273,10 @@
       "upstream_reduction": -0.21428571428571427,
       "utk_reduction": 0.0,
       "ratio": null,
-      "exit_code": 129
+      "exit_code": 129,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": true
     },
     {
       "case": "git-worktree-list",
@@ -223,7 +286,10 @@
       "upstream_reduction": 0.06060606060606061,
       "utk_reduction": 0.06060606060606061,
       "ratio": 1.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-worktree-write",
@@ -233,7 +299,10 @@
       "upstream_reduction": 0.96,
       "utk_reduction": 0.92,
       "ratio": 0.9583333333333334,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-worktree-failure",
@@ -243,7 +312,10 @@
       "upstream_reduction": -0.5789473684210527,
       "utk_reduction": 0.0,
       "ratio": null,
-      "exit_code": 128
+      "exit_code": 128,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": true
     },
     {
       "case": "ls-human-long",
@@ -253,7 +325,10 @@
       "upstream_reduction": 0.7073170731707317,
       "utk_reduction": 0.7073170731707317,
       "ratio": 1.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "ls-unknown-locale",
@@ -263,7 +338,10 @@
       "upstream_reduction": 0.03571428571428571,
       "utk_reduction": 0.0,
       "ratio": 0.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
     },
     {
       "case": "ls-failure",
@@ -273,7 +351,10 @@
       "upstream_reduction": 0.07692307692307693,
       "utk_reduction": 0.0,
       "ratio": 0.0,
-      "exit_code": 2
+      "exit_code": 2,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
     },
     {
       "case": "tree-human",
@@ -283,7 +364,10 @@
       "upstream_reduction": 0.3076923076923077,
       "utk_reduction": 0.3076923076923077,
       "ratio": 1.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "tree-unknown-format",
@@ -293,7 +377,10 @@
       "upstream_reduction": 0.125,
       "utk_reduction": 0.0,
       "ratio": 0.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
     },
     {
       "case": "tree-failure",
@@ -303,7 +390,10 @@
       "upstream_reduction": 0.1,
       "utk_reduction": 0.0,
       "ratio": 0.0,
-      "exit_code": 2
+      "exit_code": 2,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
     },
     {
       "case": "find-human-paths",
@@ -313,7 +403,10 @@
       "upstream_reduction": 0.4888888888888889,
       "utk_reduction": 0.4888888888888889,
       "ratio": 1.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "find-failure",
@@ -323,7 +416,10 @@
       "upstream_reduction": 0.09090909090909091,
       "utk_reduction": 0.0,
       "ratio": 0.0,
-      "exit_code": 1
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
     },
     {
       "case": "read-numbered-source",
@@ -333,7 +429,10 @@
       "upstream_reduction": -0.5,
       "utk_reduction": -0.5,
       "ratio": null,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "json-compact-values",
@@ -343,7 +442,10 @@
       "upstream_reduction": 0.46551724137931033,
       "utk_reduction": 0.46551724137931033,
       "ratio": 1.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "smart-python-summary",
@@ -353,7 +455,10 @@
       "upstream_reduction": 0.3611111111111111,
       "utk_reduction": 0.3333333333333333,
       "ratio": 0.923076923076923,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "rg-human-search",
@@ -363,7 +468,10 @@
       "upstream_reduction": 0.00641025641025641,
       "utk_reduction": 0.10256410256410256,
       "ratio": 16.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": false
     },
     {
       "case": "grep-human-search",
@@ -373,7 +481,10 @@
       "upstream_reduction": 0.00641025641025641,
       "utk_reduction": 0.10256410256410256,
       "ratio": 16.0,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": false
     },
     {
       "case": "pytest-failure",
@@ -383,7 +494,10 @@
       "upstream_reduction": 0.7194244604316546,
       "utk_reduction": 0.6870503597122302,
       "ratio": 0.955,
-      "exit_code": 1
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "typescript-pretty-errors",
@@ -393,7 +507,10 @@
       "upstream_reduction": 0.8394160583941606,
       "utk_reduction": 0.8248175182481752,
       "ratio": 0.9826086956521739,
-      "exit_code": 2
+      "exit_code": 2,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "maven-test-failure",
@@ -403,7 +520,10 @@
       "upstream_reduction": 0.527086383601757,
       "utk_reduction": 0.6998535871156661,
       "ratio": 1.3277777777777777,
-      "exit_code": 1
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "bun-test-failure",
@@ -413,7 +533,10 @@
       "upstream_reduction": 0.5446985446985447,
       "utk_reduction": 0.632016632016632,
       "ratio": 1.1603053435114503,
-      "exit_code": 1
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "deno-test-failure",
@@ -423,7 +546,10 @@
       "upstream_reduction": 0.8943598925693823,
       "utk_reduction": 0.9176365264100269,
       "ratio": 1.026026026026026,
-      "exit_code": 1
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "gradle-test-failure",
@@ -433,7 +559,10 @@
       "upstream_reduction": 0.33189655172413796,
       "utk_reduction": 0.521551724137931,
       "ratio": 1.5714285714285714,
-      "exit_code": 1
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "golangci-v2-issues",
@@ -443,7 +572,10 @@
       "upstream_reduction": 0.941541186891054,
       "utk_reduction": 0.9406554472984943,
       "ratio": 0.9990592662276576,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
     },
     {
       "case": "git-diff-multifile",
@@ -453,7 +585,283 @@
       "upstream_reduction": 0.3463203463203463,
       "utk_reduction": 0.5411255411255411,
       "ratio": 1.5625,
-      "exit_code": 0
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
+    },
+    {
+      "case": "gh-pr-list-success",
+      "kind": "hosting-list",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.7647058823529411,
+      "utk_reduction": 0.7563025210084033,
+      "ratio": 0.989010989010989,
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
+    },
+    {
+      "case": "gh-pr-list-failure",
+      "kind": "hosting-list",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.07142857142857142,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
+    },
+    {
+      "case": "gh-pr-list-user-json",
+      "kind": "passthrough",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.0,
+      "utk_reduction": 0.0,
+      "ratio": null,
+      "exit_code": 0,
+      "expected_passthrough": true,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
+    },
+    {
+      "case": "glab-mr-list-success",
+      "kind": "hosting-list",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.7478991596638656,
+      "utk_reduction": 0.7394957983193278,
+      "ratio": 0.9887640449438203,
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
+    },
+    {
+      "case": "glab-mr-list-failure",
+      "kind": "hosting-list",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.07142857142857142,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
+    },
+    {
+      "case": "glab-mr-list-user-json",
+      "kind": "passthrough",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.0,
+      "utk_reduction": 0.0,
+      "ratio": null,
+      "exit_code": 0,
+      "expected_passthrough": true,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
+    },
+    {
+      "case": "gt-log-success",
+      "kind": "gt-log",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.13043478260869565,
+      "utk_reduction": 0.13043478260869565,
+      "ratio": 1.0,
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
+    },
+    {
+      "case": "gt-sync-failure",
+      "kind": "gt-sync",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.07142857142857142,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
+    },
+    {
+      "case": "gt-branch-passthrough",
+      "kind": "passthrough",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.0,
+      "utk_reduction": 0.0,
+      "ratio": null,
+      "exit_code": 0,
+      "expected_passthrough": true,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
+    },
+    {
+      "case": "gt-log-failure",
+      "kind": "gt-log",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.07142857142857142,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
+    },
+    {
+      "case": "gt-log-short-passthrough",
+      "kind": "passthrough",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.0,
+      "utk_reduction": 0.0,
+      "ratio": null,
+      "exit_code": 0,
+      "expected_passthrough": true,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
+    },
+    {
+      "case": "gt-submit-success",
+      "kind": "gt-submit",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.32142857142857145,
+      "utk_reduction": 0.14285714285714285,
+      "ratio": 0.44444444444444436,
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
+    },
+    {
+      "case": "gt-submit-failure",
+      "kind": "gt-submit",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.07142857142857142,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
+    },
+    {
+      "case": "gt-sync-success",
+      "kind": "gt-sync",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.24,
+      "utk_reduction": 0.24,
+      "ratio": 1.0,
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
+    },
+    {
+      "case": "gt-restack-success",
+      "kind": "gt-restack",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.8125,
+      "utk_reduction": 0.78125,
+      "ratio": 0.9615384615384616,
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
+    },
+    {
+      "case": "gt-restack-failure",
+      "kind": "gt-restack",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.07142857142857142,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
+    },
+    {
+      "case": "gt-create-success",
+      "kind": "gt-create",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.7727272727272727,
+      "utk_reduction": 0.7272727272727273,
+      "ratio": 0.9411764705882354,
+      "exit_code": 0,
+      "expected_passthrough": false,
+      "upstream_matches_raw": false,
+      "utk_matches_raw": false
+    },
+    {
+      "case": "gt-create-failure",
+      "kind": "gt-create",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.07142857142857142,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
+      "exit_code": 1,
+      "expected_passthrough": false,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
+    },
+    {
+      "case": "gt-branch-failure",
+      "kind": "passthrough",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.07142857142857142,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
+      "exit_code": 1,
+      "expected_passthrough": true,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
+    },
+    {
+      "case": "gt-other-passthrough",
+      "kind": "passthrough",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.0,
+      "utk_reduction": 0.0,
+      "ratio": null,
+      "exit_code": 0,
+      "expected_passthrough": true,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
+    },
+    {
+      "case": "gt-other-failure",
+      "kind": "passthrough",
+      "required_facts_upstream": true,
+      "required_facts_utk": true,
+      "upstream_reduction": 0.07142857142857142,
+      "utk_reduction": 0.0,
+      "ratio": 0.0,
+      "exit_code": 1,
+      "expected_passthrough": true,
+      "upstream_matches_raw": true,
+      "utk_matches_raw": true
     }
   ]
 }

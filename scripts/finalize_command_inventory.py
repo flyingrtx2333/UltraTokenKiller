@@ -37,7 +37,14 @@ def _family(path: list[str]) -> str:
 
 def _contract_ids(path: list[str], parameters: list[dict], contracts: list[dict]) -> list[str]:
     if any(parameter["role"] == "subcommand" for parameter in parameters):
-        return []
+        command = path[0]
+        if command not in {"gh", "glab", "gt"}:
+            return []
+        return sorted({
+            contract["id"]
+            for contract in contracts
+            if command in contract["commands"]
+        })
     command = " ".join(path)
     matches = []
     for contract in contracts:
@@ -95,8 +102,7 @@ def build_inventory(lock: dict, existing: list[dict], contracts: list[dict]) -> 
             )
         path = command_path(enum_name, variant_name)
         contract_ids = _contract_ids(path, parameters, contracts)
-        old_status = old.get("status", "unverified")
-        status = "contract_mapped" if old_status == "unverified" and contract_ids else old_status
+        status = "contract_mapped" if contract_ids else "unverified"
         result.append(
             {
                 "id": item_id,

@@ -1,0 +1,4 @@
+Syncing with remote...
+Synced branch feat/auth with remote
+Deleted branch feat/merged
+Deleted branch fix/old
