@@ -1,0 +1,1158 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-21T04:16:08.936604+00:00",
+  "items": {
+    "headroom.input.routing": {
+      "source_fingerprint": "4814f5a4ac5c3d388f0e810c332337796c08dc46089b2d06a329733fc2c2ceaa",
+      "evidence_hashes": {
+        "docs/evidence/four-route-matrix-20260920.json": "b2f58eb52eef1834d583ce36fb968071ebbdbc1b6dee0ec967adff7a2c7b0799"
+      }
+    },
+    "headroom.input.json": {
+      "source_fingerprint": "7ca312803a24e34f386d5cdda734edf6d6c892c0d168a01400b96c4ef1e3de37",
+      "evidence_hashes": {
+        "docs/evidence/four-route-matrix-20260920.json": "b2f58eb52eef1834d583ce36fb968071ebbdbc1b6dee0ec967adff7a2c7b0799"
+      }
+    },
+    "headroom.input.table": {
+      "source_fingerprint": "2a01ef0b89214ae7a92a3b9efa502793182b7959d53d640ecbd966ff71924efb",
+      "evidence_hashes": {
+        "docs/evidence/four-route-matrix-20260920.json": "b2f58eb52eef1834d583ce36fb968071ebbdbc1b6dee0ec967adff7a2c7b0799"
+      }
+    },
+    "headroom.input.logs": {
+      "source_fingerprint": "b6f4142b91d3ea015aee9dfb711a8f9e3690250055a1c568978bb7edb3c6d61d",
+      "evidence_hashes": {
+        "docs/evidence/four-route-matrix-20260920.json": "b2f58eb52eef1834d583ce36fb968071ebbdbc1b6dee0ec967adff7a2c7b0799"
+      }
+    },
+    "headroom.input.code.python": {
+      "source_fingerprint": "6bf492a951e120d687d48b1574497a506db83b2886b6204b45d960b710513bd2",
+      "evidence_hashes": {
+        "docs/evidence/four-route-matrix-20260920.json": "b2f58eb52eef1834d583ce36fb968071ebbdbc1b6dee0ec967adff7a2c7b0799"
+      }
+    },
+    "headroom.input.code.multilanguage": {
+      "source_fingerprint": "d5ffe151a3f62426f42cbaf706d2de201a8692e8613ec42d60953b2e117f3693",
+      "evidence_hashes": {
+        "docs/evidence/four-route-matrix-20260920.json": "b2f58eb52eef1834d583ce36fb968071ebbdbc1b6dee0ec967adff7a2c7b0799"
+      }
+    },
+    "headroom.input.diff": {
+      "source_fingerprint": "0b489a32abd75bfbbdd4f949b0577772f72fae1148653cff719745f71a220fc1",
+      "evidence_hashes": {
+        "docs/evidence/four-route-matrix-20260920.json": "b2f58eb52eef1834d583ce36fb968071ebbdbc1b6dee0ec967adff7a2c7b0799"
+      }
+    },
+    "headroom.input.search": {
+      "source_fingerprint": "d39c8b5985d4e45371c25c3868079e6ebd5b0f1d93f5f40dd8dc69484535565d",
+      "evidence_hashes": {
+        "docs/evidence/four-route-matrix-20260920.json": "b2f58eb52eef1834d583ce36fb968071ebbdbc1b6dee0ec967adff7a2c7b0799"
+      }
+    },
+    "headroom.input.long_text_en": {
+      "source_fingerprint": "b878024df32162d5d23b418eaacd1cceaf479abcbb048fc7617b91ba2a85782a",
+      "evidence_hashes": {
+        "docs/evidence/four-route-matrix-20260920.json": "b2f58eb52eef1834d583ce36fb968071ebbdbc1b6dee0ec967adff7a2c7b0799"
+      }
+    },
+    "headroom.input.long_text_zh": {
+      "source_fingerprint": "1bcf6d46c2e3c3a35c09ab4ec5f0286741377282d62a6d75c5e13c0bcd8b611d",
+      "evidence_hashes": {}
+    },
+    "headroom.input.image": {
+      "source_fingerprint": "bc685983f5ed1a1ae95b84f5ec07a89b4f35e8a6ca27d3188c282a963ecf2a4d",
+      "evidence_hashes": {}
+    },
+    "headroom.recovery.memory": {
+      "source_fingerprint": "2d9879b8e974e32adce0a5375fc2640ad62aeb134f229ff1da55c4c6b617227b",
+      "evidence_hashes": {}
+    },
+    "headroom.recovery.mcp": {
+      "source_fingerprint": "f86779e67d14a6201894cce3a58e48db6b9a793c0e2d8bce0d6f5afc37795262",
+      "evidence_hashes": {}
+    },
+    "headroom.cache.stable_prefix": {
+      "source_fingerprint": "4cfb5be6ea3b59f6c4a989c9a68bf0831e9c155492b4ae8f0652a0b90e0b8782",
+      "evidence_hashes": {}
+    },
+    "headroom.protocol.responses_http_sse": {
+      "source_fingerprint": "9677282c1c55e4d8e87b8a1d984f662115bc4c149180f10d6bc5b94aebb4ad11",
+      "evidence_hashes": {}
+    },
+    "headroom.protocol.chat_completions": {
+      "source_fingerprint": "a6f1de18929b2b442bdeb66dc1c8aa1372f3a749704309a0c3163d3b16fdb000",
+      "evidence_hashes": {}
+    },
+    "headroom.protocol.anthropic_messages": {
+      "source_fingerprint": "d5270c929d292c42fd441736aa3636c6f3865d2944c00e5ff717bb96af98d919",
+      "evidence_hashes": {}
+    },
+    "headroom.protocol.responses_websocket": {
+      "source_fingerprint": "f2b43dace8c4ffffd225ae02f180afba737471accd0f2031dd7a2d5f5695638b",
+      "evidence_hashes": {}
+    },
+    "headroom.benchmark.fixed_upstream": {
+      "source_fingerprint": "e918fdbd332df8c77c7c196b4ba111fa13ceb0ce4e729c4742773f16a96f149d",
+      "evidence_hashes": {
+        "docs/evidence/four-route-matrix-20260920.json": "b2f58eb52eef1834d583ce36fb968071ebbdbc1b6dee0ec967adff7a2c7b0799"
+      }
+    },
+    "headroom.client.codex_subscription": {
+      "source_fingerprint": "aec06abc448b93416e927140adbf8fff747b84c5acb13f290300340649fc409d",
+      "evidence_hashes": {}
+    },
+    "headroom.client.codex_api_key": {
+      "source_fingerprint": "910ef878f6ee7662365001758bfcc2dc376fbff24c7e060cc6fca80506e09ee0",
+      "evidence_hashes": {}
+    },
+    "headroom.dashboard.metrics": {
+      "source_fingerprint": "b2391f60e2290ce0840d2a02c2680eea994ebca5b6407ccb2fd8b59b0ab2bff3",
+      "evidence_hashes": {}
+    },
+    "headroom.install.windows": {
+      "source_fingerprint": "b596976cffb7e4a5cbb157caa126e899f5e739998f72e4ed75de700831381a2d",
+      "evidence_hashes": {}
+    },
+    "headroom.install.macos_linux": {
+      "source_fingerprint": "6b974c14de8988be6599d730942f3019964f1793520f77f6dc7979791f098f28",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.BunCommands.Add": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.BunCommands.Build": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.BunCommands.Install": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.BunCommands.Other": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.BunCommands.Pm": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.BunCommands.Remove": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.BunCommands.Run": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.BunCommands.Test": {
+      "source_fingerprint": "0e8e70e052525ee2c2974f6b88a5827cf95ca767163bbdbe168b1ca334b94bcd",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.BunCommands.X": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.BunPmCommands.Ls": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.BunPmCommands.Other": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.CargoCommand.Build": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.CargoCommand.Check": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.CargoCommand.Clippy": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.CargoCommand.Install": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.CargoCommand.Nextest": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.CargoCommand.Test": {
+      "source_fingerprint": "95760d38049aa22ef79d37c18fe11df1e0f4ece98181a0fa3c1aa437694b8ade",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.CargoCommands.Build": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.CargoCommands.Check": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.CargoCommands.Clippy": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.CargoCommands.Install": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.CargoCommands.Nextest": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.CargoCommands.Other": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.CargoCommands.Test": {
+      "source_fingerprint": "51ffe900f19ce3f7dde9ebf52c263265506e542c3454fa450892ab63a262d64f",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.AstGrep": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Aws": {
+      "source_fingerprint": "366a99fb5df5e4860ee5a29280f52b7b6d7fbc8db5c58f9ce5cbd187af396252",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Bun": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Bunx": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Cargo": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.CcEconomics": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Config": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Ctest": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Curl": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Deno": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Deps": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Diff": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Discover": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Docker": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Dotnet": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Ecs": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Env": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Err": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Find": {
+      "source_fingerprint": "9779dd4cccdcdd05fd8d812e82a48bb2506651526afe6ad73f1a29dd401006d0",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.Commands.Format": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Gain": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Gh": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Git": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Glab": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Go": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.GolangciLint": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Gradlew": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Grep": {
+      "source_fingerprint": "247bc58698f98504b421b8dae3119338ae55ad7dbaf8635e6463189b445bd6eb",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.Commands.Gt": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Hook": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.HookAudit": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Init": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Jest": {
+      "source_fingerprint": "c6679b67b654643a4108487b065b8d0d92319c4c2253d2c45b16344ede1faa04",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Json": {
+      "source_fingerprint": "7cbaee4eb33eed37f6161321f6a931eb76a9c1e6b5053eb9fc7ec29b231c8e6e",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.Commands.Kubectl": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Learn": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Lint": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Log": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Ls": {
+      "source_fingerprint": "372b05e86e4dfb34980684b77b4792644cff8ab3a41e012297270de7e1cb6632",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.Commands.Mvn": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Mvnd": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Mypy": {
+      "source_fingerprint": "9605512a55f165566b4bca61aa987c8285be7f014cfa4419ab121add188f0152",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Next": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Npm": {
+      "source_fingerprint": "1251829e7b23b5c094d9198132951a4213479473dc58ebf6bba1c2da0433f42c",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Npx": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Oc": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Paratest": {
+      "source_fingerprint": "81de4a4501125e99a14b900f3590e3a6d8684164fcb44d902d46f49401ec0cb8",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Pest": {
+      "source_fingerprint": "08a39a2fe1f9a916c830c7aebfccb1c42ae9aa7fab6a5a3843ec646e525a000f",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Php": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Phpstan": {
+      "source_fingerprint": "501721a3ae8d803323a9ecd58280a40bd0a36f88f6e994cdd18dd3b8e30db838",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Phpt": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Phpunit": {
+      "source_fingerprint": "f087cf77798fe3b2fbca19a132e402217a4ebdb98949fc65a859568de3b8ffc7",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Pint": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Pip": {
+      "source_fingerprint": "4a08a3c74b4acca2288d81f7d3a9fe36aaaa8fb7550a11276ef94df1a256f272",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Pipe": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Playwright": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Pnpm": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Prettier": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Prisma": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Proxy": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Psql": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Pytest": {
+      "source_fingerprint": "1affc16d7645b9c12183ae705f19abe67bdc36e475750d3fc7e5c8450f6df972",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Rake": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Read": {
+      "source_fingerprint": "1a1d9589822ca1682a79954d5e8623c02ca7ccf15161185eb600308267851aec",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.Commands.Recall": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Rewrite": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Rg": {
+      "source_fingerprint": "6405312631120fa444b5644a38f6756afcdcdff1a494cbce1bfbf17546f466ed",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.Commands.Rspec": {
+      "source_fingerprint": "fc68fae7602436db3d26bbdf6b22c2add0e8befcfa212461b23654af4cdd828c",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Rubocop": {
+      "source_fingerprint": "6af923d9a9e312f2a5970b8ca8f9dd5f3c4c63a1ca63cba57157aae369750f45",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Ruff": {
+      "source_fingerprint": "71590101c7f85766d9e774e787876c626133586bc4fb558c0b3080434224048b",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Run": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Sbt": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Session": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Smart": {
+      "source_fingerprint": "662944d6287f14307ec2e658184ede82746f6bdcb034f9ffd0eb46c79a8df455",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.Commands.Sqlfluff": {
+      "source_fingerprint": "017f3d25b23af793ffb9a25c8341da0aaf7593a98a3719b1243dd3f5d1b19b42",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Summary": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Telemetry": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Test": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Tree": {
+      "source_fingerprint": "3016e512b22004405af28f352c3de95ba71f96969cff7a44b67609057c77fba7",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.Commands.Trust": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Tsc": {
+      "source_fingerprint": "493ea862ef8e9ae67fa9c8e6f40f3896ba82f597a546e7bc471ccf207c6149a8",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Untrust": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Uv": {
+      "source_fingerprint": "ce9c5f61e89ef0f7faa5bddf3140cad40c822d63ac1401f365f96879fe3b986d",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Verify": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Vitest": {
+      "source_fingerprint": "e3bd0f4d1b4668babdf42eea5b3ed37596c37035e91bff8dabde7db925d06b3d",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Wc": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.Commands.Wget": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.ComposeCommands.Build": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.ComposeCommands.Logs": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.ComposeCommands.Other": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.ComposeCommands.Ps": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DenoCommands.Check": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DenoCommands.Compile": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DenoCommands.Install": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DenoCommands.Lint": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DenoCommands.Other": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DenoCommands.Run": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DenoCommands.Task": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DenoCommands.Test": {
+      "source_fingerprint": "258cce9de8a7a5c028acce7de7ac4187c45fc72991f64f9f22cfcc553f9e6ada",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DockerCommands.Compose": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DockerCommands.Images": {
+      "source_fingerprint": "65dbcfc54725f6dcca9d394d93fe595598e042d767de348e1dbb68c38f53789d",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DockerCommands.Logs": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DockerCommands.Other": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DockerCommands.Ps": {
+      "source_fingerprint": "d5dcb1b8b18328e196b870799bd0b95022698cd35f86674ae8e066cb1b5d3338",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DotnetCommands.Build": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DotnetCommands.Format": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DotnetCommands.Other": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DotnetCommands.Restore": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.DotnetCommands.Test": {
+      "source_fingerprint": "df9e61b193f19536ae710bb168d0c29045ddab9da4f719a3c73e97adda94ec00",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.GitCommand.Add": {
+      "source_fingerprint": "9eecd4e49087beb4faa89ccbb504c88be39a88504d33ff82ddbc7f7ee05f1347",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.GitCommand.Branch": {
+      "source_fingerprint": "62ac4ae35925d6fff41a67e7c44d996a43375a0dbe18b1e1b1f2afcf44459ec4",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommand.Checkout": {
+      "source_fingerprint": "7e0f268daef94d0a7fa1e260e36d5a433f49b52270a6f254ff8b86b0ea5c0db4",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommand.Commit": {
+      "source_fingerprint": "7cf5e553bb6a1330efad66e47ac72eddd10c8b1c944e7ab42c1a2e395e232c8a",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommand.Diff": {
+      "source_fingerprint": "8086772bd2ef623fb6695f4e35e0afd6bc94d82719cfe0efff95f3b44cdd670b",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommand.Fetch": {
+      "source_fingerprint": "af41584c9713cf78eac724af6da4b113c723c0b1e14a25b154827728245fb69b",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommand.Log": {
+      "source_fingerprint": "c7ad4c9bb3db905772f6174e3d36ce077821f61941a3be37c1a1715ab9349449",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommand.Pull": {
+      "source_fingerprint": "255d212848b1ef41638a235152ed59eff22a02b6527ddf0b0336d69d062686b5",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommand.Push": {
+      "source_fingerprint": "90b511c2afc425cf70d40f167fa3a3633e2bada98dd956e62b998a6e81d2ece5",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommand.Show": {
+      "source_fingerprint": null,
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommand.Stash": {
+      "source_fingerprint": "f6008cc0a87eae1ddca9459b273bb2169a7b682624b5239560d6ce4861b2a58f",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommand.Status": {
+      "source_fingerprint": "ab7ee037bf6f29058e2254658f13973ee7855a860eed19a60cecae15af80db08",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommand.Worktree": {
+      "source_fingerprint": "a8266cc709c6929d1d4a94bcee7b9356ab71656ab649df96b1417c18a0264d68",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommands.Add": {
+      "source_fingerprint": "59c99c8f519ac4437f6d445076504d46173812d93c4a9ac4e8af8ace697f1665",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.GitCommands.Branch": {
+      "source_fingerprint": "6d4361f3384c0eeaa144478cfa03449e0317686b37fede27d9e98ff105f9aea1",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommands.Checkout": {
+      "source_fingerprint": "65eaf429960d1cbf8c2d511a4f509773b24ea062187ab28a78b98960098d46ff",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommands.Commit": {
+      "source_fingerprint": "f7e7a46b04fd2c3d7e2c58bfec8f6dbfb16c0bc22c534da4889cc34574412a06",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommands.Diff": {
+      "source_fingerprint": "cd4630a06bc0ce4b7154ed812f8336ad87acfbfcedf0a614938def523059e441",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommands.Fetch": {
+      "source_fingerprint": "9ce9c80dcb76d8c97d0e161589e37af7a629c1783cd7b4e71ebb401f95633f5a",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommands.Log": {
+      "source_fingerprint": "c613c79ad6f81d801213328417bce3f14eb27bcbe312798a31a917cbb538895e",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommands.Other": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.GitCommands.Pull": {
+      "source_fingerprint": "604c0bf92a5dd3922746efe6b74b3363dcfbe151e7fdfd0fd792fcb00081d439",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommands.Push": {
+      "source_fingerprint": "7b09bcfb369910536a8ac21f71926fb89b4777218da2b4dd9e72eacd75052d32",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommands.Show": {
+      "source_fingerprint": null,
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommands.Stash": {
+      "source_fingerprint": "abc8afb0fec2b0a402c4a88e9f7da5558e2bce3fc12858c244c035fdf9c8391b",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommands.Status": {
+      "source_fingerprint": "037de3d0cc4aa140b5be73b96c52c53125a7d77a9548fd93c61c92110447c115",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GitCommands.Worktree": {
+      "source_fingerprint": "76115757ab77fcb8865244e36f96c4c523c6f3e7c827a99d728c05f4927b6aaa",
+      "evidence_hashes": {
+        "docs/evidence/upstream-rtk-comparison-20260920.json": "48295c83ef7ddc64be65d50f27cd3356889b70ba13ee8b589fdb4d7c5071defa"
+      }
+    },
+    "rtk.tools.GoCommands.Build": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.GoCommands.Other": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.GoCommands.Test": {
+      "source_fingerprint": "ecba243421a80018fad5cc4d222f74c6b7c46b0e0b2fa6519b001de365fb4014",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.GoCommands.Vet": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.GtCommands.Branch": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.GtCommands.Create": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.GtCommands.Log": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.GtCommands.Other": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.GtCommands.Restack": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.GtCommands.Submit": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.GtCommands.Sync": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.HookCommands.Check": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.HookCommands.Claude": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.HookCommands.Codex": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.HookCommands.Copilot": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.HookCommands.Cursor": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.HookCommands.Droid": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.HookCommands.Gemini": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.HookCommands.Trae": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.HookCommands.Vibe": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.KubectlCommands.Get": {
+      "source_fingerprint": "97af9432c6d76c431b4224eb40012e87c04b907f90f24418001a6d5042aa8642",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.KubectlCommands.Logs": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.KubectlCommands.Other": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.KubectlCommands.Pods": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.KubectlCommands.Services": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.OcCommands.Get": {
+      "source_fingerprint": "1ba43aba90eade25edec7e58b9df2f725a3ab7e0f4687510dcbd1bb027e6c344",
+      "evidence_hashes": {}
+    },
+    "rtk.tools.OcCommands.Logs": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.OcCommands.Other": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.OcCommands.Pods": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.OcCommands.Services": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PnpmCommand.Install": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PnpmCommand.List": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PnpmCommand.Outdated": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PnpmCommands.Install": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PnpmCommands.List": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PnpmCommands.Other": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PnpmCommands.Outdated": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PnpmCommands.Typecheck": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PrismaCommand.DbPush": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PrismaCommand.Generate": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PrismaCommand.Migrate": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PrismaCommands.DbPush": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PrismaCommands.Generate": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PrismaCommands.Migrate": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PrismaMigrateCommands.Deploy": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PrismaMigrateCommands.Dev": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.PrismaMigrateCommands.Status": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.SbtCommands.Compile": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.SbtCommands.Other": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.SbtCommands.Run": {
+      "source_fingerprint": null,
+      "evidence_hashes": {}
+    },
+    "rtk.tools.SbtCommands.Test": {
+      "source_fingerprint": "8be74ad840b8d933cdb60f971d156416a494cb2ee033909e9ecac1147d08a83f",
+      "evidence_hashes": {}
+    },
+    "caveman.mode.off": {
+      "source_fingerprint": "8eb94a87d0e9a6736ea922977d0f57f845edf36dfd13a843a5ce6d9a0e5b6a9f",
+      "evidence_hashes": {
+        "docs/evidence/upstream-caveman-policy-reference-20260920.json": "72b50e13f078e6c9ed1b86fb3163a10738c73c88924dae305a7d54d524543aff"
+      }
+    },
+    "caveman.mode.lite": {
+      "source_fingerprint": "fcf8356863d47c7e8543a5a6ee69c6bd87846969647382738d8296267d9316b9",
+      "evidence_hashes": {
+        "docs/evidence/upstream-caveman-policy-reference-20260920.json": "72b50e13f078e6c9ed1b86fb3163a10738c73c88924dae305a7d54d524543aff"
+      }
+    },
+    "caveman.mode.full": {
+      "source_fingerprint": "42e7922814436af587ad391758eed2ccbcee9dcaa8f293fe2a40d1869db6117b",
+      "evidence_hashes": {
+        "docs/evidence/upstream-caveman-policy-reference-20260920.json": "72b50e13f078e6c9ed1b86fb3163a10738c73c88924dae305a7d54d524543aff"
+      }
+    },
+    "caveman.mode.ultra": {
+      "source_fingerprint": "d3055934b2a33fa0a839fd88906aa2185d4afc0d3108e34cecf8ebe95a888069",
+      "evidence_hashes": {
+        "docs/evidence/upstream-caveman-policy-reference-20260920.json": "72b50e13f078e6c9ed1b86fb3163a10738c73c88924dae305a7d54d524543aff"
+      }
+    },
+    "caveman.mode.wenyan-lite": {
+      "source_fingerprint": "023c98d3e730c557bee291d44e71ad4cad9770017e621799abe6c0c6a632f81c",
+      "evidence_hashes": {
+        "docs/evidence/upstream-caveman-policy-reference-20260920.json": "72b50e13f078e6c9ed1b86fb3163a10738c73c88924dae305a7d54d524543aff"
+      }
+    },
+    "caveman.mode.wenyan-full": {
+      "source_fingerprint": "8dd253b42862378ce8698a648a24afd80343270c9af177d6cd1eb45e75adb583",
+      "evidence_hashes": {
+        "docs/evidence/upstream-caveman-policy-reference-20260920.json": "72b50e13f078e6c9ed1b86fb3163a10738c73c88924dae305a7d54d524543aff"
+      }
+    },
+    "caveman.mode.wenyan-ultra": {
+      "source_fingerprint": "5995cfc47201034ad87ce81c1d30341c73bd9871d2352388e557e033d46fa4a4",
+      "evidence_hashes": {
+        "docs/evidence/upstream-caveman-policy-reference-20260920.json": "72b50e13f078e6c9ed1b86fb3163a10738c73c88924dae305a7d54d524543aff"
+      }
+    },
+    "caveman.rule.facts-and-errors": {
+      "source_fingerprint": "484de3f9dbea6b1d7d4190b2c5f08f64405c9150ebdfb9e861fe14098593e211",
+      "evidence_hashes": {
+        "docs/evidence/upstream-caveman-policy-reference-20260920.json": "72b50e13f078e6c9ed1b86fb3163a10738c73c88924dae305a7d54d524543aff"
+      }
+    },
+    "caveman.rule.negations-and-numbers": {
+      "source_fingerprint": "269da4a57653874dbf9e7fdce96fbbd536b07cdd8a4cb0eb6d4881a5dee41097",
+      "evidence_hashes": {
+        "docs/evidence/upstream-caveman-policy-reference-20260920.json": "72b50e13f078e6c9ed1b86fb3163a10738c73c88924dae305a7d54d524543aff"
+      }
+    },
+    "caveman.rule.language-preservation": {
+      "source_fingerprint": "3e4e95093c3f3167eefc127317817ce701c9162c1718df59b1194d28223ec765",
+      "evidence_hashes": {
+        "docs/evidence/upstream-caveman-policy-reference-20260920.json": "72b50e13f078e6c9ed1b86fb3163a10738c73c88924dae305a7d54d524543aff"
+      }
+    },
+    "caveman.rule.safety-clarity": {
+      "source_fingerprint": "b9c417146c22aed5c1387cb3a4154f6906982291a447956199aaed474178859e",
+      "evidence_hashes": {
+        "docs/evidence/upstream-caveman-policy-reference-20260920.json": "72b50e13f078e6c9ed1b86fb3163a10738c73c88924dae305a7d54d524543aff"
+      }
+    },
+    "caveman.rule.detail-override": {
+      "source_fingerprint": "1d2baa1c58f251c8f5e8c5ba9124638d699dd0618c15f4358d12848e6b60e911",
+      "evidence_hashes": {
+        "docs/evidence/upstream-caveman-policy-reference-20260920.json": "72b50e13f078e6c9ed1b86fb3163a10738c73c88924dae305a7d54d524543aff"
+      }
+    },
+    "caveman.rule.no-invented-abbreviations": {
+      "source_fingerprint": "f9f2054f8a5d3b7337941df9f712fd815e1aeb519ca086bd2c07566ec759558d",
+      "evidence_hashes": {
+        "docs/evidence/upstream-caveman-policy-reference-20260920.json": "72b50e13f078e6c9ed1b86fb3163a10738c73c88924dae305a7d54d524543aff"
+      }
+    },
+    "caveman.rule.never-grow": {
+      "source_fingerprint": "d261730eb43ba021dcbbc867f80f9861ce20feed9b70b143e6f41f557e79cc01",
+      "evidence_hashes": {
+        "docs/evidence/upstream-caveman-policy-reference-20260920.json": "72b50e13f078e6c9ed1b86fb3163a10738c73c88924dae305a7d54d524543aff"
+      }
+    },
+    "caveman.quality.technical-qa": {
+      "source_fingerprint": "c60b5328efabf5f949f0d10247c5e3bf92bcc3ea8c426214c5798826135a1965",
+      "evidence_hashes": {
+        "docs/evidence/response-quality-budget-20260920.json": "159990b268c9e6248880f7836ca0d08349dd2b379cd2678ae848d8c864dacdaa"
+      }
+    },
+    "caveman.quality.code-explanation": {
+      "source_fingerprint": "c482890d894434331e433026b232b001aec1c6ca4eba15be800499fad6e44d4b",
+      "evidence_hashes": {
+        "docs/evidence/response-quality-budget-20260920.json": "159990b268c9e6248880f7836ca0d08349dd2b379cd2678ae848d8c864dacdaa"
+      }
+    },
+    "caveman.quality.code-review": {
+      "source_fingerprint": "aa27957f18a464ddb804ca27640864b0ce6432341f138dbcee712406048daeba",
+      "evidence_hashes": {
+        "docs/evidence/response-quality-budget-20260920.json": "159990b268c9e6248880f7836ca0d08349dd2b379cd2678ae848d8c864dacdaa"
+      }
+    },
+    "caveman.quality.commit-message": {
+      "source_fingerprint": "4e72dc55a8089024448ed322c9b410101f94657cc033ff0c65e1ba0060861b43",
+      "evidence_hashes": {
+        "docs/evidence/response-quality-budget-20260920.json": "159990b268c9e6248880f7836ca0d08349dd2b379cd2678ae848d8c864dacdaa"
+      }
+    },
+    "caveman.quality.task-summary": {
+      "source_fingerprint": "96c8992516fe61d652f863506d5308ee4e0353096f59386a1f9bee3aace1bd6f",
+      "evidence_hashes": {
+        "docs/evidence/response-quality-budget-20260920.json": "159990b268c9e6248880f7836ca0d08349dd2b379cd2678ae848d8c864dacdaa"
+      }
+    },
+    "caveman.bypass.json-schema": {
+      "source_fingerprint": "d1ec574bf3d81084b610d55314969c748e112b422423ef73ba467c134f654f83",
+      "evidence_hashes": {
+        "tests/test_response_policy.py": "6bd0581dbe9a3944a96e1229dd33a34a8cdf5494dffdff1f8bbc7a82dfc89a7a",
+        "tests/test_caveman_reference.py": "050f4a71cb5bfbcfb4108197980f71b65c7f6c47a40e186d171b20d92493e56c"
+      }
+    },
+    "caveman.bypass.tool-call": {
+      "source_fingerprint": "29514d8f8cf776d58012fabf392f45a645a9ca0e9cef787467745974dacbac56",
+      "evidence_hashes": {
+        "tests/test_response_policy.py": "6bd0581dbe9a3944a96e1229dd33a34a8cdf5494dffdff1f8bbc7a82dfc89a7a",
+        "tests/test_caveman_reference.py": "050f4a71cb5bfbcfb4108197980f71b65c7f6c47a40e186d171b20d92493e56c"
+      }
+    }
+  }
+}

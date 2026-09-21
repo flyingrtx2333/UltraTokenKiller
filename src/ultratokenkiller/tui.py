@@ -74,9 +74,10 @@ class Dashboard(App):
                 f"输入代理 {'在线' if status['headroom'] else '离线'} · 内置工具压缩 {'可用' if status['rtk'] else '不可用'} · {status['profile']} / {status['caveman']}"
             )
             summary = capabilities["summary"]
+            full_summary = capabilities["full_parity_verification_summary"]
             reports = f"压缩对照 {'已有' if compression_report.is_success else '未运行'} / 回答评测 {'已有' if response_report.is_success else '未运行'}"
             self.query_one("#readiness", Label).update(
-                f"能力 {capabilities['total_core_capabilities']} 项：对标 {summary['upstream_parity_passed']}，真实 {summary['real_client_passed']}，离线 {summary['offline_passed']}，待验证 {summary['implemented_unverified']}，未实现 {summary['not_implemented']} · "
+                f"完整分母 {capabilities['full_parity_denominator']} 项：固定上游完整 {full_summary['fixed_upstream_full_passed']}，部分 {full_summary['fixed_upstream_partial_passed']}，离线 {full_summary['offline_passed']}，契约 {full_summary['contract_mapped']}，未实现 {full_summary['not_implemented']}，资产未就绪 {full_summary['asset_not_ready']} · "
                 f"源码 {capabilities['verification']['source_bound_capabilities']} · 契约 {capabilities['verified_command_contracts']}/{capabilities['reviewed_command_contracts']} · RTK {capabilities['command_inventory_coverage_denominator']}（映射 {capabilities['command_inventory_status_counts'].get('contract_mapped', 0)} / 待验证 {capabilities['command_inventory_status_counts'].get('unverified', 0)}） · {reports} · 原文 {recovery['used_bytes'] / 1048576:.1f}/{recovery['capacity_bytes'] / 1048576:.0f} MiB"
             )
             table = self.query_one("#events", DataTable)
