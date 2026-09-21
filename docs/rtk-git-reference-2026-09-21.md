@@ -25,7 +25,7 @@
 
 `utk exec` 现使用总内存上限约束的双通道捕获器，stdout 与 stderr 分开保存、压缩并写回原通道。容量超限时两个通道一起切换为流式透传，避免只压缩 stdout 而漏掉 Git `push`、`fetch`、`worktree` 的 stderr 输出。该能力已有通道、退出码、二进制与容量回退测试；真实客户端采用证据仍需后续重新绑定。
 
-包含双通道工具捕获的提交 `05a7185` 在 Mac arm64 的独立 `/tmp` 工作区完成全量离线回归：`291 passed, 1 skipped, 2 warnings`。该运行未执行固定 RTK 二进制，因而只证明 UTK 跨平台回归，不补充上游变体证据。
+包含 `git add` staged stat 探针的提交 `7c3a11b` 在 Mac arm64 的独立 `/tmp` 工作区完成全量离线回归：`292 passed, 1 skipped, 2 warnings`。该运行未执行固定 RTK 二进制，因而只证明 UTK 跨平台回归，不补充上游变体证据。
 
 证据文件：
 
