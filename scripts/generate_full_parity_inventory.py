@@ -82,7 +82,15 @@ def rtk_items(inventory: list[dict], lock: dict) -> list[dict]:
         "tools.GitCommands.Status",
     }
     behavior_windows = {"tools.Commands.Ls", "tools.Commands.Tree"}
-    success_failure_windows = {"tools.Commands.Find"}
+    success_failure_windows = {
+        "tools.Commands.Find",
+        "tools.GitCommand.Checkout",
+        "tools.GitCommand.Commit",
+        "tools.GitCommand.Pull",
+        "tools.GitCommands.Checkout",
+        "tools.GitCommands.Commit",
+        "tools.GitCommands.Pull",
+    }
     for row in inventory:
         mapped = row.get("status") == "contract_mapped"
         success_sampled = row["id"] in success_samples

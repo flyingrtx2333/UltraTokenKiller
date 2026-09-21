@@ -18,6 +18,42 @@
       "exit_code": 0,
       "raw_sha256": "389d791ba5a66910bc542271f823ecdcb42cbd5b964d5f19c84e03010b81beee"
     },
+    "git-commit-success": {
+      "raw": "[main a1b2c3d] preserve migration guard\n 3 files changed, 10 insertions(+), 2 deletions(-)\n create mode 100644 docs/risk.md\n",
+      "output": "ok a1b2c3d",
+      "exit_code": 0,
+      "raw_sha256": "749032d1359f9f65077b15258444e4335d38fb72b0ae6fa46f8abc9d617f363d"
+    },
+    "git-commit-failure": {
+      "raw": "On branch main\nnothing to commit, working tree clean\n",
+      "output": "On branch main\nnothing to commit, working tree clean",
+      "exit_code": 1,
+      "raw_sha256": "8422c09e067bfd4c362ac07071a0394d8f06bf873c71ea003e68f398b3f838da"
+    },
+    "git-pull-success": {
+      "raw": "Updating 1111111..2222222\nFast-forward\n src/main.py | 12 ++++++++++--\n 3 files changed, 10 insertions(+), 2 deletions(-)\n",
+      "output": "ok 3 files +10 -2",
+      "exit_code": 0,
+      "raw_sha256": "fe584da6c91be40efe4a43ef56631ee026a2d151fbcb48820bfcbc024b3436dd"
+    },
+    "git-pull-failure": {
+      "raw": "error: Your local changes to the following files would be overwritten by merge:\n        src/main.py\nPlease commit your changes or stash them before you merge.\nAborting\n",
+      "output": "FAILED: git pull\nerror: Your local changes to the following files would be overwritten by merge:\n        src/main.py\nPlease commit your changes or stash them before you merge.\nAborting",
+      "exit_code": 1,
+      "raw_sha256": "6b2886bbb22be915777e05cc33f05e153d33ec171d24a88f266d7c68bf42b298"
+    },
+    "git-checkout-success": {
+      "raw": "Switched to a new branch 'feature/migration'\n",
+      "output": "ok feature/migration (new)",
+      "exit_code": 0,
+      "raw_sha256": "15384cf0058e5e50a3fae2de68b2b7275497e2fd1692ef405b50e86dfd3a1c35"
+    },
+    "git-checkout-failure": {
+      "raw": "error: pathspec 'missing-branch' did not match any file(s) known to git\n",
+      "output": "error: pathspec 'missing-branch' did not match any file(s) known to git",
+      "exit_code": 1,
+      "raw_sha256": "690401e2b133f8b2acc338da82e1cdcfb7dbab26daf92bfc44104e4c719eeba7"
+    },
     "ls-human-long": {
       "raw": "total 16\ndrwxr-xr-x  2 user  staff    64 Jan  1 12:00 src\n-rw-r--r--  1 user  staff  1234 Jan  1 12:00 README file.md\n-rwxr-xr-x  1 user  staff   500 Dec 25  2024 build.sh\n",
       "output": "755  src/\n644  README file.md  1.2K\n755  build.sh  500B",
@@ -134,7 +170,7 @@
     },
     "golangci-v2-issues": {
       "raw": "{\"Issues\":[{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":101,\"Line\":10,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":200,\"Line\":18,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":299,\"Line\":26,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":105,\"Line\":11,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":204,\"Line\":19,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":303,\"Line\":27,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"}],\"Report\":{\"Linters\":[{\"Name\":\"arangolint\"},{\"Name\":\"asasalint\"},{\"Name\":\"asciicheck\"},{\"Name\":\"bidichk\"},{\"Name\":\"bodyclose\"},{\"Name\":\"canonicalheader\"},{\"Name\":\"clickhouselint\"},{\"Name\":\"containedctx\"},{\"Name\":\"contextcheck\"},{\"Name\":\"copyloopvar\"},{\"Name\":\"cyclop\"},{\"Name\":\"decorder\"},{\"Name\":\"depguard\"},{\"Name\":\"dogsled\"},{\"Name\":\"dupl\"},{\"Name\":\"dupword\"},{\"Name\":\"durationcheck\"},{\"Name\":\"embeddedstructfieldcheck\"},{\"Name\":\"errcheck\",\"Enabled\":true},{\"Name\":\"errchkjson\"},{\"Name\":\"errname\"},{\"Name\":\"errorlint\"},{\"Name\":\"exhaustive\"},{\"Name\":\"exhaustruct\"},{\"Name\":\"exhaustruct_v5\"},{\"Name\":\"exptostd\"},{\"Name\":\"forbidigo\"},{\"Name\":\"forcetypeassert\"},{\"Name\":\"funcorder\"},{\"Name\":\"fatcontext\"},{\"Name\":\"funlen\"},{\"Name\":\"gci\"},{\"Name\":\"ginkgolinter\"},{\"Name\":\"gocheckcompilerdirectives\"},{\"Name\":\"gochecknoglobals\"},{\"Name\":\"gochecknoinits\"},{\"Name\":\"gochecksumtype\"},{\"Name\":\"gocognit\"},{\"Name\":\"goconst\"},{\"Name\":\"gocritic\"},{\"Name\":\"gocyclo\"},{\"Name\":\"godoclint\"},{\"Name\":\"godot\"},{\"Name\":\"godox\"},{\"Name\":\"err113\"},{\"Name\":\"gofmt\"},{\"Name\":\"gofumpt\"},{\"Name\":\"golines\"},{\"Name\":\"goheader\"},{\"Name\":\"goimports\"},{\"Name\":\"mnd\"},{\"Name\":\"modernize\"},{\"Name\":\"gomoddirectives\"},{\"Name\":\"gomodguard\"},{\"Name\":\"gomodguard_v2\"},{\"Name\":\"goprintffuncname\"},{\"Name\":\"gosec\"},{\"Name\":\"gosmopolitan\"},{\"Name\":\"govet\",\"Enabled\":true},{\"Name\":\"grouper\"},{\"Name\":\"iface\"},{\"Name\":\"importas\"},{\"Name\":\"inamedparam\"},{\"Name\":\"ineffassign\",\"Enabled\":true},{\"Name\":\"interfacebloat\"},{\"Name\":\"intrange\"},{\"Name\":\"iotamixing\"},{\"Name\":\"ireturn\"},{\"Name\":\"lll\"},{\"Name\":\"loggercheck\"},{\"Name\":\"maintidx\"},{\"Name\":\"makezero\"},{\"Name\":\"mirror\"},{\"Name\":\"misspell\"},{\"Name\":\"musttag\"},{\"Name\":\"nakedret\"},{\"Name\":\"nestif\"},{\"Name\":\"nilerr\"},{\"Name\":\"nilnesserr\"},{\"Name\":\"nilnil\"},{\"Name\":\"nlreturn\"},{\"Name\":\"noctx\"},{\"Name\":\"noinlineerr\"},{\"Name\":\"nonamedreturns\"},{\"Name\":\"nosprintfhostport\"},{\"Name\":\"paralleltest\"},{\"Name\":\"perfsprint\"},{\"Name\":\"prealloc\"},{\"Name\":\"predeclared\"},{\"Name\":\"promlinter\"},{\"Name\":\"protogetter\"},{\"Name\":\"reassign\"},{\"Name\":\"recvcheck\"},{\"Name\":\"revive\"},{\"Name\":\"rowserrcheck\"},{\"Name\":\"sloglint\"},{\"Name\":\"sqlclosecheck\"},{\"Name\":\"spancheck\"},{\"Name\":\"staticcheck\",\"Enabled\":true},{\"Name\":\"swaggo\"},{\"Name\":\"tagalign\"},{\"Name\":\"tagliatelle\"},{\"Name\":\"testableexamples\"},{\"Name\":\"testifylint\"},{\"Name\":\"testpackage\"},{\"Name\":\"thelper\"},{\"Name\":\"tparallel\"},{\"Name\":\"typecheck\",\"Enabled\":true},{\"Name\":\"unconvert\"},{\"Name\":\"unparam\"},{\"Name\":\"unqueryvet\"},{\"Name\":\"unused\",\"Enabled\":true},{\"Name\":\"usestdlibvars\"},{\"Name\":\"usetesting\"},{\"Name\":\"varnamelen\"},{\"Name\":\"wastedassign\"},{\"Name\":\"whitespace\"},{\"Name\":\"wrapcheck\"},{\"Name\":\"wsl\"},{\"Name\":\"wsl_v5\"},{\"Name\":\"zerologlint\"},{\"Name\":\"nolintlint\"}]}}\n",
-      "output": "golangci-lint: 6 issues in 1 files\nTop linters:\n  errcheck (3x)\n  ineffassign (3x)\n\nTop files:\n  main.go (6 issues)\n    ineffassign (3)\n      → v := 1\n    errcheck (3)\n      → defer f.Close()",
+      "output": "golangci-lint: 6 issues in 1 files\nTop linters:\n  errcheck (3x)\n  ineffassign (3x)\n\nTop files:\n  main.go (6 issues)\n    errcheck (3)\n      → defer f.Close()\n    ineffassign (3)\n      → v := 1",
       "exit_code": 0,
       "raw_sha256": "0d979b09897297a5c5fac3b29b41e11521010254cac5498d2c46f02c0f54756f"
     },

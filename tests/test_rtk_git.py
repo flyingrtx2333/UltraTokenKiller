@@ -57,21 +57,21 @@ def test_git_status_removes_only_instructional_hints():
     assert "use \"git" not in compact
 
 
-def test_git_commit_preserves_hash_subject_and_change_counts():
+def test_git_commit_success_matches_fixed_rtk_hash_summary():
     raw = (
         "[main a1b2c3d] do not remove fallback\n"
         " 2 files changed, 10 insertions(+), 2 deletions(-)\n"
         " create mode 100644 docs/risk.md\n"
     )
     compact = compress_tool(raw, "git-commit")
-    assert compact == "ok a1b2c3d do not remove fallback\n2 files changed | 10 insertions(+) | 2 deletions(-)\n"
+    assert compact == "ok a1b2c3d\n"
 
 
 @pytest.mark.parametrize(
     "kind, raw, expected",
     [
         ("git-pull", "Already up to date.\n", "ok (up-to-date)\n"),
-        ("git-pull", "Fast-forward\n 3 files changed, 8 insertions(+), 1 deletion(-)\n", "ok 3 files changed | 8 insertions(+) | 1 deletion(-)\n"),
+        ("git-pull", "Fast-forward\n 3 files changed, 8 insertions(+), 1 deletion(-)\n", "ok 3 files +8 -1\n"),
         ("git-fetch", "From example.test/repo\n * [new branch] feature -> origin/feature\n", "ok fetched (1 new refs)\n"),
         ("git-checkout", "Switched to a new branch 'feature/x'\n", "ok feature/x (new)\n"),
         ("git-switch", "Already on 'main'\n", "ok main\n"),

@@ -365,13 +365,7 @@ def compress_tool(text: str, kind: str) -> str:
         match = re.search(r"(?m)^\[[^\]]*\b([0-9a-f]{7,64})\]\s+(.+)$", text)
         if not match:
             return text
-        summary = next(
-            (line.strip() for line in text.splitlines() if re.search(r"\bfiles? changed\b", line)),
-            "",
-        )
-        rendered = f"ok {match.group(1)[:7]} {match.group(2)}"
-        if summary:
-            rendered += "\n" + re.sub(r",\s+", " | ", summary)
+        rendered = f"ok {match.group(1)[:7]}"
         rendered += "\n" if text.endswith("\n") else ""
         return rendered if len(rendered) < len(text) else text
     if kind == "git-pull":
@@ -385,7 +379,14 @@ def compress_tool(text: str, kind: str) -> str:
             None,
         )
         if summary:
-            rendered = "ok " + re.sub(r",\s+", " | ", summary)
+            files = re.search(r"(\d+) files? changed", summary)
+            insertions = re.search(r"(\d+) insertions?\(\+\)", summary)
+            deletions = re.search(r"(\d+) deletions?\(-\)", summary)
+            rendered = "ok"
+            if files:
+                rendered += f" {files.group(1)} files"
+                rendered += f" +{insertions.group(1) if insertions else '0'}"
+                rendered += f" -{deletions.group(1) if deletions else '0'}"
             return rendered + ("\n" if text.endswith("\n") else "")
         return text
     if kind == "git-fetch":

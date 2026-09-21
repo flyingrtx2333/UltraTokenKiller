@@ -68,6 +68,6 @@ def test_additional_filters_keep_failures_and_machine_shapes():
     compact = compress_tool(listing, "file-list-ls-long")
     assert compact == listing
     commit = "[main a1b2c3d] change\n 2 files changed, 10 insertions(+), 2 deletions(-)\n"
-    assert "2 files changed | 10" in compress_tool(commit, "git-commit")
+    assert compress_tool(commit, "git-commit") == "ok a1b2c3d\n"
     unknown = "remote helper emitted opaque result\n"
     assert compress_tool(unknown, "git-push") == unknown
