@@ -5,7 +5,7 @@ import './styles.css'
 type Client = {name:string; detected:boolean; enabled:boolean; supported:boolean}
 type Status = {headroom:boolean;rtk:boolean;profile:string;profile_controlled:boolean;caveman:string;clients:Client[]}
 type Metrics = {model_requests:number;tool_commands:number;tool_optimized:number;input_tokens:number|null;output_tokens:number|null;cached_tokens:number|null;rtk_saved_tokens:number;headroom_saved_tokens:number}
-type EventItem = {id:number;created_at:number;kind:string;client:string;model?:string;duration_ms?:number;success:boolean;saved_tokens:number|null;metadata:{optimized?:boolean;original_bytes?:number;rendered_bytes?:number}}
+type EventItem = {id:number;created_at:number;kind:string;client:string;model?:string;duration_ms?:number;success:boolean;saved_tokens:number|null;metadata:{optimized?:boolean;original_bytes?:number;rendered_bytes?:number;upstream_status?:number}}
 const format = (value:number|null|undefined) => value == null ? '—' : new Intl.NumberFormat('zh-CN').format(value)
 const profiles:Record<string,string> = {safe:'稳妥',aggressive:'积极',off:'关闭'}
 const modes:Record<string,string> = {lite:'简洁',full:'精简',ultra:'极简',off:'关闭','wenyan-lite':'文言 · 简洁','wenyan-full':'文言 · 精简','wenyan-ultra':'文言 · 极简'}
@@ -118,7 +118,9 @@ function App(){
           const tool=['tool','rtk'].includes(item.kind)
           const {original_bytes:before,rendered_bytes:after}=item.metadata
           const size=before!=null&&after!=null?`${format(before)} → ${format(after)} B`:null
-          return <tr key={item.id}><td>{new Date(item.created_at*1000).toLocaleString('zh-CN',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'})}</td><td>{tool?'工具命令':'模型请求'}</td><td>{clientName(item.client)}</td><td>{tool?size||'—':item.model||'—'}</td><td>{format(item.saved_tokens)}</td><td><span className={item.success?'result ok':'result bad'}>{item.success?'成功':'失败'}</span></td></tr>
+          const status=item.metadata.upstream_status
+          const label=item.success?'成功':tool?'命令失败':status?`上游 ${status}`:'失败'
+          return <tr key={item.id}><td>{new Date(item.created_at*1000).toLocaleString('zh-CN',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'})}</td><td>{tool?'工具命令':'模型请求'}</td><td>{clientName(item.client)}</td><td>{tool?size||'—':item.model||'—'}</td><td>{format(item.saved_tokens)}</td><td><span className={item.success?'result ok':'result bad'}>{label}</span></td></tr>
         })}</tbody></table></div>:<div className="empty-state"><strong>{updated?'暂无活动':'加载中…'}</strong></div>}
       </section>
     </main>

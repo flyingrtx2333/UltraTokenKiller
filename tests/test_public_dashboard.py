@@ -36,10 +36,13 @@ def test_public_view_never_exposes_token_or_management(public_service):
     assert client.get("/api/v1/recovery", headers=headers).status_code == 403
     assert client.get("/api/v1/capabilities").status_code == 403
     assert all("config_path" not in item for item in client.get("/api/v1/status").json()["clients"])
+    public_service.store.add(kind="input", client="hermes", success=False,
+                             metadata={"session_id": "private", "recovery_id": "handle", "upstream_status": 404})
     public_service.store.add(kind="tool", client="hermes", success=True,
                              metadata={"session_id": "private", "recovery_id": "handle", "original_bytes": 100, "rendered_bytes": 20})
     metadata = client.get("/api/v1/events").json()[0]["metadata"]
     assert metadata == {"original_bytes": 100, "rendered_bytes": 20}
+    assert client.get("/api/v1/events").json()[1]["metadata"] == {"upstream_status": 404}
 
 
 def test_spoofed_loopback_headers_do_not_grant_access(public_service):

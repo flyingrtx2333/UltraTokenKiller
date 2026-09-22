@@ -141,7 +141,7 @@ async def api_events(request: Request, limit: int = Query(100, ge=1, le=500), ho
     if public_access(request):
         for event in events:
             event["metadata"] = {key: value for key, value in event["metadata"].items()
-                                 if key in {"optimized", "original_bytes", "rendered_bytes"}}
+                                 if key in {"optimized", "original_bytes", "rendered_bytes", "upstream_status"}}
     return events
 
 
