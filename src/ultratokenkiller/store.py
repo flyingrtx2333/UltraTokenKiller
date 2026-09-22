@@ -93,6 +93,80 @@ class Store:
             row[key] = row[key] or 0
         return row
 
+    def analytics(self, since_hours: int = 24) -> dict[str, Any]:
+        """Return privacy-safe chart data without exposing request content."""
+        now = time.time()
+        bucket_seconds = 3600 if since_hours <= 48 else 86400
+        bucket_count = max(1, (since_hours * 3600 + bucket_seconds - 1) // bucket_seconds)
+        end_bucket = int(now // bucket_seconds) * bucket_seconds
+        start_bucket = end_bucket - (bucket_count - 1) * bucket_seconds
+        timeline = {
+            start: {
+                "start": start,
+                "consumed_tokens": 0,
+                "saved_tokens": 0,
+                "model_requests": 0,
+                "failures": 0,
+            }
+            for start in range(start_bucket, end_bucket + 1, bucket_seconds)
+        }
+        by_model: dict[str, dict[str, Any]] = {}
+        by_client: dict[str, dict[str, Any]] = {}
+        savings = {"input": 0, "tool": 0}
+        outcomes = {"success": 0, "failure": 0}
+
+        with self.connect() as db:
+            rows = db.execute(
+                """SELECT created_at, kind, client, model, input_tokens, output_tokens,
+                          saved_tokens, success
+                   FROM events
+                   WHERE created_at >= ? AND kind IN ('input','headroom','tool','rtk')
+                   ORDER BY created_at""",
+                (start_bucket,),
+            ).fetchall()
+
+        def add(target: dict[str, dict[str, Any]], name: str, consumed: int, saved: int, request: bool) -> None:
+            item = target.setdefault(name, {"name": name, "requests": 0, "consumed_tokens": 0, "saved_tokens": 0})
+            item["requests"] += int(request)
+            item["consumed_tokens"] += consumed
+            item["saved_tokens"] += saved
+
+        for row in rows:
+            bucket = int(row["created_at"] // bucket_seconds) * bucket_seconds
+            if bucket not in timeline:
+                continue
+            model_request = row["kind"] in {"input", "headroom"}
+            consumed = int(row["input_tokens"] or 0) + int(row["output_tokens"] or 0) if model_request else 0
+            saved = max(0, int(row["saved_tokens"] or 0))
+            point = timeline[bucket]
+            point["consumed_tokens"] += consumed
+            point["saved_tokens"] += saved
+            point["model_requests"] += int(model_request)
+            point["failures"] += int(model_request and not row["success"])
+            savings["input" if model_request else "tool"] += saved
+            outcomes["success" if row["success"] else "failure"] += 1
+            add(by_client, row["client"] or "unknown", consumed, saved, model_request)
+            if model_request:
+                add(by_model, row["model"] or "unknown", consumed, saved, True)
+
+        rank = lambda values: sorted(
+            values.values(), key=lambda item: (item["consumed_tokens"] + item["saved_tokens"], item["requests"]), reverse=True
+        )[:8]
+        return {
+            "granularity": "hour" if bucket_seconds == 3600 else "day",
+            "timeline": list(timeline.values()),
+            "by_model": rank(by_model),
+            "by_client": rank(by_client),
+            "savings": [
+                {"name": "input", "saved_tokens": savings["input"]},
+                {"name": "tool", "saved_tokens": savings["tool"]},
+            ],
+            "outcomes": [
+                {"name": "success", "count": outcomes["success"]},
+                {"name": "failure", "count": outcomes["failure"]},
+            ],
+        }
+
     def events(self, limit: int = 100, *, since_hours: int | None = None, kinds: tuple[str, ...] = ()) -> list[dict[str, Any]]:
         conditions = []
         args = []

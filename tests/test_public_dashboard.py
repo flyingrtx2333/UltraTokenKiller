@@ -129,3 +129,19 @@ def test_failed_applied_response_style_is_reported_as_error(public_service):
     status = TestClient(public_service.app).get("/api/v1/status").json()
 
     assert status["features"]["response"] == "error"
+
+
+def test_public_metrics_include_safe_chart_aggregates(public_service):
+    public_service.store.add(
+        kind="input", client="hermes", model="model-a", success=True,
+        input_tokens=10, output_tokens=2, saved_tokens=3,
+        metadata={"secret": "never expose"},
+    )
+
+    payload = TestClient(public_service.app, base_url="http://42.194.159.81:19187").get(
+        "/api/v1/metrics?hours=24"
+    ).json()
+
+    assert payload["analytics"]["by_model"][0]["name"] == "model-a"
+    assert payload["analytics"]["timeline"]
+    assert "secret" not in str(payload["analytics"])

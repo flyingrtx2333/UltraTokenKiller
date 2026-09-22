@@ -153,8 +153,9 @@ async def api_metrics(hours: int = Query(24, ge=1, le=24 * 90), client: str | No
     _ingest_headroom(headroom)
     store.prune(settings.retention_days)
     local = store.summary(hours, client, model)
+    analytics = store.analytics(hours)
     rtk = _rtk_summary()
-    return {"local": local, "headroom": headroom, "rtk": rtk, "period_hours": hours}
+    return {"local": local, "analytics": analytics, "headroom": headroom, "rtk": rtk, "period_hours": hours}
 
 
 @app.get("/api/v1/events")
