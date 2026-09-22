@@ -18,6 +18,76 @@ HERMES_HOOK_START = "# >>> ultratokenkiller hermes hook >>>"
 HERMES_HOOK_END = "# <<< ultratokenkiller hermes hook <<<"
 HERMES_HOOK_COMMAND = "utk hermes-hook"
 HERMES_ALLOWLIST = "shell-hooks-allowlist.json"
+HERMES_PLUGIN_NAME = "utk-rewrite"
+HERMES_PLUGIN_INIT = '''"""Hermes plugin adapter for UltraTokenKiller command rewriting."""
+import json
+import shutil
+import subprocess
+import sys
+
+_utk_executable = None
+_missing_warned = False
+
+
+def register(ctx):
+    """Register a fail-open Hermes pre-tool callback."""
+    global _utk_executable, _missing_warned
+    _utk_executable = shutil.which("utk")
+    if not _utk_executable:
+        if not _missing_warned:
+            print("utk: hermes plugin warning: utk is not available in PATH", file=sys.stderr)
+            _missing_warned = True
+        return
+    ctx.register_hook("pre_tool_call", _pre_tool_call)
+
+
+def _pre_tool_call(tool_name="", args=None, session_id="", profile="", **extra):
+    if tool_name not in {"terminal", "shell"} or not isinstance(args, dict):
+        return
+    command = args.get("command")
+    if not isinstance(command, str) or not command.strip():
+        return
+    payload = {
+        "hook_event_name": "pre_tool_call",
+        "tool_name": tool_name,
+        "tool_input": args,
+        "session_id": session_id,
+        "profile": profile,
+        "extra": extra,
+    }
+    try:
+        result = subprocess.run(
+            [_utk_executable, "hermes-hook"],
+            input=json.dumps(payload),
+            shell=False,
+            timeout=5,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode != 0:
+            _warn(f"utk hermes-hook exited with {result.returncode}")
+            return
+        directive = json.loads(result.stdout or "{}")
+        modified = directive.get("args") if directive.get("action") == "modify" else None
+        if isinstance(modified, dict) and isinstance(modified.get("command"), str):
+            args.update(modified)
+            return {"action": "modify", "args": modified}
+    except Exception as exc:
+        _warn(str(exc))
+
+
+def _warn(message):
+    print(f"utk: hermes plugin warning: {message}", file=sys.stderr)
+'''
+HERMES_PLUGIN_MANIFEST = '''name: utk-rewrite
+version: "0.1.0"
+description: Rewrite Hermes terminal commands through UltraTokenKiller.
+author: UltraTokenKiller
+hooks:
+  - pre_tool_call
+provides_hooks:
+  - pre_tool_call
+'''
 
 
 @dataclass
@@ -176,8 +246,8 @@ class HermesAdapter:
         detected = shutil.which("hermes") is not None or self.root.exists()
         text = self.config.read_text(encoding="utf-8") if self.config.exists() else ""
         supported = not bool(re.search(r"provider:\s*(anthropic|bedrock|vertex)", text, re.I))
-        hook = HERMES_HOOK_START in text
-        detail = ("OpenAI-compatible provider; managed tool hook " + ("enabled" if hook else "not enabled")) if supported else "Current provider is not OpenAI-compatible"
+        plugin = _hermes_plugin_enabled(text)
+        detail = ("OpenAI-compatible provider; managed plugin " + ("enabled" if plugin else "not enabled")) if supported else "Current provider is not OpenAI-compatible"
         return ClientState(self.name, detected, START in text, detected and supported, detail, str(self.config))
 
     def upstream_url(self) -> str | None:
@@ -203,19 +273,22 @@ class HermesAdapter:
         _backup(self.config, backup_root)
         text = _remove_hermes_block(text) if START in text else text
         text = _remove_hermes_hook(text)
-        managed = _add_hermes_hook(_add_hermes_block(text, proxy_port, caveman))
+        managed = _set_hermes_plugin(_add_hermes_block(text, proxy_port, caveman), enabled=True)
         _validate_hermes_config(managed)
         allowlist = self.root / HERMES_ALLOWLIST
         _backup(allowlist, backup_root)
-        _approve_hermes_hook(allowlist)
+        _install_hermes_plugin(self.root, backup_root)
         _atomic_write_text(self.config, managed)
+        _revoke_hermes_hook(allowlist)
         return self.detect()
 
     def disable(self) -> ClientState:
         if self.config.exists():
             text = _remove_hermes_hook(self.config.read_text(encoding="utf-8"))
-            self.config.write_text(_remove_hermes_block(text), encoding="utf-8")
+            text = _set_hermes_plugin(_remove_hermes_block(text), enabled=False)
+            self.config.write_text(text, encoding="utf-8")
         _revoke_hermes_hook(self.root / HERMES_ALLOWLIST)
+        _remove_hermes_plugin(self.root)
         return self.detect()
 
 
@@ -269,53 +342,121 @@ def _remove_hermes_block(text: str) -> str:
     return clean.strip() + "\n"
 
 
-def _add_hermes_hook(text: str) -> str:
-    """Merge one managed pre-tool hook without replacing user hook entries."""
-    if HERMES_HOOK_START in text:
-        return text
-    lines = text.splitlines()
-    hooks = [i for i, line in enumerate(lines) if re.match(r"^hooks:\s*(?:#.*)?$", line)]
-    if len(hooks) > 1:
-        raise ValueError("Hermes config has multiple root hooks sections")
-    command_lines = [
-        '- matcher: "^(terminal|shell)$"',
-        f'  command: "{HERMES_HOOK_COMMAND}"',
-        "  timeout: 5",
-        "  fail_closed: false",
-    ]
-    if not hooks:
-        block = [HERMES_HOOK_START, "hooks:", "  pre_tool_call:"]
-        block += ["    " + line for line in command_lines]
-        block.append(HERMES_HOOK_END)
-        return text.rstrip() + "\n\n" + "\n".join(block) + "\n"
+def _hermes_plugin_enabled(text: str) -> bool:
+    try:
+        data = yaml.safe_load(text) if text.strip() else {}
+    except yaml.YAMLError:
+        return False
+    if not isinstance(data, dict):
+        return False
+    plugins = data.get("plugins")
+    enabled = plugins.get("enabled") if isinstance(plugins, dict) else None
+    return isinstance(enabled, list) and HERMES_PLUGIN_NAME in enabled
 
-    root = hooks[0]
+
+def _set_hermes_plugin(text: str, *, enabled: bool) -> str:
+    """Add or remove the managed plugin while preserving unrelated YAML text."""
+    try:
+        data = yaml.safe_load(text) if text.strip() else {}
+    except yaml.YAMLError as exc:
+        raise ValueError("Hermes config is not valid YAML") from exc
+    if data is None:
+        data = {}
+    if not isinstance(data, dict):
+        raise ValueError("Hermes config root must be a mapping")
+    plugins = data.get("plugins")
+    if plugins is None:
+        if not enabled:
+            return text
+        suffix = "" if not text or text.endswith("\n") else "\n"
+        return text + suffix + f"\nplugins:\n  enabled:\n    - {HERMES_PLUGIN_NAME}\n"
+    if not isinstance(plugins, dict):
+        raise ValueError("Hermes plugins must be a mapping")
+    current = plugins.get("enabled")
+    if current is None:
+        current = []
+    if not isinstance(current, list) or not all(isinstance(item, str) for item in current):
+        raise ValueError("Hermes plugins.enabled must be a list of names")
+    names = [item for item in current if item != HERMES_PLUGIN_NAME]
+    if enabled:
+        names.append(HERMES_PLUGIN_NAME)
+    if names == current:
+        return text
+
+    lines = text.splitlines(keepends=True)
+    plugin_lines = [i for i, line in enumerate(lines) if re.match(r"^plugins:\s*(?:#.*)?(?:\r?\n)?$", line)]
+    if len(plugin_lines) != 1:
+        raise ValueError("Hermes config must have one block-style root plugins section")
+    root = plugin_lines[0]
     end = len(lines)
     for i in range(root + 1, len(lines)):
-        line = lines[i]
-        if line and not line[0].isspace() and not line.lstrip().startswith("#"):
+        raw = lines[i].rstrip("\r\n")
+        if raw.strip() and not raw.lstrip().startswith("#") and not raw[0].isspace():
             end = i
             break
-    events = [i for i in range(root + 1, end) if re.match(r"^  pre_tool_call:\s*(?:#.*)?$", lines[i])]
-    if len(events) > 1:
-        raise ValueError("Hermes config has multiple pre_tool_call hook sections")
-    if not events:
-        block = ["  " + HERMES_HOOK_START, "  pre_tool_call:"]
-        block += ["    " + line for line in command_lines]
-        block.append("  " + HERMES_HOOK_END)
-        lines[end:end] = block
-    else:
-        event = events[0]
-        event_end = end
-        for i in range(event + 1, end):
-            if re.match(r"^  [A-Za-z0-9_-]+:\s*", lines[i]):
-                event_end = i
-                break
-        block = ["    " + HERMES_HOOK_START]
-        block += ["    " + line for line in command_lines]
-        block.append("    " + HERMES_HOOK_END)
-        lines[event_end:event_end] = block
-    return "\n".join(lines).rstrip() + "\n"
+    if not enabled and not names and set(plugins) == {"enabled"}:
+        del lines[root:end]
+        return "".join(lines).rstrip() + "\n"
+    enabled_lines = [
+        i
+        for i in range(root + 1, end)
+        if re.match(r"^  enabled:\s*", lines[i])
+    ]
+    rendered = "  enabled: []\n" if not names else "  enabled:\n" + "".join(
+        f"    - {json.dumps(name, ensure_ascii=False)}\n" for name in names
+    )
+    if not enabled_lines:
+        if not enabled:
+            return text
+        if root + 1 == end and not lines[root].endswith(("\n", "\r")):
+            lines[root] += "\n"
+        lines[end:end] = [rendered]
+        return "".join(lines)
+    if len(enabled_lines) != 1:
+        raise ValueError("Hermes config has multiple plugins.enabled sections")
+    start = enabled_lines[0]
+    enabled_end = end
+    for i in range(start + 1, end):
+        raw = lines[i].rstrip("\r\n")
+        if raw.strip() and not raw.lstrip().startswith("#") and len(raw) - len(raw.lstrip()) <= 2:
+            enabled_end = i
+            break
+    lines[start:enabled_end] = [rendered]
+    return "".join(lines)
+
+
+def _hermes_plugin_dir(root: Path) -> Path:
+    return root / "plugins" / HERMES_PLUGIN_NAME
+
+
+def _install_hermes_plugin(root: Path, backup_root: Path) -> None:
+    plugin_dir = _hermes_plugin_dir(root)
+    plugin_dir.mkdir(parents=True, exist_ok=True)
+    files = {
+        plugin_dir / "__init__.py": HERMES_PLUGIN_INIT,
+        plugin_dir / "plugin.yaml": HERMES_PLUGIN_MANIFEST,
+    }
+    for path, content in files.items():
+        _backup(path, backup_root)
+        _atomic_write_text(path, content)
+
+
+def _remove_hermes_plugin(root: Path) -> None:
+    plugin_dir = _hermes_plugin_dir(root)
+    files = {
+        plugin_dir / "__init__.py": HERMES_PLUGIN_INIT,
+        plugin_dir / "plugin.yaml": HERMES_PLUGIN_MANIFEST,
+    }
+    for path, expected in files.items():
+        try:
+            if path.read_text(encoding="utf-8") == expected:
+                path.unlink()
+        except OSError:
+            pass
+    try:
+        plugin_dir.rmdir()
+    except OSError:
+        pass
 
 
 def _remove_hermes_hook(text: str) -> str:
@@ -333,59 +474,20 @@ def _validate_hermes_config(text: str) -> None:
         raise ValueError("Hermes config is not valid YAML") from exc
     if not isinstance(data, dict):
         raise ValueError("Hermes config root must be a mapping")
-    hooks = data.get("hooks")
-    if not isinstance(hooks, dict):
-        raise ValueError("Hermes hooks must be a mapping")
-    entries = hooks.get("pre_tool_call")
-    if not isinstance(entries, list):
-        raise ValueError("Hermes pre_tool_call hooks must be a list")
-    matches = [
-        entry
-        for entry in entries
-        if isinstance(entry, dict) and entry.get("command") == HERMES_HOOK_COMMAND
-    ]
-    if len(matches) != 1 or matches[0].get("matcher") != "^(terminal|shell)$":
-        raise ValueError("Hermes managed hook did not merge exactly once")
+    plugins = data.get("plugins")
+    if not isinstance(plugins, dict):
+        raise ValueError("Hermes plugins must be a mapping")
+    enabled = plugins.get("enabled")
+    if not isinstance(enabled, list):
+        raise ValueError("Hermes plugins.enabled must be a list")
+    if enabled.count(HERMES_PLUGIN_NAME) != 1:
+        raise ValueError("Hermes managed plugin did not merge exactly once")
 
 
 def _atomic_write_text(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(path.name + ".utk.tmp")
     temporary.write_text(text, encoding="utf-8")
-    os.replace(temporary, path)
-
-
-def _approve_hermes_hook(path: Path) -> None:
-    data: dict = {"approvals": []}
-    if path.exists():
-        try:
-            loaded = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, ValueError) as exc:
-            raise ValueError("Hermes hook allowlist is not valid JSON") from exc
-        if not isinstance(loaded, dict) or not isinstance(loaded.get("approvals", []), list):
-            raise ValueError("Hermes hook allowlist has an unsupported shape")
-        data = loaded
-        data.setdefault("approvals", [])
-    exists = any(
-        isinstance(entry, dict)
-        and entry.get("event") == "pre_tool_call"
-        and entry.get("command") == HERMES_HOOK_COMMAND
-        for entry in data["approvals"]
-    )
-    if exists:
-        return
-    data["approvals"].append(
-        {
-            "event": "pre_tool_call",
-            "command": HERMES_HOOK_COMMAND,
-            "approved_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-            "script_mtime_at_approval": None,
-            "managed_by": "utk",
-        }
-    )
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_name(path.name + ".utk.tmp")
-    temporary.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     os.replace(temporary, path)
 
 

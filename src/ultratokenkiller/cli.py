@@ -308,13 +308,19 @@ def profile(name: str = typer.Argument(..., help="safe、aggressive 或 off"), c
 
 
 @app.command(context_settings={"allow_extra_args": True, "ignore_unknown_options": True})
-def exec(ctx: typer.Context, session: str | None = typer.Option(None), hook_call_id: str | None = typer.Option(None)):
+def exec(
+    ctx: typer.Context,
+    session: str | None = typer.Option(None),
+    hook_call_id: str | None = typer.Option(None),
+    client: str | None = typer.Option(None, hidden=True),
+):
     """通过 UTK 工具压缩 运行命令；复杂 shell 语法安全透传。"""
     command = list(ctx.args)
     if command and command[0] == "--":
         command = command[1:]
     previous = os.environ.get("UTK_SESSION_ID")
     previous_call = os.environ.get("UTK_HOOK_CALL_ID")
+    previous_client = os.environ.get("UTK_CLIENT")
     if hook_call_id:
         import re
         if not re.fullmatch(r"[a-f0-9]{64}", hook_call_id):
@@ -324,6 +330,10 @@ def exec(ctx: typer.Context, session: str | None = typer.Option(None), hook_call
         if not re.fullmatch(r"[A-Za-z0-9_-]{16,128}", session):
             raise typer.BadParameter("Invalid session identifier")
         os.environ["UTK_SESSION_ID"] = session
+    if client:
+        if client not in {"cli", "codex", "hermes"}:
+            raise typer.BadParameter("Invalid UTK client")
+        os.environ["UTK_CLIENT"] = client
     try:
         if hook_call_id:
             os.environ["UTK_HOOK_CALL_ID"] = hook_call_id
@@ -338,6 +348,10 @@ def exec(ctx: typer.Context, session: str | None = typer.Option(None), hook_call
             os.environ.pop("UTK_SESSION_ID", None)
         else:
             os.environ["UTK_SESSION_ID"] = previous
+        if previous_client is None:
+            os.environ.pop("UTK_CLIENT", None)
+        else:
+            os.environ["UTK_CLIENT"] = previous_client
     raise typer.Exit(code)
 
 

@@ -3,12 +3,15 @@ from __future__ import annotations
 
 import os
 import sqlite3
-from typing import Literal
+from typing import Annotated, Literal
 
 import httpx
 from pydantic import BaseModel, ConfigDict, Field
 
 from .config import default_home
+
+
+RecoveryId = Annotated[str, Field(max_length=128, pattern=r"^[A-Za-z0-9_-]+$")]
 
 
 class ToolMetadata(BaseModel):
@@ -21,7 +24,9 @@ class ToolMetadata(BaseModel):
     execution_id: str = Field(pattern=r"^[a-f0-9]{32}$")
     session_id: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
     tool_call_id: str | None = Field(default=None, pattern=r"^[a-f0-9]{64}$")
-    recovery_id: str | None = Field(default=None, max_length=128, pattern=r"^[A-Za-z0-9_-]+$")
+    recovery_id: RecoveryId | None = None
+    recovery_ids: dict[Literal["stdout", "stderr"], RecoveryId] | None = None
+    optimized_channels: list[Literal["stdout", "stderr"]] | None = None
     fallback: str | None = Field(default=None, max_length=64, pattern=r"^[a-z0-9:_-]+$")
 
 

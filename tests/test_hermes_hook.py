@@ -22,6 +22,7 @@ def test_rewrites_supported_terminal_command_with_correlation():
     assert command.startswith("utk exec ")
     assert "--session hermes_" in command
     assert "--hook-call-id" in command
+    assert "--client hermes" in command
     assert command.endswith("-- git status")
     assert directive["args"]["timeout"] == 30
 

@@ -11,9 +11,12 @@ from ultratokenkiller.tool_events import ToolEventSink
 
 def event():
     return {"kind": "tool", "client": "codex", "success": True, "duration_ms": 10,
-            "saved_tokens": 100, "metadata": {"command": "rg", "optimized": True,
+        "saved_tokens": 100, "metadata": {"command": "rg", "optimized": True,
             "engine": "utk-native", "estimator": "utf8_bytes_div_4", "filter": "search",
-            "execution_id": "a" * 32, "session_id": "b" * 64}}
+            "execution_id": "a" * 32, "session_id": "b" * 64,
+            "recovery_id": "stdout-recovery",
+            "recovery_ids": {"stdout": "stdout-recovery", "stderr": "stderr-recovery"},
+            "optimized_channels": ["stdout", "stderr"]}}
 
 
 def test_broker_records_metadata_once_and_rejects_bodies(tmp_path):

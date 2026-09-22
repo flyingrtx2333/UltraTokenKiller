@@ -42,7 +42,10 @@ def rewrite_payload(payload: object) -> dict[str, Any] | None:
     extra = payload.get("extra") if isinstance(payload.get("extra"), dict) else {}
     call_seed = "\0".join((session_seed, str(extra.get("tool_call_id", "")), command))
     hook_call_id = hashlib.sha256(call_seed.encode("utf-8")).hexdigest()
-    wrapped = ["utk", "exec", "--session", session, "--hook-call-id", hook_call_id, "--", *argv]
+    wrapped = [
+        "utk", "exec", "--session", session, "--hook-call-id", hook_call_id,
+        "--client", "hermes", "--", *argv,
+    ]
     rendered = subprocess.list2cmdline(wrapped) if os.name == "nt" else shlex.join(wrapped)
     modified = dict(tool_input)
     modified["command"] = rendered
