@@ -144,8 +144,9 @@ def apply_response_style(payload: dict, level: str, protocol: str = "openai") ->
         elif isinstance(system, list) and not any("[UTK response policy]" in str(item.get("text", "")) for item in system if isinstance(item, dict)):
             result["system"].append({"type": "text", "text": instruction})
     elif "messages" in result and isinstance(result["messages"], list):
-        if not any("[UTK response policy]" in str(item.get("content", "")) for item in result["messages"] if isinstance(item, dict) and item.get("role") == "developer"):
-            result["messages"].insert(0, {"role": "developer", "content": instruction})
+        role = "system" if protocol == "openai-chat" else "developer"
+        if not any("[UTK response policy]" in str(item.get("content", "")) for item in result["messages"] if isinstance(item, dict) and item.get("role") == role):
+            result["messages"].insert(0, {"role": role, "content": instruction})
     elif "input" in result:
         previous = result.get("instructions")
         if previous is None or isinstance(previous, str) and "[UTK response policy]" not in previous:

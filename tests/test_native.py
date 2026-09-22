@@ -141,6 +141,6 @@ def test_style_toggle_and_chat_usage(tmp_path):
         settings.caveman = "off"
         settings.save(tmp_path)
         client.post("/v1/chat/completions", json=payload)
-    assert observed[0]["messages"][0]["role"] == "developer"
+    assert observed[0]["messages"][0]["role"] == "system"
     assert observed[1] == payload
     assert Store(tmp_path / "metrics.sqlite3").events()[0]["input_tokens"] == 12

@@ -9,7 +9,7 @@ from websockets.sync.server import serve
 from ultratokenkiller.broker import broker_router
 from ultratokenkiller.config import Settings
 from ultratokenkiller.mcp import dispatch
-from ultratokenkiller.proxy import create_proxy, websocket_proxy_policy
+from ultratokenkiller.proxy import create_proxy, request_class, websocket_proxy_policy
 
 
 def test_websocket_proxy_policy_bypasses_loopback_only():
@@ -17,6 +17,63 @@ def test_websocket_proxy_policy_bypasses_loopback_only():
     assert websocket_proxy_policy("ws://localhost:9000/v1/responses") is None
     assert websocket_proxy_policy("ws://[::1]:9000/v1/responses") is None
     assert websocket_proxy_policy("wss://api.openai.com/v1/responses") is True
+
+
+def test_request_class_separates_model_probes_and_transport():
+    assert request_class("POST", "v1/chat/completions") == "model"
+    assert request_class("POST", "api/show") == "probe"
+    assert request_class("GET", "v1/models") == "probe"
+    assert request_class("POST", "health") == "transport"
+
+
+def test_probe_does_not_consume_model_budget_or_count_as_model(tmp_path, monkeypatch):
+    monkeypatch.setenv("UTK_MAX_MODEL_REQUESTS", "1")
+
+    def upstream(request):
+        if request.url.path.endswith("/api/show"):
+            return httpx.Response(404, json={"error": {"type": "not_ollama"}})
+        return httpx.Response(200, json={"choices": [], "usage": {"prompt_tokens": 3, "completion_tokens": 1}})
+
+    with TestClient(create_proxy("https://example.test/v1", tmp_path, httpx.MockTransport(upstream))) as client:
+        assert client.post("/api/show", json={"name": "model"}).status_code == 404
+        assert client.post("/v1/chat/completions", json={"model": "m", "messages": []}).status_code == 200
+        assert client.post("/v1/chat/completions", json={"model": "m", "messages": []}).status_code == 429
+
+    events = Store(tmp_path / "metrics.sqlite3").events()
+    assert [item["kind"] for item in events] == ["input", "transport"]
+    probe = events[1]
+    assert probe["metadata"]["request_class"] == "probe"
+    assert probe["metadata"]["path"] == "/api/show"
+    assert probe["metadata"]["error_category"] == "not_ollama"
+
+
+def test_model_session_compresses_and_header_is_not_forwarded(tmp_path, monkeypatch):
+    sent = []
+
+    def compress(_self, text, session, hint=None, query=""):
+        assert session == "hermes_bound"
+        return {"content": "short", "saved_tokens": 20, "recovery_id": "abcdefghijklmnop"}
+
+    monkeypatch.setattr("ultratokenkiller.proxy.BrokerClient.compress", compress)
+
+    def upstream(request):
+        sent.append(request)
+        return httpx.Response(200, json={"choices": [], "usage": {"prompt_tokens": 4, "completion_tokens": 1}})
+
+    recovered = "UTK_RETRIEVED_ORIGINAL\n" + ("keep" * 100)
+    envelope = json.dumps({"output": "x" * 400, "stdout": recovered, "exit_code": 7, "error": None})
+    payload = {"model": "m", "messages": [{"role": "tool", "content": envelope}]}
+    with TestClient(create_proxy("https://example.test/v1", tmp_path, httpx.MockTransport(upstream))) as client:
+        assert client.post("/v1/chat/completions", json=payload,
+                           headers={"x-utk-session-id": "hermes_bound"}).status_code == 200
+
+    assert "x-utk-session-id" not in sent[0].headers
+    messages = json.loads(sent[0].content)["messages"]
+    rendered = json.loads(next(item for item in messages if item.get("role") == "tool")["content"])
+    assert rendered == {"output": "short", "stdout": recovered, "exit_code": 7, "error": None}
+    event = Store(tmp_path / "metrics.sqlite3").events()[0]
+    assert event["metadata"]["changed_tool_results"] == 1
+    assert event["saved_tokens"] > 0
 from ultratokenkiller.recovery import RecoveryVault
 from ultratokenkiller.store import Store
 

@@ -104,6 +104,29 @@ def api_health() -> dict:
 @app.get("/api/v1/status")
 async def api_status(request: Request) -> dict:
     managed_values = [bool(item.get("managed", True)) for item in settings.clients.values()]
+    recent = store.events(100, since_hours=24, kinds=("input", "tool", "rtk"))
+
+    def latest(kind: str) -> dict | None:
+        return next((item for item in recent if item["kind"] == kind), None)
+
+    last_input = latest("input")
+    last_tool = next((item for item in recent if item["kind"] in {"tool", "rtk"}), None)
+    input_state = "off" if settings.profile == "off" else "waiting"
+    if last_input and input_state != "off":
+        metadata = last_input["metadata"]
+        if metadata.get("compression_fallback") in {"missing_session", "broker_unavailable", True}:
+            input_state = "error"
+        elif metadata.get("changed_tool_results", 0) > 0:
+            input_state = "active"
+        else:
+            input_state = "skipped"
+    tool_state = "off" if not settings.tools_enabled else "waiting"
+    if last_tool and tool_state != "off":
+        tool_state = "active" if last_tool["metadata"].get("optimized") else "skipped"
+    response_state = "off" if settings.caveman == "off" else "waiting"
+    if last_input and response_state != "off" and "response_style_applied" in last_input["metadata"]:
+        applied = bool(last_input["metadata"]["response_style_applied"])
+        response_state = "error" if applied and not last_input["success"] else "active" if applied else "skipped"
     return {
         "service": True,
         "headroom": bool(headroom_ports(settings)) and all(headroom_health(settings, port) for port in headroom_ports(settings)),
@@ -114,6 +137,7 @@ async def api_status(request: Request) -> dict:
         "profile": settings.profile,
         "profile_controlled": all(managed_values) if managed_values else settings.headroom_managed,
         "caveman": settings.caveman,
+        "features": {"input": input_state, "tools": tool_state, "response": response_state},
         "auto_start": settings.auto_start,
         "ports": {"dashboard": settings.dashboard_port, "headroom": settings.headroom_port, "headroom_instances": headroom_ports(settings)},
         "clients": [
@@ -141,7 +165,9 @@ async def api_events(request: Request, limit: int = Query(100, ge=1, le=500), ho
     if public_access(request):
         for event in events:
             event["metadata"] = {key: value for key, value in event["metadata"].items()
-                                 if key in {"optimized", "original_bytes", "rendered_bytes", "upstream_status"}}
+                                 if key in {"optimized", "original_bytes", "rendered_bytes", "upstream_status",
+                                            "request_class", "path", "error_category", "changed_tool_results",
+                                            "response_style_applied"}}
     return events
 
 

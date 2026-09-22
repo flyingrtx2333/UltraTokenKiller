@@ -219,15 +219,37 @@ def test_installed_hermes_plugin_resolves_utk_and_fails_open(tmp_path: Path, mon
     assert spec and spec.loader
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
+    spaced = tmp_path / "UTK Runtime" / ("utk.exe" if module.os.name == "nt" else "utk")
+    spaced.parent.mkdir()
+    spaced.write_text("launcher", encoding="utf-8")
+    monkeypatch.setenv("UTK_EXECUTABLE", str(spaced))
+    monkeypatch.setattr(module.shutil, "which", lambda _name: None)
+    assert module._resolve_utk() == str(spaced.resolve())
+    monkeypatch.delenv("UTK_EXECUTABLE")
     monkeypatch.setattr(module.shutil, "which", lambda name: "/opt/utk" if name == "utk" else None)
     callbacks = {}
+    middleware = {}
+    tools = {}
 
     class Context:
         def register_hook(self, event, callback):
             callbacks[event] = callback
 
+        def register_middleware(self, kind, callback):
+            middleware[kind] = callback
+
+        def register_tool(self, **kwargs):
+            tools[kwargs["name"]] = kwargs
+
     module.register(Context())
     assert set(callbacks) == {"pre_tool_call"}
+    assert set(middleware) == {"llm_request"}
+    assert set(tools) == {"utk_retrieve"}
+    request = {"messages": [], "extra_headers": {"x-user": "keep"}}
+    rewritten = middleware["llm_request"](request=request, session_id="session-one")
+    assert rewritten["request"]["extra_headers"]["x-user"] == "keep"
+    assert rewritten["request"]["extra_headers"]["x-utk-session-id"].startswith("hermes_")
+    assert middleware["llm_request"](request=request, session_id="") is None
 
     def successful_run(argv, **kwargs):
         assert argv == ["/opt/utk", "hermes-hook"]
@@ -247,6 +269,20 @@ def test_installed_hermes_plugin_resolves_utk_and_fails_open(tmp_path: Path, mon
         "action": "modify",
         "args": {"command": "utk exec -- git status", "timeout": 30},
     }
+
+    def retrieve_run(argv, **kwargs):
+        assert argv[:2] == ["/opt/utk", "hermes-retrieve"]
+        assert "hermes_" in argv[argv.index("--session") + 1]
+        assert kwargs["shell"] is False
+        return SimpleNamespace(returncode=0, stdout='{"content":"original"}\n', stderr="")
+
+    monkeypatch.setattr(module.subprocess, "run", retrieve_run)
+    recovered = tools["utk_retrieve"]["handler"]({"handle": "abcdefghijklmnop"}, session_id="session-one")
+    assert recovered.startswith("UTK_RETRIEVED_ORIGINAL\n")
+    assert json.loads(recovered.split("\n", 1)[1])["content"] == "original"
+    assert "session identifier is missing" in tools["utk_retrieve"]["handler"](
+        {"handle": "abcdefghijklmnop"}, session_id=""
+    )
 
     def failing_run(*_args, **_kwargs):
         raise OSError("missing")

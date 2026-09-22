@@ -45,6 +45,43 @@ def test_public_view_never_exposes_token_or_management(public_service):
     assert client.get("/api/v1/events").json()[1]["metadata"] == {"upstream_status": 404}
 
 
+def test_feature_states_describe_observed_effect_not_only_configuration(public_service):
+    client = TestClient(public_service.app)
+    initial = client.get("/api/v1/status").json()["features"]
+    assert initial == {"input": "waiting", "tools": "waiting", "response": "waiting"}
+
+    public_service.store.add(
+        kind="input", client="hermes", success=True, saved_tokens=12,
+        metadata={"changed_tool_results": 1, "response_style_applied": False},
+    )
+    public_service.store.add(
+        kind="tool", client="hermes", success=True, saved_tokens=8,
+        metadata={"optimized": True},
+    )
+    observed = client.get("/api/v1/status").json()["features"]
+    assert observed["input"] == "active"
+    assert observed["tools"] == "active"
+    assert observed["response"] == "skipped"
+
+
+def test_public_event_exposes_only_safe_request_diagnostics(public_service):
+    public_service.store.add(
+        kind="input", client="hermes", success=False,
+        metadata={
+            "request_class": "model", "path": "/v1/chat/completions",
+            "error_category": "invalid_request", "session_id": "secret",
+            "recovery_id": "secret-handle",
+        },
+    )
+    event = TestClient(public_service.app, base_url="http://42.194.159.81:19187").get(
+        "/api/v1/events"
+    ).json()[0]
+    assert event["metadata"] == {
+        "request_class": "model", "path": "/v1/chat/completions",
+        "error_category": "invalid_request",
+    }
+
+
 def test_spoofed_loopback_headers_do_not_grant_access(public_service):
     client = TestClient(public_service.app, base_url="http://127.0.0.1:19187")
     headers = {"X-Forwarded-For": "127.0.0.1", "X-Real-IP": "127.0.0.1"}
@@ -78,3 +115,17 @@ def test_store_unfiltered_call_stays_compatible(tmp_path):
     store = Store(tmp_path / "metrics.sqlite3")
     store.add(kind="transport", client="cli", success=True)
     assert len(store.events()) == 1
+
+
+def test_failed_applied_response_style_is_reported_as_error(public_service):
+    public_service.settings.caveman = "lite"
+    public_service.store.add(
+        kind="input",
+        client="hermes",
+        success=False,
+        metadata={"response_style_applied": True, "error_category": "invalid_request_error"},
+    )
+
+    status = TestClient(public_service.app).get("/api/v1/status").json()
+
+    assert status["features"]["response"] == "error"

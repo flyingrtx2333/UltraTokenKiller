@@ -3,6 +3,13 @@ import pytest
 from ultratokenkiller.engines import apply_response_style
 
 
+def test_chat_completions_uses_widely_supported_system_role():
+    payload = {"messages": [{"role": "user", "content": "Be concise"}]}
+    result = apply_response_style(payload, "lite", protocol="openai-chat")
+    assert result["messages"][0]["role"] == "system"
+    assert result["messages"][1:] == payload["messages"]
+
+
 @pytest.mark.parametrize("mode", ["lite", "full", "ultra", "wenyan-lite", "wenyan-full", "wenyan-ultra"])
 def test_policy_idempotent_preserves_fields(mode):
     payload = {"input": "Review this", "model": "chosen-model", "reasoning": {"effort": "high"}, "tools": [{"name": "keep"}]}

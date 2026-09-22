@@ -134,8 +134,8 @@ def render_roadmap_status(status: dict) -> str:
         ),
         (
             "- Caveman："
-            f"{by_upstream['caveman']['fixed_upstream_full_passed']} 项固定上游完整通过、"
-            f"{by_upstream['caveman']['offline_passed']} 项离线通过。"
+            f"{by_upstream['caveman'].get('fixed_upstream_full_passed', 0)} 项固定上游完整通过、"
+            f"{by_upstream['caveman'].get('offline_passed', 0)} 项离线通过。"
         ),
     ])
 

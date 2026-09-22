@@ -30,6 +30,35 @@ def websocket_proxy_policy(url: str):
     return None if urlparse(url).hostname in {"127.0.0.1", "localhost", "::1"} else True
 
 HOP_HEADERS = {"host", "content-length", "connection", "transfer-encoding", "keep-alive", "upgrade", "proxy-authorization", "proxy-authenticate", "te", "trailer"}
+MODEL_ENDPOINTS = {"responses", "chat/completions", "messages"}
+
+
+def request_class(method: str, path: str) -> str:
+    route = path.strip("/")
+    if route.startswith("v1/"):
+        route = route[3:]
+    if method.upper() == "POST" and route in MODEL_ENDPOINTS:
+        return "model"
+    if route in {"api/show", "models"} or route.endswith("/models"):
+        return "probe"
+    return "transport"
+
+
+def error_category(status: int, body: bytes) -> str | None:
+    if status < 400:
+        return None
+    try:
+        payload = json.loads(body)
+        error = payload.get("error", payload) if isinstance(payload, dict) else {}
+        if isinstance(error, dict):
+            for key in ("code", "type"):
+                value = error.get(key)
+                if isinstance(value, str) and 1 <= len(value) <= 80:
+                    return value
+    except (ValueError, TypeError):
+        pass
+    return {400: "invalid_request", 401: "authentication", 403: "authentication",
+            404: "not_found", 429: "rate_limit"}.get(status, "upstream_error")
 
 
 def usage_fields(payload: dict) -> dict:
@@ -69,14 +98,40 @@ async def compress_request(payload, settings, root, session):
                         if isinstance(block, dict) and block.get("type") == "tool_result":
                             fields.extend(tool_text_fields(block, "content"))
                 for block, key in fields:
-                    compressed = await asyncio.to_thread(broker.compress, block[key], session, query=query)
-                    if compressed["content"] != block[key]:
+                    compressed = await compress_tool_value(block[key], broker, session, query)
+                    if compressed != block[key]:
                         metadata["changed_tool_results"] += 1
-                        block[key] = compressed["content"]
+                        block[key] = compressed
             metadata["changed_images"] = await compress_inline_images(items, broker, session, query)
     metadata["estimated_input_after"] = estimate_tokens(json.dumps(result, ensure_ascii=False))
     metadata["estimated_saved_tokens"] = max(0, metadata["estimated_input_before"]-metadata["estimated_input_after"])
     return result, metadata
+
+
+async def compress_tool_value(text: str, broker: BrokerClient, session: str, query: str) -> str:
+    """Compress Hermes terminal output without discarding its status envelope."""
+    if text.startswith("UTK_RETRIEVED_ORIGINAL\n"):
+        return text
+    try:
+        envelope = json.loads(text)
+    except (ValueError, TypeError):
+        envelope = None
+    if isinstance(envelope, dict):
+        changed = False
+        for key in ("output", "stdout", "stderr"):
+            value = envelope.get(key)
+            if not isinstance(value, str) or not value:
+                continue
+            if value.startswith("UTK_RETRIEVED_ORIGINAL\n"):
+                continue
+            compressed = await asyncio.to_thread(broker.compress, value, session, query=query)
+            if compressed["content"] != value:
+                envelope[key] = compressed["content"]
+                changed = True
+        if changed:
+            return json.dumps(envelope, ensure_ascii=False, separators=(",", ":"))
+    compressed = await asyncio.to_thread(broker.compress, text, session, query=query)
+    return compressed["content"]
 
 
 def user_text(content):
@@ -239,11 +294,13 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
 
     @app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
     async def forward(path: str, request: Request):
-        if request.method == "POST" and not may_submit():
+        classification = request_class(request.method, path)
+        if classification == "model" and not may_submit():
             return JSONResponse({"error": {"message": "UTK live verification request budget exhausted"}}, status_code=429)
         started = time.perf_counter()
         body = await request.body()
-        metadata: dict = {"engine": "utk-native", "transport": "http"}
+        metadata: dict = {"engine": "utk-native", "transport": "http",
+                          "request_class": classification, "path": "/" + path.lstrip("/")}
         model = None
         settings = Settings.load(root)
         session = request.headers.get("x-utk-session-id", "")
@@ -252,16 +309,19 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
         metadata["request_id"] = uuid.uuid4().hex
         if session:
             metadata["session_id"] = hashlib.sha256(session.encode()).hexdigest()
-        if request.method == "POST" and path.rstrip("/").endswith(("responses", "chat/completions", "messages")):
+        if classification == "model":
             try:
                 payload = json.loads(body)
                 if isinstance(payload, dict):
                     model = payload.get("model")
                     # Style overhead is included before the compression estimate.
-                    styled = apply_response_style(payload, settings.caveman, protocol="anthropic" if path.rstrip("/").endswith("messages") else "openai")
+                    protocol = ("anthropic" if path.rstrip("/").endswith("messages") else
+                                "openai-chat" if path.rstrip("/").endswith("chat/completions") else "openai")
+                    styled = apply_response_style(payload, settings.caveman, protocol=protocol)
                     compressed, estimates = await compress_request(styled, settings, root, session)
                     metadata.update(estimates)
                     metadata["response_style"] = settings.caveman
+                    metadata["response_style_applied"] = styled != payload
                     body = json.dumps(compressed, ensure_ascii=False).encode("utf-8")
             except Exception:
                 # Any optimization failure retains the exact original request bytes.
@@ -280,7 +340,8 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
             outgoing = client.build_request(request.method, url, content=body, headers=headers)
             response = await client.send(outgoing, stream=True)
         except httpx.HTTPError:
-            store.add(kind="input", client=client_name, model=model, success=False,
+            store.add(kind="input" if classification == "model" else "transport",
+                      client=client_name, model=model, success=False,
                       duration_ms=int((time.perf_counter()-started)*1000), metadata=metadata)
             return JSONResponse({"error": {"message": "UTK upstream connection failed"}}, status_code=502)
         observer = UsageObserver("text/event-stream" in response.headers.get("content-type", "").lower())
@@ -289,14 +350,20 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
 
         async def stream():
             completed = False
+            error_body = bytearray()
             try:
                 async for chunk in response.aiter_bytes():
                     observer.feed(chunk)
+                    if response.status_code >= 400 and len(error_body) < 65536:
+                        error_body.extend(chunk[:65536 - len(error_body)])
                     yield chunk
                 completed = True
             finally:
                 await response.aclose()
                 observer.finish()
+                category = error_category(response.status_code, bytes(error_body))
+                if category:
+                    metadata["error_category"] = category
                 metadata["usage_observation"] = {
                     "status": "observed" if observer.usage else "observer_limit" if observer.disabled else "not_observed",
                     "usage_objects": observer.usage_objects,
@@ -310,7 +377,7 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
                     "cr_seen": observer.cr_seen,
                     "lf_seen": observer.lf_seen,
                 }
-                store.add(kind="input" if request.method == "POST" else "transport", client=client_name, model=model,
+                store.add(kind="input" if classification == "model" else "transport", client=client_name, model=model,
                           success=completed and response.is_success and not observer.failed,
                           duration_ms=int((time.perf_counter()-started)*1000),
                           saved_tokens=metadata.get("estimated_saved_tokens", 0),

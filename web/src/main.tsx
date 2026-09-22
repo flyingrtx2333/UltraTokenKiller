@@ -3,12 +3,13 @@ import { createRoot } from 'react-dom/client'
 import './styles.css'
 
 type Client = {name:string; detected:boolean; enabled:boolean; supported:boolean}
-type Status = {headroom:boolean;rtk:boolean;profile:string;profile_controlled:boolean;caveman:string;clients:Client[]}
+type FeatureState = 'off'|'waiting'|'active'|'skipped'|'error'
+type Status = {headroom:boolean;rtk:boolean;profile:string;profile_controlled:boolean;caveman:string;features?:{input:FeatureState;tools:FeatureState;response:FeatureState};clients:Client[]}
 type Metrics = {model_requests:number;tool_commands:number;tool_optimized:number;input_tokens:number|null;output_tokens:number|null;cached_tokens:number|null;rtk_saved_tokens:number;headroom_saved_tokens:number}
-type EventItem = {id:number;created_at:number;kind:string;client:string;model?:string;duration_ms?:number;success:boolean;saved_tokens:number|null;metadata:{optimized?:boolean;original_bytes?:number;rendered_bytes?:number;upstream_status?:number}}
+type EventItem = {id:number;created_at:number;kind:string;client:string;model?:string;duration_ms?:number;success:boolean;saved_tokens:number|null;metadata:{optimized?:boolean;original_bytes?:number;rendered_bytes?:number;upstream_status?:number;request_class?:string;path?:string;error_category?:string}}
 const format = (value:number|null|undefined) => value == null ? '—' : new Intl.NumberFormat('zh-CN').format(value)
 const profiles:Record<string,string> = {safe:'稳妥',aggressive:'积极',off:'关闭'}
-const modes:Record<string,string> = {lite:'简洁',full:'精简',ultra:'极简',off:'关闭','wenyan-lite':'文言 · 简洁','wenyan-full':'文言 · 精简','wenyan-ultra':'文言 · 极简'}
+const modes:Record<string,string> = {lite:'轻度',off:'关闭',full:'精简（实验）',ultra:'极简（实验）','wenyan-lite':'文言简洁（实验）','wenyan-full':'文言精简（实验）','wenyan-ultra':'文言极简（实验）'}
 const clientNames:Record<string,string> = {codex:'Codex',hermes:'Hermes',cli:'终端'}
 const clientName = (name:string) => clientNames[name]||name
 
@@ -93,9 +94,9 @@ function App(){
       <div className="workspace">
         <section aria-labelledby="layers-title"><div className="section-head"><h2 id="layers-title">功能</h2>{status&&!token&&<span className="state">只读</span>}</div>
           <div className="layer-list">
-            <Layer name="输入压缩" active={status?status.headroom&&status.profile!=='off':null} />
-            <Layer name="工具输出" active={status?status.rtk:null} />
-            <Layer name="回答精简" active={status?status.caveman!=='off':null} />
+            <Layer name="输入压缩" state={status?.features?.input||(status?(status.profile==='off'?'off':'waiting'):null)} />
+            <Layer name="工具输出" state={status?.features?.tools||(status?(status.rtk?'waiting':'off'):null)} />
+            <Layer name="回答精简" state={status?.features?.response||(status?(status.caveman==='off'?'off':'waiting'):null)} />
           </div>
           {token?<><fieldset disabled={!status||!!busy||!status.profile_controlled}><legend>压缩档位</legend><div className="segmented">
             {Object.entries(profiles).map(([v,label])=><button key={v} className={status?.profile===v?'selected':''} aria-pressed={status?.profile===v} onClick={()=>update('/api/v1/config','PATCH','config',{profile:v})}>{label}</button>)}
@@ -129,6 +130,7 @@ function App(){
 
 function Metric({label,value}:{label:string;value:string}){return <article className="metric"><span>{label}</span><strong>{value}</strong></article>}
 function StatusDot({ok}:{ok:boolean}){return <span className={ok?'dot on':'dot'} aria-label={ok?'已开启':'未开启'} />}
-function Layer({name,active}:{name:string;active:boolean|null}){return <article className="layer"><StatusDot ok={active===true}/><h3>{name}</h3><span className="state">{active===null?'加载中':active?'已开启':'已关闭'}</span></article>}
+const stateLabels:Record<FeatureState,string>={off:'已关闭',waiting:'等待请求',active:'已生效',skipped:'已跳过',error:'异常'}
+function Layer({name,state}:{name:string;state:FeatureState|null}){return <article className="layer"><StatusDot ok={state==='active'}/><h3>{name}</h3><span className="state">{state===null?'加载中':stateLabels[state]}</span></article>}
 
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>)

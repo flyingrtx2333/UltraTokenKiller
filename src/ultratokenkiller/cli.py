@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import os
 import shutil
 import subprocess
@@ -82,6 +83,34 @@ def hermes_hook_command():
     from .hermes_hook import main
 
     raise typer.Exit(main())
+
+
+@app.command("hermes-retrieve", hidden=True)
+def hermes_retrieve_command(
+    session: str = typer.Option(...),
+    handle: str = typer.Option(...),
+    offset: int = typer.Option(0, min=0),
+    limit: int = typer.Option(32000, min=1, max=64000),
+):
+    """Retrieve a session-bound original for the trusted Hermes plugin."""
+    import httpx
+    import re
+    from .broker import BrokerClient
+    from .recovery import RecoveryUnavailable
+
+    if not re.fullmatch(r"hermes_[a-f0-9]{32}", session):
+        raise typer.BadParameter("Invalid Hermes session identifier")
+    if not re.fullmatch(r"[A-Za-z0-9_-]{16,128}", handle):
+        raise typer.BadParameter("Invalid recovery handle")
+    try:
+        value = BrokerClient().retrieve(session, handle, offset, limit)
+    except RecoveryUnavailable as error:
+        typer.echo(f"Original unavailable: {error}", err=True)
+        raise typer.Exit(2)
+    except (OSError, ValueError, httpx.HTTPError) as error:
+        typer.echo(f"Original unavailable: {type(error).__name__}", err=True)
+        raise typer.Exit(2)
+    typer.echo(json.dumps(value, ensure_ascii=False))
 
 
 @app.command("assets")

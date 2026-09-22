@@ -21,6 +21,9 @@ HERMES_ALLOWLIST = "shell-hooks-allowlist.json"
 HERMES_PLUGIN_NAME = "utk-rewrite"
 HERMES_PLUGIN_INIT = '''"""Hermes plugin adapter for UltraTokenKiller command rewriting."""
 import json
+import hashlib
+import os
+from pathlib import Path
 import shutil
 import subprocess
 import sys
@@ -29,16 +32,95 @@ _utk_executable = None
 _missing_warned = False
 
 
+def _resolve_utk():
+    names = ("utk.exe", "utk") if os.name == "nt" else ("utk",)
+    configured = os.environ.get("UTK_EXECUTABLE")
+    if configured and Path(configured).is_file():
+        return str(Path(configured).resolve())
+    discovered = shutil.which("utk")
+    if discovered:
+        return discovered
+    candidates = []
+    candidates.extend(str(Path(sys.executable).with_name(name)) for name in names)
+    state = Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local" / "state"))
+    candidates.extend(str(state / "utk" / "venv" / "bin" / name) for name in names)
+    for candidate in candidates:
+        if candidate and Path(candidate).is_file():
+            return str(Path(candidate).resolve())
+    return None
+
+
+def _utk_session(session_id):
+    if not isinstance(session_id, str) or not session_id:
+        return ""
+    return "hermes_" + hashlib.sha256(session_id.encode("utf-8")).hexdigest()[:32]
+
+
 def register(ctx):
     """Register a fail-open Hermes pre-tool callback."""
     global _utk_executable, _missing_warned
-    _utk_executable = shutil.which("utk")
+    _utk_executable = _resolve_utk()
     if not _utk_executable:
         if not _missing_warned:
-            print("utk: hermes plugin warning: utk is not available in PATH", file=sys.stderr)
+            print("utk: hermes plugin warning: utk executable unavailable", file=sys.stderr)
             _missing_warned = True
         return
     ctx.register_hook("pre_tool_call", _pre_tool_call)
+    ctx.register_middleware("llm_request", _llm_request)
+    ctx.register_tool(
+        name="utk_retrieve",
+        toolset="utk",
+        schema={
+            "name": "utk_retrieve",
+            "description": "Retrieve original content referenced by a UTK compression marker.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "handle": {"type": "string", "description": "UTK recovery handle"},
+                    "offset": {"type": "integer", "minimum": 0, "default": 0},
+                    "limit": {"type": "integer", "minimum": 1, "maximum": 64000, "default": 32000},
+                },
+                "required": ["handle"],
+                "additionalProperties": False,
+            },
+        },
+        handler=_retrieve,
+        description="Retrieve original content referenced by a UTK compression marker.",
+    )
+
+
+def _llm_request(request=None, session_id="", **_extra):
+    session = _utk_session(session_id)
+    if not session or not isinstance(request, dict):
+        return None
+    updated = dict(request)
+    headers = dict(updated.get("extra_headers") or {})
+    headers["x-utk-session-id"] = session
+    updated["extra_headers"] = headers
+    return {"request": updated, "source": "utk-rewrite", "reason": "session binding"}
+
+
+def _retrieve(args=None, session_id="", **_extra):
+    session = _utk_session(session_id)
+    if not session:
+        return "Original unavailable: Hermes session identifier is missing."
+    args = args if isinstance(args, dict) else {}
+    handle = args.get("handle")
+    if not isinstance(handle, str) or not handle:
+        return "Original unavailable: recovery handle is missing."
+    command = [
+        _utk_executable, "hermes-retrieve", "--session", session,
+        "--handle", handle, "--offset", str(args.get("offset", 0)),
+        "--limit", str(args.get("limit", 32000)),
+    ]
+    try:
+        result = subprocess.run(command, shell=False, timeout=10, capture_output=True, text=True)
+        if result.returncode != 0:
+            return (result.stderr or "Original unavailable: UTK recovery failed.").strip()
+        return "UTK_RETRIEVED_ORIGINAL\\n" + result.stdout.strip()
+    except (OSError, subprocess.SubprocessError) as error:
+        _warn(f"utk retrieve failed: {type(error).__name__}")
+        return "Original unavailable: UTK recovery service could not be reached."
 
 
 def _pre_tool_call(tool_name="", args=None, session_id="", profile="", **extra):
@@ -80,13 +162,17 @@ def _warn(message):
     print(f"utk: hermes plugin warning: {message}", file=sys.stderr)
 '''
 HERMES_PLUGIN_MANIFEST = '''name: utk-rewrite
-version: "0.1.0"
-description: Rewrite Hermes terminal commands through UltraTokenKiller.
+version: "0.2.0"
+description: Bind Hermes requests and terminal output to UltraTokenKiller sessions.
 author: UltraTokenKiller
 hooks:
   - pre_tool_call
 provides_hooks:
   - pre_tool_call
+provides_middleware:
+  - llm_request
+provides_tools:
+  - utk_retrieve
 '''
 
 
