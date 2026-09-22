@@ -81,7 +81,7 @@ function App(){
       <section aria-labelledby="overview-title">
         <div className="section-head"><h2 id="overview-title">用量与节省</h2><time>{updated?.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})||'加载中'}</time></div>
         <div className="metrics">
-          <Metric label="模型请求" value={format(metrics?.model_requests)} />
+          <Metric label="模型请求尝试" value={format(metrics?.model_requests)} />
           <Metric label="输入 Token" value={format(metrics?.input_tokens)} />
           <Metric label="输出 Token" value={format(metrics?.output_tokens)} />
           <Metric label="输入节省（估算 Token）" value={format(metrics?.headroom_saved_tokens)} />
