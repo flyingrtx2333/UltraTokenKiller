@@ -232,7 +232,7 @@ def _add_hermes_block(text: str, proxy_port: int, caveman: str) -> str:
     previous: dict[str, str] = {}
     kept: list[str] = []
     for line in section.splitlines():
-        child = re.match(r"^  (provider|base_url|coding_instructions):", line)
+        child = re.match(r"^  (base_url|coding_instructions):", line)
         if child:
             previous[child.group(1)] = line
         else:
@@ -241,7 +241,6 @@ def _add_hermes_block(text: str, proxy_port: int, caveman: str) -> str:
     managed = [
         f"  {START}",
         f"  # utk-hermes-state: {state}",
-        "  provider: custom",
         f"  base_url: http://127.0.0.1:{proxy_port}/v1",
         f"  coding_instructions: {json.dumps(_caveman_instruction(caveman), ensure_ascii=False)}",
         f"  {END}",

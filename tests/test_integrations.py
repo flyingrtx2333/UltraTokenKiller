@@ -61,13 +61,36 @@ def test_hermes_enable_restores_existing_model_fields(tmp_path: Path):
     assert adapter.enable(18788, tmp_path / "backups").enabled
     enabled = config.read_text(encoding="utf-8")
     assert enabled.count("model:") == 1
-    assert "provider: custom" in enabled
+    assert "provider: openai" in enabled
+    assert "provider: custom" not in enabled
     assert "default: gpt-test" in enabled
     adapter.disable()
     restored = config.read_text(encoding="utf-8")
     assert "provider: openai" in restored
     assert "coding_instructions: keep-this" in restored
     assert "enabled: true" in restored
+
+
+def test_hermes_enable_preserves_provider_while_proxying_base_url(tmp_path: Path):
+    root = tmp_path / "hermes"
+    root.mkdir()
+    config = root / "config.yaml"
+    original = (
+        "model:\n"
+        "  provider: alibaba-cn\n"
+        "  base_url: https://dashscope.aliyuncs.com/compatible-mode/v1\n"
+        "  default: deepseek-v4-flash-0731\n"
+    )
+    config.write_text(original, encoding="utf-8")
+
+    adapter = HermesAdapter(root)
+    assert adapter.enable(18788, tmp_path / "backups").enabled
+    enabled = yaml.safe_load(config.read_text(encoding="utf-8"))
+    assert enabled["model"]["provider"] == "alibaba-cn"
+    assert enabled["model"]["base_url"] == "http://127.0.0.1:18788/v1"
+
+    adapter.disable()
+    assert yaml.safe_load(config.read_text(encoding="utf-8")) == yaml.safe_load(original)
 
 
 def test_hermes_hook_merge_approval_and_restore_are_scoped(tmp_path: Path):
