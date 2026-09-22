@@ -6,6 +6,32 @@ from ultratokenkiller.runtime import _git_add_summary
 from ultratokenkiller.tool_filters import command_filter, compress_tool
 
 
+def test_runtime_streaming_does_not_invent_byte_counts(tmp_path, monkeypatch):
+    import ultratokenkiller.runtime as runtime
+    from ultratokenkiller.store import Store
+    monkeypatch.setenv("UTK_HOME", str(tmp_path))
+    monkeypatch.setattr("ultratokenkiller.processes.execute_channels", lambda *a, **kw: (0, None, None, "memory_limit_passthrough"))
+    store = Store(tmp_path / "metrics.sqlite3")
+    assert runtime.run_command(["python", "-m", "pytest"], store) == 0
+    metadata = store.events()[0]["metadata"]
+    assert metadata["optimized"] is False
+    assert "original_bytes" not in metadata
+
+
+def test_runtime_records_captured_output_sizes(tmp_path, monkeypatch):
+    import ultratokenkiller.runtime as runtime
+    from ultratokenkiller.store import Store
+    monkeypatch.setenv("UTK_HOME", str(tmp_path))
+    monkeypatch.delenv("UTK_SESSION_ID", raising=False)
+    monkeypatch.setattr("ultratokenkiller.processes.execute_channels", lambda *a, **kw: (7, b"hello", b"error", None))
+    monkeypatch.setattr(runtime, "_write_stdout", lambda *_: None)
+    monkeypatch.setattr(runtime, "_write_stderr", lambda *_: None)
+    store = Store(tmp_path / "metrics.sqlite3")
+    assert runtime.run_command(["python", "-m", "pytest"], store) == 7
+    metadata = store.events()[0]["metadata"]
+    assert metadata["original_bytes"] == metadata["rendered_bytes"] == 10
+
+
 def test_memory_overflow_streams_every_byte_without_disk():
     output = []
     code, captured, fallback = execute([sys.executable, "-c", "import sys; sys.stdout.buffer.write(b'x'*200000)"], capture=True, write=output.append, memory_limit=1000)

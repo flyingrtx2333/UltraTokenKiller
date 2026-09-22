@@ -213,8 +213,10 @@ def run_command(command: list[str], store: Store) -> int:
             elif native.rendered != native.original:
                 rendered = native.original
                 fallback = "missing_session"
-            metadata["optimized"] = rendered != native.original
             _write_stdout(rendered.encode("utf-8"))
+        metadata["optimized"] = rendered != native.original
+        metadata["original_bytes"] = len(native.original.encode("utf-8"))
+        metadata["rendered_bytes"] = len(rendered.encode("utf-8"))
         metadata["fallback"] = fallback
         client_name = os.environ.get("UTK_CLIENT", "cli")
         if client_name not in {"codex", "hermes", "cli"}:
@@ -280,6 +282,9 @@ def run_command(command: list[str], store: Store) -> int:
     if rendered_stderr:
         _write_stderr(rendered_stderr)
     metadata["optimized"] = bool(optimized_channels)
+    if raw_stdout is not None and raw_stderr is not None:
+        metadata["original_bytes"] = len(raw_stdout) + len(raw_stderr)
+        metadata["rendered_bytes"] = len(rendered_stdout or b"") + len(rendered_stderr or b"")
     if optimized_channels:
         metadata["optimized_channels"] = optimized_channels
     if recovery_ids:

@@ -93,10 +93,19 @@ class Store:
             row[key] = row[key] or 0
         return row
 
-    def events(self, limit: int = 100) -> list[dict[str, Any]]:
+    def events(self, limit: int = 100, *, since_hours: int | None = None, kinds: tuple[str, ...] = ()) -> list[dict[str, Any]]:
+        conditions = []
+        args = []
+        if since_hours is not None:
+            conditions.append("created_at >= ?")
+            args.append(time.time() - since_hours * 3600)
+        if kinds:
+            conditions.append("kind IN (" + ",".join("?" for _ in kinds) + ")")
+            args.extend(kinds)
+        predicate = " WHERE " + " AND ".join(conditions) if conditions else ""
         with self.connect() as db:
             rows = db.execute(
-                "SELECT * FROM events ORDER BY created_at DESC LIMIT ?", (min(limit, 500),)
+                "SELECT * FROM events" + predicate + " ORDER BY created_at DESC LIMIT ?", (*args, min(limit, 500))
             ).fetchall()
         result = []
         for row in rows:

@@ -23,6 +23,7 @@ def default_home() -> Path:
 @dataclass
 class Settings:
     host: str = "127.0.0.1"
+    dashboard_host: str = "127.0.0.1"
     dashboard_port: int = 18787
     headroom_port: int = 18788
     profile: str = "safe"
@@ -63,6 +64,8 @@ class Settings:
     def validate(self):
         if self.host != "127.0.0.1":
             raise ValueError("UTK only supports loopback listeners")
+        if self.dashboard_host not in {"127.0.0.1", "0.0.0.0"}:
+            raise ValueError("Dashboard host must be loopback or 0.0.0.0")
         if self.profile not in {"safe", "aggressive", "off"}:
             raise ValueError("Unknown input profile")
         if self.caveman not in {"lite", "full", "ultra", "off", "wenyan-lite", "wenyan-full", "wenyan-ultra"}:

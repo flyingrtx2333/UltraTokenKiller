@@ -33,6 +33,30 @@ recovery_vault = RecoveryVault(settings.recovery_capacity_bytes, settings.recove
 app.include_router(broker_router(recovery_vault, session_token, home))
 
 
+def local_access(request: Request) -> bool:
+    peer = request.client.host if request.client else None  # Unix socket has no peer address.
+    return peer in {None, "127.0.0.1", "::1"} and request.url.hostname in {"127.0.0.1", "localhost", "::1"}
+
+
+def public_access(request: Request) -> bool:
+    return settings.dashboard_host == "0.0.0.0" and not local_access(request)
+
+
+@app.middleware("http")
+async def dashboard_access(request: Request, call_next):
+    if public_access(request):
+        path = request.url.path
+        readable = path in {"/", "/dashboard", "/api/v1/health", "/api/v1/status",
+                            "/api/v1/metrics", "/api/v1/events", "/api/v1/config", "/api/v1/stream"}
+        readable = readable or path.startswith(("/assets/", "/brand/"))
+        if request.method not in {"GET", "HEAD"} or not readable:
+            return JSONResponse({"detail": "Public dashboard is read-only"}, status_code=403)
+    response = await call_next(request)
+    if request.url.path.startswith("/api/"):
+        response.headers["Cache-Control"] = "no-store"
+    return response
+
+
 @app.get("/api/v1/capabilities")
 def api_capabilities():
     from .benchmark import capability_report
@@ -78,12 +102,12 @@ def api_health() -> dict:
 
 
 @app.get("/api/v1/status")
-async def api_status() -> dict:
+async def api_status(request: Request) -> dict:
     managed_values = [bool(item.get("managed", True)) for item in settings.clients.values()]
     return {
         "service": True,
         "headroom": bool(headroom_ports(settings)) and all(headroom_health(settings, port) for port in headroom_ports(settings)),
-        "rtk": True,
+        "rtk": settings.tools_enabled,
         "engine": "utk-native",
         "parity_certified": False,
         "recovery": recovery_vault.status(),
@@ -92,7 +116,10 @@ async def api_status() -> dict:
         "caveman": settings.caveman,
         "auto_start": settings.auto_start,
         "ports": {"dashboard": settings.dashboard_port, "headroom": settings.headroom_port, "headroom_instances": headroom_ports(settings)},
-        "clients": clients(),
+        "clients": [
+            {key: value for key, value in item.items() if key in {"name", "detected", "enabled", "supported"}}
+            if public_access(request) else item for item in clients()
+        ],
     }
 
 
@@ -107,10 +134,15 @@ async def api_metrics(hours: int = Query(24, ge=1, le=24 * 90), client: str | No
 
 
 @app.get("/api/v1/events")
-async def api_events(limit: int = Query(100, ge=1, le=500)) -> list[dict]:
+async def api_events(request: Request, limit: int = Query(100, ge=1, le=500), hours: int = Query(24, ge=1, le=24 * 90)) -> list[dict]:
     headroom = await headroom_stats()
     _ingest_headroom(headroom)
-    return store.events(limit)
+    events = store.events(limit, since_hours=hours, kinds=("input", "headroom", "tool", "rtk"))
+    if public_access(request):
+        for event in events:
+            event["metadata"] = {key: value for key, value in event["metadata"].items()
+                                 if key in {"optimized", "original_bytes", "rendered_bytes"}}
+    return events
 
 
 def _ingest_headroom(headroom: dict) -> None:
@@ -145,10 +177,10 @@ def _rtk_summary() -> dict:
 
 
 @app.get("/api/v1/config")
-def api_config() -> dict:
+def api_config(request: Request) -> dict:
     return {"schema_version": 2, "input": {"profile": settings.profile}, "tools": {"enabled": settings.tools_enabled},
             "response": {"mode": settings.caveman}, "profile": settings.profile, "caveman": settings.caveman,
-            "auto_start": settings.auto_start, "session_token": session_token}
+            "auto_start": settings.auto_start, "session_token": None if public_access(request) else session_token}
 
 
 @app.patch("/api/v1/config")
@@ -169,7 +201,7 @@ async def update_config(request: Request, x_utk_token: str | None = Header(None)
             raise HTTPException(422, "response must be an object")
         data["caveman"] = data["response"].get("mode", pending.caveman)
     if "profile" in data:
-        status = await api_status()
+        status = await api_status(request)
         if not status["profile_controlled"]:
             raise HTTPException(409, "Legacy external proxy is not managed by UTK; reconnect to the native engine")
         if not isinstance(data["profile"], str) or data["profile"] not in {"safe", "aggressive", "off"}:
@@ -186,7 +218,7 @@ async def update_config(request: Request, x_utk_token: str | None = Header(None)
         pending.tools_enabled = tools_config["enabled"]
     pending.save(home)
     settings = pending
-    return await api_status()
+    return await api_status(request)
 
 
 @app.post("/api/v1/clients/{name}/{action}")
@@ -205,7 +237,7 @@ def update_client(name: str, action: str, request: Request, x_utk_token: str | N
 async def stream(request: Request, hours: int = Query(24, ge=1, le=24 * 90)):
     async def events():
         while not await request.is_disconnected():
-            payload = {"status": await api_status(), "metrics": await api_metrics(hours)}
+            payload = {"status": await api_status(request), "metrics": await api_metrics(hours)}
             yield f"event: snapshot\ndata: {json.dumps(payload)}\n\n"
             await asyncio.sleep(5)
     return StreamingResponse(events(), media_type="text/event-stream", headers={"Cache-Control": "no-cache"})

@@ -27,7 +27,9 @@ class ToolMetadata(BaseModel):
     recovery_id: RecoveryId | None = None
     recovery_ids: dict[Literal["stdout", "stderr"], RecoveryId] | None = None
     optimized_channels: list[Literal["stdout", "stderr"]] | None = None
-    fallback: str | None = Field(default=None, max_length=64, pattern=r"^[a-z0-9:_-]+$")
+    original_bytes: int | None = Field(default=None, ge=0)
+    rendered_bytes: int | None = Field(default=None, ge=0)
+    fallback: str | None = Field(default=None, max_length=256, pattern=r"^[a-z0-9:;_-]+$")
 
 
 class ToolEvent(BaseModel):

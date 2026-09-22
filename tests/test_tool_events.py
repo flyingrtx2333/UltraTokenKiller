@@ -16,7 +16,9 @@ def event():
             "execution_id": "a" * 32, "session_id": "b" * 64,
             "recovery_id": "stdout-recovery",
             "recovery_ids": {"stdout": "stdout-recovery", "stderr": "stderr-recovery"},
-            "optimized_channels": ["stdout", "stderr"]}}
+                         "optimized_channels": ["stdout", "stderr"],
+                         "original_bytes": 1200, "rendered_bytes": 200,
+                         "fallback": "stdout:missing_session;stderr:missing_session"}}
 
 
 def test_broker_records_metadata_once_and_rejects_bodies(tmp_path):

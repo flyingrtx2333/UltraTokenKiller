@@ -81,13 +81,13 @@ def serve():
         tcp = socket.socket(socket.AF_INET6 if ":" in settings.host else socket.AF_INET)
         listeners.append(tcp)
         tcp.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        tcp.bind((settings.host, settings.dashboard_port))
+        tcp.bind((settings.dashboard_host, settings.dashboard_port))
         tcp.listen(128)
         local = bind_broker_socket(home)
         if local:
             listeners.append(local)
             local_inode = path.stat().st_ino
-        LocalServer(uvicorn.Config("ultratokenkiller.service:app", log_level="warning")).run(sockets=listeners)
+        LocalServer(uvicorn.Config("ultratokenkiller.service:app", log_level="warning", proxy_headers=False)).run(sockets=listeners)
     finally:
         for listener in listeners:
             listener.close()
