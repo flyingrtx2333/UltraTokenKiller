@@ -1,6 +1,6 @@
 # 能力证据绑定
 
-本文件是持续维护的当前状态说明，初建于 2026-09-20，最近刷新于 2026-09-22。带日期的实机、平台和阶段验收报告保留其运行当时的结论，不随本文件回写。
+本文件是持续维护的当前状态说明，初建于 2026-09-20，最近刷新于 2026-09-25。带日期的实机、平台和阶段验收报告保留其运行当时的结论，不随本文件回写。
 
 能力状态绑定实现文件、对应测试、固定上游提交和最近一次完整离线测试的 SHA-256 指纹。仅存在实现或测试文件不视为验证通过；实现、测试或证据变化后，状态自动降为“已实现待验证”，直到完整套件重新通过并生成账本。
 
@@ -9,7 +9,7 @@
 <!-- BEGIN GENERATED CURRENT STATUS -->
 高层产品能力共 **36 项**：**33 项**证据有效并离线通过，**3 项**已实现但当前证据待重新验证，**0 项**拥有当前源码绑定的实机通过证据。
 
-完整三层核心分母共 **256 项**：固定上游完整通过 1 项、部分通过 40 项、离线通过 42 项、仅完成契约映射 30 项、资产未就绪 2 项、未实现 141 项。
+完整三层核心分母共 **256 项**：固定上游完整通过 1 项、部分通过 41 项、离线通过 42 项、仅完成契约映射 29 项、资产未就绪 2 项、未实现 141 项。
 
 “已实现”表示实现文件和测试入口仍存在；“当前已验证”还要求完整测试账本、实现与测试源码指纹以及相关证据哈希全部匹配。代码或证据变化后，状态会保守降级，不沿用旧结论。
 
@@ -26,14 +26,14 @@
 
 ```sh
 python scripts/generate-verification-ledger.py
-python scripts/refresh_full_parity_ledger.py
+python scripts/refresh_full_parity_ledger.py --upstream rtk
 python scripts/generate_current_status.py
 utk capabilities --json
 ```
 
 高层账本位于 `src/ultratokenkiller/data/verification-ledger.json`，完整分母账本位于 `src/ultratokenkiller/data/full-parity-verification-ledger.json`，均随 wheel 分发。真实客户端和上游状态只能由包含相同源码指纹与证据哈希的记录提升。
 
-`python scripts/generate_current_status.py --check` 只检查 README、本文件和当前路线图的生成区块，不写文件；任一状态数字或待验证清单过期时返回非零退出码。
+`refresh_full_parity_ledger.py --upstream rtk` 只刷新已重新核对的 RTK 项，保留其他上游原有指纹；无范围参数的完整刷新只用于三层证据都已重验的批次。`python scripts/generate_current_status.py --check` 只检查开发备注、本文件和当前路线图的生成区块，不写文件；任一状态数字或待验证清单过期时返回非零退出码。
 
 ## 固定上游证据边界
 

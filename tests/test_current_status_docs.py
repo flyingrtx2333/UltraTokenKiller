@@ -1,4 +1,5 @@
 from pathlib import Path
+from copy import deepcopy
 
 import scripts.generate_current_status as current_status
 from scripts.generate_current_status import (
@@ -44,6 +45,13 @@ def test_rendered_sections_include_both_denominators_and_all_unverified_items():
         assert "256 项" in rendered
     evidence = sections["docs/capability-evidence-2026-09-20.md"]
     assert all(f"`{identifier}`" in evidence for identifier in status["unverified"])
+
+
+def test_roadmap_handles_zero_source_bound_rtk_partial_passes():
+    status = deepcopy(collect_status(Path.cwd()))
+    status["full_by_upstream"]["rtk"].pop("fixed_upstream_partial_passed", None)
+    rendered = current_status.render_roadmap_status(status)
+    assert "RTK：0 项固定上游部分通过" in rendered
 
 
 def test_check_mode_detects_drift_without_writing_and_update_is_idempotent(tmp_path):

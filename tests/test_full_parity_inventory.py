@@ -3,6 +3,7 @@ from collections import Counter
 from pathlib import Path
 
 from scripts.generate_full_parity_inventory import generate
+from scripts.refresh_full_parity_ledger import generate as generate_ledger
 from ultratokenkiller.capabilities import capability_report
 
 
@@ -34,10 +35,10 @@ def test_rtk_mapping_does_not_claim_variant_parity():
         "unverified": 141,
     }
     assert Counter(item["parity_status"] for item in rtk) == {
-        "pending_fixed_upstream_variant_evidence": 169,
+        "pending_fixed_upstream_variant_evidence": 168,
         "fixed_upstream_success_only": 13,
         "fixed_upstream_behavior_suite_windows": 2,
-        "fixed_upstream_success_failure_windows": 27,
+        "fixed_upstream_success_failure_windows": 28,
     }
 
 
@@ -68,6 +69,15 @@ def test_exclusions_are_explicit_and_not_in_denominator():
     )
 
 
+def test_scoped_rtk_ledger_refresh_preserves_other_upstreams():
+    previous = json.loads(Path("src/ultratokenkiller/data/full-parity-verification-ledger.json").read_text(encoding="utf-8"))
+    refreshed = generate_ledger(Path.cwd(), upstream="rtk")
+    for identifier, entry in previous["items"].items():
+        if not identifier.startswith("rtk."):
+            assert refreshed["items"][identifier] == entry
+    assert refreshed["last_scoped_refresh"]["upstream"] == "rtk"
+
+
 def test_capability_report_exposes_full_parity_without_inflating_completion():
     report = capability_report(Path.cwd())
 
@@ -86,8 +96,8 @@ def test_capability_report_exposes_full_parity_without_inflating_completion():
     assert report["full_parity_status_counts"]["rtk"] == {
         "fixed_upstream_success_only": 13,
         "fixed_upstream_behavior_suite_windows": 2,
-        "fixed_upstream_success_failure_windows": 27,
-        "pending_fixed_upstream_variant_evidence": 169,
+        "fixed_upstream_success_failure_windows": 28,
+        "pending_fixed_upstream_variant_evidence": 168,
     }
     assert report["full_parity_status_counts"]["caveman"]["authorization_required"] == 5
     assert report["full_parity_status_counts"]["headroom"] == {

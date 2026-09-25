@@ -1,0 +1,12 @@
+============================= test session starts ==============================
+platform win32 -- Python 3.10.3, pytest-8.4.1, pluggy-1.6.0
+rootdir: C:\work\sample
+configfile: pyproject.toml
+collected 4 items
+
+tests/test_math.py ..xX                                                   [100%]
+
+=========================== short test summary info ============================
+XFAIL tests/test_math.py::test_division - known bug #42
+XPASS tests/test_math.py::test_rounding - unexpected behavior change
+================= 2 passed, 1 xfailed, 1 xpassed in 0.05s =================

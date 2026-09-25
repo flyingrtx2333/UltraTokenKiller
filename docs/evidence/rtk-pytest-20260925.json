@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-25",
+  "scope": "rtk.tools.Commands.Pytest expected-failure outcomes on Windows",
+  "fixed_upstream_commit": "0924356b4caba4989607227b7c8824d3d8098719",
+  "fixed_binary_sha256": "f033de4697944f83e287b1cbe0b938639b241a4c2d659461a688b6478f53d61d",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "fixture": "tests/fixtures/rtk_reference/pytest_xfail_xpass_raw.txt",
+  "fixture_sha256": "84d1c26f5a1490a1520bcb33b438b999a938b33052d5e95a01acf011e2abba65",
+  "upstream_exit_code": 0,
+  "upstream_output": "Pytest: 2 passed, 0 failed, 1 xfailed, 1 xpassed\n\nExpected-failure outcomes:\n  XFAIL tests/test_math.py::test_division - known bug #42\n  XPASS tests/test_math.py::test_rounding - unexpected behavior change",
+  "utk_output": "XFAIL tests/test_math.py::test_division - known bug #42\nXPASS tests/test_math.py::test_rounding - unexpected behavior change\n================= 2 passed, 1 xfailed, 1 xpassed in 0.05s =================\n",
+  "required_facts_preserved": true,
+  "utk_output_shorter_than_raw": true,
+  "unknown_format_result": "passthrough in tests/test_command_contracts.py",
+  "collection_error_result": "passthrough in tests/test_command_contracts.py",
+  "limits": [
+    "Windows sample only",
+    "macOS and Linux not verified",
+    "unknown format not exercised against the fixed upstream binary"
+  ]
+}

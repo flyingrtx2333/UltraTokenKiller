@@ -1,0 +1,412 @@
+{
+  "schema_version": 1,
+  "generator": "utk-fixed-rtk-captured-output",
+  "baseline": "0924356b4caba4989607227b7c8824d3d8098719",
+  "binary_sha256": "f033de4697944f83e287b1cbe0b938639b241a4c2d659461a688b6478f53d61d",
+  "live_model_calls": 0,
+  "external_write_commands": 0,
+  "cases": {
+    "git-status-worktree": {
+      "raw": "On branch main\nChanges not staged for commit:\n  (use \"git add <file>...\" to update what will be committed)\n  (use \"git restore <file>...\" to discard changes in working directory)\n\tmodified:   tracked.txt\n\nUntracked files:\n  (use \"git add <file>...\" to include in what will be committed)\n\tuntracked.txt\n\nno changes added to commit (use \"git add\" and/or \"git commit -a\")\n",
+      "output": "* main\n M tracked.txt\n?? untracked.txt",
+      "exit_code": 0,
+      "raw_sha256": "1b664556acb91cc4eef2594cc669ee6d6d81b1d6c22078d4ef22b191ce673e83"
+    },
+    "git-log-default": {
+      "raw": "commit ac1480510f1535763274f11745659b95dccd15c8\nAuthor: UTK Fixture <utk@example.test>\nDate:   Wed Jan 3 03:04:05 2024 +0000\n\n    preserve migration guard\n    \n    Do not remove config.v2.\n\ncommit b8dbdd2a1882fd68870e49b9b66ebffd96df77a5\nAuthor: UTK Fixture <utk@example.test>\nDate:   Tue Jan 2 03:04:05 2024 +0000\n\n    initial fixture\n",
+      "output": "ac14805 preserve migration guard (2 years, 9 months ago) <UTK Fixture>\n  Do not remove config.v2.\nb8dbdd2 initial fixture (2 years, 9 months ago) <UTK Fixture>",
+      "exit_code": 0,
+      "raw_sha256": "389d791ba5a66910bc542271f823ecdcb42cbd5b964d5f19c84e03010b81beee"
+    },
+    "git-commit-success": {
+      "raw": "[main a1b2c3d] preserve migration guard\n 3 files changed, 10 insertions(+), 2 deletions(-)\n create mode 100644 docs/risk.md\n",
+      "output": "ok a1b2c3d",
+      "exit_code": 0,
+      "raw_sha256": "749032d1359f9f65077b15258444e4335d38fb72b0ae6fa46f8abc9d617f363d"
+    },
+    "git-add-success": {
+      "raw": " tracked.txt | 1 +\n 1 file changed, 1 insertion(+)\n 1 file changed, 1 insertion(+)\n",
+      "output": "ok 1 file changed, 1 insertion(+)",
+      "exit_code": 0,
+      "raw_sha256": "ac365272bbe450cb2b17f5bbaa10afc66619c63170253d37b61892f0a334047b"
+    },
+    "git-commit-failure": {
+      "raw": "On branch main\nnothing to commit, working tree clean\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nOn branch main\nnothing to commit, working tree clean",
+      "exit_code": 1,
+      "raw_sha256": "8422c09e067bfd4c362ac07071a0394d8f06bf873c71ea003e68f398b3f838da"
+    },
+    "git-pull-success": {
+      "raw": "Updating 1111111..2222222\nFast-forward\n src/main.py | 12 ++++++++++--\n 3 files changed, 10 insertions(+), 2 deletions(-)\n",
+      "output": "ok 3 files +10 -2",
+      "exit_code": 0,
+      "raw_sha256": "fe584da6c91be40efe4a43ef56631ee026a2d151fbcb48820bfcbc024b3436dd"
+    },
+    "git-pull-failure": {
+      "raw": "error: Your local changes to the following files would be overwritten by merge:\n        src/main.py\nPlease commit your changes or stash them before you merge.\nAborting\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nFAILED: git pull\nerror: Your local changes to the following files would be overwritten by merge:\n        src/main.py\nPlease commit your changes or stash them before you merge.\nAborting",
+      "exit_code": 1,
+      "raw_sha256": "6b2886bbb22be915777e05cc33f05e153d33ec171d24a88f266d7c68bf42b298"
+    },
+    "git-checkout-success": {
+      "raw": "Switched to a new branch 'feature/migration'\n",
+      "output": "ok feature/migration (new)",
+      "exit_code": 0,
+      "raw_sha256": "15384cf0058e5e50a3fae2de68b2b7275497e2fd1692ef405b50e86dfd3a1c35"
+    },
+    "git-checkout-failure": {
+      "raw": "error: pathspec 'missing-branch' did not match any file(s) known to git\n",
+      "output": "error: pathspec 'missing-branch' did not match any file(s) known to git",
+      "exit_code": 1,
+      "raw_sha256": "690401e2b133f8b2acc338da82e1cdcfb7dbab26daf92bfc44104e4c719eeba7"
+    },
+    "git-push-success": {
+      "raw": "Enumerating objects: 5, done.\nCounting objects: 100% (5/5), done.\nDelta compression using up to 8 threads\nCompressing objects: 100% (3/3), done.\nWriting objects: 100% (3/3), 312 bytes | 312.00 KiB/s, done.\nTotal 3 (delta 2), reused 0 (delta 0)\nTo https://example.test/repo.git\n   abc1234..def5678  main -> main\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nTo https://example.test/repo.git\n   abc1234..def5678  main -> main\nok main",
+      "exit_code": 0,
+      "raw_sha256": "a6ecef0cda90b408cdcf7acab785fb22164661b5815a184a8d7abbc85a12e9fa"
+    },
+    "git-push-failure": {
+      "raw": "To https://example.test/repo.git\n ! [rejected]        main -> main (non-fast-forward)\nerror: failed to push some refs to 'https://example.test/repo.git'\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nTo https://example.test/repo.git\n ! [rejected]        main -> main (non-fast-forward)\nerror: failed to push some refs to 'https://example.test/repo.git'",
+      "exit_code": 1,
+      "raw_sha256": "9ee412a2c93e42f5065598f808c890dfc4c89ef134c5386edf8ad84d49e3384c"
+    },
+    "git-fetch-success": {
+      "raw": "From https://example.test/repo\n * [new branch]      feature/migration -> origin/feature/migration\n",
+      "output": "ok fetched (1 new refs)",
+      "exit_code": 0,
+      "raw_sha256": "27028b2aa22c9c08d357c1d50811ccb3214e9d022679546e8c42b5cf4dd85dc5"
+    },
+    "git-fetch-failure": {
+      "raw": "fatal: unable to access 'https://example.test/repo.git/': Could not resolve host: example.test\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nFAILED: git fetch\nfatal: unable to access 'https://example.test/repo.git/': Could not resolve host: example.test",
+      "exit_code": 1,
+      "raw_sha256": "97ab0fcc36c74039a845273240a941d527f662be60ac9ce510145fce7ba4ea10"
+    },
+    "git-show-commit-diff": {
+      "raw": "commit ac1480510f1535763274f11745659b95dccd15c8\nAuthor: UTK Fixture <utk@example.test>\nDate:   Wed Jan 3 03:04:05 2024 +0000\n\n    preserve migration guard\n    \n    Do not remove config.v2.\n\ndiff --git a/tracked.txt b/tracked.txt\nindex 4a58007..fbbee86 100644\n--- a/tracked.txt\n+++ b/tracked.txt\n@@ -1 +1,2 @@\n alpha\n+beta\n",
+      "output": "ac14805 preserve migration guard (2 years, 9 months ago) <UTK Fixture>\n\ntracked.txt\n@@ -1 +1,2 @@\n alpha\n+beta\n  +1 -0",
+      "exit_code": 0,
+      "raw_sha256": "2424939b6a144204791c2e2001846326d44fe1f3fd638294334da6ad1d03697a"
+    },
+    "git-branch-list": {
+      "raw": "* main\n  feature/local\n  remotes/origin/HEAD -> origin/main\n  remotes/origin/main\n  remotes/origin/feature/remote\n",
+      "output": "* main\n  feature/local\n  remote-only (1):\n    feature/remote",
+      "exit_code": 0,
+      "raw_sha256": "0daeeecb3ba1fdb4dbf48399ed0baf4eb2ce09d75916b7dbe683e8854376a49a"
+    },
+    "git-branch-write": {
+      "raw": "Deleted branch obsolete (was a1b2c3d).\n",
+      "output": "ok",
+      "exit_code": 0,
+      "raw_sha256": "6ed403ca1cd1ba971d0a9aa1d401dfd3db619b1d94d978374ac0a70bc5c21846"
+    },
+    "git-branch-failure": {
+      "raw": "error: branch 'missing' not found.\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nFAILED: git branch -d missing\nerror: branch 'missing' not found.",
+      "exit_code": 1,
+      "raw_sha256": "c50cb3a3c63f4b5799059debcafb63d8a5f828f500d7d3148263776a7e9f6536"
+    },
+    "git-stash-list": {
+      "raw": "stash@{0}: WIP on main: a1b2c3d preserve guard\nstash@{1}: On feature: f6e5d4c keep risk\n",
+      "output": "stash@{0}: a1b2c3d preserve guard\nstash@{1}: f6e5d4c keep risk",
+      "exit_code": 0,
+      "raw_sha256": "8c54b29ad36121155e6941238bcdccfa43a7e1bb95111ba92f5a907a76c6b768"
+    },
+    "git-stash-show": {
+      "raw": " src/main.py | 10 ++++++++--\n docs/risk.md | 2 ++\n 2 files changed, 10 insertions(+), 2 deletions(-)\n",
+      "output": "src/main.py 10 +-\ndocs/risk.md 2 +\n2 changed 10 + 2 -",
+      "exit_code": 0,
+      "raw_sha256": "69c4dcef91862751458e16d16c8dc6b72fef7b4c8ab4d0ea35f31245bd20f74d"
+    },
+    "git-stash-push": {
+      "raw": "Saved working directory and index state WIP on main: a1b2c3d preserve guard\n",
+      "output": "ok stashed",
+      "exit_code": 0,
+      "raw_sha256": "9f6e8555ca663b67d8c6e97f4bf01247b7b0d90ad01b8e907549b4bde5b86775"
+    },
+    "git-stash-failure": {
+      "raw": "error: unknown switch `q'\nusage: git stash [push [-p | --patch] [-S | --staged] ...]\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nFAILED: git stash push\nerror: unknown switch `q'\nusage: git stash [push [-p | --patch] [-S | --staged] ...]",
+      "exit_code": 129,
+      "raw_sha256": "149255127469c87b32a19f70a804e79beabbab873831634b92ec320e38e50718"
+    },
+    "git-worktree-list": {
+      "raw": "C:/repo/main                  a1b2c3d [main]\nC:/repo/feature               d4e5f6a [feature/migration]\n",
+      "output": "C:/repo/main a1b2c3d [main]\nC:/repo/feature d4e5f6a [feature/migration]",
+      "exit_code": 0,
+      "raw_sha256": "145c3b97444198e97bcbead4b9b6cfcb949d29316811266e38dad5a276e1be06"
+    },
+    "git-worktree-write": {
+      "raw": "Preparing worktree (new branch 'feature/migration')\nHEAD is now at a1b2c3d preserve guard\n",
+      "output": "ok",
+      "exit_code": 0,
+      "raw_sha256": "1986fd29a40edda2f4b61aff63b9ec72706f68e18383876adfdd2a9e5d8e52e0"
+    },
+    "git-worktree-failure": {
+      "raw": "fatal: 'C:/repo/main' is already checked out at 'C:/repo/main'\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nFAILED: git worktree add C:/repo/main\nfatal: 'C:/repo/main' is already checked out at 'C:/repo/main'",
+      "exit_code": 128,
+      "raw_sha256": "46199010cc3bd192752b880d4aec0d5da53fc7b71a40521b7bb0651a5b6ac102"
+    },
+    "ls-human-long": {
+      "raw": "total 16\ndrwxr-xr-x  2 user  staff    64 Jan  1 12:00 src\n-rw-r--r--  1 user  staff  1234 Jan  1 12:00 README file.md\n-rwxr-xr-x  1 user  staff   500 Dec 25  2024 build.sh\n",
+      "output": "755  src/\n644  README file.md  1.2K\n755  build.sh  500B",
+      "exit_code": 0,
+      "raw_sha256": "23884b54dc3080bfdc4b0c22ecb699305c1739b2fc65a5a482c5dace9f6ef802"
+    },
+    "ls-unknown-locale": {
+      "raw": "-rw-r--r--  1 user  staff  1234 9月 21 12:00 README.md\n",
+      "output": "-rw-r--r--  1 user  staff  1234 9月 21 12:00 README.md",
+      "exit_code": 0,
+      "raw_sha256": "8ced9f2fab3ddce63b249cfa15838583c9cb244d91a6ee348c7802c7327260fd"
+    },
+    "ls-failure": {
+      "raw": "ls: cannot access 'missing': No such file or directory\n",
+      "output": "ls: cannot access 'missing': No such file or directory",
+      "exit_code": 2,
+      "raw_sha256": "8d5d50334f9f581e79fc9cb28bd621a4fe8d882e38ac0cc2c2cc4e84e4b8461d"
+    },
+    "tree-human": {
+      "raw": ".\n├── src\n│   └── main.py\n└── README.md\n\n1 directory, 2 files\n",
+      "output": ".\n├── src\n│   └── main.py\n└── README.md",
+      "exit_code": 0,
+      "raw_sha256": "7b472bf31ac5838c405a9f3ae52f919894efb9768743341217a33cafc9b4ad0e"
+    },
+    "tree-unknown-format": {
+      "raw": ".\n+-- src\nsummary unavailable\n",
+      "output": ".\n+-- src\nsummary unavailable",
+      "exit_code": 0,
+      "raw_sha256": "6e0bc3786d0bdb0fbae9004898b5df89258e07e8ad06931672721888e1d5f898"
+    },
+    "tree-failure": {
+      "raw": "tree: missing: No such file or directory\n",
+      "output": "tree: missing: No such file or directory",
+      "exit_code": 2,
+      "raw_sha256": "a6e96933ed4a2987e9a7e15381ed1fa1929aca5ac209e9c3ff245e7d996ebbfe"
+    },
+    "find-human-paths": {
+      "raw": "src/components/feature/file_00.py\nsrc/components/feature/file_01.py\nsrc/components/feature/file_02.py\nsrc/components/feature/file_03.py\nsrc/components/feature/file_04.py\nsrc/components/feature/file_05.py\nsrc/components/feature/file_06.py\nsrc/components/feature/file_07.py\nsrc/components/feature/file_08.py\nsrc/components/feature/file_09.py\nsrc/components/feature/file_10.py\nsrc/components/feature/file_11.py\nsrc/components/feature/file_12.py\nsrc/components/feature/file_13.py\nsrc/components/feature/file_14.py\nsrc/components/feature/file_15.py\nsrc/components/feature/file_16.py\nsrc/components/feature/file_17.py\nsrc/components/feature/file_18.py\nsrc/components/feature/file_19.py\n",
+      "output": "20F 1D:\n\nsrc\\components\\feature/ file_00.py file_01.py file_02.py file_03.py file_04.py file_05.py file_06.py file_07.py file_08.py file_09.py file_10.py file_11.py file_12.py file_13.py file_14.py file_15.py file_16.py file_17.py file_18.py file_19.py",
+      "exit_code": 0,
+      "raw_sha256": "2563004786fa0329e4865bb42d231fb66885d0b606101e8babe0c13a70546555"
+    },
+    "find-failure": {
+      "raw": "find: './missing': No such file or directory\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nfind: './missing': No such file or directory",
+      "exit_code": 1,
+      "raw_sha256": "58ce4cad9212d0f90bdbb593667fc84d2c59f745df440263d4d2fa5646409624"
+    },
+    "read-numbered-source": {
+      "raw": "from pathlib import Path\n\nclass Config:\n    def __init__(self, name):\n        self.name = name\n\ndef load_config(path):\n    return Config(Path(path).name)\n",
+      "output": "1 │ from pathlib import Path\n2 │ \n3 │ class Config:\n4 │     def __init__(self, name):\n5 │         self.name = name\n6 │ \n7 │ def load_config(path):\n8 │     return Config(Path(path).name)",
+      "exit_code": 0,
+      "raw_sha256": "4d7404bd5a4ff627609869e1db95d459b959d3016ead2679f4384212cbb51c68"
+    },
+    "json-compact-values": {
+      "raw": "{\"users\":[{\"id\":1,\"name\":\"alpha\"},{\"id\":2,\"name\":\"beta\"},{\"id\":3,\"name\":\"gamma\"},{\"id\":4,\"name\":\"delta\"},{\"id\":5,\"name\":\"epsilon\"},{\"id\":6,\"name\":\"zeta\"}],\"enabled\":true}\n",
+      "output": "{\n  enabled: true\n  users:\n  [{\n      id: 1\n      name: \"alpha\"\n    }, ... +5 more]\n}",
+      "exit_code": 0,
+      "raw_sha256": "74ec00005ceed4311f8efb52fd31fee901aac6835585c383a8b058f4b932508b"
+    },
+    "smart-python-summary": {
+      "raw": "from pathlib import Path\n\nclass Config:\n    def __init__(self, name):\n        self.name = name\n\ndef load_config(path):\n    return Config(Path(path).name)\n",
+      "output": "Python module (2 fn, 1 struct) - 8 lines\nuses: pathlib | patterns: OOP",
+      "exit_code": 0,
+      "raw_sha256": "4d7404bd5a4ff627609869e1db95d459b959d3016ead2679f4384212cbb51c68"
+    },
+    "rg-human-search": {
+      "raw": "src/a.py:1:target one with enough explanatory content\nsrc/a.py:8:target two with enough explanatory content\nsrc/a.py:13:target five with enough explanatory content\nsrc/a.py:21:target six with enough explanatory content\nsrc/a.py:34:target seven with enough explanatory content\nsrc/a.py:55:target eight with enough explanatory content\nsrc/b.py:3:target three with enough explanatory content\nsrc/b.py:21:target four with enough explanatory content\nsrc/b.py:29:target nine with enough explanatory content\nsrc/b.py:44:target ten with enough explanatory content\nsrc/b.py:61:target eleven with enough explanatory content\nsrc/b.py:89:target twelve with enough explanatory content\n",
+      "output": "src/a.py:1:target one with enough explanatory content\nsrc/a.py:8:target two with enough explanatory content\nsrc/a.py:13:target five with enough explanatory content\nsrc/a.py:21:target six with enough explanatory content\nsrc/a.py:34:target seven with enough explanatory content\nsrc/a.py:55:target eight with enough explanatory content\nsrc/b.py:3:target three with enough explanatory content\nsrc/b.py:21:target four with enough explanatory content\nsrc/b.py:29:target nine with enough explanatory content\nsrc/b.py:44:target ten with enough explanatory content\nsrc/b.py:61:target eleven with enough explanatory content\nsrc/b.py:89:target twelve with enough explanatory content",
+      "exit_code": 0,
+      "raw_sha256": "0ec8479cfde999208f3b0893686803dcaafe5939736f926448be89a0488fcd48"
+    },
+    "grep-human-search": {
+      "raw": "src/a.py:1:target one with enough explanatory content\nsrc/a.py:8:target two with enough explanatory content\nsrc/a.py:13:target five with enough explanatory content\nsrc/a.py:21:target six with enough explanatory content\nsrc/a.py:34:target seven with enough explanatory content\nsrc/a.py:55:target eight with enough explanatory content\nsrc/b.py:3:target three with enough explanatory content\nsrc/b.py:21:target four with enough explanatory content\nsrc/b.py:29:target nine with enough explanatory content\nsrc/b.py:44:target ten with enough explanatory content\nsrc/b.py:61:target eleven with enough explanatory content\nsrc/b.py:89:target twelve with enough explanatory content\n",
+      "output": "src/a.py:1:target one with enough explanatory content\nsrc/a.py:8:target two with enough explanatory content\nsrc/a.py:13:target five with enough explanatory content\nsrc/a.py:21:target six with enough explanatory content\nsrc/a.py:34:target seven with enough explanatory content\nsrc/a.py:55:target eight with enough explanatory content\nsrc/b.py:3:target three with enough explanatory content\nsrc/b.py:21:target four with enough explanatory content\nsrc/b.py:29:target nine with enough explanatory content\nsrc/b.py:44:target ten with enough explanatory content\nsrc/b.py:61:target eleven with enough explanatory content\nsrc/b.py:89:target twelve with enough explanatory content",
+      "exit_code": 0,
+      "raw_sha256": "0ec8479cfde999208f3b0893686803dcaafe5939736f926448be89a0488fcd48"
+    },
+    "pytest-failure": {
+      "raw": "Downloading cpython-3.13.5-macos-aarch64-none (download) (14.9MiB)\n Downloading cpython-3.13.5-macos-aarch64-none (download)\nUsing CPython 3.13.5\nCreating virtual environment at: .venv\nDownloading pygments (1.2MiB)\n Downloading pygments\nInstalled 5 packages in 7ms\n============================= test session starts ==============================\nplatform darwin -- Python 3.13.5, pytest-8.4.1, pluggy-1.6.0\nrootdir: /private/tmp/rtk-uv-fixture\nconfigfile: pyproject.toml\ncollected 2 items\n\ntests/test_users.py .F                                                   [100%]\n\n=================================== FAILURES ===================================\n______________________ test_normalize_user_rejects_empty _______________________\n\n    def test_normalize_user_rejects_empty():\n>       assert normalize_user(\"   \") == \"anonymous\"\nE       AssertionError: assert '' == 'anonymous'\nE\nE         - anonymous\n\ntests/test_users.py:10: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_users.py::test_normalize_user_rejects_empty - AssertionErro...\n========================= 1 failed, 1 passed in 0.01s ==========================\n",
+      "output": "Pytest: 1 passed, 1 failed\n\nFailures:\n1. [FAIL] test_normalize_user_rejects_empty\n     >       assert normalize_user(\"   \") == \"anonymous\"\n     E       AssertionError: assert '' == 'anonymous'\n     E\n\n2. [FAIL] tests/test_users.py::test_normalize_user_rejects_empty\n     AssertionErro...",
+      "exit_code": 1,
+      "raw_sha256": "96c849a552d3fe35b30ba034636e7e96afd8ea7cfc0e02c1622804af13899574"
+    },
+    "pytest-xfail-xpass": {
+      "raw": "============================= test session starts ==============================\nplatform win32 -- Python 3.10.3, pytest-8.4.1, pluggy-1.6.0\nrootdir: C:\\work\\sample\nconfigfile: pyproject.toml\ncollected 4 items\n\ntests/test_math.py ..xX                                                   [100%]\n\n=========================== short test summary info ============================\nXFAIL tests/test_math.py::test_division - known bug #42\nXPASS tests/test_math.py::test_rounding - unexpected behavior change\n================= 2 passed, 1 xfailed, 1 xpassed in 0.05s =================\n",
+      "output": "Pytest: 2 passed, 0 failed, 1 xfailed, 1 xpassed\n\nExpected-failure outcomes:\n  XFAIL tests/test_math.py::test_division - known bug #42\n  XPASS tests/test_math.py::test_rounding - unexpected behavior change",
+      "exit_code": 0,
+      "raw_sha256": "84d1c26f5a1490a1520bcb33b438b999a938b33052d5e95a01acf011e2abba65"
+    },
+    "typescript-pretty-errors": {
+      "raw": "\u001b[96msrc/index.ts\u001b[0m:\u001b[93m1\u001b[0m:\u001b[93m7\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2322: \u001b[0mType 'string' is not assignable to type 'number'.\n\n\u001b[7m1\u001b[0m const x: number = \"hello\";\n\u001b[7m \u001b[0m \u001b[91m      ~\u001b[0m\n\n\u001b[96msrc/index.ts\u001b[0m:\u001b[93m4\u001b[0m:\u001b[93m8\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2322: \u001b[0mType 'string' is not assignable to type 'number'.\n\n\u001b[7m4\u001b[0m take({ a: \"x\", b: 1 });\n\u001b[7m \u001b[0m \u001b[91m       ~\u001b[0m\n\n  \u001b[96msrc/index.ts\u001b[0m:\u001b[93m2\u001b[0m:\u001b[93m17\u001b[0m\n    \u001b[7m2\u001b[0m interface Foo { a: number; b: string }\n    \u001b[7m \u001b[0m \u001b[96m                ~\u001b[0m\n    The expected type comes from property 'a' which is declared here on type 'Foo'\n\n\u001b[96msrc/index.ts\u001b[0m:\u001b[93m4\u001b[0m:\u001b[93m16\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2322: \u001b[0mType 'number' is not assignable to type 'string'.\n\n\u001b[7m4\u001b[0m take({ a: \"x\", b: 1 });\n\u001b[7m \u001b[0m \u001b[91m               ~\u001b[0m\n\n  \u001b[96msrc/index.ts\u001b[0m:\u001b[93m2\u001b[0m:\u001b[93m28\u001b[0m\n    \u001b[7m2\u001b[0m interface Foo { a: number; b: string }\n    \u001b[7m \u001b[0m \u001b[96m                           ~\u001b[0m\n    The expected type comes from property 'b' which is declared here on type 'Foo'\n\n\nFound 3 errors in the same file, starting at: src/index.ts\u001b[90m:1\u001b[0m\n\n",
+      "output": "src/index.ts:1:7 - error TS2322: Type 'string' is not assignable to type 'number'.\nsrc/index.ts:4:8 - error TS2322: Type 'string' is not assignable to type 'number'.\nsrc/index.ts:4:16 - error TS2322: Type 'number' is not assignable to type 'string'.\nTypeScript: 3 errors in 1 files",
+      "exit_code": 2,
+      "raw_sha256": "4bf6c9391fc7c51bd35952715156b8366fabe55d34f8aa2a0f422ad1b9d0b79e"
+    },
+    "maven-test-failure": {
+      "raw": "[INFO] Scanning for projects...\n[INFO]\n[INFO] ----------------------< commons-cli:commons-cli >-----------------------\n[INFO] Building Apache Commons CLI 1.11.1-SNAPSHOT\n[INFO]   from pom.xml\n[INFO] --------------------------------[ jar ]---------------------------------\n[INFO]\n[INFO] --- surefire:3.5.5:test (default-test) @ commons-cli ---\n[INFO]\n[INFO] -------------------------------------------------------\n[INFO]  T E S T S\n[INFO] -------------------------------------------------------\n[INFO] Running org.apache.commons.cli.SolrCliTest\n[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in org.apache.commons.cli.SolrCliTest\n[INFO] Running org.apache.commons.cli.RtkInducedFailTest\n[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.033 s <<< FAILURE! -- in org.apache.commons.cli.RtkInducedFailTest\n[ERROR] org.apache.commons.cli.RtkInducedFailTest.rtkInducedFailure -- Time elapsed: 0.025 s <<< FAILURE!\norg.opentest4j.AssertionFailedError: expected: <expected> but was: <actual>\n\tat org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)\n\tat org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)\n\tat org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)\n\tat org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)\n\tat org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)\n\tat org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1145)\n\tat org.apache.commons.cli.RtkInducedFailTest.rtkInducedFailure(RtkInducedFailTest.java:25)\n\tat java.base/java.lang.reflect.Method.invoke(Method.java:580)\n\tat java.base/java.util.ArrayList.forEach(ArrayList.java:1596)\n\tat java.base/java.util.ArrayList.forEach(ArrayList.java:1596)\n\n[INFO] Running org.apache.commons.cli.PatternOptionBuilderTest\n[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.066 s -- in org.apache.commons.cli.PatternOptionBuilderTest\n[INFO]\n[INFO] Results:\n[INFO]\n[ERROR] Failures:\n[ERROR]   RtkInducedFailTest.rtkInducedFailure:25 expected: <expected> but was: <actual>\n[INFO]\n[ERROR] Tests run: 978, Failures: 1, Errors: 0, Skipped: 61\n[INFO]\n[INFO] ------------------------------------------------------------------------\n[INFO] BUILD FAILURE\n[INFO] ------------------------------------------------------------------------\n[INFO] Total time:  01:05 min\n[INFO] Finished at: 2026-05-21T14:57:09Z\n[INFO] ------------------------------------------------------------------------\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.5:test (default-test) on project commons-cli: There are test failures.\n",
+      "output": "[INFO] Scanning for projects...\n[INFO] ----------------------< commons-cli:commons-cli >-----------------------\n[INFO] Building Apache Commons CLI 1.11.1-SNAPSHOT\n[INFO] Running org.apache.commons.cli.RtkInducedFailTest\n[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.033 s <<< FAILURE! -- in org.apache.commons.cli.RtkInducedFailTest\n[ERROR] org.apache.commons.cli.RtkInducedFailTest.rtkInducedFailure -- Time elapsed: 0.025 s <<< FAILURE!\norg.opentest4j.AssertionFailedError: expected: <expected> but was: <actual>\n\tat org.apache.commons.cli.RtkInducedFailTest.rtkInducedFailure(RtkInducedFailTest.java:25)\n\n[INFO] Results:\n[ERROR] Failures:\n[ERROR]   RtkInducedFailTest.rtkInducedFailure:25 expected: <expected> but was: <actual>\n[ERROR] Tests run: 978, Failures: 1, Errors: 0, Skipped: 61\n[INFO] BUILD FAILURE\n[INFO] Total time:  01:05 min\n[INFO] Finished at: 2026-05-21T14:57:09Z\n[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.5:test (default-test) on project commons-cli: There are test failures.",
+      "exit_code": 1,
+      "raw_sha256": "ec70a099974c1b1d63d7a5275e0c43e1e949f8d1ed7d1729d8d26b4c8a576821"
+    },
+    "bun-test-failure": {
+      "raw": "bun test v1.2.20 (6ad208bc)\n\nfails.test.ts:\n1 | import { test, expect } from \"bun:test\";\n2 | test(\"t1 passes\", () => { expect(1 + 1).toBe(2); });\n3 | test(\"t2 fails\", () => { expect(1 + 1).toBe(3); });\n                                           ^\nerror: expect(received).toBe(expected)\n\nExpected: 3\nReceived: 2\n\n      at <anonymous> (/home/user/project/fails.test.ts:3:40)\n✗ t2 fails [0.13ms]\nerror: logged between real failures\n3 | test(\"t2 fails\", () => { expect(1 + 1).toBe(3); });\n4 | test(\"t3 logs an error line\", () => {\n5 |   console.log(\"error: logged between real failures\");\n6 |   expect(3).toBe(3);\n7 | });\n8 | test(\"t4 fails too\", () => { expect([1, 2, 3].length).toBe(4); });\n                                                          ^\nerror: expect(received).toBe(expected)\n\nExpected: 4\nReceived: 3\n\n      at <anonymous> (/home/user/project/fails.test.ts:8:55)\n✗ t4 fails too [0.03ms]\n4 | test(\"t3 logs an error line\", () => {\n5 |   console.log(\"error: logged between real failures\");\n6 |   expect(3).toBe(3);\n7 | });\n8 | test(\"t4 fails too\", () => { expect([1, 2, 3].length).toBe(4); });\n9 | test(\"t5 throws\", () => { throw new Error(\"boom: connection refused\"); });\n                                                                        ^\nerror: boom: connection refused\n      at <anonymous> (/home/user/project/fails.test.ts:9:69)\n✗ t5 throws [0.02ms]\nerror: Test \"t6 times out\" timed out after 150ms\n✗ t6 times out [150.10ms]\n\n 2 pass\n 1 skip\n 1 todo\n 4 fail\n 4 expect() calls\nRan 8 tests across 1 file. [157.00ms]\n",
+      "output": "[FAIL] FAILURES:\n  ✗ t2 fails [0.13ms]\n  ✗ t4 fails too [0.03ms]\n  ✗ t5 throws [0.02ms]\n  ✗ t6 times out [150.10ms]\n  error: expect(received).toBe(expected)\n  Expected: 3\n  Received: 2\n  at <anonymous> (/home/user/project/fails.test.ts:3:40)\n  error: expect(received).toBe(expected)\n  Expected: 4\n  Received: 3\n  at <anonymous> (/home/user/project/fails.test.ts:8:55)\n  error: boom: connection refused\n  at <anonymous> (/home/user/project/fails.test.ts:9:69)\n  error: Test \"t6 times out\" timed out after 150ms\n\nSUMMARY:\n   2 pass\n   1 skip\n   1 todo\n   4 fail\n  Ran 8 tests across 1 file. [157.00ms]",
+      "exit_code": 1,
+      "raw_sha256": "e14496031422745bb3337d4f12f7b3e279a2cbe5314a396e38bf8293da17474f"
+    },
+    "deno-test-failure": {
+      "raw": "\u001b[0m\u001b[32mCheck\u001b[0m fails_test.ts\n\u001b[0m\u001b[38;5;245mrunning 5 tests from ./fails_test.ts\u001b[0m\nplain assertion ... \u001b[0m\u001b[31mFAILED\u001b[0m \u001b[0m\u001b[38;5;245m(11ms)\u001b[0m\narrow in message ... \u001b[0m\u001b[31mFAILED\u001b[0m \u001b[0m\u001b[38;5;245m(810µs)\u001b[0m\nleaks a timer ... \u001b[0m\u001b[32mok\u001b[0m \u001b[0m\u001b[38;5;245m(627µs)\u001b[0m\nleaks another timer ... \u001b[0m\u001b[32mok\u001b[0m \u001b[0m\u001b[38;5;245m(53µs)\u001b[0m\npasses ... \u001b[0m\u001b[32mok\u001b[0m \u001b[0m\u001b[38;5;245m(21µs)\u001b[0m\n\n\u001b[0m\u001b[1m\u001b[37m\u001b[41m ERRORS \u001b[0m\n\nplain assertion \u001b[0m\u001b[38;5;245m=> ./fails_test.ts:2:6\u001b[0m\n\u001b[0m\u001b[1m\u001b[31merror\u001b[0m: AssertionError: Values are not equal.\n\n\n    \u001b[90m\u001b[1m[Diff]\u001b[22m\u001b[39m \u001b[31m\u001b[1mActual\u001b[22m\u001b[39m / \u001b[32m\u001b[1mExpected\u001b[22m\u001b[39m\n\n\n\u001b[31m\u001b[1m-   1\u001b[22m\u001b[39m\n\u001b[32m\u001b[1m+   2\u001b[22m\u001b[39m\n\n  throw new AssertionError(message);\n\u001b[0m\u001b[31m        ^\u001b[0m\n    at \u001b[0m\u001b[1m\u001b[3massertEquals\u001b[0m (\u001b[0m\u001b[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts\u001b[0m:\u001b[0m\u001b[33m67\u001b[0m:\u001b[0m\u001b[33m9\u001b[0m)\n    at \u001b[0m\u001b[2m\u001b[38;5;245mfile:///home/user/project/\u001b[0m\u001b[0m\u001b[36mfails_test.ts\u001b[0m:\u001b[0m\u001b[33m2\u001b[0m:\u001b[0m\u001b[33m38\u001b[0m\n\narrow in message \u001b[0m\u001b[38;5;245m=> ./fails_test.ts:3:6\u001b[0m\n\u001b[0m\u001b[1m\u001b[31merror\u001b[0m: AssertionError: Values are not equal: handler (a) => b must match\n\n\n    \u001b[90m\u001b[1m[Diff]\u001b[22m\u001b[39m \u001b[31m\u001b[1mActual\u001b[22m\u001b[39m / \u001b[32m\u001b[1mExpected\u001b[22m\u001b[39m\n\n\n\u001b[31m\u001b[1m-   \u001b[41m\u001b[37mx\u001b[31m\u001b[49m\n\u001b[22m\u001b[39m\u001b[32m\u001b[1m+   \u001b[42m\u001b[37my\u001b[32m\u001b[49m\n\u001b[22m\u001b[39m\n\n  throw new AssertionError(message);\n\u001b[0m\u001b[31m        ^\u001b[0m\n    at \u001b[0m\u001b[1m\u001b[3massertEquals\u001b[0m (\u001b[0m\u001b[36mhttps://jsr.io/@std/assert/1.0.19/equals.ts\u001b[0m:\u001b[0m\u001b[33m67\u001b[0m:\u001b[0m\u001b[33m9\u001b[0m)\n    at \u001b[0m\u001b[2m\u001b[38;5;245mfile:///home/user/project/\u001b[0m\u001b[0m\u001b[36mfails_test.ts\u001b[0m:\u001b[0m\u001b[33m4\u001b[0m:\u001b[0m\u001b[33m3\u001b[0m\n\n\u001b[0m\u001b[1m\u001b[37m\u001b[41m FAILURES \u001b[0m\n\nplain assertion \u001b[0m\u001b[38;5;245m=> ./fails_test.ts:2:6\u001b[0m\narrow in message \u001b[0m\u001b[38;5;245m=> ./fails_test.ts:3:6\u001b[0m\n\n\u001b[0m\u001b[31mFAILED\u001b[0m | 3 passed | 2 failed \u001b[0m\u001b[38;5;245m(15ms)\u001b[0m\n\n\u001b[0m\u001b[1m\u001b[31merror\u001b[0m: Test failed\n",
+      "output": "[FAIL] FAILURES:\n  plain assertion => ./fails_test.ts:2:6\n  arrow in message => ./fails_test.ts:3:6\n  error: AssertionError: Values are not equal.\n  [Diff] Actual / Expected\n  -   1\n  +   2\n  error: AssertionError: Values are not equal: handler (a) => b must match\n  [Diff] Actual / Expected\n  -   x\n  +   y\n\nSUMMARY:\n  FAILED | 3 passed | 2 failed (15ms)",
+      "exit_code": 1,
+      "raw_sha256": "789e50571d4a6134f89850b9dc00b72f7f2b3b61dab0f06c520824077ae47313"
+    },
+    "gradle-test-failure": {
+      "raw": "> Task :app:testDebugUnitTest\ncom.example.myapp.CalculatorTest > testAddition PASSED\ncom.example.myapp.CalculatorTest > testSubtraction FAILED\n    java.lang.AssertionError: expected:<3> but was:<-1>\n        at org.junit.Assert.fail(Assert.java:89)\n        at org.junit.Assert.assertEquals(Assert.java:197)\n        at com.example.myapp.CalculatorTest.testSubtraction(CalculatorTest.kt:25)\ncom.example.myapp.CalculatorTest > testMultiplication PASSED\ncom.example.myapp.MainViewModelTest > loadDataSuccess PASSED\ncom.example.myapp.MainViewModelTest > loadDataError FAILED\n    kotlin.NotImplementedError: An operation is not implemented: TODO\n        at com.example.myapp.MainViewModelTest.loadDataError(MainViewModelTest.kt:45)\n\n5 tests completed, 2 failed\n\nThere were failing tests. See the report at: file:///Users/user/MyApp/app/build/reports/tests/testDebugUnitTest/index.html\n\nBUILD FAILED in 22s\n4 actionable tasks: 1 executed, 3 up-to-date\n",
+      "output": "com.example.myapp.CalculatorTest > testSubtraction FAILED\n    java.lang.AssertionError: expected:<3> but was:<-1>\n        at com.example.myapp.CalculatorTest.testSubtraction(CalculatorTest.kt:25)\ncom.example.myapp.MainViewModelTest > loadDataError FAILED\n    kotlin.NotImplementedError: An operation is not implemented: TODO\n        at com.example.myapp.MainViewModelTest.loadDataError(MainViewModelTest.kt:45)\n5 tests completed, 2 failed\nThere were failing tests. See the report at: file:///Users/user/MyApp/app/build/reports/tests/testDebugUnitTest/index.html\nBUILD FAILED in 22s\n4 actionable tasks: 1 executed, 3 up-to-date",
+      "exit_code": 1,
+      "raw_sha256": "704aeceeb47694bd94bd523999abb67c2447bbf7ae99125aa697188196f34795"
+    },
+    "golangci-v2-issues": {
+      "raw": "{\"Issues\":[{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":101,\"Line\":10,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":200,\"Line\":18,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"errcheck\",\"Text\":\"Error return value of `f.Close` is not checked\",\"Severity\":\"\",\"SourceLines\":[\"\\tdefer f.Close()\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":299,\"Line\":26,\"Column\":15},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":105,\"Line\":11,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":204,\"Line\":19,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"},{\"FromLinter\":\"ineffassign\",\"Text\":\"ineffectual assignment to v\",\"Severity\":\"\",\"SourceLines\":[\"\\tv := 1\"],\"Pos\":{\"Filename\":\"main.go\",\"Offset\":303,\"Line\":27,\"Column\":2},\"ExpectNoLint\":false,\"ExpectedNoLintLinter\":\"\"}],\"Report\":{\"Linters\":[{\"Name\":\"arangolint\"},{\"Name\":\"asasalint\"},{\"Name\":\"asciicheck\"},{\"Name\":\"bidichk\"},{\"Name\":\"bodyclose\"},{\"Name\":\"canonicalheader\"},{\"Name\":\"clickhouselint\"},{\"Name\":\"containedctx\"},{\"Name\":\"contextcheck\"},{\"Name\":\"copyloopvar\"},{\"Name\":\"cyclop\"},{\"Name\":\"decorder\"},{\"Name\":\"depguard\"},{\"Name\":\"dogsled\"},{\"Name\":\"dupl\"},{\"Name\":\"dupword\"},{\"Name\":\"durationcheck\"},{\"Name\":\"embeddedstructfieldcheck\"},{\"Name\":\"errcheck\",\"Enabled\":true},{\"Name\":\"errchkjson\"},{\"Name\":\"errname\"},{\"Name\":\"errorlint\"},{\"Name\":\"exhaustive\"},{\"Name\":\"exhaustruct\"},{\"Name\":\"exhaustruct_v5\"},{\"Name\":\"exptostd\"},{\"Name\":\"forbidigo\"},{\"Name\":\"forcetypeassert\"},{\"Name\":\"funcorder\"},{\"Name\":\"fatcontext\"},{\"Name\":\"funlen\"},{\"Name\":\"gci\"},{\"Name\":\"ginkgolinter\"},{\"Name\":\"gocheckcompilerdirectives\"},{\"Name\":\"gochecknoglobals\"},{\"Name\":\"gochecknoinits\"},{\"Name\":\"gochecksumtype\"},{\"Name\":\"gocognit\"},{\"Name\":\"goconst\"},{\"Name\":\"gocritic\"},{\"Name\":\"gocyclo\"},{\"Name\":\"godoclint\"},{\"Name\":\"godot\"},{\"Name\":\"godox\"},{\"Name\":\"err113\"},{\"Name\":\"gofmt\"},{\"Name\":\"gofumpt\"},{\"Name\":\"golines\"},{\"Name\":\"goheader\"},{\"Name\":\"goimports\"},{\"Name\":\"mnd\"},{\"Name\":\"modernize\"},{\"Name\":\"gomoddirectives\"},{\"Name\":\"gomodguard\"},{\"Name\":\"gomodguard_v2\"},{\"Name\":\"goprintffuncname\"},{\"Name\":\"gosec\"},{\"Name\":\"gosmopolitan\"},{\"Name\":\"govet\",\"Enabled\":true},{\"Name\":\"grouper\"},{\"Name\":\"iface\"},{\"Name\":\"importas\"},{\"Name\":\"inamedparam\"},{\"Name\":\"ineffassign\",\"Enabled\":true},{\"Name\":\"interfacebloat\"},{\"Name\":\"intrange\"},{\"Name\":\"iotamixing\"},{\"Name\":\"ireturn\"},{\"Name\":\"lll\"},{\"Name\":\"loggercheck\"},{\"Name\":\"maintidx\"},{\"Name\":\"makezero\"},{\"Name\":\"mirror\"},{\"Name\":\"misspell\"},{\"Name\":\"musttag\"},{\"Name\":\"nakedret\"},{\"Name\":\"nestif\"},{\"Name\":\"nilerr\"},{\"Name\":\"nilnesserr\"},{\"Name\":\"nilnil\"},{\"Name\":\"nlreturn\"},{\"Name\":\"noctx\"},{\"Name\":\"noinlineerr\"},{\"Name\":\"nonamedreturns\"},{\"Name\":\"nosprintfhostport\"},{\"Name\":\"paralleltest\"},{\"Name\":\"perfsprint\"},{\"Name\":\"prealloc\"},{\"Name\":\"predeclared\"},{\"Name\":\"promlinter\"},{\"Name\":\"protogetter\"},{\"Name\":\"reassign\"},{\"Name\":\"recvcheck\"},{\"Name\":\"revive\"},{\"Name\":\"rowserrcheck\"},{\"Name\":\"sloglint\"},{\"Name\":\"sqlclosecheck\"},{\"Name\":\"spancheck\"},{\"Name\":\"staticcheck\",\"Enabled\":true},{\"Name\":\"swaggo\"},{\"Name\":\"tagalign\"},{\"Name\":\"tagliatelle\"},{\"Name\":\"testableexamples\"},{\"Name\":\"testifylint\"},{\"Name\":\"testpackage\"},{\"Name\":\"thelper\"},{\"Name\":\"tparallel\"},{\"Name\":\"typecheck\",\"Enabled\":true},{\"Name\":\"unconvert\"},{\"Name\":\"unparam\"},{\"Name\":\"unqueryvet\"},{\"Name\":\"unused\",\"Enabled\":true},{\"Name\":\"usestdlibvars\"},{\"Name\":\"usetesting\"},{\"Name\":\"varnamelen\"},{\"Name\":\"wastedassign\"},{\"Name\":\"whitespace\"},{\"Name\":\"wrapcheck\"},{\"Name\":\"wsl\"},{\"Name\":\"wsl_v5\"},{\"Name\":\"zerologlint\"},{\"Name\":\"nolintlint\"}]}}\n",
+      "output": "golangci-lint: 6 issues in 1 files\nTop linters:\n  ineffassign (3x)\n  errcheck (3x)\n\nTop files:\n  main.go (6 issues)\n    errcheck (3)\n      → defer f.Close()\n    ineffassign (3)\n      → v := 1",
+      "exit_code": 0,
+      "raw_sha256": "0d979b09897297a5c5fac3b29b41e11521010254cac5498d2c46f02c0f54756f"
+    },
+    "git-diff-multifile": {
+      "raw": "diff --git a/main.rs b/main.rs\nindex 5d804c0..0658d30 100644\n--- a/main.rs\n+++ b/main.rs\n@@ -1,6 +1,7 @@\n fn main() {\n     println!(\"one\");\n-    println!(\"two\");\n+    println!(\"2\");\n     println!(\"three\");\n     println!(\"four\");\n+    println!(\"five\");\n }\ndiff --git a/notes.md b/notes.md\nindex d4d7d60..976bcb5 100644\n--- a/notes.md\n+++ b/notes.md\n@@ -3,3 +3,4 @@ Some intro text.\n ---\n A horizontal rule above.\n increment operator: x\n+++ can also start a line\ndiff --git a/schema.sql b/schema.sql\nindex bb42838..07010ac 100644\n--- a/schema.sql\n+++ b/schema.sql\n@@ -1,7 +1,4 @@\n--- users table\n--- created 2024\n CREATE TABLE users (\n   id INTEGER PRIMARY KEY,\n-  -- legacy column\n   name TEXT\n );\n",
+      "output": "Changes:\n\nmain.rs\n@@ -1,6 +1,7 @@\n fn main() {\n     println!(\"one\");\n-    println!(\"two\");\n+    println!(\"2\");\n     println!(\"three\");\n     println!(\"four\");\n+    println!(\"five\");\n }\n  +2 -1\n\nnotes.md\n@@ -3,3 +3,4 @@ Some intro text.\n ---\n A horizontal rule above.\n increment operator: x\n+++ can also start a line\n  +1 -0\n\nschema.sql\n@@ -1,7 +1,4 @@\n--- users table\n--- created 2024\n CREATE TABLE users (\n   id INTEGER PRIMARY KEY,\n-  -- legacy column\n   name TEXT\n );\n  +0 -3",
+      "exit_code": 0,
+      "raw_sha256": "1532fc3b1849738a1822a0ef09d21cd5034aedf13586f8d290c6a0d21755016f"
+    },
+    "gh-pr-list-success": {
+      "raw": "[\n  {\n    \"number\": 42,\n    \"title\": \"Preserve migration guard\",\n    \"state\": \"OPEN\",\n    \"author\": {\"login\": \"dev\"},\n    \"updatedAt\": \"2026-09-21T04:00:00Z\"\n  },\n  {\n    \"number\": 41,\n    \"title\": \"Do not delete config\",\n    \"state\": \"MERGED\",\n    \"author\": {\"login\": \"ops\"},\n    \"updatedAt\": \"2026-09-20T04:00:00Z\"\n  }\n]\n",
+      "output": "Pull Requests\n  [open] #42 Preserve migration guard (dev)\n  [merged] #41 Do not delete config (ops)",
+      "exit_code": 0,
+      "raw_sha256": "a4bceeec5e5c07fa5ad83bdda7162c9b03df87b9865f83dc67c533711cd946c4"
+    },
+    "gh-pr-list-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nHTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "gh-pr-list-user-json": {
+      "raw": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}\n",
+      "output": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}",
+      "exit_code": 0,
+      "raw_sha256": "8b58a94dc56087308d16384cedecbcd7a998fb196022ef5212d517561613ba87"
+    },
+    "glab-mr-list-success": {
+      "raw": "[\n  {\n    \"iid\": 7,\n    \"title\": \"Keep tenant check\",\n    \"state\": \"opened\",\n    \"author\": {\"username\": \"reviewer\"},\n    \"updated_at\": \"2026-09-21T04:00:00Z\"\n  },\n  {\n    \"iid\": 6,\n    \"title\": \"Do not bypass authorization\",\n    \"state\": \"merged\",\n    \"author\": {\"username\": \"maintainer\"},\n    \"updated_at\": \"2026-09-20T04:00:00Z\"\n  }\n]\n",
+      "output": "Merge Requests\n  [open] !7 Keep tenant check (reviewer)\n  [merged] !6 Do not bypass authorization (maintainer)",
+      "exit_code": 0,
+      "raw_sha256": "085da5691bdd7f24e8349352186cc322864c333128f9b4ee4b113e17bedf0320"
+    },
+    "glab-mr-list-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nHTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "glab-mr-list-user-json": {
+      "raw": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}\n",
+      "output": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}",
+      "exit_code": 0,
+      "raw_sha256": "8b58a94dc56087308d16384cedecbcd7a998fb196022ef5212d517561613ba87"
+    },
+    "gt-log-success": {
+      "raw": "◉  abc1234 feat/auth 2d ago dev@example.com\n│  preserve auth guard\n│\n◉  def5678 main 3d ago ops@example.com\n│  keep tenant validation\n~\n",
+      "output": "◉  abc1234 feat/auth 2d ago\n│  preserve auth guard\n│\n◉  def5678 main 3d ago\n│  keep tenant validation\n~",
+      "exit_code": 0,
+      "raw_sha256": "8fad3125fc65068d3f1fd3fe683e9e90013697bdc898056ed91c8e14b4f2a33c"
+    },
+    "gt-sync-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nHTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "gt-branch-passthrough": {
+      "raw": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}\n",
+      "output": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}",
+      "exit_code": 0,
+      "raw_sha256": "8b58a94dc56087308d16384cedecbcd7a998fb196022ef5212d517561613ba87"
+    },
+    "gt-log-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nHTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "gt-log-short-passthrough": {
+      "raw": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}\n",
+      "output": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}",
+      "exit_code": 0,
+      "raw_sha256": "8b58a94dc56087308d16384cedecbcd7a998fb196022ef5212d517561613ba87"
+    },
+    "gt-submit-success": {
+      "raw": "Pushing objects...\nPushed branch feat/auth\nCreated pull request #42 for feat/auth: https://example.test/pull/42\n",
+      "output": "pushed feat/auth\ncreated PR #42 feat/auth https://example.test/pull/42",
+      "exit_code": 0,
+      "raw_sha256": "8cd7e0090fc4aad9b5e7e7c11874daf13273ef04b95c7de30b4c26df82320677"
+    },
+    "gt-submit-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nHTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "gt-sync-success": {
+      "raw": "Syncing with remote...\nSynced branch feat/auth with remote\nDeleted branch feat/merged\nDeleted branch fix/old\n",
+      "output": "ok sync: 1 synced, 2 deleted (feat/merged, fix/old)",
+      "exit_code": 0,
+      "raw_sha256": "f110e606b906f8ae42862c630558b03c8c6038dbc0034888a535380f990643b3"
+    },
+    "gt-restack-success": {
+      "raw": "Restacked branch feat/auth on top of main\nRestacked branch feat/db on top of feat/auth\nRestacked branch fix/parser on top of feat/db\n",
+      "output": "ok restacked 3 branches",
+      "exit_code": 0,
+      "raw_sha256": "ca019cddd7682cbb6dff276a61f134a76450579ecdfb0b08dd59ac596584646e"
+    },
+    "gt-restack-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nHTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "gt-create-success": {
+      "raw": "Creating new branch...\nCreated branch feat/new-feature from feat/auth\nBranch feat/new-feature is ready for development\n",
+      "output": "ok created feat/new-feature",
+      "exit_code": 0,
+      "raw_sha256": "77627351ca2bfda0e3904941ae396a10366f06f5dc7dc7c93cf793d36b2500d3"
+    },
+    "gt-create-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nHTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "gt-branch-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nHTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    },
+    "gt-other-passthrough": {
+      "raw": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}\n",
+      "output": "{\"customField\":\"must remain exact\",\"enabled\":false,\"limit\":7}",
+      "exit_code": 0,
+      "raw_sha256": "8b58a94dc56087308d16384cedecbcd7a998fb196022ef5212d517561613ba87"
+    },
+    "gt-other-failure": {
+      "raw": "HTTP 403: authentication required; do not retry with another account\n",
+      "output": "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings\nHTTP 403: authentication required; do not retry with another account",
+      "exit_code": 1,
+      "raw_sha256": "71c0f30f8beaaec3cd179bc67ab92b2746307dbede4d5eb01afb3c4758e44376"
+    }
+  }
+}

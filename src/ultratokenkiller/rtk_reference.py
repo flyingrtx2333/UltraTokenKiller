@@ -377,6 +377,15 @@ CASES = (
         "required": ["test_normalize_user_rejects_empty", "AssertionError", "1 failed"],
     },
     {
+        "id": "pytest-xfail-xpass",
+        "fixture": "pytest_xfail_xpass_raw.txt",
+        "program": "pytest",
+        "argv": ["pytest"],
+        "kind": "pytest",
+        "exit_code": 0,
+        "required": ["2 passed", "1 xfailed", "1 xpassed", "known bug #42", "unexpected behavior change"],
+    },
+    {
         "id": "typescript-pretty-errors",
         "fixture": "tsc_pretty_raw.txt",
         "program": "tsc",

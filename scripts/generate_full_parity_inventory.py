@@ -120,6 +120,7 @@ def rtk_items(inventory: list[dict], lock: dict) -> list[dict]:
     behavior_windows = {"tools.Commands.Ls", "tools.Commands.Tree"}
     success_failure_windows = {
         "tools.Commands.Find",
+        "tools.Commands.Pytest",
         "tools.GitCommand.Checkout",
         "tools.GitCommand.Branch",
         "tools.GitCommand.Commit",
@@ -168,10 +169,7 @@ def rtk_items(inventory: list[dict], lock: dict) -> list[dict]:
                 else "pending_fixed_upstream_variant_evidence"
             ),
             "parity_evidence": (
-                [
-                    "docs/evidence/upstream-rtk-comparison-20260920.json",
-                    *(["docs/evidence/hosting-command-parity-20260921.json"] if row["id"] in hosting_windows else []),
-                ]
+                ["docs/evidence/upstream-rtk-comparison-20260925.json"]
                 if success_sampled or behavior_sampled or success_failure_sampled else []
             ),
             "gap": (

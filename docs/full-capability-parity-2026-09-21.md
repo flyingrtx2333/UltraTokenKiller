@@ -7,7 +7,7 @@ Generated from machine-readable upstream evidence. Implementation status and fix
 | Upstream | Core items | Implementation states | Parity states |
 |---|---:|---|---|
 | Headroom | 24 | {'offline_passed': 21, 'real_client_passed': 3} | {'fixed_upstream_sample_passed': 13, 'fixed_upstream_suite_passed': 1, 'not_individually_compared': 10} |
-| Rtk | 211 | {'contract_mapped': 70, 'unverified': 141} | {'fixed_upstream_behavior_suite_windows': 2, 'fixed_upstream_success_failure_windows': 27, 'fixed_upstream_success_only': 13, 'pending_fixed_upstream_variant_evidence': 169} |
+| Rtk | 211 | {'contract_mapped': 70, 'unverified': 141} | {'fixed_upstream_behavior_suite_windows': 2, 'fixed_upstream_success_failure_windows': 28, 'fixed_upstream_success_only': 13, 'pending_fixed_upstream_variant_evidence': 168} |
 | Caveman | 21 | {'implemented_unverified': 5, 'real_client_passed': 16} | {'authorization_required': 5, 'fixed_upstream_policy_passed': 14, 'offline_passed': 2} |
 
 Total core denominator: **256**
@@ -125,7 +125,7 @@ Total core denominator: **256**
 | `rtk.tools.Commands.Prisma` | javascript | `prisma` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Proxy` | general | `proxy` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Psql` | data | `psql` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
-| `rtk.tools.Commands.Pytest` | python | `pytest` | contract_mapped | pending_fixed_upstream_variant_evidence | Mapped contract still needs success, failure and unknown-format fixed-upstream evidence |
+| `rtk.tools.Commands.Pytest` | python | `pytest` | contract_mapped | fixed_upstream_success_failure_windows | Fixed-upstream success and failure samples passed on Windows; unknown-format, macOS and Linux evidence remain |
 | `rtk.tools.Commands.Rake` | general | `rake` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |
 | `rtk.tools.Commands.Read` | file_search | `read` | contract_mapped | fixed_upstream_success_only | Success sample passed; fixed-upstream failure, unknown-format and applicable-platform evidence remain |
 | `rtk.tools.Commands.Recall` | general | `recall` | unverified | pending_fixed_upstream_variant_evidence | Needs a dedicated contract plus success, failure and unknown-format evidence |

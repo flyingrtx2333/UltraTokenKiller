@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 import pytest
 from ultratokenkiller.compression import _json_compact
 from ultratokenkiller.tool_filters import command_filter, compress_tool
@@ -83,6 +84,31 @@ def test_additional_filters_keep_failures_and_machine_shapes():
     assert compress_tool(commit, "git-commit") == "ok a1b2c3d\n"
     unknown = "remote helper emitted opaque result\n"
     assert compress_tool(unknown, "git-push") == unknown
+
+
+def test_pytest_expected_failure_outcomes_keep_reasons_and_counts():
+    fixture = Path(__file__).parent / "fixtures" / "rtk_reference" / "pytest_xfail_xpass_raw.txt"
+    raw = fixture.read_text(encoding="utf-8")
+    result = compress_tool(raw, "pytest")
+    assert "XFAIL tests/test_math.py::test_division - known bug #42" in result
+    assert "XPASS tests/test_math.py::test_rounding - unexpected behavior change" in result
+    assert "2 passed, 1 xfailed, 1 xpassed" in result
+    assert len(result) < len(raw)
+
+
+def test_pytest_collection_errors_and_unknown_output_pass_through():
+    collection_error = (
+        "============================= test session starts =============================\n"
+        "collected 0 items / 1 error\n\n"
+        "==================================== ERRORS ====================================\n"
+        "ERROR collecting tests/test_auth.py\n"
+        "ImportError while importing test module tests/test_auth.py\n"
+        "E   ModuleNotFoundError: No module named 'auth'\n"
+        "=========================== 1 error in 0.12s =============================\n"
+    )
+    assert compress_tool(collection_error, "pytest") == collection_error
+    unknown = "plugin changed its output format\nopaque details\n"
+    assert compress_tool(unknown, "pytest") == unknown
 
 
 def test_hosting_filters_preserve_identifiers_states_and_failure_text():

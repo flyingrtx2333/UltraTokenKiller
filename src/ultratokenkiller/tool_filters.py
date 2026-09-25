@@ -859,6 +859,14 @@ def compress_tool(text: str, kind: str) -> str:
     if kind in {"pytest", "cargo-test", "go-test", "js-test", "generic-test"}:
         from .compression import CRITICAL
         has_failure = bool(CRITICAL.search(re.sub(r"\b0 (?:failed|failures|errors|warnings)\b", "", text)))
+        if kind == "pytest" and (
+            re.search(r"^ERROR (?:collecting|at setup|at teardown)\b", text, re.M)
+            or re.search(r"\b[1-9]\d* errors?\b", text)
+            or "Interrupted:" in text
+        ):
+            # Collection and fixture errors can have no FAILED line. Keep their
+            # traceback and summary intact until this shape has its own parser.
+            return text
         if has_failure and kind == "pytest":
             kept = [
                 line for line in lines
@@ -882,8 +890,12 @@ def compress_tool(text: str, kind: str) -> str:
         if has_failure:
             return text
         if kind == "pytest":
-            summary = [line for line in lines if re.search(r"\b\d+ passed\b", line)]
+            summary = [line for line in lines if re.search(r"\b\d+ (?:passed|skipped|xfailed|xpassed)\b", line)]
             valid = bool(summary) and any("test session starts" in line or re.match(r"[.s]+\s*\[", line) for line in lines)
+            if valid:
+                outcomes = [line for line in lines if line.startswith(("XFAIL ", "XPASS "))]
+                rendered = "\n".join([*outcomes, summary[-1]]) + "\n"
+                return rendered if len(rendered) < len(text) else text
         elif kind == "cargo-test":
             summary = [line for line in lines if line.startswith("test result: ok.")]
             valid = bool(summary)

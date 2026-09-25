@@ -128,9 +128,9 @@ def render_roadmap_status(status: dict) -> str:
         ),
         (
             "- RTK："
-            f"{by_upstream['rtk']['fixed_upstream_partial_passed']} 项固定上游部分通过、"
-            f"{by_upstream['rtk']['contract_mapped']} 项仅完成契约映射、"
-            f"{by_upstream['rtk']['not_implemented']} 项未实现。"
+            f"{by_upstream['rtk'].get('fixed_upstream_partial_passed', 0)} 项固定上游部分通过、"
+            f"{by_upstream['rtk'].get('contract_mapped', 0)} 项仅完成契约映射、"
+            f"{by_upstream['rtk'].get('not_implemented', 0)} 项未实现。"
         ),
         (
             "- Caveman："
