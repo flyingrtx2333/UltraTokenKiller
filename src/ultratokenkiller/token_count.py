@@ -14,13 +14,13 @@ class TokenCount:
 def count_text(text: str, model: str | None = None) -> TokenCount:
     try:
         import tiktoken
-        if model:
-            try:
-                encoding = tiktoken.encoding_for_model(model)
-                return TokenCount(len(encoding.encode(text)), f"tiktoken:{encoding.name}", True)
-            except KeyError:
-                pass
-        encoding = tiktoken.get_encoding("o200k_base")
-        return TokenCount(len(encoding.encode(text)), "tiktoken:o200k_base:model_unmapped", False)
+        try:
+            if not model:
+                raise KeyError("model is unknown")
+            encoding = tiktoken.encoding_for_model(model)
+            return TokenCount(len(encoding.encode(text)), f"tiktoken:{encoding.name}", True)
+        except (KeyError, TypeError):
+            encoding = tiktoken.get_encoding("o200k_base")
+            return TokenCount(len(encoding.encode(text)), "tiktoken:o200k_base:model_unmapped", False)
     except (ImportError, ValueError):
         return TokenCount((len(text.encode("utf-8")) + 3) // 4, "utf8_bytes_div_4", False)

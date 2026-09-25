@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-23",
+  "upstream": {
+    "repository": "chopratejas/headroom",
+    "commit": "bc21c9370793f7e4aa94ac4c5d9a67a8d2dd0df9",
+    "platform": "Windows",
+    "core_binary_sha256": "fbec5359ed5325f662f0d84c24a2b90ededf87a4fd5b353425202eaa2789034e",
+    "test_files": [
+      "tests/test_proxy_openai.py",
+      "tests/test_openai_responses_buffered_sse.py",
+      "tests/test_openai_responses_compression_units.py",
+      "tests/test_anthropic_buffered_sse.py",
+      "tests/test_anthropic_compaction_transforms.py",
+      "tests/test_anthropic_pre_upstream_backpressure.py",
+      "tests/test_proxy_openai_responses_stream_ccr.py",
+      "tests/test_proxy_openai_responses_bypass.py",
+      "tests/test_proxy/test_anthropic_streaming_ccr_retrieve.py",
+      "tests/test_proxy/test_openai_responses_ccr.py",
+      "tests/test_proxy/test_anthropic_upstream_header.py",
+      "tests/test_proxy/test_anthropic_recount_and_reparse_safety.py",
+      "tests/test_responses_ws_pyo3_compression.py",
+      "tests/test_openai_codex_ws_lifecycle.py",
+      "tests/test_sse_utf8_split.py",
+      "tests/test_sse_thinking_blocks.py"
+    ],
+    "collected": 237,
+    "passed": 237,
+    "failed": 0,
+    "skipped": 0
+  },
+  "utk": {
+    "protocol_suite": {
+      "file": "tests/test_protocols_v2.py",
+      "passed": 19,
+      "failed": 0
+    },
+    "full_suite": {
+      "passed": 425,
+      "failed": 0,
+      "skipped": 3
+    }
+  },
+  "behavior_checks": [
+    "Chat Completions SSE bytes are preserved and provider usage is recorded.",
+    "Transient WebSocket handshake retries are bounded to three attempts before any model frame is sent.",
+    "Model request budgets count submitted model frames, not handshake attempts.",
+    "Failed, incomplete, cancelled, or interrupted WebSocket requests record zero estimated savings.",
+    "An interrupted request is recorded without upstream error text and is not automatically replayed; a new client connection can proceed.",
+    "The x-utk-session-id header is not forwarded to the upstream WebSocket."
+  ],
+  "external_calls": {
+    "network": 0,
+    "model_api": 0
+  },
+  "scope_note": "Protocol-level offline behavior evidence only. Selected fixed-upstream tests do not imply full feature parity or real Codex/Hermes client acceptance; those remain separately scoped."
+}

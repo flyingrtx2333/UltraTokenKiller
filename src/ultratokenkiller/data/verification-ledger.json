@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-21T03:13:09.845616+00:00",
+  "generated_at": "2026-09-25T06:23:01.164930+00:00",
   "suite_passed": true,
   "test_command": [
     "C:\\Users\\17489\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
@@ -12,31 +12,31 @@
   "platform": "Windows-10-10.0.26200-SP0",
   "capabilities": {
     "input.routing": {
-      "source_fingerprint": "850fa2416355103a12915f19bdd55bae20776d25ab0b13cb9a6076a2be740d06",
+      "source_fingerprint": "faabd9990e7fd0101cab76de65c42d9f9447c1918a947a8c949b0a98200d214e",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "input.json": {
-      "source_fingerprint": "3619afc943684d3d79fd57593c708fb11858a9bf563c8f8700d0da5572b620b6",
+      "source_fingerprint": "f50387d6d5c3e1f783bf765c7fa6f99072da2850838f1196ecb2f4d63beedddf",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "input.table": {
-      "source_fingerprint": "ed005cd22992abb5b5a9b0b5556812d22f5372f4169dde0bab867d52def51749",
+      "source_fingerprint": "83cff5c84dac2a612d95bae9ff578cfcd075d4647f439fbf55ee3fe2db7ecedd",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "input.logs": {
-      "source_fingerprint": "1c0ce5e33500d54953318372a8beb6be87a61e6af8b16350989223ba6327f381",
+      "source_fingerprint": "1b013d7a8887522e3ee44122407e0bce6caa5a8565c87d5990f37f4cc5418dc4",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "input.code.python": {
-      "source_fingerprint": "c63b45c45c49cb61e1851de2aac8ca95afeab1ca63279015dc3515d40301ddd4",
+      "source_fingerprint": "05da556102844825fe02c226ec39a842304b0e0fbbadf6fb5493f2d937e05430",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
@@ -48,37 +48,37 @@
       "upstream_source_fingerprint": null
     },
     "input.diff": {
-      "source_fingerprint": "695368acdd46bd90a28c8d743c029e58031b5b6abde938e22c98fc516b94dfb5",
+      "source_fingerprint": "90cdf802c04537900937a33948c83fdb5ae50e68eb10fc65953026de371dea24",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "input.search": {
-      "source_fingerprint": "fb6828a01732d5f8bc11bb14fc0458d01d83947933145f7e116a140dce340da7",
+      "source_fingerprint": "7436ebe4c53764d5956f3dd6078c936d59dde2afa35c5af1639d1fbcb6328ba3",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "input.long_text_en": {
-      "source_fingerprint": "140f8c8b91d9f35878ad0aaa3e2f3c5d5d48e0d56b2c6560403a3118ea1bfa3a",
+      "source_fingerprint": "d4c36242f682e75b5710961d54ebe4a5d603890d6ad5cb0991ea3c9d9102f1ed",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "input.long_text_zh": {
-      "source_fingerprint": "32a626bfa0fbcb6d9043907c2d2885e516e493f74589fb084a45c5d6ee26e304",
+      "source_fingerprint": "12bb6bc5e5a838f2c0d34c7f5b8b14dc3cfae35ef839610f4cd3bd2e53370dad",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "input.image": {
-      "source_fingerprint": "bd26e41a6d4256d08d665a431887684677297cb390596e44732ea83ea1b058ff",
+      "source_fingerprint": "b515f1fdc35cbed16d5fa4f3f54042b39de73953d89374b3ad467a9f35ce04b6",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "recovery.memory": {
-      "source_fingerprint": "a3fb4ce11af6421af6c219bf15ef88c6db635fcc1b437267dc128c56b4a0ac0d",
+      "source_fingerprint": "2625b2426ae794aee05c155c2bc165d04b99de4f9a1e40683404065f27f89c6d",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
@@ -90,85 +90,85 @@
       "upstream_source_fingerprint": null
     },
     "cache.stable_prefix": {
-      "source_fingerprint": "0deb078feb020c48e9d7693445b4028222540d86f849f87bae708f633071840f",
+      "source_fingerprint": "55065a8947b1464880b3c366d655ae2d1ba8c1ab407f9c5b363bb26f6336cda0",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "protocol.responses_http_sse": {
-      "source_fingerprint": "45c462825d1924335c76da9800622ca40462d1ee0197edf3c37d650c8926e71c",
+      "source_fingerprint": "267c10320a2c26beec8e75d2ce7804bc6c736cfad9cb33cc63ea682edbecc20c",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "protocol.chat_completions": {
-      "source_fingerprint": "cad888cc0a8b09200febdcc6ba844cc32be44537cf6d86705c95d6849cbb2f41",
+      "source_fingerprint": "0c8dc830989c064ec94f681c55a12516fc25beb5040fa9256065acf125ee4caf",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "protocol.anthropic_messages": {
-      "source_fingerprint": "4cc562d14987c318a2f2e8052602fe752c4101121aef6ed0680ea7a3f05755e6",
+      "source_fingerprint": "623c81525916aeae745039ecfa84a35d774c2dba3c3785a9cc6b08ca07d13ad6",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "protocol.responses_websocket": {
-      "source_fingerprint": "787d396284cca0d5fa1dc2132c95adf278c407950dc40a79d1546cb104e03fc2",
+      "source_fingerprint": "8102c38a6b4dbbe3f6b0f9e4b8d40df0999c1585e6de4653353dff5759eceeb3",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.files_search": {
-      "source_fingerprint": "201c6222d8b81cd86a18a0923e4a66b263d03a29776ba0e3f4a007457420fc34",
+      "source_fingerprint": "59a8ebe669646efec15ae64b2e7ae8b67d0ca450dc708aaa9fc9602da8b5d4eb",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.git": {
-      "source_fingerprint": "0ba28f6eaf91f081dc3ea4452dc4e55a2e25a98e5031ac6f233c5bc2495a5d81",
+      "source_fingerprint": "ed9a310421327498b73fb9a79d3cde302585e71b0d1a09c79f2ab049b2debca3",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.github": {
-      "source_fingerprint": "561fa99f03579f3b31d287e99a91f3a693d802eba208b6c3598d7aee300ce8ed",
+      "source_fingerprint": "7d97febfa1538a4906c4e7a3adc55fa7002839ab3d1f8c1dab27cf6fa752aa2f",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.test_runners": {
-      "source_fingerprint": "0fad58b124079ad14a5014fe262b0403dafba385a386011e0cb7eb09f8bdcdd5",
+      "source_fingerprint": "112158fcb9c4a26b99e7c2f1058de0eb02a409b3f72df60589c9f99ba114b4d1",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.diagnostics": {
-      "source_fingerprint": "08563bb61adc964d92019b412cdfe2ba3e4612e136aca8deafa4a17216eca04c",
+      "source_fingerprint": "5b278067d8c1898cf176bc9da790d9fdc3a41321e7aa1c4878a701c93925137d",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.packages": {
-      "source_fingerprint": "f4a169e0b4ec1abcd523e1df3947844d2c78016187e5512504863a37570849fa",
+      "source_fingerprint": "a69370dc534c1708280438859a023ede755d28d408c5d92cc87cd662414c332b",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.infrastructure": {
-      "source_fingerprint": "fb4ae60b7d156bd2e5a77e94c2c47b89702c7c4c8c55dde41a9288d1d3631772",
+      "source_fingerprint": "62bd9c6620f786e9c364f407924729eedc39c9fbddbb5ab67776024b40b9880d",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "tools.execution_semantics": {
-      "source_fingerprint": "17a4bd408e47b9635146dd7e9113a814b730a472386470f1138d6d21b0fbca22",
+      "source_fingerprint": "eef669a9c4ffc9ad47a659344415b042b13b6fc2172c91358b653d79da367595",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "response.modes": {
-      "source_fingerprint": "74b11296c24923b89ed12b6dff40aec3d150a740ebcd3e0ec7f106715000849d",
+      "source_fingerprint": "255b95da046a73050f65caa32ed8b2311d8080a7d8878785480f23326ac95653",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
@@ -186,13 +186,13 @@
       "upstream_source_fingerprint": null
     },
     "client.codex_api_key": {
-      "source_fingerprint": "b6c1d0d0d48e84352417ee3f4422655e0d7cfd6d66f542ce2e09b0409a58af1e",
+      "source_fingerprint": "8a0e59d034cdafd436e37af860e470b78e1d9f8ff363b1dff68cfa79322effe4",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
     },
     "dashboard.metrics": {
-      "source_fingerprint": "055f036da4f9b891519b2841c8613c2339c9629788ee9fb6f3b77ccc6ba20ec2",
+      "source_fingerprint": "a862896dda7f29e630606a48672298e7accd6f66abc5f03def089ee1f029acd7",
       "offline_passed": true,
       "real_client_source_fingerprint": null,
       "upstream_source_fingerprint": null
@@ -212,103 +212,111 @@
   },
   "command_contracts": {
     "git.status.human": {
-      "source_fingerprint": "049be88f0cc3936590575da62244388b38ef563e3110b628282aaef253b26cf2",
+      "source_fingerprint": "d1bc47d9f349d44fbc666c3b52d99a686e90d59157a69c6f6f0153dc5a9c3738",
       "offline_passed": true
     },
     "git.log.default": {
-      "source_fingerprint": "9eba6b82e45fd6123566bf8294d7fc37ddad6ef42549de5ba60dc0280fa2a1cb",
+      "source_fingerprint": "6b2ebd3ef16f6c0b94b21d5ee67b3bc60e75c2199b5eb33cf38b5d0976ebb565",
       "offline_passed": true
     },
     "git.diff.unified": {
-      "source_fingerprint": "57fccef19e89d3ced24f7a559d9062e7dd79033f9b7093c2525858a0436bee5d",
+      "source_fingerprint": "b3d3d892b9b7ee987d2ed0c299b08d284bfd1395b0e692c5cb1a772b5538d3f5",
       "offline_passed": true
     },
     "git.actions": {
-      "source_fingerprint": "6e77f730b3fd2db954f4ba4e1c6ba88f1f455aa84fd516e3cc8e20134f6f8ecf",
+      "source_fingerprint": "752736c5afa502a5abab7623318c739039625fb203b011e475be9756177d133d",
       "offline_passed": true
     },
     "search.human": {
-      "source_fingerprint": "3849a72217e7a1041d992e4b2332b055f01fb0f651b71f92848dee100994f0f0",
+      "source_fingerprint": "8957f9138a98e88183e8748639a79879e66c7b887b2657bb1ade18cef59bc2c7",
       "offline_passed": true
     },
     "files.read": {
-      "source_fingerprint": "cea32b0ad558501bdec92c7a27f14c1deac842a9a009b8f6d5f8d284c4d9711c",
+      "source_fingerprint": "e817bc0ae1c3f17ea123935d81e7fb558b66d496479b7da0b80f2500c2e78461",
       "offline_passed": true
     },
     "files.json": {
-      "source_fingerprint": "7f41679778c33c461042f8657e3c9bae753ec6118e5b51810fc0d20fb4aa71f5",
+      "source_fingerprint": "5a6d76ede0054f69e6acb7913ad605724838749b5deaadb48c977acf4edbeda5",
       "offline_passed": true
     },
     "files.smart": {
-      "source_fingerprint": "f0baa55f37c2bde7538fd1bfccdaf46add69f5c7b9f89d7fd2682ed8ca308718",
+      "source_fingerprint": "c6802efe832d478469f90ad82973b808251199902ac97567b217524445b7eecc",
       "offline_passed": true
     },
     "test.pytest": {
-      "source_fingerprint": "d6fe60aa14513cf2954690172986de0ae13e4d669ee13606f3b93ab698150288",
+      "source_fingerprint": "c8abbb857f896cd830821e4201c83b0f7fabe4bb824e18174568dc4b2b017797",
       "offline_passed": true
     },
     "test.cargo": {
-      "source_fingerprint": "a0ea9c41fa5cea75b24f28a023ed58e6a154f0ddf587fc4bdd2485894786380b",
+      "source_fingerprint": "dd711929b9f2aadd6fddc0cbe14b568be613e45d8c6088a0a5efd916c058c92a",
       "offline_passed": true
     },
     "test.go": {
-      "source_fingerprint": "84e0642eec66ef380631bbe96a99d8972282cd662a3cb3edbf0d62b189e80a36",
+      "source_fingerprint": "9100cd1ad6031c356a40d7983ef137d98af51baf27f6a58a69f60912ff789426",
       "offline_passed": true
     },
     "test.javascript": {
-      "source_fingerprint": "1b1c11bd59c8d984d0cf26e1f2cb8c7ce8ba9e744482ec5291e443940d619082",
+      "source_fingerprint": "518f6ec37e0c734106ceb98c0fa0592b4c2c5826aa4e91cf0d21c56e81c04b15",
       "offline_passed": true
     },
     "diagnostics.compilers": {
-      "source_fingerprint": "3c954f1f56a9fd7c441a6cdd13257770028be1a626fe368fba6ab686b3d3fb78",
+      "source_fingerprint": "3d861291ad50def4649db52ec30e6fc10f476869b9dd87dbb7b59d6ed6012231",
       "offline_passed": true
     },
     "infra.tables": {
-      "source_fingerprint": "55b9c9d8b156a6b19dc9f1b270d123468181d26f3ed8cd9773b7927824ebb21d",
+      "source_fingerprint": "43e49545f3bf531423370cb3c0b9ce5537207cf3c7cb50f3361e61c7b6001110",
       "offline_passed": true
     },
     "files.list": {
-      "source_fingerprint": "0156f1616d4ba5fecd8b53f9c006f341017931c44e880d701c418038500d9c76",
+      "source_fingerprint": "671dd68ec9624c7809e0eb32f46ee66f31ee4877bfc8649b1ab18cdd2f003a39",
       "offline_passed": true
     },
     "github.human": {
-      "source_fingerprint": "78551f858b880c76c1ce3a9199d7b3523f72e1245237dc3744c21c07db76abf6",
+      "source_fingerprint": "94996ab7bd6c5f564c77581d9f27bf227f67af2b5e6abee612ca7fb00b5f8d18",
+      "offline_passed": true
+    },
+    "gitlab.human": {
+      "source_fingerprint": "7d61b62e140ed0044a61cde90893970fac602fe3fccded3a93806322e80cf798",
+      "offline_passed": true
+    },
+    "graphite.human": {
+      "source_fingerprint": "d014298b1391c486f836bfb3d5fadd71760053fb3592aee744b592b8615b58f2",
       "offline_passed": true
     },
     "test.ruby_php": {
-      "source_fingerprint": "c9b2bbe4faf453e1ca803bf115796bdee9d78e7eb532431055c9f7751ad5a9e4",
+      "source_fingerprint": "88a9454c86430a87a052aa9068b4732bf7c3e34e2f81344bfc5f40875b7e961b",
       "offline_passed": true
     },
     "test.build_systems": {
-      "source_fingerprint": "f5b1d4d8a709a95f7f8f1e4e093b262a918cd2abd57afccdf8acc3dd5e7fbbe5",
+      "source_fingerprint": "5f95047f68a133daf3d6fadac442561d51ba5dd3d773a86a3d0671207bd5416d",
       "offline_passed": true
     },
     "test.bun": {
-      "source_fingerprint": "7399b09e6f986013532d0faa61b45399f3a3a7b080b65177ce63a8cba51ae495",
+      "source_fingerprint": "cede59b35938c41e6aa58c563f35f6389518ebd9f84a83ebcc5fb628e498ab30",
       "offline_passed": true
     },
     "test.deno": {
-      "source_fingerprint": "6250919af4cb5b715d98b939094337791ace865a8140e3933c55af7c00d67647",
+      "source_fingerprint": "624528f276760ecc67d932e339a6359d8cb19884748e5b23f599a9d83e927801",
       "offline_passed": true
     },
     "test.gradle": {
-      "source_fingerprint": "ed5e2e00c229afe8e0279dcb09b26f6d78c6c7a9817116a9915633dc867a8d3a",
+      "source_fingerprint": "d9e1bd7cc60157538c555338564b610c054727f7d48011d38078deed985989c3",
       "offline_passed": true
     },
     "diagnostics.golangci_v2": {
-      "source_fingerprint": "ee4bc50f9fe5be3e4c0314caec69fa80c4441b50360b73907b4b2b4c24a9a272",
+      "source_fingerprint": "ce9b7244f04cc7a02b570b3c5707d2b12d77da9cf57e592dbd8cbf3778a569bd",
       "offline_passed": true
     },
     "diagnostics.extended": {
-      "source_fingerprint": "60536e78a90a84982c17a7382505594edee3c1708f6b462472285b62f85f4b8d",
+      "source_fingerprint": "d20e944634bd4cc7856a4f6b90ad4a0f3ea7cd5813054b5c78bff2d9f3772034",
       "offline_passed": true
     },
     "packages.human": {
-      "source_fingerprint": "97efbd37055d6ba7e6442050a53d74a410bf3406cfe73b9167d8b8c393e1a74c",
+      "source_fingerprint": "72e6e66337dd7329aeaad6544889deb69016d30e19581f10afa8b5c686bcdffb",
       "offline_passed": true
     },
     "cloud.aws_human": {
-      "source_fingerprint": "de53150dbd99b6bda8a470607bd82d3fee01b643dfe5777e9b68651250de2b15",
+      "source_fingerprint": "f79ac317fef298f957e963d5c82e0ed04f22f934dfeaa84e90a1ae8629866b10",
       "offline_passed": true
     }
   },

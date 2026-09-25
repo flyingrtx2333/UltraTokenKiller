@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-23",
+  "scope": "dashboard.metrics H14; local offline and rendered UI checks only",
+  "coverage": {
+    "time_ranges": ["day", "week", "month"],
+    "charts": [
+      "token consumption and estimated savings",
+      "estimated cost and input-cost difference by currency",
+      "model requests and failures",
+      "provider-reported input, output, and cached-input usage",
+      "savings by source, model, and client",
+      "estimated model cost",
+      "skip reasons and request outcomes"
+    ],
+    "event_detail_allowlist": [
+      "request class label",
+      "mapped error category",
+      "compression fallback label",
+      "known skip-reason labels and counts",
+      "compression candidate and changed counts",
+      "cost-estimate status label"
+    ],
+    "event_detail_excluded": [
+      "request body",
+      "credentials",
+      "session identifiers",
+      "raw request paths",
+      "unknown raw error categories",
+      "unknown skip-reason strings"
+    ]
+  },
+  "verification": {
+    "python_full_suite": {"passed": 426, "failed": 0, "skipped": 3},
+    "frontend_typecheck": "passed",
+    "frontend_build": "passed; existing static assets were not cleared",
+    "rendered_ui": {
+      "browser": "Playwright Chromium",
+      "viewports": ["1280x1100", "390x844"],
+      "static_preview": "passed; built package assets loaded from the local static preview",
+      "data": "synthetic API responses; not production data",
+      "request_and_usage_charts_visible": true,
+      "desktop_trend_columns": 2,
+      "empty_cache_observation_not_drawn_as_zero": true,
+      "private_path_value_exposed": false,
+      "mobile_document_horizontal_overflow": false
+    },
+    "diff_check": "passed"
+  },
+  "external_calls": {"model_api": 0, "production_api": 0},
+  "scope_note": "This evidence does not establish real Hermes/Codex client behavior or online service acceptance."
+}

@@ -6,6 +6,7 @@ from fastapi.testclient import TestClient
 
 from ultratokenkiller.config import Settings
 from ultratokenkiller.store import Store
+from ultratokenkiller.pricing import event_cost_estimates
 
 
 @pytest.fixture
@@ -69,8 +70,14 @@ def test_public_event_exposes_only_safe_request_diagnostics(public_service):
         kind="input", client="hermes", success=False,
         metadata={
             "request_class": "model", "path": "/v1/chat/completions",
-            "error_category": "invalid_request", "session_id": "secret",
+            "error_category": "invalid_request", "estimator": "tiktoken:o200k_base:model_unmapped",
+            "token_estimate_exact_for_model": False,
+            "estimated_saved_tokens_basis": "estimated_prompt_delta",
+            "cost_estimate_status": "unavailable_no_price_catalog", "session_id": "secret",
             "recovery_id": "secret-handle",
+            "candidate_tool_results": 2,
+            "tool_skip_reasons": {"already_compressed": 1, "secret-session": "private text"},
+            "image_skip_reasons": {"text_dense_or_diagram": 1, "secret-session": "private text"},
         },
     )
     event = TestClient(public_service.app, base_url="http://42.194.159.81:19187").get(
@@ -79,7 +86,32 @@ def test_public_event_exposes_only_safe_request_diagnostics(public_service):
     assert event["metadata"] == {
         "request_class": "model", "path": "/v1/chat/completions",
         "error_category": "invalid_request",
+        "estimator": "tiktoken:o200k_base:model_unmapped",
+        "token_estimate_exact_for_model": False,
+        "estimated_saved_tokens_basis": "estimated_prompt_delta",
+        "cost_estimate_status": "unavailable_no_price_catalog",
+        "candidate_tool_results": 2,
+        "tool_skip_reasons": {"already_compressed": 1},
+        "image_skip_reasons": {"text_dense_or_diagram": 1},
     }
+
+
+def test_public_compression_failure_shows_safe_reason_only(public_service):
+    public_service.store.add(
+        kind="input", client="hermes", success=True,
+        metadata={"compression_fallback": "compression_timeout", "session_id": "private"},
+    )
+    client = TestClient(public_service.app, base_url="http://42.194.159.81:19187")
+    assert client.get("/api/v1/status").json()["features"]["input"] == "error"
+    assert client.get("/api/v1/events").json()[0]["metadata"] == {
+        "compression_fallback": "compression_timeout"
+    }
+
+    public_service.store.add(
+        kind="input", client="hermes", success=True,
+        metadata={"compression_fallback": {"detail": "private exception text"}},
+    )
+    assert client.get("/api/v1/events").json()[0]["metadata"] == {}
 
 
 def test_spoofed_loopback_headers_do_not_grant_access(public_service):
@@ -145,3 +177,37 @@ def test_public_metrics_include_safe_chart_aggregates(public_service):
     assert payload["analytics"]["by_model"][0]["name"] == "model-a"
     assert payload["analytics"]["timeline"]
     assert "secret" not in str(payload["analytics"])
+
+
+def test_public_events_show_money_estimates_without_price_sources_or_secrets(public_service):
+    public_service.settings.model_pricing = {
+        "hermes/model-a": {
+            "currency": "USD",
+            "input_per_million": 1,
+            "output_per_million": 2,
+            "cache_mode": "none",
+            "source": "private-price-source-with-sensitive-query?token=secret",
+            "checked_on": "2026-09-23",
+        }
+    }
+    metadata = {"secret": "request content must stay hidden"}
+    metadata.update(event_cost_estimates(
+        public_service.settings.model_pricing, "model-a", client="hermes", input_tokens=1000,
+        output_tokens=100, cached_tokens=0, saved_tokens=200,
+    ))
+    public_service.store.add(
+        kind="input", client="hermes", model="model-a", success=True,
+        input_tokens=1000, output_tokens=100, cached_tokens=0, saved_tokens=200,
+        metadata=metadata,
+    )
+
+    response = TestClient(public_service.app, base_url="http://42.194.159.81:19187").get("/api/v1/events")
+    quote = response.json()[0]["metadata"]["estimated_cost"]
+    saved_quote = response.json()[0]["metadata"]["estimated_saved_cost"]
+
+    assert quote["status"] == "estimated"
+    assert quote["currency"] == "USD"
+    assert quote["amount"] == pytest.approx(0.0012)
+    assert saved_quote["amount"] == pytest.approx(0.0002)
+    assert "source" not in quote
+    assert "secret" not in str(response.json())

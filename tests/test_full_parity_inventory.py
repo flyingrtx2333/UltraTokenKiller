@@ -91,8 +91,8 @@ def test_capability_report_exposes_full_parity_without_inflating_completion():
     }
     assert report["full_parity_status_counts"]["caveman"]["authorization_required"] == 5
     assert report["full_parity_status_counts"]["headroom"] == {
-        "fixed_upstream_sample_passed": 9,
+        "fixed_upstream_sample_passed": 13,
         "fixed_upstream_suite_passed": 1,
-        "not_individually_compared": 14,
+        "not_individually_compared": 10,
     }
     assert "contract_mapped and passthrough do not count" in report["full_parity_note"]

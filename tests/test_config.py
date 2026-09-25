@@ -17,11 +17,13 @@ def test_public_dashboard_does_not_expose_model_proxy(tmp_path):
 
 
 def test_settings_round_trip(tmp_path: Path):
-    settings = Settings(dashboard_port=19001, caveman="full")
+    pricing = {"provider/model": {"input_per_million": 1.0}}
+    settings = Settings(dashboard_port=19001, caveman="full", model_pricing=pricing)
     settings.save(tmp_path)
     loaded = Settings.load(tmp_path)
     assert loaded.dashboard_port == 19001
     assert loaded.caveman == "full"
+    assert loaded.model_pricing == pricing
 
 
 def test_choose_port_skips_excluded():

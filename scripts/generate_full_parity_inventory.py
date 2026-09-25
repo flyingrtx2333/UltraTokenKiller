@@ -22,7 +22,11 @@ def upstream_url(repository: str, commit: str, path: str) -> str:
 
 def headroom_items(manifest: list[dict], lock: dict) -> list[dict]:
     fixture_map = {
-        "input.routing": ["all fixed input fixtures"],
+        "input.routing": [
+            "tests/test_recovery_pipeline.py::test_fixed_upstream_mixed_boundaries_without_blank_lines_preserve_facts",
+            "tests/test_recovery_pipeline.py::test_interleaved_table_html_plain_and_failure_facts_keep_their_order",
+            "tests/test_protocols_v2.py::test_mixed_tool_output_compresses_through_model_proxy_and_remains_recoverable",
+        ],
         "input.json": ["json-outlier", "json-minority"],
         "input.table": ["unknown-format"],
         "input.logs": ["log-failure", "unicode-log", "log-trace"],
@@ -31,10 +35,26 @@ def headroom_items(manifest: list[dict], lock: dict) -> list[dict]:
         "input.diff": ["patch-change"],
         "input.search": ["search-location"],
         "input.long_text_en": ["prose-negation", "long-identifier"],
+        "input.long_text_zh": ["h10-zh-fixed-sample"],
+        "recovery.memory": ["tests/test_compression_store.py"],
+        "recovery.mcp": ["tests/test_ccr_mcp_server.py"],
+        "cache.stable_prefix": [
+            "tests/test_cache_aligner_prefix_stability.py",
+            "tests/test_cache_prefix_overlay.py",
+            "tests/test_cache/test_prefix_tracker.py",
+        ],
+    }
+    review_evidence_map = {
+        "input.long_text_zh": ["docs/evidence/headroom-h10-20260923.json"],
+        "input.image": ["docs/evidence/headroom-h10-20260923.json"],
+    }
+    gap_map = {
+        "input.image": "Only cache-only tile-resize and preserve fallback were compared; trained image router is unavailable",
     }
     result = []
     for row in (item for item in manifest if item["upstream"] == "headroom"):
         fixtures = fixture_map.get(row["id"], [])
+        review_evidence = review_evidence_map.get(row["id"], [])
         parity_status = "fixed_upstream_sample_passed" if fixtures else "not_individually_compared"
         if row["id"] == "benchmark.fixed_upstream":
             parity_status = "fixed_upstream_suite_passed"
@@ -58,10 +78,12 @@ def headroom_items(manifest: list[dict], lock: dict) -> list[dict]:
             "implementation_status": row["verification"],
             "parity_status": parity_status,
             "parity_evidence": (
-                ["docs/evidence/four-route-matrix-20260920.json", *fixtures]
-                if fixtures or row["id"] == "benchmark.fixed_upstream" else []
+                ["docs/evidence/four-route-matrix-20260920.json", *fixtures, *review_evidence]
+                if fixtures or review_evidence or row["id"] == "benchmark.fixed_upstream" else []
             ),
-            "gap": None if parity_status != "not_individually_compared" else "Needs a fixed-upstream item-level comparison",
+            "gap": None if parity_status != "not_individually_compared" else gap_map.get(
+                row["id"], "Needs a fixed-upstream item-level comparison"
+            ),
         })
     return result
 

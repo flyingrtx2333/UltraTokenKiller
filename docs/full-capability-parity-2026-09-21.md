@@ -6,7 +6,7 @@ Generated from machine-readable upstream evidence. Implementation status and fix
 
 | Upstream | Core items | Implementation states | Parity states |
 |---|---:|---|---|
-| Headroom | 24 | {'offline_passed': 21, 'real_client_passed': 3} | {'fixed_upstream_sample_passed': 9, 'fixed_upstream_suite_passed': 1, 'not_individually_compared': 14} |
+| Headroom | 24 | {'offline_passed': 21, 'real_client_passed': 3} | {'fixed_upstream_sample_passed': 13, 'fixed_upstream_suite_passed': 1, 'not_individually_compared': 10} |
 | Rtk | 211 | {'contract_mapped': 70, 'unverified': 141} | {'fixed_upstream_behavior_suite_windows': 2, 'fixed_upstream_success_failure_windows': 27, 'fixed_upstream_success_only': 13, 'pending_fixed_upstream_variant_evidence': 169} |
 | Caveman | 21 | {'implemented_unverified': 5, 'real_client_passed': 16} | {'authorization_required': 5, 'fixed_upstream_policy_passed': 14, 'offline_passed': 2} |
 
@@ -25,11 +25,11 @@ Total core denominator: **256**
 | `headroom.input.diff` | input | `input.diff` | offline_passed | fixed_upstream_sample_passed | — |
 | `headroom.input.search` | input | `input.search` | offline_passed | fixed_upstream_sample_passed | — |
 | `headroom.input.long_text_en` | input | `input.long_text_en` | offline_passed | fixed_upstream_sample_passed | — |
-| `headroom.input.long_text_zh` | input | `input.long_text_zh` | offline_passed | not_individually_compared | Needs a fixed-upstream item-level comparison |
-| `headroom.input.image` | input | `input.image` | offline_passed | not_individually_compared | Needs a fixed-upstream item-level comparison |
-| `headroom.recovery.memory` | recovery | `recovery.memory` | offline_passed | not_individually_compared | Needs a fixed-upstream item-level comparison |
-| `headroom.recovery.mcp` | recovery | `recovery.mcp` | real_client_passed | not_individually_compared | Needs a fixed-upstream item-level comparison |
-| `headroom.cache.stable_prefix` | recovery | `cache.stable_prefix` | offline_passed | not_individually_compared | Needs a fixed-upstream item-level comparison |
+| `headroom.input.long_text_zh` | input | `input.long_text_zh` | offline_passed | fixed_upstream_sample_passed | — |
+| `headroom.input.image` | input | `input.image` | offline_passed | not_individually_compared | Only cache-only tile-resize and preserve fallback were compared; trained image router is unavailable |
+| `headroom.recovery.memory` | recovery | `recovery.memory` | offline_passed | fixed_upstream_sample_passed | — |
+| `headroom.recovery.mcp` | recovery | `recovery.mcp` | real_client_passed | fixed_upstream_sample_passed | — |
+| `headroom.cache.stable_prefix` | recovery | `cache.stable_prefix` | offline_passed | fixed_upstream_sample_passed | — |
 | `headroom.protocol.responses_http_sse` | protocol | `protocol.responses_http_sse` | real_client_passed | not_individually_compared | Needs a fixed-upstream item-level comparison |
 | `headroom.protocol.chat_completions` | protocol | `protocol.chat_completions` | offline_passed | not_individually_compared | Needs a fixed-upstream item-level comparison |
 | `headroom.protocol.anthropic_messages` | protocol | `protocol.anthropic_messages` | offline_passed | not_individually_compared | Needs a fixed-upstream item-level comparison |

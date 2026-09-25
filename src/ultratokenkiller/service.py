@@ -17,6 +17,7 @@ from .integrations import CodexAdapter, HermesAdapter
 from .identity import ensure_session_token, instance_id
 from .runtime import headroom_health, headroom_ports, restart_managed_headrooms
 from .store import Store
+from .pricing import event_cost_estimates, load_price_catalog
 
 home = default_home()
 settings = Settings.load(home)
@@ -114,9 +115,13 @@ async def api_status(request: Request) -> dict:
     input_state = "off" if settings.profile == "off" else "waiting"
     if last_input and input_state != "off":
         metadata = last_input["metadata"]
-        if metadata.get("compression_fallback") in {"missing_session", "broker_unavailable", True}:
+        fallback = metadata.get("compression_fallback")
+        if fallback is True or (isinstance(fallback, str) and fallback in {
+            "missing_session", "broker_unavailable", "compression_error",
+            "compression_timeout", "compression_circuit_open",
+        }):
             input_state = "error"
-        elif metadata.get("changed_tool_results", 0) > 0:
+        elif metadata.get("changed_tool_results", 0) > 0 or metadata.get("changed_images", 0) > 0:
             input_state = "active"
         else:
             input_state = "skipped"
@@ -153,7 +158,8 @@ async def api_metrics(hours: int = Query(24, ge=1, le=24 * 90), client: str | No
     _ingest_headroom(headroom)
     store.prune(settings.retention_days)
     local = store.summary(hours, client, model)
-    analytics = store.analytics(hours)
+    price_catalog, price_catalog_status = load_price_catalog(settings.model_pricing)
+    analytics = store.analytics(hours, catalog_status=price_catalog_status)
     rtk = _rtk_summary()
     return {"local": local, "analytics": analytics, "headroom": headroom, "rtk": rtk, "period_hours": hours}
 
@@ -168,8 +174,58 @@ async def api_events(request: Request, limit: int = Query(100, ge=1, le=500), ho
             event["metadata"] = {key: value for key, value in event["metadata"].items()
                                  if key in {"optimized", "original_bytes", "rendered_bytes", "upstream_status",
                                             "request_class", "path", "error_category", "changed_tool_results",
-                                            "response_style_applied"}}
-    return events
+                                            "candidate_tool_results", "tool_skip_reasons", "image_skip_reasons", "changed_images",
+                                            "response_style_applied", "compression_fallback", "estimator",
+                                            "estimator_after", "token_estimate_exact_for_model",
+                                            "estimated_saved_tokens_basis", "cost_estimate_status",
+                                            "estimated_cost", "estimated_saved_cost"}}
+            for key in ("estimated_cost", "estimated_saved_cost"):
+                quote = event["metadata"].get(key)
+                if isinstance(quote, dict):
+                    event["metadata"][key] = {
+                        field: quote[field] for field in ("status", "amount", "currency", "checked_on")
+                        if field in quote
+                    }
+            fallback = event["metadata"].get("compression_fallback")
+            safe_fallback = fallback is True or (
+                isinstance(fallback, str) and fallback in {
+                    "missing_session", "broker_unavailable", "compression_error",
+                    "compression_timeout", "compression_circuit_open",
+                    "missing_query", "too_few_segments", "too_many_segments", "segment_too_large",
+                    "no_length_reduction", "detail_task", "unsupported_format_or_url", "invalid_base64",
+                    "image_too_large", "image_library_unavailable", "already_small", "text_dense_or_diagram",
+                    "image_decode_error", "insufficient_byte_savings",
+                }
+            )
+            if not safe_fallback:
+                event["metadata"].pop("compression_fallback", None)
+            reasons = event["metadata"].get("tool_skip_reasons")
+            if isinstance(reasons, dict):
+                allowed = {"no_tool_result", "already_compressed", "broker_unavailable", "disabled",
+                           "missing_session", "not_smaller_or_memory_full", "compressor_not_ready",
+                           "compression_error", "restored_original", "unchanged"}
+                event["metadata"]["tool_skip_reasons"] = {
+                    key: value for key, value in reasons.items()
+                    if key in allowed and type(value) is int and 0 <= value <= 100000
+                }
+            else:
+                event["metadata"].pop("tool_skip_reasons", None)
+            image_reasons = event["metadata"].get("image_skip_reasons")
+            if isinstance(image_reasons, dict):
+                allowed_images = {
+                    "compression_error", "missing_session", "broker_unavailable", "disabled",
+                    "not_smaller_or_memory_full", "compressor_not_ready", "detail_task",
+                    "unsupported_format_or_url", "invalid_base64", "image_too_large",
+                    "image_library_unavailable", "already_small", "text_dense_or_diagram",
+                    "image_decode_error", "insufficient_byte_savings", "unchanged",
+                }
+                event["metadata"]["image_skip_reasons"] = {
+                    key: value for key, value in image_reasons.items()
+                    if key in allowed_images and isinstance(value, int) and 0 <= value <= 100000
+                }
+            else:
+                event["metadata"].pop("image_skip_reasons", None)
+        return events
 
 
 def _ingest_headroom(headroom: dict) -> None:
@@ -183,16 +239,30 @@ def _ingest_headroom(headroom: dict) -> None:
         except (AttributeError, ValueError):
             created = None
         event_id = f"{port}:{item.get('request_id') or f'recent-{index}-{timestamp}'}"
+        input_tokens = item.get("input_tokens_optimized")
+        output_tokens = item.get("output_tokens")
+        cached_tokens = item.get("cached_tokens", item.get("cached_input_tokens"))
+        metadata = {"external_id": event_id, "proxy_port": port}
+        metadata.update(event_cost_estimates(
+            settings.model_pricing,
+            item.get("model"),
+            client=item.get("provider", "model"),
+            input_tokens=input_tokens if isinstance(input_tokens, int) else None,
+            output_tokens=output_tokens if isinstance(output_tokens, int) else None,
+            cached_tokens=cached_tokens if isinstance(cached_tokens, int) else None,
+            saved_tokens=max(0, int(item.get("tokens_saved", 0) or 0)),
+        ))
         store.add(
             kind="headroom",
             client=item.get("provider", "model"),
             success=item.get("token_accounting_status") != "failed",
             model=item.get("model"),
-            input_tokens=item.get("input_tokens_optimized"),
-            output_tokens=item.get("output_tokens"),
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
+            cached_tokens=cached_tokens,
             saved_tokens=item.get("tokens_saved", 0),
             duration_ms=round(item.get("total_latency_ms", 0)),
-            metadata={"external_id": event_id, "proxy_port": port},
+            metadata=metadata,
         )
         if created:
             with store.connect() as db:

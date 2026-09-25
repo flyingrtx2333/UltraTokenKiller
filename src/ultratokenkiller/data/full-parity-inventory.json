@@ -28,16 +28,21 @@
         }
       ],
       "utk_implementation": [
-        "src/ultratokenkiller/compression.py"
+        "src/ultratokenkiller/compression.py",
+        "src/ultratokenkiller/proxy.py"
       ],
       "utk_tests": [
-        "tests/test_native.py"
+        "tests/test_native.py",
+        "tests/test_recovery_pipeline.py",
+        "tests/test_protocols_v2.py"
       ],
       "implementation_status": "offline_passed",
       "parity_status": "fixed_upstream_sample_passed",
       "parity_evidence": [
         "docs/evidence/four-route-matrix-20260920.json",
-        "all fixed input fixtures"
+        "tests/test_recovery_pipeline.py::test_fixed_upstream_mixed_boundaries_without_blank_lines_preserve_facts",
+        "tests/test_recovery_pipeline.py::test_interleaved_table_html_plain_and_failure_facts_keep_their_order",
+        "tests/test_protocols_v2.py::test_mixed_tool_output_compresses_through_model_proxy_and_remains_recoverable"
       ],
       "gap": null
     },
@@ -346,9 +351,13 @@
         "tests/test_text_compression.py"
       ],
       "implementation_status": "offline_passed",
-      "parity_status": "not_individually_compared",
-      "parity_evidence": [],
-      "gap": "Needs a fixed-upstream item-level comparison"
+      "parity_status": "fixed_upstream_sample_passed",
+      "parity_evidence": [
+        "docs/evidence/four-route-matrix-20260920.json",
+        "h10-zh-fixed-sample",
+        "docs/evidence/headroom-h10-20260923.json"
+      ],
+      "gap": null
     },
     {
       "id": "headroom.input.image",
@@ -378,8 +387,11 @@
       ],
       "implementation_status": "offline_passed",
       "parity_status": "not_individually_compared",
-      "parity_evidence": [],
-      "gap": "Needs a fixed-upstream item-level comparison"
+      "parity_evidence": [
+        "docs/evidence/four-route-matrix-20260920.json",
+        "docs/evidence/headroom-h10-20260923.json"
+      ],
+      "gap": "Only cache-only tile-resize and preserve fallback were compared; trained image router is unavailable"
     },
     {
       "id": "headroom.recovery.memory",
@@ -402,16 +414,21 @@
         }
       ],
       "utk_implementation": [
-        "src/ultratokenkiller/recovery.py"
+        "src/ultratokenkiller/recovery.py",
+        "src/ultratokenkiller/compression.py"
       ],
       "utk_tests": [
         "tests/test_recovery_pipeline.py",
-        "tests/test_history_stability.py"
+        "tests/test_history_stability.py",
+        "tests/test_structured_tool_outputs.py"
       ],
       "implementation_status": "offline_passed",
-      "parity_status": "not_individually_compared",
-      "parity_evidence": [],
-      "gap": "Needs a fixed-upstream item-level comparison"
+      "parity_status": "fixed_upstream_sample_passed",
+      "parity_evidence": [
+        "docs/evidence/four-route-matrix-20260920.json",
+        "tests/test_compression_store.py"
+      ],
+      "gap": null
     },
     {
       "id": "headroom.recovery.mcp",
@@ -440,9 +457,12 @@
         "tests/test_mcp_encoding.py"
       ],
       "implementation_status": "real_client_passed",
-      "parity_status": "not_individually_compared",
-      "parity_evidence": [],
-      "gap": "Needs a fixed-upstream item-level comparison"
+      "parity_status": "fixed_upstream_sample_passed",
+      "parity_evidence": [
+        "docs/evidence/four-route-matrix-20260920.json",
+        "tests/test_ccr_mcp_server.py"
+      ],
+      "gap": null
     },
     {
       "id": "headroom.cache.stable_prefix",
@@ -465,15 +485,25 @@
         }
       ],
       "utk_implementation": [
-        "src/ultratokenkiller/recovery.py"
+        "src/ultratokenkiller/compression.py",
+        "src/ultratokenkiller/proxy.py",
+        "src/ultratokenkiller/recovery.py",
+        "src/ultratokenkiller/read_lifecycle.py"
       ],
       "utk_tests": [
-        "tests/test_history_stability.py"
+        "tests/test_history_stability.py",
+        "tests/test_structured_tool_outputs.py",
+        "tests/test_read_lifecycle.py"
       ],
       "implementation_status": "offline_passed",
-      "parity_status": "not_individually_compared",
-      "parity_evidence": [],
-      "gap": "Needs a fixed-upstream item-level comparison"
+      "parity_status": "fixed_upstream_sample_passed",
+      "parity_evidence": [
+        "docs/evidence/four-route-matrix-20260920.json",
+        "tests/test_cache_aligner_prefix_stability.py",
+        "tests/test_cache_prefix_overlay.py",
+        "tests/test_cache/test_prefix_tracker.py"
+      ],
+      "gap": null
     },
     {
       "id": "headroom.protocol.responses_http_sse",
@@ -718,11 +748,17 @@
       ],
       "utk_implementation": [
         "src/ultratokenkiller/service.py",
+        "src/ultratokenkiller/store.py",
+        "src/ultratokenkiller/proxy.py",
+        "src/ultratokenkiller/token_count.py",
         "src/ultratokenkiller/tui.py"
       ],
       "utk_tests": [
         "tests/test_service.py",
-        "tests/test_store.py"
+        "tests/test_store.py",
+        "tests/test_dashboard_analytics.py",
+        "tests/test_token_count.py",
+        "tests/test_protocols_v2.py"
       ],
       "implementation_status": "offline_passed",
       "parity_status": "not_individually_compared",

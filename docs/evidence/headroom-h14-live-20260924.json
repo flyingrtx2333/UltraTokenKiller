@@ -1,0 +1,104 @@
+{
+  "date": "2026-09-24",
+  "scope": "H14 online dashboard and daily Hermes connectivity smoke test",
+  "deployment": {
+    "release": "h14-dashboard-label-20260924",
+    "public_url": "http://42.194.159.81:19187/",
+    "dashboard_assets": [
+      "index-D0f9UiQj.js",
+      "index-Cg9TBmHr.css"
+    ],
+    "corrected_outcome_chart_title": "事件结果（模型与工具）",
+    "corrected_js_http_status": 200,
+    "browser_reload_after_title_correction": "timed_out; public HTML and JS were verified directly",
+    "services_active": true,
+    "hermes_configuration_sha256_unchanged": true,
+    "browser_checks": {
+      "desktop_viewport": "1440x1100",
+      "desktop_page_horizontal_overflow": false,
+      "mobile_viewport": "390x844",
+      "mobile_page_horizontal_overflow": false,
+      "mobile_trend_cards_scroll_horizontally": true,
+      "rendered_svg_charts": 3,
+      "visible_chart_groups": [
+        "token consumption and savings",
+        "requests and failures",
+        "provider usage",
+        "savings source",
+        "model savings",
+        "model cost estimates",
+        "model usage",
+        "client savings",
+        "skip reasons"
+      ]
+    }
+  },
+  "hermes_smoke_test": {
+    "result": "success",
+    "response_marker": "UTK-LIVE-20260924-OK",
+    "api_calls_counted": 2,
+    "main_request_calls": 1,
+    "title_generation_calls": 1,
+    "tool_calls": 0,
+    "input_compression_savings_tokens": 0,
+    "proves": [
+      "The daily Hermes configuration can complete a request through UTK.",
+      "The dashboard records the request."
+    ],
+    "does_not_prove": [
+      "Tool-output compression works in a real Hermes tool call.",
+      "Input compression saves tokens in a real Hermes conversation."
+    ]
+  },
+  "dashboard_metrics_after_test": {
+    "model_requests": 27,
+    "input_savings_estimated_tokens": 2540,
+    "tool_savings_estimated_tokens": 122721,
+    "note": "Savings are UTK estimates, not verified provider-bill reductions."
+  },
+  "event_outcomes_last_24_hours": {
+    "model_requests": {
+      "success": 26,
+      "failure": 1
+    },
+    "tool_events": {
+      "success": 2,
+      "failure": 0
+    },
+    "dashboard_total": {
+      "success": 28,
+      "failure": 1
+    },
+    "source": "Public sanitized /api/v1/events aggregation, grouped by event kind and success."
+  },
+  "pricing": {
+    "configured_for_observed_models": false,
+    "cost_chart_has_priced_data": false,
+    "note": "No model price was inferred or invented."
+  },
+  "test_budget": {
+    "used": 12,
+    "limit": 25,
+    "remaining": 13,
+    "note": "Both the request and title-generation call count against the budget."
+  },
+  "rollback": {
+    "previous_dashboard_files_backed_up": true,
+    "backup_dir": "/root/.local/state/utk/releases/h14-dashboard-label-20260924/backup",
+    "restore_files": [
+      "index.html",
+      "assets/index-BirccT85.js"
+    ],
+    "keep_verification_budget_database": true,
+    "note": "Do not restore the old budget database; it would erase the two calls recorded by this test."
+  },
+  "offline_checks": {
+    "frontend_typecheck_and_build": "passed",
+    "dashboard_analytics_and_public_dashboard_tests": "15 passed; one upstream deprecation warning"
+  },
+  "limitations": [
+    "The final page screenshot was not saved; the screenshot captured before the label correction is not final-state evidence.",
+    "A browser reload after the title correction timed out, although the live HTML points to the corrected JS and that bundle returns HTTP 200 with the title string present.",
+    "This smoke test did not exercise a tool-output compression scenario."
+  ]
+}

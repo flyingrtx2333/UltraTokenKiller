@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-23",
+  "upstream": {
+    "repository": "chopratejas/headroom",
+    "commit": "bc21c9370793f7e4aa94ac4c5d9a67a8d2dd0df9",
+    "platform": "Windows",
+    "core_binary_sha256": "fbec5359ed5325f662f0d84c24a2b90ededf87a4fd5b353425202eaa2789034e",
+    "tests": [
+      "tests/test_compression_store.py",
+      "tests/test_ccr_mcp_server.py",
+      "tests/test_cache_aligner_prefix_stability.py",
+      "tests/test_cache_prefix_overlay.py",
+      "tests/test_cache/test_prefix_tracker.py"
+    ],
+    "passed": 184,
+    "failed": 0
+  },
+  "utk": {
+    "suite": "python -m pytest -q",
+    "passed": 420,
+    "skipped": 3,
+    "failed": 0
+  },
+  "external_calls": {
+    "network": 0,
+    "model_api": 0
+  },
+  "scope_note": "Behavioral test evidence only. Headroom and UTK storage implementations differ; this does not establish internal implementation equivalence or live-client acceptance."
+}

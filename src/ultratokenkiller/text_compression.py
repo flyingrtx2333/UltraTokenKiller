@@ -83,11 +83,15 @@ def summarize_text(text: str, query: str, home=None, aggressive=False) -> str:
     return "\n\n".join(chunk if i in keep else "[UTK: passage omitted]" for i, chunk in enumerate(chunks))
 
 
-def summarize_cjk_text(text: str, query: str, aggressive=False) -> str:
-    """Deterministic CJK passage selection; no multilingual parity claim."""
+def summarize_cjk_text_with_reason(text: str, query: str, aggressive=False) -> tuple[str, str]:
+    """Select CJK passages and return a bounded, content-free skip reason."""
     chunks = [part for part in re.split(r"(?<=[。！？!?；;])\s*|\n+", text) if part]
-    if len(chunks) < 8 or len(chunks) > 512 or any(len(chunk) > 2000 for chunk in chunks):
-        return text
+    if len(chunks) < 8:
+        return text, "too_few_segments"
+    if len(chunks) > 512:
+        return text, "too_many_segments"
+    if any(len(chunk) > 2000 for chunk in chunks):
+        return text, "segment_too_large"
 
     def terms(value):
         compact = re.sub(r"\s+", "", value.lower())
@@ -120,4 +124,9 @@ def summarize_cjk_text(text: str, query: str, aggressive=False) -> str:
     if omitted:
         output.append(f"[UTK: 省略 {omitted} 个低相关段落]")
     rendered = "\n".join(output)
-    return rendered if len(rendered) < len(text) else text
+    return (rendered, "compressed") if len(rendered) < len(text) else (text, "no_length_reduction")
+
+
+def summarize_cjk_text(text: str, query: str, aggressive=False) -> str:
+    """Deterministic CJK passage selection; no multilingual parity claim."""
+    return summarize_cjk_text_with_reason(text, query, aggressive)[0]

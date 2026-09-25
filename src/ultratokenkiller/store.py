@@ -6,6 +6,19 @@ import time
 from pathlib import Path
 from typing import Any
 
+TOOL_SKIP_REASONS = frozenset({
+    "no_tool_result", "already_compressed", "broker_unavailable", "disabled",
+    "missing_session", "not_smaller_or_memory_full", "compressor_not_ready",
+    "compression_error", "restored_original", "unchanged",
+})
+IMAGE_SKIP_REASONS = frozenset({
+    "compression_error", "missing_session", "broker_unavailable", "disabled",
+    "not_smaller_or_memory_full", "compressor_not_ready", "detail_task",
+    "unsupported_format_or_url", "invalid_base64", "image_too_large",
+    "image_library_unavailable", "already_small", "text_dense_or_diagram",
+    "image_decode_error", "insufficient_byte_savings", "unchanged",
+})
+
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS events (
@@ -93,7 +106,11 @@ class Store:
             row[key] = row[key] or 0
         return row
 
-    def analytics(self, since_hours: int = 24) -> dict[str, Any]:
+    def analytics(
+        self,
+        since_hours: int = 24,
+        catalog_status: str = "not_configured",
+    ) -> dict[str, Any]:
         """Return privacy-safe chart data without exposing request content."""
         now = time.time()
         bucket_seconds = 3600 if since_hours <= 48 else 86400
@@ -104,9 +121,18 @@ class Store:
             start: {
                 "start": start,
                 "consumed_tokens": 0,
+                "actual_input_tokens": 0,
+                "actual_output_tokens": 0,
+                "actual_cached_input_tokens": 0,
                 "saved_tokens": 0,
                 "model_requests": 0,
                 "failures": 0,
+                "usage_observations": 0,
+                "input_usage_observations": 0,
+                "output_usage_observations": 0,
+                "cache_usage_observations": 0,
+                "estimated_cost_by_currency": {},
+                "estimated_saved_cost_by_currency": {},
             }
             for start in range(start_bucket, end_bucket + 1, bucket_seconds)
         }
@@ -114,11 +140,15 @@ class Store:
         by_client: dict[str, dict[str, Any]] = {}
         savings = {"input": 0, "tool": 0}
         outcomes = {"success": 0, "failure": 0}
+        skip_reason_totals: dict[tuple[str, str], int] = {}
+        total_costs: dict[str, float] = {}
+        total_saved_costs: dict[str, float] = {}
+        cost_statuses: dict[str, int] = {}
 
         with self.connect() as db:
             rows = db.execute(
-                """SELECT created_at, kind, client, model, input_tokens, output_tokens,
-                          saved_tokens, success
+                """SELECT created_at, kind, client, model, input_tokens, output_tokens, cached_tokens,
+                          saved_tokens, success, metadata
                    FROM events
                    WHERE created_at >= ? AND kind IN ('input','headroom','tool','rtk')
                    ORDER BY created_at""",
@@ -143,11 +173,85 @@ class Store:
             point["saved_tokens"] += saved
             point["model_requests"] += int(model_request)
             point["failures"] += int(model_request and not row["success"])
+            point["usage_observations"] += int(
+                model_request and (row["input_tokens"] is not None or row["output_tokens"] is not None)
+            )
+            point["input_usage_observations"] += int(model_request and row["input_tokens"] is not None)
+            point["output_usage_observations"] += int(model_request and row["output_tokens"] is not None)
+            point["cache_usage_observations"] += int(model_request and row["cached_tokens"] is not None)
+            if model_request:
+                point["actual_input_tokens"] += int(row["input_tokens"] or 0)
+                point["actual_output_tokens"] += int(row["output_tokens"] or 0)
+                point["actual_cached_input_tokens"] += int(row["cached_tokens"] or 0)
             savings["input" if model_request else "tool"] += saved
             outcomes["success" if row["success"] else "failure"] += 1
             add(by_client, row["client"] or "unknown", consumed, saved, model_request)
             if model_request:
-                add(by_model, row["model"] or "unknown", consumed, saved, True)
+                model_name = row["model"] or "unknown"
+                add(by_model, model_name, consumed, saved, True)
+                model_usage = by_model[model_name]
+                model_usage.setdefault("actual_input_tokens", 0)
+                model_usage.setdefault("actual_output_tokens", 0)
+                model_usage.setdefault("actual_cached_input_tokens", 0)
+                model_usage.setdefault("usage_observations", 0)
+                model_usage.setdefault("cache_usage_observations", 0)
+                if row["input_tokens"] is not None or row["output_tokens"] is not None:
+                    model_usage["usage_observations"] += 1
+                if row["cached_tokens"] is not None:
+                    model_usage["cache_usage_observations"] += 1
+                model_usage["actual_input_tokens"] += int(row["input_tokens"] or 0)
+                model_usage["actual_output_tokens"] += int(row["output_tokens"] or 0)
+                model_usage["actual_cached_input_tokens"] += int(row["cached_tokens"] or 0)
+            metadata = json.loads(row["metadata"] or "{}")
+            for source, field, allowed in (
+                ("tool", "tool_skip_reasons", TOOL_SKIP_REASONS),
+                ("image", "image_skip_reasons", IMAGE_SKIP_REASONS),
+            ):
+                reasons = metadata.get(field)
+                if isinstance(reasons, dict):
+                    for reason, count in reasons.items():
+                        if reason in allowed and type(count) is int and 0 < count <= 100000:
+                            key = (source, reason)
+                            skip_reason_totals[key] = skip_reason_totals.get(key, 0) + count
+            if model_request:
+                cost = metadata.get("estimated_cost")
+                saved_cost = metadata.get("estimated_saved_cost")
+                cost_status = (
+                    cost.get("status") if isinstance(cost, dict)
+                    else metadata.get("cost_estimate_status", "price_not_recorded")
+                )
+                if (
+                    not isinstance(cost, dict)
+                    and cost_status == "unavailable_no_price_catalog"
+                    and catalog_status in {"ready", "partial"}
+                ):
+                    cost_status = "price_not_recorded"
+                cost_statuses[cost_status] = cost_statuses.get(cost_status, 0) + 1
+                model_usage.setdefault("estimated_cost_by_currency", {})
+                model_usage.setdefault("estimated_saved_cost_by_currency", {})
+                model_usage.setdefault("cost_estimate_statuses", {})
+                statuses = model_usage["cost_estimate_statuses"]
+                statuses[cost_status] = statuses.get(cost_status, 0) + 1
+                if isinstance(cost, dict) and cost.get("status") == "estimated":
+                    currency = cost["currency"]
+                    amount = cost["amount"]
+                    model_usage["estimated_cost_by_currency"][currency] = (
+                        model_usage["estimated_cost_by_currency"].get(currency, 0.0) + amount
+                    )
+                    point["estimated_cost_by_currency"][currency] = (
+                        point["estimated_cost_by_currency"].get(currency, 0.0) + amount
+                    )
+                    total_costs[currency] = total_costs.get(currency, 0.0) + amount
+                if isinstance(saved_cost, dict) and saved_cost.get("status") == "estimated":
+                    currency = saved_cost["currency"]
+                    amount = saved_cost["amount"]
+                    model_usage["estimated_saved_cost_by_currency"][currency] = (
+                        model_usage["estimated_saved_cost_by_currency"].get(currency, 0.0) + amount
+                    )
+                    point["estimated_saved_cost_by_currency"][currency] = (
+                        point["estimated_saved_cost_by_currency"].get(currency, 0.0) + amount
+                    )
+                    total_saved_costs[currency] = total_saved_costs.get(currency, 0.0) + amount
 
         rank = lambda values: sorted(
             values.values(), key=lambda item: (item["consumed_tokens"] + item["saved_tokens"], item["requests"]), reverse=True
@@ -157,6 +261,24 @@ class Store:
             "timeline": list(timeline.values()),
             "by_model": rank(by_model),
             "by_client": rank(by_client),
+            "skip_reasons": [
+                {"source": source, "reason": reason, "count": count}
+                for (source, reason), count in sorted(
+                    skip_reason_totals.items(), key=lambda item: (-item[1], item[0])
+                )
+            ],
+            "measurement_basis": {
+                "consumed_tokens": "provider_reported_usage",
+                "saved_tokens": "estimated_prompt_delta",
+                "money": "estimated_from_reported_usage_and_configured_prices"
+                if catalog_status in {"ready", "partial"}
+                else "unavailable_no_price_catalog",
+                "cached_input_tokens": "provider_reported_subset_of_input_tokens",
+            },
+            "price_catalog_status": catalog_status,
+            "estimated_cost_by_currency": total_costs,
+            "estimated_saved_cost_by_currency": total_saved_costs,
+            "cost_estimate_statuses": cost_statuses,
             "savings": [
                 {"name": "input", "saved_tokens": savings["input"]},
                 {"name": "tool", "saved_tokens": savings["tool"]},
@@ -167,7 +289,13 @@ class Store:
             ],
         }
 
-    def events(self, limit: int = 100, *, since_hours: int | None = None, kinds: tuple[str, ...] = ()) -> list[dict[str, Any]]:
+    def events(
+        self,
+        limit: int = 100,
+        *,
+        since_hours: int | None = None,
+        kinds: tuple[str, ...] = (),
+    ) -> list[dict[str, Any]]:
         conditions = []
         args = []
         if since_hours is not None:

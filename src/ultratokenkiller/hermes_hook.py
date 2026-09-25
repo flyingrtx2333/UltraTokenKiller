@@ -6,8 +6,10 @@ import json
 import os
 import re
 import shlex
+import shutil
 import subprocess
 import sys
+from pathlib import Path
 from typing import Any
 
 from .tool_filters import command_filter
@@ -16,7 +18,17 @@ from .tool_filters import command_filter
 _SHELL_META = re.compile(r"(?:\r|\n|\|\||&&|[|;<>`]|\$\()")
 
 
-def rewrite_payload(payload: object) -> dict[str, Any] | None:
+def _resolve_utk_executable() -> str | None:
+    candidates = [os.environ.get("UTK_EXECUTABLE"), sys.argv[0], shutil.which("utk")]
+    names = ("utk.exe", "utk") if os.name == "nt" else ("utk",)
+    candidates.extend(str(Path(sys.executable).with_name(name)) for name in names)
+    for candidate in candidates:
+        if candidate and Path(candidate).name.lower() in names and Path(candidate).is_file():
+            return str(Path(candidate).resolve())
+    return None
+
+
+def rewrite_payload(payload: object, *, executable: str | None = None) -> dict[str, Any] | None:
     """Return a Hermes modify directive, or None when equivalence is uncertain."""
     if not isinstance(payload, dict) or payload.get("hook_event_name") != "pre_tool_call":
         return None
@@ -36,6 +48,9 @@ def rewrite_payload(payload: object) -> dict[str, Any] | None:
         return None
     if command_filter(argv) is None:
         return None
+    executable = executable if executable is not None else _resolve_utk_executable()
+    if not executable or not Path(executable).is_file():
+        return None
 
     session_seed = str(payload.get("session_id") or payload.get("profile") or "default")
     session = "hermes_" + hashlib.sha256(session_seed.encode("utf-8")).hexdigest()[:32]
@@ -43,7 +58,7 @@ def rewrite_payload(payload: object) -> dict[str, Any] | None:
     call_seed = "\0".join((session_seed, str(extra.get("tool_call_id", "")), command))
     hook_call_id = hashlib.sha256(call_seed.encode("utf-8")).hexdigest()
     wrapped = [
-        "utk", "exec", "--session", session, "--hook-call-id", hook_call_id,
+        str(Path(executable).resolve()), "exec", "--session", session, "--hook-call-id", hook_call_id,
         "--client", "hermes", "--", *argv,
     ]
     rendered = subprocess.list2cmdline(wrapped) if os.name == "nt" else shlex.join(wrapped)

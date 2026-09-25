@@ -65,6 +65,27 @@ class RecoveryVault:
                     return replace(plain, content=original)
         return None
 
+    def recent_entries(self, session: str, *, limit: int = 8, max_characters: int = 2_000_000):
+        """Return bounded recent originals for same-session exact-repeat detection."""
+        if not session or limit < 1 or max_characters < 1:
+            return ()
+        with self.lock:
+            self._prune()
+            current = self.sessions.get(session)
+            if not current:
+                return ()
+            current.touched = self.clock()
+            recent = []
+            used_characters = 0
+            for handle, (original, _result) in reversed(current.entries.items()):
+                if len(recent) >= limit:
+                    break
+                if len(original) > max_characters - used_characters:
+                    continue
+                recent.append((handle, original))
+                used_characters += len(original)
+            return tuple(recent)
+
     def pin_passthrough(self, session: str, result: CompressionResult) -> CompressionResult:
         """Remember unchanged history without retaining another copy of its body.
 

@@ -32,6 +32,7 @@ class Settings:
     auto_start: bool = True
     headroom_managed: bool = True
     clients: dict[str, dict[str, Any]] = field(default_factory=dict)
+    model_pricing: dict[str, dict[str, Any]] = field(default_factory=dict)
     proxy_environment: dict[str, str] = field(default_factory=dict)
     schema_version: int = 2
     tools_enabled: bool = True
