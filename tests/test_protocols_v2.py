@@ -66,11 +66,13 @@ def test_model_session_compresses_and_header_is_not_forwarded(tmp_path, monkeypa
     envelope = json.dumps({"output": "x" * 400, "stdout": recovered, "exit_code": 7, "error": None})
     payload = {"model": "m", "messages": [{"role": "tool", "content": envelope}]}
     with TestClient(create_proxy("https://example.test/v1", tmp_path, httpx.MockTransport(upstream))) as client:
+        assert client.post("/v1/chat/completions", json={"model": "m", "messages": []},
+                           headers={"x-utk-session-id": "hermes_bound"}).status_code == 200
         assert client.post("/v1/chat/completions", json=payload,
                            headers={"x-utk-session-id": "hermes_bound"}).status_code == 200
 
-    assert "x-utk-session-id" not in sent[0].headers
-    messages = json.loads(sent[0].content)["messages"]
+    assert "x-utk-session-id" not in sent[-1].headers
+    messages = json.loads(sent[-1].content)["messages"]
     rendered = json.loads(next(item for item in messages if item.get("role") == "tool")["content"])
     assert rendered == {"output": "short", "stdout": recovered, "exit_code": 7, "error": None}
     event = Store(tmp_path / "metrics.sqlite3").events()[0]
@@ -109,12 +111,14 @@ def test_mixed_tool_output_compresses_through_model_proxy_and_remains_recoverabl
         {"role": "tool", "content": envelope},
     ]}
     with TestClient(create_proxy("https://example.test/v1", tmp_path, httpx.MockTransport(upstream))) as client:
+        assert client.post("/v1/chat/completions", json={"model": "m", "messages": []},
+                           headers={"x-utk-session-id": "hermes_mixed"}).status_code == 200
         response = client.post("/v1/chat/completions", json=payload,
                                headers={"x-utk-session-id": "hermes_mixed"})
     assert response.status_code == 200
 
-    assert "x-utk-session-id" not in sent[0].headers
-    forwarded = json.loads(sent[0].content)
+    assert "x-utk-session-id" not in sent[-1].headers
+    forwarded = json.loads(sent[-1].content)
     tool_result = json.loads(next(item for item in forwarded["messages"] if item.get("role") == "tool")["content"])
     assert tool_result["exit_code"] == 7
     assert tool_result["error"] is None
@@ -226,7 +230,7 @@ def test_websocket_compresses_response_create_and_budgets_model_calls_only(tmp_p
     from ultratokenkiller.recovery import RecoveryVault
 
     Settings(caveman="off").save(tmp_path)
-    monkeypatch.setenv("UTK_MAX_MODEL_REQUESTS", "1")
+    monkeypatch.setenv("UTK_MAX_MODEL_REQUESTS", "2")
     vault = RecoveryVault()
 
     def compress(_self, text, session, hint=None, query=""):
@@ -255,7 +259,8 @@ def test_websocket_compresses_response_create_and_budgets_model_calls_only(tmp_p
             if event.get("type") == "response.create":
                 socket.send(json.dumps({
                     "type": "response.completed",
-                    "response": {"id": "resp-1", "usage": {"input_tokens": 123, "output_tokens": 7}},
+                    "response": {"id": f"resp-{len(seen)}",
+                                 "usage": {"input_tokens": 123, "output_tokens": 7}},
                 }))
             elif event.get("type") == "response.cancel":
                 cancel_seen.set()
@@ -269,9 +274,17 @@ def test_websocket_compresses_response_create_and_budgets_model_calls_only(tmp_p
                 "/v1/responses",
                 headers={"Authorization": "Bearer opaque", "x-utk-session-id": "ws-session"},
             ) as socket:
+                socket.send_text(json.dumps({"type": "response.create", "response": {
+                    "model": "gpt-4o", "input": []}}))
+                assert json.loads(socket.receive_text())["type"] == "response.completed"
                 socket.send_text(json.dumps(create_event))
                 completed = json.loads(socket.receive_text())
                 assert completed["type"] == "response.completed"
+                for _ in range(40):
+                    if any(event["metadata"].get("changed_tool_results")
+                           for event in Store(tmp_path / "metrics.sqlite3").events()):
+                        break
+                    threading.Event().wait(0.05)
                 socket.send_text(json.dumps({"type": "response.cancel", "response_id": "resp-1"}))
                 assert cancel_seen.wait(timeout=5)
                 socket.send_text(json.dumps(create_event))
@@ -281,18 +294,19 @@ def test_websocket_compresses_response_create_and_budgets_model_calls_only(tmp_p
         server.shutdown()
         worker.join(timeout=5)
 
-    assert len(seen) == 2
+    assert len(seen) == 3
     assert seen[0]["type"] == "response.create"
-    forwarded_output = seen[0]["response"]["input"][0]["output"]
+    forwarded_output = seen[1]["response"]["input"][0]["output"]
     assert forwarded_output != original
     assert "ERROR permission denied at src/app.py:42" in forwarded_output
     handle = forwarded_output.split("UTK retrieve: ", 1)[1].strip()
     assert vault.retrieve("ws-session", handle)["content"] == original
-    assert seen[1]["type"] == "response.cancel"
+    assert seen[2]["type"] == "response.cancel"
     assert upstream_headers["authorization"] == "Bearer opaque"
     assert "x-utk-session-id" not in upstream_headers
 
-    event = Store(tmp_path / "metrics.sqlite3").events()[0]
+    event = next(event for event in Store(tmp_path / "metrics.sqlite3").events()
+                 if event["metadata"].get("changed_tool_results"))
     assert event["model"] == "gpt-4o"
     assert (event["input_tokens"], event["output_tokens"]) == (123, 7)
     assert event["saved_tokens"] > 0
@@ -420,6 +434,10 @@ def test_websocket_failed_response_does_not_count_estimated_savings(tmp_path, mo
             event = json.loads(message)
             if event.get("type") == "response.create":
                 sent.append(event)
+                if len(sent) == 1:
+                    socket.send(json.dumps({"type": "response.completed", "response": {
+                        "id": "primer", "usage": {"input_tokens": 1, "output_tokens": 1}}}))
+                    continue
                 socket.send(json.dumps({
                     "type": "response.failed",
                     "response": {"id": "resp-failed"},
@@ -435,6 +453,9 @@ def test_websocket_failed_response_does_not_count_estimated_savings(tmp_path, mo
             with client.websocket_connect(
                 "/v1/responses", headers={"x-utk-session-id": "failed-compress"}
             ) as socket:
+                socket.send_text(json.dumps({"type": "response.create", "response": {
+                    "model": "gpt-4o", "input": []}}))
+                assert json.loads(socket.receive_text())["type"] == "response.completed"
                 socket.send_text(json.dumps({
                     "type": "response.create",
                     "response": {
@@ -446,7 +467,7 @@ def test_websocket_failed_response_does_not_count_estimated_savings(tmp_path, mo
         server.shutdown()
         worker.join(timeout=5)
 
-    forwarded = sent[0]["response"]["input"][0]["output"]
+    forwarded = sent[1]["response"]["input"][0]["output"]
     assert forwarded != original
     handle = forwarded.split("UTK retrieve: ", 1)[1].strip()
     assert vault.retrieve("failed-compress", handle)["content"] == original

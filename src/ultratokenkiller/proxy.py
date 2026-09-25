@@ -22,6 +22,7 @@ from .identity import ensure_session_token, instance_id
 from .engines import apply_response_style
 from .broker import BrokerClient
 from .read_lifecycle import classify_reads, frozen_prefix_message_count, tool_output_text_fields
+from .prefix_guard import PrefixGuard
 from .store import Store
 from .token_count import count_text
 from .pricing import event_cost_estimates
@@ -106,7 +107,9 @@ def usage_fields(payload: dict) -> dict:
     return {key: value for key, value in result.items() if isinstance(value, int) and not isinstance(value, bool) and value >= 0}
 
 
-async def compress_request(payload, settings, root, session, model=None):
+async def compress_request(payload, settings, root, session, model=None, *,
+                           frozen_message_count=0, allow_cold=False,
+                           forwarded_prefix=None):
     result = copy.deepcopy(payload)
     before_count = count_text(json.dumps(payload, ensure_ascii=False), model)
     metadata = {"estimated_input_before": before_count.value,
@@ -128,12 +131,18 @@ async def compress_request(payload, settings, root, session, model=None):
         broker = BrokerClient(root)
         items = result.get("messages", result.get("input", []))
         if isinstance(items, list):
+            if forwarded_prefix is not None:
+                items[:len(forwarded_prefix)] = copy.deepcopy(forwarded_prefix)
+            frozen_message_count = max(
+                frozen_message_count,
+                0 if allow_cold else frozen_prefix_message_count(items),
+            )
             query = next((user_text(item.get("content")) for item in reversed(items)
                           if isinstance(item, dict) and item.get("role") == "user"), "")
             read_fields = set()
             lifecycle_fields = set()
             classifications = classify_reads(
-                items, frozen_message_count=frozen_prefix_message_count(items),
+                items, frozen_message_count=frozen_message_count,
                 compress_superseded=True,
             )
             lifecycle_stats = metadata["read_lifecycle"]
@@ -142,7 +151,7 @@ async def compress_request(payload, settings, root, session, model=None):
             lifecycle_stats["reads_superseded"] = sum(item.state == "superseded" for item in classifications)
             lifecycle_stats["reads_fresh"] = sum(item.state == "fresh" for item in classifications)
             by_call_id = {item.call_id: item for item in classifications}
-            for call_id, container, key in tool_output_text_fields(items):
+            for call_id, container, key in tool_output_text_fields(items[frozen_message_count:]):
                 lifecycle = by_call_id.get(call_id)
                 if lifecycle:
                     read_fields.add((id(container), key))
@@ -177,7 +186,7 @@ async def compress_request(payload, settings, root, session, model=None):
                     lifecycle_stats["transformed"] += 1
                     lifecycle_stats["bytes_before"] += len(original.encode("utf-8"))
                     lifecycle_stats["bytes_after"] += len(rendered.encode("utf-8"))
-            for item in items:
+            for item in items[frozen_message_count:]:
                 if not isinstance(item, dict):
                     continue
                 fields = []
@@ -206,7 +215,8 @@ async def compress_request(payload, settings, root, session, model=None):
                         reasons = metadata["tool_skip_reasons"]
                         reasons[reason] = reasons.get(reason, 0) + 1
             metadata["changed_images"] = await compress_inline_images(
-                items, broker, session, query, metadata["image_skip_reasons"])
+                items[frozen_message_count:], broker, session, query,
+                metadata["image_skip_reasons"])
             if (not metadata["candidate_tool_results"] and not metadata["changed_images"]
                     and not metadata["tool_skip_reasons"] and not metadata["image_skip_reasons"]):
                 metadata["tool_skip_reasons"] = {"no_tool_result": 1}
@@ -409,7 +419,31 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
     client_name = os.environ.get("UTK_CLIENT", "unknown")
     store = Store(root / "metrics.sqlite3")
     compression_breaker = CompressionBreaker()
+    prefix_guard = PrefixGuard()
     submission_limit = os.environ.get("UTK_MAX_MODEL_REQUESTS")
+
+    async def guarded_compress(payload, settings, session, model, protocol):
+        # A pre-existing provider prefix can include system instructions. Once a
+        # session is observed, changing them would defeat prefix protection.
+        styled = payload if session else apply_response_style(
+            payload, settings.caveman, protocol=protocol)
+
+        async def transform(source, frozen, cold, forwarded_prefix):
+            return await compress_request(
+                source, settings, root, session, model,
+                frozen_message_count=frozen, allow_cold=cold,
+                forwarded_prefix=forwarded_prefix,
+            )
+
+        result, estimates = await prefix_guard.process(
+            styled, session=session, protocol=protocol, model=model,
+            transform=transform,
+        )
+        estimates["response_style"] = settings.caveman
+        estimates["response_style_applied"] = styled != payload
+        if session and settings.caveman != "off":
+            estimates["response_style_skipped"] = "cache_prefix"
+        return result, estimates
 
     def may_submit():
         if submission_limit is None:
@@ -458,14 +492,12 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
                     # Style overhead is included before the compression estimate.
                     protocol = ("anthropic" if path.rstrip("/").endswith("messages") else
                                 "openai-chat" if path.rstrip("/").endswith("chat/completions") else "openai")
-                    styled = apply_response_style(payload, settings.caveman, protocol=protocol)
                     compressed, estimates = await asyncio.wait_for(
-                        compress_request(styled, settings, root, session, model),
+                        guarded_compress(payload, settings, session, model, protocol),
                         timeout=INPUT_COMPRESSION_TIMEOUT_SECONDS)
                     metadata.update(estimates)
-                    metadata["response_style"] = settings.caveman
-                    metadata["response_style_applied"] = styled != payload
-                    body = json.dumps(compressed, ensure_ascii=False).encode("utf-8")
+                    if compressed != payload:
+                        body = json.dumps(compressed, ensure_ascii=False).encode("utf-8")
                     if metadata.get("compression_fallback") in {"broker_unavailable", "compression_error"}:
                         compression_breaker.failure()
                     else:
@@ -628,14 +660,12 @@ def create_proxy(upstream: str | None = None, home=None, transport=None) -> Fast
                             if not compression_breaker.is_open() and isinstance(response_payload, dict):
                                 try:
                                     settings = Settings.load(root)
-                                    styled = apply_response_style(response_payload, settings.caveman, protocol="openai")
                                     compressed, estimates = await asyncio.wait_for(
-                                        compress_request(styled, settings, root, session, model),
+                                        guarded_compress(response_payload, settings, session,
+                                                         model, "openai"),
                                         timeout=INPUT_COMPRESSION_TIMEOUT_SECONDS,
                                     )
                                     metadata.update(estimates)
-                                    metadata["response_style"] = settings.caveman
-                                    metadata["response_style_applied"] = styled != response_payload
                                     if compressed != response_payload:
                                         forwarded_event = dict(event)
                                         forwarded_event["response"] = compressed

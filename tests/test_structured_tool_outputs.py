@@ -116,7 +116,8 @@ def test_warm_history_and_provider_cache_markers_remain_stable_across_turns(tmp_
                                             "cache_control": {"type": "ephemeral", "ttl": "1h"}}]},
     ]}
 
-    first, _ = asyncio.run(compress_request(first_payload, Settings(), tmp_path, "warm-session"))
+    first, _ = asyncio.run(compress_request(first_payload, Settings(), tmp_path,
+                                            "warm-session", allow_cold=True))
     old_result = first["messages"][1]["content"][0]["content"]
     assert old_result != first_original
     assert first["system"] == system
@@ -129,8 +130,7 @@ def test_warm_history_and_provider_cache_markers_remain_stable_across_turns(tmp_
                                   for index in range(100)])
     second_payload = copy.deepcopy(first)
     second_payload["messages"].append({"role": "user", "content": [
-        {"type": "tool_result", "tool_use_id": "t2", "content": second_original,
-         "cache_control": {"type": "ephemeral", "ttl": "1h"}}
+        {"type": "tool_result", "tool_use_id": "t2", "content": second_original}
     ]})
     second, metadata = asyncio.run(
         compress_request(second_payload, Settings(), tmp_path, "warm-session")
@@ -208,7 +208,8 @@ def test_warm_tool_prefix_stays_stable_when_new_provider_turn_is_compressed(
         field = "messages"
 
     first, _ = asyncio.run(
-        compress_request(first_payload, Settings(), tmp_path, f"warm-{protocol}")
+        compress_request(first_payload, Settings(), tmp_path, f"warm-{protocol}",
+                         allow_cold=True)
     )
     stable_prefix = text_of(first[field][0])
     assert stable_prefix != original_prefix
@@ -274,7 +275,7 @@ def test_unexpected_image_compressor_error_preserves_image(tmp_path, monkeypatch
 def test_slow_compression_forwards_original_request(tmp_path, monkeypatch):
     calls = []
 
-    async def slow(*args):
+    async def slow(*args, **kwargs):
         calls.append(1)
         await asyncio.sleep(0.1)
 
@@ -299,7 +300,7 @@ def test_slow_compression_forwards_original_request(tmp_path, monkeypatch):
 def test_repeated_compression_failures_open_local_circuit(tmp_path, monkeypatch):
     calls = []
 
-    async def broken(*args):
+    async def broken(*args, **kwargs):
         calls.append(1)
         raise RuntimeError("private details")
 
